@@ -95,8 +95,12 @@ make
 ```sh
 make clean
 ```
-
-6. Ausführbar machen mit:
+6. Im Terminal starten:
+```sh
+./Projekt-122-l
+```
+   
+7. Ausführbar machen, *wenn sie wollen,* mit:
 ```sh
 chmod +x Projekt-122-l-meineVersion
 ```
