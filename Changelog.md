@@ -4,7 +4,7 @@
 
 **Codename:** *Hüpfender USB-Stick / Jumping USB flash drive* 
 ```
-	- Erster Paketbau
+	- first build 
 ```
 
 ## v.0.2. 
