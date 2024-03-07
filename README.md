@@ -59,7 +59,11 @@ sudo zypper install android-tools
 
 - **nur unter Linux gibt es eine Anleitung**
 
-1. Laden sie den Quellcode herunter 
+1. Laden sie den Quellcode herunter:
+```sh
+git clone https://github.com/NachtsternBuild/Projekt-122.git
+```
+ 
 2. bearbeiten sie diesen nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
 3. Installieren sie GCC:
 
@@ -86,7 +90,12 @@ sudo zypper install gcc
 ```sh
 make
 ```
-5. Ausführbar machen mit:
+5. löschen der .o Dateien
+```sh
+make clean
+```
+
+6. Ausführbar machen mit:
 ```sh
 chmod +x Projekt-122-l-meineVersion
 ```
@@ -97,6 +106,7 @@ sudo chmod +x Projekt-122-l-meineVersion
 
 ## Eigentümer
 - *Elias Mörz*
+
 ## Info
 ADB (Android Debug Bridge) ermöglicht die Kommunikation zwischen einem Computer und einem Android-Gerät für Debugging und Dateiübertragung. Fastboot ist ein Befehlszeilenwerkzeug für den Bootloader-Modus von Android-Geräten, um Systemabbilder zu flashen und benutzerdefinierte Firmware zu installieren. Beide sind wichtige Tools für Entwickler und fortgeschrittene Nutzer zur Modifikation und Diagnose von Android-Geräten über eine USB-Verbindung. 
 
