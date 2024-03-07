@@ -5,6 +5,7 @@ Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erle
 
 ## Versionen
 - *Projekt-122-l-v.0.3.beta* → für Linux Debian/Ubuntu
+- ***aktuell muss das Programm noch selbst kompiliert werden***
 ## Hinweise
 - Benutzung auf eigene Gefahr.
 - Es kann zu Schäden am Gerät kommen.
