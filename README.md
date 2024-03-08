@@ -102,11 +102,11 @@ make clean
    
 7. Ausführbar machen, *wenn sie wollen,* mit:
 ```sh
-chmod +x Projekt-122-l-meineVersion
+chmod a+w Projekt-122-l-meineVersion
 ```
 oder mit:
 ```sh
-sudo chmod +x Projekt-122-l-meineVersion
+sudo chmod a+w Projekt-122-l-meineVersion
 ```
 
 ## Eigentümer
