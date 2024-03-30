@@ -25,7 +25,7 @@
 
 ```
 	- add rename functions
-	- add UI for rename functions *→ didn't work*
+	- add UI for rename functions → didn't work
 	- add vendor_boot flash
 	- add new structure for flash files
 	- add new UI for flash files
