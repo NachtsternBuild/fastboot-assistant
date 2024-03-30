@@ -4,7 +4,7 @@
 
 **Codename:** *Hüpfender USB-Stick / Jumping USB flash drive* 
 ```
-	- first build 
+	- Erster Paketbau
 ```
 
 ## v.0.2. 
@@ -25,7 +25,7 @@
 
 ```
 	- add rename functions
-	- add UI for rename functions
+	- add UI for rename functions *→ didn't work*
 	- add vendor_boot flash
 	- add new structure for flash files
 	- add new UI for flash files
