@@ -6,7 +6,7 @@ Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erle
 ## Versionen
 - *Projekt-122-l-v.0.3.beta* → für Linux
 
-  *<https://github.com/NachtsternBuild/Projekt-122/releases/tag/v.0.3.beta>* 
+  *<https://github.com/NachtsternBuild/Projekt-122/releases>* 
 ## Hinweise
 - Benutzung auf eigene Gefahr.
 - Es kann zu Schäden am Gerät kommen.
