@@ -28,7 +28,6 @@
 void flashrecoveryfunction();
 void flashboot();
 void flashvendor();
-void flashvendorboot();
 void flashsystem();
 void flashpayload();
 void flashvbmeta();
