@@ -4,7 +4,7 @@
 Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern.
 
 ## Versionen
-- *Projekt-122-l-v.0.3.beta* → für Linux Debian/Ubuntu
+- *Projekt-122-l-v.0.3.beta* → für Linux 
 ## Hinweise
 - Benutzung auf eigene Gefahr.
 - Es kann zu Schäden am Gerät kommen.
@@ -21,43 +21,58 @@ Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erle
 - boot in den Recovery
 - öffnen/schleißen des Bootloaders 
 - löschen der Nutzerdaten
-- umbenennen von Dateien (recovery.img, boot.img, vendor.img, system.img, vbmeta.img)
-- Flashen recovery.img, boot.img, vendor.img, system.img, vbmeta.img
+- umbenennen von Dateien (recovery.img, boot.img, vendor.img, system.img, vbmeta.img) 
+
+	***→ funktioniert aktuell nicht***
+- Flashen recovery.img, boot.img ***(funktioniert nicht)***, vendor.img ***(funktioniert nicht)***, vendor_boot.img, system.img, vbmeta.img
 
 ## Installation
 Es werden für die Ausführung des Programms folgende Tools benötigt. 
 
 *Android Debug Bridge (adb)*, *Fastboot*
 
-- Unter Linux die Tools installieren mit:
+1. Entpacken der Dateien im Ordner
+2. Ausführen der **setup.sh** im Terminal:
+```sh
+bash setup.sh
+```
+*→ Es werden zur Installation zugehöriger Tools Root-Rechte benötigt*
+
+- Manuelle Installation der Tool unter Linux mit:
 ```sh
 # Debian / Ubuntu:
 sudo apt update
 sudo apt install android-tools-adb android-tools-fastboot
+sudo apt-get install -y desktop-file-utils
 ```
 ```sh
 # Fedora: 
 sudo dnf install android-tools
+sudo dnf install -y desktop-file-utils
 ```
 ```sh
 # Arch:
 sudo pacman -S android-tools
+sudo pacman -S --noconfirm desktop-file-utils
 ```
 ```sh
-# openSUSE:
-sudo zypper install android-tools
+# RHEL
+sudo yum install android-tools
+sudo yum install -y desktop-file-utils
 ```
- Um diese Tool auszuführen führen sie im Terminal folgendes aus:
-```sh
-./Projekt-122-l-v_0_3
+ 
+## Deinstallation
+1. Löschen der Desktop Verknüpfung mit:
+```sh 
+    rm ~/.local/share/applications/Projekt-122-l.desktop
 ```
 
-- *Für Windows-Nutzer:*
-**Nutzung von WSL um die Anwendung auszuführen.**
+2. löschen der anderen Ordner des Projektes.
 
 ## Build
 
 - **nur unter Linux gibt es eine Anleitung**
+- ***wäre sehr schön wenn jemand die Anwendung auch als Debian-Paket oder RPM bauen könnte***
 
 1. Laden sie den Quellcode herunter 
 2. bearbeiten sie diesen nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
@@ -88,15 +103,19 @@ make
 ```
 5. Ausführbar machen mit:
 ```sh
-chmod a+w Projekt-122-l-meineVersion
+chmod +x Projekt-122-l-meineVersion
 ```
 oder mit:
 ```sh
-sudo chmod a+w Projekt-122-l-meineVersion
+sudo chmod +x Projekt-122-l-meineVersion
 ```
 
 ## Eigentümer
 - *Elias Mörz*
+
+## License
+- ***Apache License, Version 2.0***	
+
 ## Info
 ADB (Android Debug Bridge) ermöglicht die Kommunikation zwischen einem Computer und einem Android-Gerät für Debugging und Dateiübertragung. Fastboot ist ein Befehlszeilenwerkzeug für den Bootloader-Modus von Android-Geräten, um Systemabbilder zu flashen und benutzerdefinierte Firmware zu installieren. Beide sind wichtige Tools für Entwickler und fortgeschrittene Nutzer zur Modifikation und Diagnose von Android-Geräten über eine USB-Verbindung. 
 
