@@ -28,7 +28,6 @@
 extern void flashrecovery();
 extern void flashboot();
 extern void flashvendor();
-extern void flashvendorboot();
 extern void flashsystem();
 extern void flashpayload();
 extern void flashvbmeta();
@@ -52,25 +51,19 @@ static void on_buttonFv_clicked(GtkWidget *widget, gpointer data)
 	flashvendor();
 }
 
-// button 4 - flash vendor_boot.img
-static void on_buttonFvboo_clicked(GtkWidget *widget, gpointer data)
-{
-	flashvendorboot();
-}
-
-// button 5 - flash system.img
+// button 4 - flash system.img
 static void on_buttonFs_clicked(GtkWidget *widget, gpointer data)
 {
 	flashsystem();
 }
 
-// button 6 - flash payload.zip
+// button 5 - flash payload.zip
 static void on_buttonFp_clicked(GtkWidget *widget, gpointer data)
 {
 	flashpayload();
 }
 
-// button 7 - flash vbmeta.img
+// button 6 - flash vbmeta.img
 static void on_buttonFvb_clicked(GtkWidget *widget, gpointer data)
 {
 	flashvbmeta();
@@ -93,7 +86,6 @@ void flashGUI(int argc, char *argv[])
     GtkWidget *buttonFr = gtk_button_new_with_label("Flash Recovery-Image");
     GtkWidget *buttonFb = gtk_button_new_with_label("Flash Boot-Image");
     GtkWidget *buttonFv = gtk_button_new_with_label("Flash Vendor-Image");
-    GtkWidget *buttonFvboo = gtk_button_new_with_label("Flash Vendor_Boot-Image");
     GtkWidget *buttonFs = gtk_button_new_with_label("Flash System-Image");
     GtkWidget *buttonFp = gtk_button_new_with_label("Flash payload.zip");
     GtkWidget *buttonFvb = gtk_button_new_with_label("Flash vbmeta.img");        
@@ -102,7 +94,6 @@ void flashGUI(int argc, char *argv[])
     g_signal_connect(buttonFr, "clicked", G_CALLBACK(on_buttonFr_clicked), NULL);
     g_signal_connect(buttonFb, "clicked", G_CALLBACK(on_buttonFb_clicked), NULL);
     g_signal_connect(buttonFv, "clicked", G_CALLBACK(on_buttonFv_clicked), NULL);
-    g_signal_connect(buttonFvboo, "clicked", G_CALLBACK(on_buttonFvboo_clicked), NULL);
     g_signal_connect(buttonFs, "clicked", G_CALLBACK(on_buttonFs_clicked), NULL);
     g_signal_connect(buttonFp, "clicked", G_CALLBACK(on_buttonFp_clicked), NULL);
     g_signal_connect(buttonFvb, "clicked", G_CALLBACK(on_buttonFvb_clicked), NULL);
@@ -116,13 +107,12 @@ void flashGUI(int argc, char *argv[])
     
     // Add the first two buttons to the left VBox
     gtk_box_pack_start(GTK_BOX(left_vbox), buttonFr, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(right_vbox), buttonFb, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(left_vbox), buttonFv, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), buttonFs, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), buttonFvb, TRUE, TRUE, 0);
    
     // Add the other two buttons to the right VBox
-    gtk_box_pack_start(GTK_BOX(right_vbox), buttonFb, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(right_vbox), buttonFvboo, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(left_vbox), buttonFs, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(left_vbox), buttonFvb, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(right_vbox), buttonFp, TRUE, TRUE, 0);
 
     // Add the left and right VBoxes to the main HBox
@@ -136,7 +126,6 @@ void flashGUI(int argc, char *argv[])
     gtk_widget_show(buttonFr);
     gtk_widget_show(buttonFb);
     gtk_widget_show(buttonFv);
-    gtk_widget_show(buttonFvboo);
     gtk_widget_show(buttonFs);
     gtk_widget_show(buttonFp);
     gtk_widget_show(buttonFvb);
