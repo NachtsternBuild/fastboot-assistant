@@ -31,7 +31,6 @@ SRCS =	Header1.c \
 		flashrecovery.c \
 		flashboot.c \
 		flashvendor.c \
-		flashvendorboot.c \
 		flashsystem.c \
 		flashpayload.c \
 		flashvbmeta.c \
@@ -52,6 +51,6 @@ $(TARGET): $(OBJS) $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f *.o 
+	rm -f *.o $(TARGET)
 
 
