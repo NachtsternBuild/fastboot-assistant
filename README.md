@@ -4,9 +4,11 @@
 Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern.
 
 ## Versionen
-- *Projekt-122-l-v.0.3.beta* → für Linux
+- *Projekt-122-l v.0.3.beta* → für Linux Debian/Ubuntu
+- **Projekt-122-l-de v.0.4.beta** → für Linux
 
-  *<https://github.com/NachtsternBuild/Projekt-122/releases>* 
+  *<https://github.com/NachtsternBuild/Projekt-122/releases>*
+
 ## Hinweise
 - Benutzung auf eigene Gefahr.
 - Es kann zu Schäden am Gerät kommen.
@@ -23,87 +25,111 @@ Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erle
 - boot in den Recovery
 - öffnen/schleißen des Bootloaders 
 - löschen der Nutzerdaten
-- umbenennen von Dateien (recovery.img, boot.img, vendor.img, system.img, vbmeta.img) 
-
-	***→ funktioniert aktuell nicht***
-- Flashen recovery.img, boot.img ***(funktioniert nicht)***, vendor.img ***(funktioniert nicht)***, vendor_boot.img, system.img, vbmeta.img
+- umbenennen von Dateien (recovery.img, boot.img, vendor.img, system.img, vbmeta.img)
+- Flashen recovery.img, boot.img, vendor.img, system.img, vbmeta.img
 
 ## Installation
 Es werden für die Ausführung des Programms folgende Tools benötigt. 
 
 *Android Debug Bridge (adb)*, *Fastboot*
 
-1. Entpacken der Dateien im Ordner
-2. Ausführen der **setup.sh** im Terminal:
-```sh
-bash setup.sh
-```
-*→ Es werden zur Installation zugehöriger Tools Root-Rechte benötigt*
-
-- Manuelle Installation der Tool unter Linux mit:
+- Unter Linux die Tools installieren mit:
 ```sh
 # Debian / Ubuntu:
-sudo apt update
-sudo apt install android-tools-adb android-tools-fastboot
-sudo apt-get install -y desktop-file-utils
+sudo apt-get update
+sudo apt-get install adb
+sudo apt-get install fastboot
 ```
 ```sh
 # Fedora: 
 sudo dnf install android-tools
-sudo dnf install -y desktop-file-utils
 ```
 ```sh
 # Arch:
 sudo pacman -S android-tools
-sudo pacman -S --noconfirm desktop-file-utils
 ```
 ```sh
-# RHEL
-sudo yum install android-tools
-sudo yum install -y desktop-file-utils
+# openSUSE:
+sudo zypper refresh
+sudo zypper install android-tools
 ```
- 
-## Deinstallation
-1. Löschen der Desktop Verknüpfung mit:
-```sh 
+```sh
+# Fedora/SUSE
+sudo yum install android-tools
+```
+ Um diese Tool auszuführen starten sie es vom Desktop.
+
+## Entfernen von Projekt 122
+1. Terminal öffnen
+2. folgenden Befehl ausführen:
+```sh
     rm ~/.local/share/applications/Projekt-122-l.desktop
 ```
+3. Das Verzeichnis wo Projekt-122 liegt löschen.
 
-2. löschen der anderen Ordner des Projektes.
+*Entweder über den Dateimanager oder via:*
+```sh
+rm -r ~/Downloads/Projekt-122
+```
 
 ## Build
 
 - **nur unter Linux gibt es eine Anleitung**
-- ***wäre sehr schön wenn jemand die Anwendung auch als Debian-Paket oder RPM bauen könnte***
 
-1. Laden sie den Quellcode herunter 
+1. Laden sie den Quellcode herunter:
+```sh
+git clone https://github.com/NachtsternBuild/Projekt-122.git
+```
 2. bearbeiten sie diesen nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
-3. Installieren sie GCC:
+3. Nutzen von der ***build.sh*** via:
+```sh
+bash build.sh
+```
+
+*oder manuell:*
+
+1. Installieren sie GCC, ADB/Fastboot, desktop-file-utils :
 
 ```sh
 # Debian / Ubuntu:
 sudo apt update
 sudo apt install build-essential
+sudo apt-get install adb
+sudo apt-get install fastboot
+sudo apt-get install -y desktop-file-utils
 ```
 ```sh
 # Fedora:
 sudo dnf install gcc
+sudo dnf install -y android-tools
+sudo dnf install -y desktop-file-utils
 ```
 ```sh
 # Arch:
-sudo pacman -Syu
+sudo pacman -Syyu
 sudo pacman -S gcc
+sudo pacman -S --noconfirm android-tools
+sudo pacman -S --noconfirm desktop-file-utils
 ```
 ```sh
 # Open SUSE:
+sudo zypper refresh
 sudo zypper install gcc
+sudo zypper install android-tools
+sudo zypper install desktop-file-utils
+```
+```sh
+# Fedora/SUSE
+sudo yum install gcc
+sudo yum install android-tools
+sudo yum install -y desktop-file-utils
 ```
 
-4. Kompilieren sie den Code indem sie das Makefile ausführen:
+2. Kompilieren sie den Code indem sie das Makefile ausführen:
 ```sh
 make
 ```
-5. Ausführbar machen mit:
+3. Ausführbar machen mit:
 ```sh
 chmod +x Projekt-122-l-meineVersion
 ```
@@ -111,13 +137,13 @@ oder mit:
 ```sh
 sudo chmod +x Projekt-122-l-meineVersion
 ```
+4. Aufräumen:
+```sh
+make clean
+```
 
 ## Eigentümer
 - *Elias Mörz*
-
-## License
-- ***Apache License, Version 2.0***	
-
 ## Info
 ADB (Android Debug Bridge) ermöglicht die Kommunikation zwischen einem Computer und einem Android-Gerät für Debugging und Dateiübertragung. Fastboot ist ein Befehlszeilenwerkzeug für den Bootloader-Modus von Android-Geräten, um Systemabbilder zu flashen und benutzerdefinierte Firmware zu installieren. Beide sind wichtige Tools für Entwickler und fortgeschrittene Nutzer zur Modifikation und Diagnose von Android-Geräten über eine USB-Verbindung. 
 
