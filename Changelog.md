@@ -25,7 +25,7 @@
 
 ```
 	- add rename functions
-	- add UI for rename functions → didn't work
+	- add UI for rename functions
 	- add vendor_boot flash
 	- add new structure for flash files
 	- add new UI for flash files
@@ -35,10 +35,21 @@
 ```
 
 ##  v.0.4.
-**Status:** *on work*
+**Status:** *unstable*
 
 **Codename:** *Sprudelnde PC-Kühlung / Effervescent PC cooling*
 
 ```
-	
+- add rename.sh
+- add update engine → update.sh
+- add a remove old file function
+- rework flash functions → fix issue #4
+- rework rename functions → use bash to auto detect image-typ (fix issue #3)
+- rework setup.sh
+- rework icon
+- rework CLEAN.sh
+- rework CLEAN_AFTER_UPDATE.sh
+- rework GUI
+- rework some headers
+- rework makefile and add a new names for all functions
 ```
