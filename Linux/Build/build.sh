@@ -38,6 +38,7 @@ cp CLEAN_AFTER_UPDATE.sh ~/Projekt-122-Build/
 cp sweet_unix.png ~/Projekt-122-Build/
 cp Projekt-122-l.desktop ~/Projekt-122-Build/
 
+chmod a+x ~/Projekt-122-Build
 # create tar
-tar -cJvf ~/Projekt-122.tar.xz -C ~/Projekt-122-Build .
+tar -cJvf ~/Projekt-122-l-de.tar.xz -C ~/Projekt-122-Build .
 
