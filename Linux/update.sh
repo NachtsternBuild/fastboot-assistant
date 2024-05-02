@@ -6,8 +6,8 @@ REPO_URL="https://github.com/NachtsternBuild/Projekt-122"
 set -e
 SCRIPTPATH="$( cd "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
-# install depends
-install_depends() {
+# install neofetch
+install_neofetch() {
     local package_manager
 
     # check packagemanager
@@ -20,7 +20,7 @@ install_depends() {
     elif command -v pacman &>/dev/null; then
         package_manager="pacman"
     else
-        echo "Unkown packagemanager." >&2
+        echo "Unkown packagemanager. Please install neofetch" >&2
         exit 1
     fi
 
@@ -29,24 +29,88 @@ install_depends() {
         apt-get)
             sudo apt-get update
             sudo apt-get install neofetch
-            sudo apt-get install -y desktop-file-utils
-            sudo apt-get install adb
-            sudo apt-get install fastboot
             ;;
         dnf)
             sudo dnf install neofetch
-            sudo dnf install -y desktop-file-utils
-            sudo dnf install -y android-tools
             ;;
         yum)
             sudo yum install epel-release # only if EPEL-repo isn't installed
 			sudo yum install neofetch
-			sudo yum install -y desktop-file-utils
-			sudo yum install android-tools
             ;;
         pacman)
             sudo pacman -S neofetch
+            ;;
+    esac
+}
+
+# install desktop file utils
+install_desktop_file_utils() {
+    local package_manager
+
+    # check packagemanager
+    if command -v apt-get &>/dev/null; then
+        package_manager="apt-get"
+    elif command -v dnf &>/dev/null; then
+        package_manager="dnf"
+    elif command -v yum &>/dev/null; then
+        package_manager="yum"
+    elif command -v pacman &>/dev/null; then
+        package_manager="pacman"
+    else
+        echo "Unkown packagemanager. Please install desktop-file-utils." >&2
+        exit 1
+    fi
+
+    # Install desktop-file-utils
+    case $package_manager in
+        apt-get)
+            sudo apt-get update
+            sudo apt-get install -y desktop-file-utils
+            ;;
+        dnf)
+            sudo dnf install -y desktop-file-utils
+            ;;
+        yum)
+            sudo yum install -y desktop-file-utils
+            ;;
+        pacman)
             sudo pacman -S --noconfirm desktop-file-utils
+            ;;
+    esac
+}
+
+# install adb/fastboot
+install_adb_fastboot() {
+    local package_manager
+
+    # check packagemanager
+    if command -v apt-get &>/dev/null; then
+        package_manager="apt-get"
+    elif command -v dnf &>/dev/null; then
+        package_manager="dnf"
+    elif command -v yum &>/dev/null; then
+        package_manager="yum"
+    elif command -v pacman &>/dev/null; then
+        package_manager="pacman"
+    else
+        echo "Unkown packagemanager. Please install adb and fastboot" >&2
+        exit 1
+    fi
+
+    # Install adb/fastboot
+    case $package_manager in
+        apt-get)
+            sudo apt-get update
+            sudo apt-get install adb
+            sudo apt-get install fastboot
+            ;;
+        dnf)
+            sudo dnf install -y android-tools
+            ;;
+        yum)
+            sudo yum install android-tools
+            ;;
+        pacman)
             sudo pacman -S --noconfirm android-tools
             ;;
     esac
@@ -72,7 +136,7 @@ update_part() {
 	rm ~/.local/share/applications/Projekt-122-l.desktop
 		
 	# copie new files to working dir
-	cd ~/Downloads/UpdateProjekt122/
+	cd ~/Downloads/UpdateProjekt122/Projekt-122/
 		
 	# add the following path if you need 🖋️👇️
 	echo "Copie files to old path..."
@@ -115,18 +179,23 @@ update_part() {
 	bash CLEAN_AFTER_UPDATE.sh
 }
 
+# only a thing for the eyes
+install_neofetch
+
 # install depends
 echo "Get depends..."
 echo "projekt-122-l: desktop-file-utils adb fastboot"
 echo "Installing desktop-file-utils..."
+install_desktop_file_utils
+echo "Installation complete."
 echo "Installing ADB/Fastboot..."
-install_depends
+install_adb_fastboot
 echo "Installation complete."
 
 # get version for github
 # create oldversion.txt
 # content
-inhalt="0.4"
+inhalt="0.3"
 # name
 dateiname="oldversion.txt"
 
@@ -199,7 +268,7 @@ else
 	
 		# unpack package 
 		echo "Unpack file..."
-		tar -xvf Projekt-122-l-de.tar.xz -C ~/Downloads/UpdateProjekt122/
+		tar -xvf Projekt-122-de.tar.xz -C ~/Downloads/UpdateProjekt122/
 		
 		# do update
 		update_part()
@@ -214,7 +283,7 @@ else
 	
 		# unpack package 
 		echo "Unpack file..."
-		tar -xvf Projekt-122-l-en.tar.xz -C ~/Downloads/UpdateProjekt122/
+		tar -xvf Projekt-122-en.tar.xz -C ~/Downloads/UpdateProjekt122/
 	
     	# do update
     	update_part()
