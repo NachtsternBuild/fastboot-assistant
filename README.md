@@ -1,4 +1,4 @@
-# Projekt 122
+# Projekt 122 - fastboot-assistant
 
 ## Beschreibung
 Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern.
