@@ -3,6 +3,8 @@
 ## Beschreibung
 Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern.
 
+## Info
+- *neue Version ist in Vorbereitung.*
 ## Versionen
 - *Projekt-122-l v.0.3.beta* → für Linux
 - *Projekt-122-l v.0.4.beta* → für Linux
