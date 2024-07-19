@@ -10,7 +10,7 @@ Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erle
 - *Projekt-122-l v.0.4.beta* → für Linux
 - *Projekt-122-l v.0.4.1.beta* → für Linux
 
-  *<https://github.com/NachtsternBuild/Projekt-122/releases>*
+  *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
 
 ## Hinweise
 - Benutzung auf eigene Gefahr.
