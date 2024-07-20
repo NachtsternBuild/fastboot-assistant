@@ -3,6 +3,9 @@
 ## Beschreibung
 Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern.
 
+## Info
+- ***Diese Verzeichnis wird nicht mehr verwendet. Alles wurde ins Verzeichnis 'Anwendung' verlagert.***
+  
 ## Hinweise
 - Benutzung auf eigene Gefahr.
 - Es kann zu Schäden am Gerät kommen.
