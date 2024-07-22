@@ -7,7 +7,7 @@
  *                                           *
  *  Programm um das installieren von 		 *
  *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern - backup_noroot		 *
+ *	zu erleichtern - backup_noroot		 	 *
  *                                           *
  *-------------------------------------------*
  *      (C) Copyright 2023 Elias Mörz 		 *
@@ -56,7 +56,7 @@ static void start_backup_sh(GtkWidget *widget, gpointer data)
 }
 
 /* start main programm */
-void flash_boot(int argc, char *argv[])
+void backup_noroot(int argc, char *argv[])
 {
 	// int gtk
 	gtk_init(&argc, &argv);
