@@ -25,13 +25,15 @@
 void erase_data_start(GtkWidget *widget, gpointer data) 
 {
     GtkWidget *dialog;
-    const char *message = "!!!Achtung!!!\nBenutzung auf eigene Gefahr!\n!!!Achtung!!!:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um Nutzerdaten zu löschen.\nGerät im Fastboot verfügbar:";
+    const char *message = "!!!Achtung!!!\nBenutzung auf eigene Gefahr!\n!!!Achtung!!!:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um Nutzerdaten zu löschen.";
 
     // show message
     show_message(message);
     
-    // Erase user data
+    // Erase user data and metadata
     system("fastboot erase userdata");
+    // I don't now if you need this command
+    // system("fastboot erase metadata");
 }
 
 // main function for erase data
