@@ -28,5 +28,6 @@ void make_dir()
 	printf("Verzeichnise wird erstellt.\n");
 	system("mkdir ~/Downloads/ROM-Install");
 	system("mkdir ~/Downloads/ROM-Install/Backup");
+	system("mkdir ~/Downloads/ROM-Install/Backup/Noroot");
 	system("mkdir ~/Downloads/ROM-Install/Images");
 }
