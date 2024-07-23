@@ -37,6 +37,8 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
     
     show_message_with_title(title, message);
     system("adb -d reboot bootloader");
+    // this is the old command
+    // system("adb reboot bootloader");
 }
 
 // reboot to bootloader from fastboot
@@ -87,7 +89,7 @@ void reboot_fastboot(int argc, char *argv[])
 	gtk_widget_show(window);
 	
 	// make button for every function
-    GtkWidget *button_reboot_from_adb = gtk_button_new_with_label("Neustart in Fastboot");
+    GtkWidget *button_reboot_from_adb = gtk_button_new_with_label("Neustart in Fastboot (von der ADB)");
     GtkWidget *button_reboot_from_fastboot = gtk_button_new_with_label("Neustart in Fastboot (von Fastboot)");
     GtkWidget *button_fastboot_help = gtk_button_new_with_label("Fastboot Hilfe");
     GtkWidget *button_fastboot_var = gtk_button_new_with_label("Bootloader Variablen anzeigen");
