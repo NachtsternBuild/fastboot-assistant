@@ -20,6 +20,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gtk/gtk.h>
+#include "program_functions.h"
 
 // get the new version from github
 void get_latest_release_url(const char *repo, char *url_buffer) 
@@ -56,15 +58,31 @@ int download_file(const char *url, const char *outfilename)
 // main function
 void updater(void) 
 {
+    
     const char *repo = "NachtsternBuild/fastboot-assitant"; 
     char download_url[256];
     get_latest_release_url(repo, download_url);  // run get url
     if (strlen(download_url) > 0) 
     {
         printf("Neueste Version URL: %s\n", download_url);
+        gtk_init(&argc, &argv);
+
+    	// buffer for the message
+    	char message[256];
+    	snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeuste Version wird heruntergeladen.\n", download_url);
+    	// show message
+    	show_message(message);
+
         const char *output_directory = getenv("HOME"); // set home as main dir
 		char output_file[512];
 		snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant.deb", output_directory);
+		
+		GtkWidget *dialog;
+    	const char *message = "Paket heruntergeladen.\nWird installiert.\n";
+
+    	// show message
+    	show_message(message);
+    
 
         // download the .deb-file
         // const char *output_file = "fastboot-assistant.deb";
