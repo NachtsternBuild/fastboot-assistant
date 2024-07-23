@@ -35,5 +35,8 @@ void open_terminal_by_desktop();
 void connected_devices();
 int get_slot_of_device();
 void check_active_slot();
+void show_message_with_title();
+int get_slot_of_device();
+void get_info();
 
 #endif
