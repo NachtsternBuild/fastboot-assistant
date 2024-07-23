@@ -54,6 +54,8 @@ void remove_old();
 
 // for preflash_GUI
 void backup_function();
+void backup_noroot();
+void backup_root();
 void prepare_function();
 void erase_data();
 void lock_unlock_bootloader();
