@@ -132,7 +132,7 @@ GUI.c ––––|
 	  |
 	  |– info.c
 	  |
-	  |– upadter.c
+	  |– updater.c
 	  |
 	  |– about.c
 	  
