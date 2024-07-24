@@ -45,12 +45,12 @@ void instruction_adb(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(frame), vbox);
     
     // Frame for each information field
-    GtkWidget *frame1 = gtk_frame_new(NULL);
-    GtkWidget *frame2 = gtk_frame_new(NULL);
-    GtkWidget *frame3 = gtk_frame_new(NULL);
-    GtkWidget *frame4 = gtk_frame_new(NULL);
-    GtkWidget *frame5 = gtk_frame_new(NULL);
-    GtkWidget *frame6 = gtk_frame_new(NULL);
+    GtkWidget *frame9 = gtk_frame_new(NULL);
+    GtkWidget *frame10 = gtk_frame_new(NULL);
+    GtkWidget *frame11 = gtk_frame_new(NULL);
+    GtkWidget *frame12 = gtk_frame_new(NULL);
+    GtkWidget *frame13 = gtk_frame_new(NULL);
+    GtkWidget *frame14 = gtk_frame_new(NULL);
     
     // Vertical box layout for the frames
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -64,7 +64,7 @@ void instruction_adb(int argc, char *argv[])
     // Creation of text labels with the text to be displayed
     const char *adb_text = "\nADB (Android Debug Bridge) stellt \neine Kommunikationsschnittstelle zwischen einem Computer \nund einem Android-Gerät zur Verfügung, \ndie für Debugging und Dateiübertragung genutzt werden kann.\nFastboot ist ein Befehlszeilenwerkzeug \nfür den Bootloader-Modus von Android-Geräten, \nmit dem benutzerdefinierte Firmware und andere Systemabbilder \ngeflasht werden können. \nBeide Tools sind für Entwickler und fortgeschrittene Nutzer \nvon großem Nutzen, wenn es darum geht, Android-Geräte \nzu modifizieren und zu diagnostizieren.\n";
     GtkWidget *label_adb = gtk_label_new(adb_text);
-    gtk_container_add(GTK_CONTAINER(frame1), label_adb);
+    gtk_container_add(GTK_CONTAINER(frame9), label_adb);
     
     // show-text
     GtkWidget *inst2_label = gtk_label_new(NULL);
@@ -73,11 +73,11 @@ void instruction_adb(int argc, char *argv[])
 
     const char *connect1_text = "\nVerbinden sie ihr das Gerät mit ihrem Computer.\n";
     GtkWidget *label_connect1 = gtk_label_new(connect1_text);
-    gtk_container_add(GTK_CONTAINER(frame2), label_connect1);
+    gtk_container_add(GTK_CONTAINER(frame10), label_connect1);
 
     const char *connect2_text = "\nEntwickleroptionen aktivieren.\n1.Suchen sie in den Einstellungen nach 'Build-Nummer'. \n2. Tippen sie siebenmal auf die 'Build-Nummer'. \n3. Suchen sie in den Einstellungen 'Debug'. \n4. Aktivieren sie USB-Debbuging. \n5. Aktivieren sie in \nden USB-Einstellungen 'Dateiübertragung'. \n5. Prüfen sie ob eine Verbindung zur ADB besteht.\n";
     GtkWidget *connect2_version = gtk_label_new(connect2_text);
-    gtk_container_add(GTK_CONTAINER(frame3), label_connect2);
+    gtk_container_add(GTK_CONTAINER(frame11), label_connect2);
     
     // show-text
     GtkWidget *inst3_label = gtk_label_new(NULL);
@@ -86,7 +86,7 @@ void instruction_adb(int argc, char *argv[])
 
     const char *connect3_text = "\n1. Navigieren sie in der Anwendung \ndurch 'Gerät neustarten' zu \n'Neustart in Fastboot (von der ADB)'. \n2. Warten sie bis sich \nihr Gerät im Fastboot-Modus befindet. \n3. Prüfen sie ob eine Verbindung \nzum Fastboot-Modus besteht.\n";
     GtkWidget *label_connect3 = gtk_label_new(connect3_text);
-    gtk_container_add(GTK_CONTAINER(frame4), label_connect3);
+    gtk_container_add(GTK_CONTAINER(frame12), label_connect3);
     
     // show-text
     GtkWidget *inst4_label = gtk_label_new(NULL);
@@ -95,7 +95,7 @@ void instruction_adb(int argc, char *argv[])
     
     const char *more_text = "\nWollen sie mehr über die \nBedienung von Fastboot erfahren \nstarten sie die Fastboot-Hilfe.\n";
     GtkWidget *label_more = gtk_label_new(more_text);
-    gtk_container_add(GTK_CONTAINER(frame5), label_more);
+    gtk_container_add(GTK_CONTAINER(frame13), label_more);
     
     // show-text
     GtkWidget *inst5_label = gtk_label_new(NULL);
@@ -105,15 +105,15 @@ void instruction_adb(int argc, char *argv[])
     // Creation of text labels with the text to be displayed
     const char *bootloader_text = "\nDer Bootloader ist ein Programm, \ndas beim Starten eines Android-Geräts \ndas Betriebssystem lädt und überprüft, \nob die Software sicher und autorisiert ist. \nDurch das Öffnen des Bootloaders \nwird diese Sicherheitsprüfung umgangen, \num benutzerdefinierte Betriebssysteme oder Software \nauf dem Gerät zu installieren. \nDadurch lassen sich Custom-ROMs \nund andere Image-Dateien flashen.\n";
     GtkWidget *label_bootloader = gtk_label_new(bootloader_text);
-    gtk_container_add(GTK_CONTAINER(frame6), label_bootloader);
+    gtk_container_add(GTK_CONTAINER(frame14), label_bootloader);
     
-   5// Add frames to the main window
-    gtk_box_pack_start(GTK_BOX(vbox), frame1, TRUE, TRUE, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), frame2, TRUE, TRUE, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), frame3, TRUE, TRUE, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), frame4, TRUE, TRUE, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), frame5, TRUE, TRUE, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), frame5, TRUE, TRUE, 5);
+    // Add frames to the main window
+    gtk_box_pack_start(GTK_BOX(vbox), frame9, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), frame10, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), frame11, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), frame12, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), frame13, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), frame14, TRUE, TRUE, 5);
 
     // Show all elements
     gtk_widget_show_all(window);
