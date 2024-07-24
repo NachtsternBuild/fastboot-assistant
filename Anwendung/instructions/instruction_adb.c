@@ -15,6 +15,8 @@
  *
  */
 
+// add unlock bootloader
+
 /* headers that used in the programm */
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,12 +36,21 @@ void instruction_adb(int argc, char *argv[])
     // Connect close function to 'destroy' signal
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_close), NULL);
 
+    // frame at the box
+    GtkWidget *frame = gtk_frame_new(NULL);
+    gtk_container_add(GTK_CONTAINER(window), frame);
+
+    // create vbox
+    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_container_add(GTK_CONTAINER(frame), vbox);
+    
     // Frame for each information field
     GtkWidget *frame1 = gtk_frame_new(NULL);
     GtkWidget *frame2 = gtk_frame_new(NULL);
     GtkWidget *frame3 = gtk_frame_new(NULL);
     GtkWidget *frame4 = gtk_frame_new(NULL);
     GtkWidget *frame5 = gtk_frame_new(NULL);
+    GtkWidget *frame6 = gtk_frame_new(NULL);
     
     // Vertical box layout for the frames
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -86,12 +97,22 @@ void instruction_adb(int argc, char *argv[])
     GtkWidget *label_more = gtk_label_new(more_text);
     gtk_container_add(GTK_CONTAINER(frame5), label_more);
     
+    // show-text
+    GtkWidget *inst5_label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(inst5_label), g_strdup_printf("<b><u> Bootlader/Preloader </u></b>"));
+    gtk_container_add(GTK_CONTAINER(vbox), inst5_label);
 
-    // Add frames to the main window
+    // Creation of text labels with the text to be displayed
+    const char *bootloader_text = "\nDer Bootloader ist ein Programm, \ndas beim Starten eines Android-Geräts \ndas Betriebssystem lädt und überprüft, \nob die Software sicher und autorisiert ist. \nDurch das Öffnen des Bootloaders \nwird diese Sicherheitsprüfung umgangen, \num benutzerdefinierte Betriebssysteme oder Software \nauf dem Gerät zu installieren. \nDadurch lassen sich Custom-ROMs \nund andere Image-Dateien flashen.\n";
+    GtkWidget *label_bootloader = gtk_label_new(bootloader_text);
+    gtk_container_add(GTK_CONTAINER(frame6), label_bootloader);
+    
+   5// Add frames to the main window
     gtk_box_pack_start(GTK_BOX(vbox), frame1, TRUE, TRUE, 5);
     gtk_box_pack_start(GTK_BOX(vbox), frame2, TRUE, TRUE, 5);
     gtk_box_pack_start(GTK_BOX(vbox), frame3, TRUE, TRUE, 5);
     gtk_box_pack_start(GTK_BOX(vbox), frame4, TRUE, TRUE, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), frame5, TRUE, TRUE, 5);
     gtk_box_pack_start(GTK_BOX(vbox), frame5, TRUE, TRUE, 5);
 
     // Show all elements
