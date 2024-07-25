@@ -56,7 +56,7 @@ void instruction_root(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(vbox), inst6_label);
 
     // Creation of text labels with the text to be displayed
-    const char *root_text = "\nBeim Rooten von Android-Geräten \nwerden dem Nutzer Superuser-Rechte \neingeräumt, die ihm vollen Zugriff \nauf das Betriebssystem und \ndie Möglichkeit geben, weitreichende \nÄnderungen vorzunehmen, \ndie normalerweise gesperrt sind. \nDies ermöglicht unter anderem \ndas Entfernen vorinstallierter Anwendungen, \ndas Ändern von Systemeinstellungen \nund das Installieren spezieller Anwendungen, \ndie erweiterte Berechtigungen erfordern.\n";
+    const char *root_text = "\nBeim Rooten von Android-Geräten \nwerden dem Nutzer Superuser-Rechte eingeräumt, \ndie ihm vollen Zugriff auf \ndas Betriebssystem und die Möglichkeit geben, \nweitreichende Änderungen vorzunehmen, \ndie normalerweise gesperrt sind. \nDies ermöglicht unter anderem \ndas Entfernen vorinstallierter Anwendungen, \ndas Ändern von Systemeinstellungen \nund das Installieren spezieller Anwendungen, \ndie erweiterte Berechtigungen erfordern.\n";
     GtkWidget *label_root = gtk_label_new(adb_text);
     gtk_container_add(GTK_CONTAINER(frame15), label_root);
     
