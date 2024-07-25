@@ -28,7 +28,7 @@ void instruction_gsi(int argc, char *argv[])
 
     // Create main window
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Anleitung Generic System Image");
+    gtk_window_set_title(GTK_WINDOW(window), "Anleitung Generic System Image (GSI)");
     gtk_widget_set_size_request(window, 500, 400);
 
     // Connect close function to 'destroy' signal
@@ -53,7 +53,7 @@ void instruction_gsi(int argc, char *argv[])
     
     // show-text
     GtkWidget *inst10_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst10_label), g_strdup_printf("<b><u> Generic System Image </u></b>"));
+    gtk_label_set_markup(GTK_LABEL(inst10_label), g_strdup_printf("<b><u> Generic System Image (GSI) </u></b>"));
     gtk_container_add(GTK_CONTAINER(vbox), inst10_label);
 
     // Creation of text labels with the text to be displayed
@@ -76,7 +76,7 @@ void instruction_gsi(int argc, char *argv[])
     gtk_label_set_markup(GTK_LABEL(inst12_label), g_strdup_printf("<b><u> Flashen eines GSI </u></b>"));
     gtk_container_add(GTK_CONTAINER(vbox), inst12_label);
 
-    const char *flash_gsi_text = "\n1. Prüfen sie ob ihr Gerät mit Project Treble kompatibel ist. \n2. Laden sie ein entsprechendes GSI herunter. \n3. Booten sie ihr Gerät in Fastboot. \n 4. Öffnen sie den Bootloader.\nManche Geräte unterstützen sie nicht \ndie Methode über Fastboot. \nInformieren sie sich genauer über ihr Chipssatz. \n \nAls Methoden des Flashs gibt es die \nAlternativen 'dirty flash'(1) und 'clean flash'(2). \nBei einem 'dirty flash' bleiben die Nutzerdaten erhalten, \naber nicht jedes GSI startet danach. \nWählen sie eine Variante. \n5.1. Führen sie einen flash des System-Images durch. \n6.1. Starten sie ihr Gerät neu. \n \n5.2. Löschen sie alle Nutzerdaten. \n6.2. Führen sie flash des System-Images aus. \n \n7. Starten sie ihr Gerät neu.\n";
+    const char *flash_gsi_text = "\n1. Prüfen sie ob ihr Gerät mit Project Treble kompatibel ist. \n2. Laden sie ein entsprechendes GSI herunter. \n3. Booten sie ihr Gerät in Fastboot. \n 4. Öffnen sie den Bootloader.\nManche Geräte unterstützen nicht \ndie Methode über Fastboot. \nInformieren sie sich genauer über ihr Chipssatz. \n \nAls Methoden des Flashs gibt es die \nAlternativen 'dirty flash'(1) und 'clean flash'(2). \nBei einem 'dirty flash' bleiben die Nutzerdaten erhalten, \naber nicht jedes GSI startet danach. \nWählen sie eine Variante. \n5.1. Führen sie einen flash des System-Images durch. \n6.1. Starten sie ihr Gerät neu. \n \n5.2. Löschen sie alle Nutzerdaten. \n6.2. Führen sie flash des System-Images aus. \n \n7. Starten sie ihr Gerät neu.\n";
     GtkWidget *label_flash_gsi = gtk_label_new(flash_gsi_text);
     gtk_container_add(GTK_CONTAINER(frame20), label_flash_gsi);
 
