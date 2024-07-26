@@ -15,8 +15,6 @@
  *
  */
 
-// add unlock bootloader
-
 /* headers that used in the programm */
 #include <stdio.h>
 #include <stdlib.h>
