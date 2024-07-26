@@ -1,0 +1,7 @@
+Package: projekt-122-l
+Version: 0.5
+Depends: adb, fastboot, libc6 (>= 2.15), libgtk-3-0 (>= 3.0.0), xz-utils, wget, unzip
+Maintainer: Elias Moerz <elias.moerz@mail.de>
+Architecture: amd64
+Section: Utils
+Description: Program to facilitate the installation of custom ROMs and GSIs on Android devices.
