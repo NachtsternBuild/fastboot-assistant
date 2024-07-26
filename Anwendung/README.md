@@ -84,6 +84,7 @@ GUI.c ––––|
 	  |				|– reboot_fastboot.c 
 	  |				|– reboot.c 
 	  |				|– reboot_recovery.c
+	  |				|– reboot_heimdall.c
 	  |
 	  |
 	  |– config_projekt_GUI.c ––––––|
