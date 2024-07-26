@@ -92,7 +92,7 @@ static void system_to_inactiv(GtkWidget *widget, gpointer data)
 static void system_heimdall(GtkWidget *widget, gpointer data)
 {
 	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --SYSTEM ~/Downloads/ROM-Install/system.img && exit");
+	open_terminal_by_desktop("heimdall flash --SYSTEM ~/Downloads/ROM-Install/system.img --no-reboot && exit");
 }
 
 /* start main programm */
