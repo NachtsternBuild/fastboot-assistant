@@ -88,6 +88,13 @@ static void system_to_inactiv(GtkWidget *widget, gpointer data)
     flash_system_img(inactive_slot);
 }
 
+// button 3 - flash system.img heimdall
+static void system_heimdall(GtkWidget *widget, gpointer data)
+{
+	char function_command[255];
+	open_terminal_by_desktop("heimdall flash --SYSTEM ~/Downloads/ROM-Install/system.img && exit");
+}
+
 /* start main programm */
 void flash_system(int argc, char *argv[])
 {
@@ -104,10 +111,12 @@ void flash_system(int argc, char *argv[])
 	// make button for every function
     GtkWidget *button_system_to_activ = gtk_button_new_with_label("Flashen in aktiven Slot (auch für only-a-devices)");
     GtkWidget *button_system_to_inactiv = gtk_button_new_with_label("Flashen in inaktiven Slot");
+    GtkWidget *button_system_heimdall = gtk_button_new_with_label("Flashen system.img (heimdall)");
     
     // Link the click callback function with the buttons 
     g_signal_connect(button_system_to_activ, "clicked", G_CALLBACK(system_to_activ), NULL);
     g_signal_connect(button_system_to_inactiv, "clicked", G_CALLBACK(system_to_inactiv), NULL);
+    g_signal_connect(button_system_heimdall, "clicked", G_CALLBACK(system_heimdall), NULL);
     
     // Create a layout container (HBox) for the buttons
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
@@ -118,6 +127,7 @@ void flash_system(int argc, char *argv[])
     
     // Add the first two buttons to the left VBox
     gtk_box_pack_start(GTK_BOX(left_vbox), button_system_to_activ, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(left_vbox), button_system_heimdall, TRUE, TRUE, 0);
     
     // Add the other two buttons to the right VBox
     gtk_box_pack_start(GTK_BOX(right_vbox), button_system_to_inactiv, TRUE, TRUE, 0);
@@ -132,6 +142,7 @@ void flash_system(int argc, char *argv[])
     // show all button
     gtk_widget_show(button_system_to_activ);
     gtk_widget_show(button_system_to_inactiv);
+    gtk_widget_show(button_system_heimdall);
     gtk_widget_show(left_vbox);
     gtk_widget_show(right_vbox);
     gtk_widget_show(hbox);
