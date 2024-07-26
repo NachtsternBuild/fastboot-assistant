@@ -47,6 +47,7 @@ void get_devices();
 void reboot_fastboot();
 void reboot();
 void reboot_recovery();
+void reboot_heimdall();
 
 // for config-projekt
 void make_dir();
