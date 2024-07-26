@@ -54,6 +54,20 @@ static void init_boot_on_ab(GtkWidget *widget, gpointer data)
 	open_terminal_by_desktop("fastboot flash init_boot_a ~/Downloads/ROM-Install/init_boot.img && fastboot flash init_boot_b ~/Downloads/ROM-Install/init_boot.img && exit");
 }
 
+// button 5 - flash boot.img heimdall
+static void boot_heimdall(GtkWidget *widget, gpointer data)
+{
+	char function_command[255];
+	open_terminal_by_desktop("heimall flash --BOOT ~/Downloads/ROM-Install/boot.img --no-reboot && exit");
+}
+
+// button 6 - flash init_boot.img heimdall
+static void init_boot_heimdall(GtkWidget *widget, gpointer data)
+{
+	char function_command[255];
+	open_terminal_by_desktop("heimdall flash --INIT_BOOT ~/Downloads/ROM-Install/init_boot.img --no-reboot && exit");
+}
+
 /* start main programm */
 void flash_boot(int argc, char *argv[])
 {
@@ -72,12 +86,16 @@ void flash_boot(int argc, char *argv[])
     GtkWidget *button_boot_on_ab = gtk_button_new_with_label("Flash Boot (a/b-devices)");
     GtkWidget *button_init_boot_on_a = gtk_button_new_with_label("Flash init_boot (only-a-devices)");
     GtkWidget *button_init_boot_on_ab = gtk_button_new_with_label("Flash init_boot (a/b-devices)");
+    GtkWidget *button_init_boot_on_a = gtk_button_new_with_label("Flash boot (heimdall)");
+    GtkWidget *button_init_boot_on_ab = gtk_button_new_with_label("Flash init_boot (heimdall)");
     
     // Link the click callback function with the buttons 
     g_signal_connect(button_boot_on_a, "clicked", G_CALLBACK(boot_on_a), NULL);
     g_signal_connect(button_boot_on_ab, "clicked", G_CALLBACK(boot_on_ab), NULL);
     g_signal_connect(button_init_boot_on_a, "clicked", G_CALLBACK(init_boot_on_a), NULL);
     g_signal_connect(button_init_boot_on_ab, "clicked", G_CALLBACK(init_boot_on_ab), NULL);
+    g_signal_connect(button_boot_heimdall, "clicked", G_CALLBACK(boot_heimdall), NULL);
+    g_signal_connect(button_init_boot_heimdall, "clicked", G_CALLBACK(init_boot_heimdall), NULL);
     
     // Create a layout container (HBox) for the buttons
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
@@ -89,10 +107,12 @@ void flash_boot(int argc, char *argv[])
     // Add the first two buttons to the left VBox
     gtk_box_pack_start(GTK_BOX(left_vbox), button_boot_on_a, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(left_vbox), button_boot_on_ab, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(left_vbox), button_boot_heimdall, TRUE, TRUE, 0);
     
     // Add the other two buttons to the right VBox
     gtk_box_pack_start(GTK_BOX(right_vbox), button_init_boot_on_a, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(right_vbox), button_init_boot_on_ab, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(right_vbox), button_init_boot_heimdall, TRUE, TRUE, 0);
     
      // Add the left and right VBoxes to the main HBox
     gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
@@ -106,6 +126,8 @@ void flash_boot(int argc, char *argv[])
     gtk_widget_show(button_boot_on_ab);
     gtk_widget_show(button_init_boot_on_a);
     gtk_widget_show(button_init_boot_on_ab);
+    gtk_widget_show(button_boot_heimdall);
+    gtk_widget_show(button_init_boot_heimdall);
     gtk_widget_show(left_vbox);
     gtk_widget_show(right_vbox);
     gtk_widget_show(hbox);
