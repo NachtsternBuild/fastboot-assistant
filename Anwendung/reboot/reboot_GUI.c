@@ -26,6 +26,7 @@
 extern void reboot_fastboot();
 extern void reboot();
 extern void reboot_recovery();
+extern void reboot_heimdall();
 
 // Callback functions for each button
 // start reboot_fastboot-function
@@ -46,19 +47,37 @@ static void start_reboot_recovery(GtkWidget *widget, gpointer data)
     reboot_recovery();
 }
 
-/* main function of reboot_GUI*/
+// start no function
+static void start_no_function1(GtkWidget *widget, gpointer data) 
+{
+    printf("Nix zu sehen!\n");
+}
+
+// start reboot-function heimdall
+static void start_reboot_heimdall(GtkWidget *widget, gpointer data) 
+{
+    reboot_heimdall();
+}
+
+// start no function
+static void start_no_function2(GtkWidget *widget, gpointer data) 
+{
+    printf("Nix zu sehen!\n");
+}
+
 void reboot_GUI(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[3][20] = {"Neustart in Fastboot-Modus", "Neustart", "Neustart in Recovery"};
+    char button_labels[6][20] = {"Neustart in Fastboot-Modus", "Neustart", "Neustart in Recovery", 
+                                 " ", "Neustart Heimdall", " "};
 
     gtk_init(&argc, &argv);
 
     // create new windows
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Neustarten");
+    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Neustart");
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
@@ -67,7 +86,7 @@ void reboot_GUI(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // add buttons and connect them with callback
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 6; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
         switch (i) {
@@ -80,6 +99,15 @@ void reboot_GUI(int argc, char *argv[])
             case 2:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_recovery), NULL);
                 break;
+            case 3:
+                g_signal_connect(button, "clicked", G_CALLBACK(start_no_function1), NULL);
+                break;
+            case 4:
+                g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_heimdall), NULL);
+                break;
+            case 5:
+                g_signal_connect(button, "clicked", G_CALLBACK(start_no_function2), NULL);
+                break;            
         }
     }
 
