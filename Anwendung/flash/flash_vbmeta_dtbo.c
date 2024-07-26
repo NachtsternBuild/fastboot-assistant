@@ -74,21 +74,21 @@ static void userdata_img(GtkWidget *widget, gpointer data)
 static void vbmeta_img_heimdall(GtkWidget *widget, gpointer data)
 {
 	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --VBMETA ~/Downloads/ROM-Install/vbmeta.img && exit");
+	open_terminal_by_desktop("heimdall flash --VBMETA ~/Downloads/ROM-Install/vbmeta.img --no-reboot && exit");
 }
 
 // button 8 - flash metadata.img heimdall
 static void metadata_img_heimdall(GtkWidget *widget, gpointer data)
 {
 	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --METADATA ~/Downloads/ROM-Install/metadata.img && exit");
+	open_terminal_by_desktop("heimdall flash --METADATA ~/Downloads/ROM-Install/metadata.img --no-reboot && exit");
 }
 
 // button 9 - flash userdata.img heimdall
 static void userdata_img_heimdall(GtkWidget *widget, gpointer data)
 {
 	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --USERDATA ~/Downloads/ROM-Install/userdata.img && exit");
+	open_terminal_by_desktop("heimdall flash --USERDATA ~/Downloads/ROM-Install/userdata.img --no-reboot && exit");
 }
 
 /* start main programm */
