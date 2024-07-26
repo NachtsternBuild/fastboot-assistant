@@ -148,10 +148,10 @@ void flash_GUI(int argc, char *argv[])
             	g_signal_connect(button, "clicked", G_CALLBACK(start_flash_preloader), NULL);
             	break;
             case 7:
-            	g_signal_connect(button, "clicked", G_CALLBACK(start_flash_others), NULL);
+            	g_signal_connect(button, "clicked", G_CALLBACK(start_flash_data), NULL);
             	break;
             case 8:
-            	g_signal_connect(button, "clicked", G_CALLBACK(no_function), NULL);
+            	g_signal_connect(button, "clicked", G_CALLBACK(start_flash_others), NULL);
             	break;
             
         }
