@@ -62,6 +62,27 @@ static void super_img(GtkWidget *widget, gpointer data)
 	open_terminal_by_desktop("fastboot flash super ~/Downloads/ROM-Install/super.img && exit");
 }
 
+// button 6 - flash preloader.bin heimdall
+static void preloader_bin_heimdall(GtkWidget *widget, gpointer data)
+{
+	char function_command[255];
+	open_terminal_by_desktop("heimdall flash --PRELOADER ~/Downloads/ROM-Install/preloader.img --no-reboot && exit");
+}
+
+// button 7 - flash preloader.img heimdall
+static void preloader_img_heimdall(GtkWidget *widget, gpointer data)
+{
+	char function_command[255];
+	open_terminal_by_desktop("heimdall flash --PRELOADER ~/Downloads/ROM-Install/preloader.img --no-reboot && exit");
+}
+
+// button 8 - flash super.img heimdall
+static void super_img_heimdall(GtkWidget *widget, gpointer data)
+{
+	char function_command[255];
+	open_terminal_by_desktop("heimdall flash --SUPER ~/Downloads/ROM-Install/super.img --no-reboot && exit");
+}
+
 /* start main programm */
 void flash_preloader_super(int argc, char *argv[])
 {
@@ -81,6 +102,9 @@ void flash_preloader_super(int argc, char *argv[])
     GtkWidget *button_preloader_img_on_a = gtk_button_new_with_label("Flashen preloader.img (only-a-devices)");
     GtkWidget *button_preloader_img_on_ab = gtk_button_new_with_label("Flashen preloader.img (a/b-devices)");
     GtkWidget *button_super_img = gtk_button_new_with_label("Flashen super.img (a/b-devices)");
+    GtkWidget *button_preloader_bin_heimdall= gtk_button_new_with_label("Flashen preloader.bin (heimdall)");
+    GtkWidget *button_preloader_img_heimdall = gtk_button_new_with_label("Flashen preloader.img (heimdall)");
+    GtkWidget *button_super_img_heimdall = gtk_button_new_with_label("Flashen super.img (heimdall)");
     
     // Link the click callback function with the buttons 
     g_signal_connect(button_preloader_bin_on_a, "clicked", G_CALLBACK(preloader_bin_on_a), NULL);
@@ -88,6 +112,9 @@ void flash_preloader_super(int argc, char *argv[])
     g_signal_connect(button_preloader_img_on_a, "clicked", G_CALLBACK(preloader_img_on_a), NULL);
     g_signal_connect(button_preloader_img_on_ab, "clicked", G_CALLBACK(preloader_img_on_ab), NULL);
     g_signal_connect(button_super_img, "clicked", G_CALLBACK(super_img), NULL);
+    g_signal_connect(button_preloader_bin_heimdall, "clicked", G_CALLBACK(preloader_bin_heimdall), NULL);
+    g_signal_connect(button_preloader_img_heimdall, "clicked", G_CALLBACK(preloader_img_heimdall), NULL);
+    g_signal_connect(button_super_img_heimdall, "clicked", G_CALLBACK(super_img_heimdall), NULL);
     
     // Create a layout container (HBox) for the buttons
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
@@ -100,10 +127,13 @@ void flash_preloader_super(int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_bin_on_a, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_bin_on_ab, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(left_vbox), button_super_img, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(left_vbox), button_super_img_heimdall, TRUE, TRUE, 0);
     
     // Add the other two buttons to the right VBox
     gtk_box_pack_start(GTK_BOX(right_vbox), button_preloader_img_on_a, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(right_vbox), button_preloader_img_on_ab, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(right_vbox), button_preloader_bin_heimdall, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(right_vbox), button_preloader_img_heimdall, TRUE, TRUE, 0);
     
      // Add the left and right VBoxes to the main HBox
     gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
@@ -117,7 +147,10 @@ void flash_preloader_super(int argc, char *argv[])
     gtk_widget_show(button_preloader_bin_on_ab);
     gtk_widget_show(button_preloader_img_on_a);
     gtk_widget_show(button_preloader_img_on_ab);
-    gtk_widget_show(super_img);
+    gtk_widget_show(button_super_img);
+    gtk_widget_show(button_preloader_bin_heimdall);
+    gtk_widget_show(button_preloader_img_heimdall);
+    gtk_widget_show(button_super_img_heimdall);
     gtk_widget_show(left_vbox);
     gtk_widget_show(right_vbox);
     gtk_widget_show(hbox);
