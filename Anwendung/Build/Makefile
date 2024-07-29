@@ -62,6 +62,7 @@ SRCS =	header_connected_devices.c \
 		instruction_preflash.c \
 		instruction_prepare_flash.c \
 		instruction_info.c \
+		instruction_GUI.c \
 		info.c \
 		updater.c \
 		about.c \
