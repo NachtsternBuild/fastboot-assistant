@@ -103,7 +103,7 @@ void preflash_GUI(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_9), NULL);
                 break;
             case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_lock_unlock_bootloader), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(start_remove_old), NULL);
                 break;
             case 5:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_10), NULL);
