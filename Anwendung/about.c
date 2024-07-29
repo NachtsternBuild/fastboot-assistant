@@ -41,40 +41,41 @@ void about(int argc, char *argv[])
     GtkWidget *frame4 = gtk_frame_new(NULL);
     GtkWidget *frame5 = gtk_frame_new(NULL);
     GtkWidget *frame6 = gtk_frame_new(NULL);
+    GtkWidget *frame7 = gtk_frame_new(NULL);
     
     // Vertical box layout for the frames
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     // Creation of text labels with the text to be displayed
-    const char *tab_text = "\nProjekt 122\n";
-    GtkWidget *label_tab = gtk_label_new(tab_text);
-    gtk_container_add(GTK_CONTAINER(frame1), label_tab);
-
-    const char *name_text = "\nApache License, Version 2.0\n";
+    const char *name_text = "\nProjekt 122\n";
     GtkWidget *label_name = gtk_label_new(name_text);
-    gtk_container_add(GTK_CONTAINER(frame2), label_name);
+    gtk_container_add(GTK_CONTAINER(frame1), label_name);
 
-    const char *version_text = "\nProgramm um das installieren von Custom-ROM und GSIs\n "
+    const char *licence_text = "\nApache License, Version 2.0\n";
+    GtkWidget *label_licence = gtk_label_new(licence_text);
+    gtk_container_add(GTK_CONTAINER(frame2), label_licence);
+
+    const char *information_text = "\nProgramm um das installieren von Custom-ROM und GSIs\n "
                                 "auf Android-Geräte zu erleichtern.\n";
-    GtkWidget *label_version = gtk_label_new(version_text);
-    gtk_container_add(GTK_CONTAINER(frame3), label_version);
+    GtkWidget *label_information = gtk_label_new(information_text);
+    gtk_container_add(GTK_CONTAINER(frame3), label_information);
 
-    const char *description_text = "\n(C) Copyright 2023 Elias Mörz\n";
-    GtkWidget *label_description = gtk_label_new(description_text);
-    gtk_container_add(GTK_CONTAINER(frame4), label_description);
+    const char *copyright_text = "\n(C) Copyright 2023 Elias Mörz\n";
+    GtkWidget *label_copyright = gtk_label_new(copyright_text);
+    gtk_container_add(GTK_CONTAINER(frame4), label_copyright);
     
-    const char *description_text = "\nhttps://github.com/NachtsternBuild/Projekt-122\n";
-    GtkWidget *label_description = gtk_label_new(description_text);
-    gtk_container_add(GTK_CONTAINER(frame5), label_description);
+    const char *github_text = "\nhttps://github.com/NachtsternBuild/Projekt-122\n";
+    GtkWidget *label_github = gtk_label_new(github_text);
+    gtk_container_add(GTK_CONTAINER(frame5), label_github);
 
-    const char *build_text = "\nVersion 0.5.\n";
-    GtkWidget *label_build = gtk_label_new(build_text);
-    gtk_container_add(GTK_CONTAINER(frame6), label_build);
+    const char *build_version_text = "\nVersion 0.5.dev\n";
+    GtkWidget *label_build_version = gtk_label_new(build_version_text);
+    gtk_container_add(GTK_CONTAINER(frame6), label_build_version);
 
-    const char *architecture_text = "\n'Sweet Unix'\n";
-    GtkWidget *label_architecture = gtk_label_new(architecture_text);
-    gtk_container_add(GTK_CONTAINER(frame7), label_architecture);
+    const char *build_name_text = "\n'Sweet Unix'\n";
+    GtkWidget *label_build_name = gtk_label_new(build_name_text);
+    gtk_container_add(GTK_CONTAINER(frame7), label_build_name);
 
     // Add frames to the main window
     gtk_box_pack_start(GTK_BOX(vbox), frame1, TRUE, TRUE, 5);
