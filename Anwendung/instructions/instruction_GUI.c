@@ -68,7 +68,7 @@ static void start_zero_function_4(GtkWidget *widget, gpointer data)
 }
 
 /* main function of flash_GUI*/
-void preflash_GUI(int argc, char *argv[]) 
+void instruction_GUI(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
@@ -106,7 +106,7 @@ void preflash_GUI(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_3), NULL);
                 break;
             case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_instruction_info, NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(start_instruction_info), NULL);
                 break;
             case 5:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_4), NULL);
