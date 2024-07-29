@@ -74,9 +74,9 @@ static void start_flash_GUI(GtkWidget *widget, gpointer data)
 }
 
 // start instructions_GUI-function
-static void start_instructions(GtkWidget *widget, gpointer data) 
+static void start_instruction_GUI(GtkWidget *widget, gpointer data) 
 {
-    instructions_GUI();
+    instruction_GUI();
 }
 
 // start info-function
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(start_flash_GUI), NULL);
                 break;
             case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_instructions), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(start_instruction_GUI), NULL);
                 break;
             case 6:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_info), NULL);
