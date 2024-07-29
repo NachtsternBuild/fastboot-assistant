@@ -33,7 +33,7 @@ void button_flash_payload(GtkWidget *widget, gpointer data)
     
     // first dialog called 'Hinweis'
     title = "Hinweis";
-    message = "Der Prozess zum flashen des payload.zip/update.zip geht davon aus, dass sie sich im Recovery befinden und 'Updates über ADB erlauben' aktiviert haben.\n";
+    message = "Der Prozess zum flashen des payload.zip geht davon aus, dass sie sich im Recovery befinden und 'Updates über ADB erlauben' aktiviert haben.\n";
     show_message_with_title(title, message);
     
     // Show a message that the flash is starting
@@ -74,7 +74,7 @@ void flash_payload(int argc, char *argv[])
 
     // Create a button
     GtkWidget *button_payload = gtk_button_new_with_label("Flash starten");
-    g_signal_connect(button_payload, "clicked", G_CALLBACK(button_flash_payload_start), entry);
+    g_signal_connect(button_payload, "clicked", G_CALLBACK(button_flash_payload), entry);
     gtk_box_pack_start(GTK_BOX(vbox), button_payload, FALSE, FALSE, 5);
 
     // Show all the widgets
