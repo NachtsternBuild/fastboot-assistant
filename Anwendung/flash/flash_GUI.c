@@ -75,7 +75,7 @@ static void start_vbmeta_dtbo_flash(GtkWidget *widget, gpointer data)
 // start flash_preloader-function
 static void start_flash_preloader(GtkWidget *widget, gpointer data)
 {
-	flash_preloader();
+	flash_preloader_super();
 }
 
 // start flash_preloader-function
@@ -92,7 +92,7 @@ static void start_flash_others(GtkWidget *widget, gpointer data)
     message = "Der Prozess kann eine Weile dauern. \nIgnorien sie alle beenden erzwingen Meldungen.\n";
     show_message(message);
     
-	flash_others();
+	flash_other();
 	
 	message = "Prozess beendet.\n";
 	show_message(message);	
