@@ -109,7 +109,7 @@ GUI.c ––––|
 	  |				|– flash_vendor.c 
 	  |				|– flash_system.c  
 	  |				|– flash_payload.c 
-	  |				|– flash_vbmeta.c 
+	  |				|– flash_vbmeta_dtbo.c 
 	  |				|– flash_preloader_super.c
 	  |				|– flash_data.c
 	  |				|– flash_others.c
