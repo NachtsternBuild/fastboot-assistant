@@ -78,11 +78,11 @@ void get_devices(int argc, char *argv[])
     
     // fastboot-label
     GtkWidget *fastboot_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(fastboot_label), g_strdup_printf("<b>Geräte: </b> %s", fastboot_device);
+    gtk_label_set_markup(GTK_LABEL(fastboot_label), g_strdup_printf("<b>Geräte: </b> %s", fastboot_device));
     gtk_container_add(GTK_CONTAINER(vbox), fastboot_label);
     
     // show all elements
-    gtk_widget_shwo_all(window);
+    gtk_widget_show_all(window);
     
     // GTK-mainloop start
     gtk_main();
