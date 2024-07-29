@@ -49,7 +49,7 @@ SRCS =	header_connected_devices.c \
 		flash_vbmeta_dtbo.c \
 		flash_preloader_super.c \
 		flash_data.c \
-		flash_others.c \
+		flash_other.c \
 		flash_GUI.c \
 		instruction_adb.c \
 		instruction_recovery.c \
