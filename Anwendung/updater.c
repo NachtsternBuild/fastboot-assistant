@@ -55,10 +55,18 @@ int download_file(const char *url, const char *outfilename)
     return system(command);
 }
 
+// show message function (assuming it is implemented elsewhere)
+void show_message(const char *message);
+
+// open terminal function (assuming it is implemented elsewhere)
+void open_terminal_by_desktop(const char *command);
+
 // main function
 void updater(void) 
 {
-    
+    int argc = 0;         // Declare argc
+    char **argv = NULL;   // Declare argv
+
     const char *repo = "NachtsternBuild/fastboot-assitant"; 
     char download_url[256];
     get_latest_release_url(repo, download_url);  // run get url
@@ -67,30 +75,25 @@ void updater(void)
         printf("Neueste Version URL: %s\n", download_url);
         gtk_init(&argc, &argv);
 
-    	// buffer for the message
-    	char message[256];
-    	snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeuste Version wird heruntergeladen.\n", download_url);
-    	// show message
-    	show_message(message);
+        // buffer for the message
+        char message[256];
+        snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeuste Version wird heruntergeladen.\n", download_url);
+        // show message
+        show_message(message);
 
         const char *output_directory = getenv("HOME"); // set home as main dir
-		char output_file[512];
-		snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant.deb", output_directory);
-		
-		GtkWidget *dialog;
-    	const char *message = "Paket heruntergeladen.\nWird installiert.\n";
+        char output_file[512];
+        snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant.deb", output_directory);
 
-    	// show message
-    	show_message(message);
-    
+        const char *download_message = "Paket heruntergeladen.\nWird installiert.\n";
+        // show message
+        show_message(download_message);
 
         // download the .deb-file
-        // const char *output_file = "fastboot-assistant.deb";
         if (download_file(download_url, output_file) == 0) 
         {
             printf("Paket heruntergeladen: %s\n", output_file);
-           
-            char function_command[255];
+
             // install the .deb-file
             open_terminal_by_desktop("sudo apt install ~/fastboot-assistant.deb && exit");
             printf("Fertig!\n");
@@ -104,7 +107,5 @@ void updater(void)
     {
         printf("Fehler beim Abrufen der neuesten Version\n");
     }
-
-    return 0;
 }
 
