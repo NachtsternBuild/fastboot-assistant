@@ -86,8 +86,8 @@ void flash_boot(int argc, char *argv[])
     GtkWidget *button_boot_on_ab = gtk_button_new_with_label("Flash Boot (a/b-devices)");
     GtkWidget *button_init_boot_on_a = gtk_button_new_with_label("Flash init_boot (only-a-devices)");
     GtkWidget *button_init_boot_on_ab = gtk_button_new_with_label("Flash init_boot (a/b-devices)");
-    GtkWidget *button_init_boot_on_a = gtk_button_new_with_label("Flash boot (heimdall)");
-    GtkWidget *button_init_boot_on_ab = gtk_button_new_with_label("Flash init_boot (heimdall)");
+    GtkWidget *button_boot_heimdall = gtk_button_new_with_label("Flash boot (heimdall)");
+    GtkWidget *button_init_boot_heimdall= gtk_button_new_with_label("Flash init_boot (heimdall)");
     
     // Link the click callback function with the buttons 
     g_signal_connect(button_boot_on_a, "clicked", G_CALLBACK(boot_on_a), NULL);
