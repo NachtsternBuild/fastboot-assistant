@@ -49,7 +49,7 @@ static void start_recovery_fastboot(GtkWidget *widget, gpointer data)
 }
 
 /* main function of reboot*/
-void reboot_fastboot(int argc, char *argv[]) 
+void reboot_recovery(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
