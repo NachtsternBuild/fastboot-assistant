@@ -25,6 +25,8 @@
 // rework flashheader
 #include "flash_function_header.h"
 
+#define BUFFER_SIZE 128
+
 // function to flash system.img to slot
 void flash_system_to_inactive(const char *slot) 
 {
@@ -85,7 +87,7 @@ static void system_to_inactiv(GtkWidget *widget, gpointer data)
     }
 
     // flash system.img to inactive slot
-    flash_system_img(inactive_slot);
+    flash_system_to_inactive(inactive_slot);
 }
 
 // button 3 - flash system.img heimdall
