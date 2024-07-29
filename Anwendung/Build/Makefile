@@ -31,7 +31,7 @@ SRCS =	header_connected_devices.c \
 		reboot_recovery.c \
 		reboot_heimdall.c \
 		reboot_GUI.c \
-		config_projekt_GUI.c \
+		config-projekt_GUI.c \
 		make_dir.c \
 		remove_old.c \
 		preflash_GUI.c \
