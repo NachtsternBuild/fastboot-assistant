@@ -39,10 +39,6 @@ void instruction_vendor(int argc, char *argv[])
     // frame at the box
     GtkWidget *frame = gtk_frame_new(NULL);
     gtk_container_add(GTK_CONTAINER(window), frame);
-
-    // create vbox
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_container_add(GTK_CONTAINER(frame), vbox);
     
     // Frame for each information field
     GtkWidget *frame17 = gtk_frame_new(NULL);
