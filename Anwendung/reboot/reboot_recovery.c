@@ -99,7 +99,7 @@ void reboot_fastboot(int argc, char *argv[])
                                     "}\n"
                                     "button:hover {\n"
                                     "    background-color: #A52A2A;\n" /* Brighter red on hover */
-            						"	 box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);\n" /* Amplify shadows */"
+            						"	 box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);\n" /* Amplify shadows */
                                     "}\n",
                                     -1,
                                     NULL);
