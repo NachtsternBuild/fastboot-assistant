@@ -65,7 +65,7 @@ static void start_zero_function_10(GtkWidget *widget, gpointer data)
 }
 
 /* main function of preflash_GUI*/
-void preflash_GUI(int argc, char *argv[]) 
+void config_projekt_GUI(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
