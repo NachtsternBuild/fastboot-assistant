@@ -15,8 +15,6 @@
  *
  */
 
-// add unlock bootloader
-
 /* headers that used in the programm */
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,10 +37,6 @@ void instruction_adb(int argc, char *argv[])
     // frame at the box
     GtkWidget *frame = gtk_frame_new(NULL);
     gtk_container_add(GTK_CONTAINER(window), frame);
-
-    // create vbox
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_container_add(GTK_CONTAINER(frame), vbox);
     
     // Frame for each information field
     GtkWidget *frame9 = gtk_frame_new(NULL);
@@ -76,7 +70,7 @@ void instruction_adb(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(frame10), label_connect1);
 
     const char *connect2_text = "\nEntwickleroptionen aktivieren.\n1.Suchen sie in den Einstellungen nach 'Build-Nummer'. \n2. Tippen sie siebenmal auf die 'Build-Nummer'. \n3. Suchen sie in den Einstellungen 'Debug'. \n4. Aktivieren sie USB-Debbuging. \n5. Aktivieren sie in \nden USB-Einstellungen 'Dateiübertragung'. \n5. Prüfen sie ob eine Verbindung zur ADB besteht.\n";
-    GtkWidget *connect2_version = gtk_label_new(connect2_text);
+    GtkWidget *label_connect2 = gtk_label_new(connect2_text);
     gtk_container_add(GTK_CONTAINER(frame11), label_connect2);
     
     // show-text
