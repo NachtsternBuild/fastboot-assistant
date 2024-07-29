@@ -35,7 +35,7 @@ void reboot_GUI();
 void config_projekt_GUI();
 void preflash_GUI();
 void flash_GUI();
-void instructions_GUI();
+void instruction_GUI();
 void info();
 void updater();
 void about();
