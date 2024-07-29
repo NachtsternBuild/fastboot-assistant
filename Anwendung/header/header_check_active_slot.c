@@ -25,9 +25,11 @@
 
 #define BUFFER_SIZE 128
 
+
 void check_active_slot() 
 {
     char buffer[BUFFER_SIZE];
+    char slot[BUFFER_SIZE]; 
     FILE *pipe;
 
     // fastboot-command for get boot-slots
@@ -54,4 +56,7 @@ void check_active_slot()
 
     // close pipe
     pclose(pipe);
+
+    // Ausgabe des Slots
+    printf("Aktueller Slot: %s\n", slot);
 }
