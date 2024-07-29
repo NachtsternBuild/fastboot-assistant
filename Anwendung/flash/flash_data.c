@@ -53,7 +53,7 @@ static void userdata_img_heimdall(GtkWidget *widget, gpointer data)
 }
 
 /* start main programm */
-void flash_vbmeta_dtbo(int argc, char *argv[])
+void flash_data(int argc, char *argv[])
 {
 	// int gtk
 	gtk_init(&argc, &argv);
