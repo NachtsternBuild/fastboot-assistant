@@ -2,17 +2,17 @@
  *-------------------------------------------*
  *                Projekt 122 - GUI          *
  *-------------------------------------------*
- *			Sprudelnde PC-Kühlung			 *
+ *          Sprudelnde PC-Kühlung            *
  *-------------------------------------------*
- *  	Apache License, Version 2.0		     *
+ *          Apache License, Version 2.0      *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
- *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern - GUI					 *
+ *  Programm um das installieren von         *
+ *  Custom-ROM und GSIs auf Android-Geräte   *
+ *  zu erleichtern - GUI                     *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2023 Elias Mörz        *
  *-------------------------------------------*
  *
  */
@@ -159,19 +159,19 @@ int main(int argc, char *argv[])
     gtk_css_provider_load_from_data(provider,
                                     "button {\n"
                                     "    background-color: #8B0000;\n" /* darkred */
-            						"	 border: none;\n"
-            						"	 border-radius: 12px;\n" /* round corners */
-            						"	 padding: 12px 24px;\n" /* inside distance */
-            						"	 color: #ffffff;\n" /* White text */
-            						"	 font-size: 16px;\n" /* Font size */
-            						"	 font-weight: 500;\n" /* Medium font */
-            						"	 text-align: center;\n" /* Centre text */
-            						"	 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n" /* Light shade */
-            						"	 transition: background-color 0.3s ease, box-shadow 0.3s ease;\n" /* Animation */
+                                    "    border: none;\n"
+                                    "    border-radius: 12px;\n" /* round corners */
+                                    "    padding: 12px 24px;\n" /* inside distance */
+                                    "    color: #ffffff;\n" /* White text */
+                                    "    font-size: 16px;\n" /* Font size */
+                                    "    font-weight: 500;\n" /* Medium font */
+                                    "    text-align: center;\n" /* Centre text */
+                                    "    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n" /* Light shade */
+                                    "    transition: background-color 0.3s ease, box-shadow 0.3s ease;\n" /* Animation */
                                     "}\n"
                                     "button:hover {\n"
                                     "    background-color: #A52A2A;\n" /* Brighter red on hover */
-            						"	 box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);\n" /* Amplify shadows */"
+                                    "    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);\n" /* Amplify shadows */
                                     "}\n",
                                     -1,
                                     NULL);
