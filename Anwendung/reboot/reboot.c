@@ -50,7 +50,7 @@ void reboot(int argc, char *argv[])
 
     // Create a button
     GtkWidget *button_reboot_fastboot = gtk_button_new_with_label("Neustarten");
-    g_signal_connect(button_reboot_fastboot, "clicked", G_CALLBACK(button_reboot_fastboot_start), NULL);
+    g_signal_connect(button_reboot_fastboot, "clicked", G_CALLBACK(reboot_fastboot), NULL);
 
     // Pack the button into the box
     gtk_box_pack_start(GTK_BOX(vbox), button_reboot_fastboot, TRUE, TRUE, 0);
