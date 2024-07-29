@@ -53,7 +53,7 @@ void instruction_root(int argc, char *argv[])
 
     // Creation of text labels with the text to be displayed
     const char *root_text = "\nBeim Rooten von Android-Geräten \nwerden dem Nutzer Superuser-Rechte eingeräumt, \ndie ihm vollen Zugriff auf \ndas Betriebssystem und die Möglichkeit geben, \nweitreichende Änderungen vorzunehmen, \ndie normalerweise gesperrt sind. \nDies ermöglicht unter anderem \ndas Entfernen vorinstallierter Anwendungen, \ndas Ändern von Systemeinstellungen \nund das Installieren spezieller Anwendungen, \ndie erweiterte Berechtigungen erfordern.\n";
-    GtkWidget *label_root = gtk_label_new(adb_text);
+    GtkWidget *label_root = gtk_label_new(root_text);
     gtk_container_add(GTK_CONTAINER(frame15), label_root);
     
     // show-text
