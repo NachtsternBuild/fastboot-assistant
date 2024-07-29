@@ -76,7 +76,7 @@ void instruction_flash(int argc, char *argv[])
     g_signal_connect(button_inst_vendor, "clicked", G_CALLBACK(inst_vendor), NULL);
     g_signal_connect(button_inst_gsi, "clicked", G_CALLBACK(inst_gsi), NULL);
     g_signal_connect(button_inst_custom_rom, "clicked", G_CALLBACK(inst_custom_rom), NULL);
-    g_signal_connect(button_inst_recovery, "clicked", G_CALLBACK(inst_recovery), NULL)
+    g_signal_connect(button_inst_recovery, "clicked", G_CALLBACK(inst_recovery), NULL);
     
     // Create a layout container (HBox) for the buttons
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
