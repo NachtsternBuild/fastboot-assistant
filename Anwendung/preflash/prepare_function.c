@@ -27,5 +27,5 @@ void prepare_function()
 {
 	// i will try to develop the prepare.sh in c
 	char function_command[255];
-	open_terminal_by_desktop("bash prepare.sh");
+	open_terminal_by_desktop("bash /usr/bin/projekt-122/prepare.sh");
 }
