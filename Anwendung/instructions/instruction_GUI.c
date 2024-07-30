@@ -73,7 +73,7 @@ void instruction_GUI(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[6][20] = {"Umgang mit ADB", "Flashen von Systemabbildern", "Vorbereitungen", 
+    char button_labels[6][20] = {"Umgang mit ADB", "Flash Images", "Vorbereitungen", 
                                  " ", "Info", " "};
 
     gtk_init(&argc, &argv);
