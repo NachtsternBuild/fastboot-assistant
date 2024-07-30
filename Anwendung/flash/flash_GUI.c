@@ -105,9 +105,9 @@ void flash_GUI(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[9][20] = {"Flash Recovery-Image", "Flash Boot-Image", "Flash Vendor-Image", 
-                                 "Flash payload.zip", "Flash System-Image", "Flash vbmeta.img/dtbo.img",
-                                 "Flashen des Bootloaders", "Flashen der Nutzerdaten", "Flashen von anderen Images"};
+    char button_labels[9][20] = {"Flash Recovery", "Flash Boot", "Flash Vendor", 
+                                 "Flash payload.zip", "Flash System", "Flash vbmeta/dtbo",
+                                 "Flash Preloader", "Flash Nutzerdaten", "Flash Andere Images"};
 
     gtk_init(&argc, &argv);
 
