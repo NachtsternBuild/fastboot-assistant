@@ -30,10 +30,8 @@ static void get_backup_root(GtkWidget *widget, gpointer data)
 {
     // backup_root();
     // this is if the c-code not work
-    // char function_command[255];
-	// open_terminal_by_desktop("bash backup_root.sh");
-	
-	backup_noroot();
+    char function_command[255];
+    open_terminal_by_desktop("bash /usr/bin/projekt-122/backup_root.sh");
 }
 
 // button 3 - backup without root
@@ -43,6 +41,7 @@ static void get_backup_noroot(GtkWidget *widget, gpointer data)
 	// char function_command[255];
 	/* thanks to @mrrfv for the backup-skripts */
 	// open_terminal_by_desktop("bash backup.sh");
+	backup_noroot();
 }
 
 void backup_function(int argc, char *argv[])
