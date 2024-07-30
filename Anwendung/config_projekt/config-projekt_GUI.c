@@ -70,8 +70,8 @@ void config_projekt_GUI(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[6][20] = {" ", "Erstelle Ordner 'ROM-Install'", " ", 
-                                 " ", "Löschen alter Dateien", " "};
+    char button_labels[6][20] = {" ", "Anlegen Ordner", " ", 
+                                 " ", "Aufräumen", " "};
 
     gtk_init(&argc, &argv);
 
