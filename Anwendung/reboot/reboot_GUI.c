@@ -70,7 +70,7 @@ void reboot_GUI(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[6][20] = {"Neustart in Fastboot-Modus", "Neustart", "Neustart in Recovery", 
+    char button_labels[6][20] = {"Neustart Fastboot", "Neustart", "Neustart in Recovery", 
                                  " ", "Neustart Heimdall", " "};
 
     gtk_init(&argc, &argv);
