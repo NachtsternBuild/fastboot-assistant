@@ -74,7 +74,7 @@ void preflash_GUI(int argc, char *argv[])
     GtkWidget *grid;
     GtkWidget *button;
     char button_labels[6][20] = {"Backup", "Dateien vorbereiten", "Lösche Nutzerdaten", 
-                                 "Setzen des aktiven Slots", "Lock/Unlock Bootloader", " "};
+                                 "Set active slot", "Bootloader", " "};
 
     gtk_init(&argc, &argv);
 
