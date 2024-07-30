@@ -103,8 +103,8 @@ int main(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[9][20] = {"Verbindung überprüfen (ADB/Fastboot)", "Gerät neustarten", "Konfigurieren von Projekt-122", 
-                                 "Flash vorbereiten", "Flashen von System-Abbildern", "Anleitungen", 
+    char button_labels[9][20] = {"Get Device", "Gerät neustarten", "Einstellungen", 
+                                 "Flash vorbereiten", "Flashen", "Anleitungen", 
                                  "Info", "Updater", "Über das Programm"};
 
     gtk_init(&argc, &argv);
