@@ -1,45 +1,43 @@
 # fastboot-assistant
-## Beschreibung
-Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern. Basierend auf GTK und Shell.
-## Funktionen
-- prüfen der Verbindung ADB/Fastboot
-- erstellen eines Arbeitsverzeichnisses
-- wechseln in das Arbeitsverzeichnis
-- boot in Fastboot-Modus
-- Neustart vom Fastboot-Modus
-- Neustart in Download-Modus
-- boot in den Recovery
-- öffnen/schleißen des Bootloaders 
-- löschen der Nutzerdaten
-- umbenennen von Dateien (recovery.img, boot.img, vendor.img, system.img, vbmeta.img)
-- Flashen recovery.img, boot.img, init_boot.img, vendor_boot.img, vendor.img, system.img, vbmeta.img, dtbo.img, preloader.img, preloader.bin, super.img und viele andere
+## Description
+Programme to facilitate the installation of custom ROMs and GSIs on Android devices. Based on GTK and Shell.
 
-## Versionen
- *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
-- ***siehe Changelog.md für alle Änderungen oder halt GitHub.***
+## Functions
+- Check the ADB/Fastboot connection
+- Create a working directory
+- change to the working directory
+- boot into fastboot mode
+- Reboot from fastboot mode
+- Reboot into download mode
+- boot into recovery
+- open/wipe the bootloader 
+- delete user data
+- Rename files (recovery.img, boot.img, vendor.img, system.img, vbmeta.img)
+- flashing recovery.img, boot.img, init_boot.img, vendor_boot.img, vendor.img, system.img, vbmeta.img, dtbo.img, preloader.img, preloader.bin, super.img and many others
 
-### Versionshinweis
-- **dev** - noch in Arbeit, aber einiges funktioniert schon
-- **beta** - das meiste funktioniert, aber einige Fehler
-- **Projekt-122-l** - alte Versionen oder Entwicklungsversionen
-  
+## Versions
+*<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
+- ***see Changelog.md for all changes or just GitHub.***
+
 ### Sweet Unix v.0.5.x
-- **fastboot-assistant (noch Projekt-122-l) v.0.5.1.dev** → Linux (Ubuntu/Debian) / *Windows über WSL (ist noch experimentell)*
+- **fastboot-assistant (noch Projekt-122-l) v.0.5.1.dev** → Linux (Ubuntu/Debian) / Windows via WSL (still experimental)
 
-### Sprudelnde PC-Kühlung v.0.4.x
+### Effervescent PC cooling v.0.4.x
 - *Projekt-122-l v.0.4.1.beta* → Linux
 - *Projekt-122-l v.0.4.beta* → Linux
-### Funkelnde Datenkristalle v.0.3.x
-- *Projekt-122-l v.0.3.beta* → für Linux Debian/Ubuntu
-## Hinweise
-- Benutzung auf eigene Gefahr.
-- Es kann zu Schäden am Gerät kommen.
-- Nicht jedes Gerät unterstützt jede der Funktionen
-- Nicht alle Betriebssystem-Varianten haben den selben Funktionsumfang.
-- Das Programm befindet sich in der **Testphase**. *Es kann zu Fehlern im Programm kommen.*
 
-## Installation
-Es werden für die Ausführung des Programms folgende Tools benötigt. 
+### Sparkling data crystals v.0.3.x
+- *Projekt-122-l v.0.3.beta* → für Linux Debian/Ubuntu
+
+## Notes
+- Use at your own risk.
+- The device may be damaged.
+- Not every device supports all of the functions
+- Not all operating system variants have the same range of functions.
+- The programme is currently in the **test phase**. *Errors may occur in the programme.*
+
+## Installation of the programme
+The following tools are required to run the programme.
 - *Android Debug Bridge (adb)* 
 - *Fastboot*
 - *xz-utils*
@@ -47,27 +45,26 @@ Es werden für die Ausführung des Programms folgende Tools benötigt.
 - *wget*
 - *heimdall*
 
-Diese werden automatisch mit dem Debian-Paket installiert.
-*Zur Installation werden Root-Rechte benötigt.*
-- **Debian-Paket im Terminal installieren mit:**
+These are installed automatically with the Debian package.
+*Root rights are required for installation.*
+- **Install the Debian package in the terminal with:** 
 ```sh
-sudo apt-get install /PFAD/ZUM/fastboot-assistant.deb 
+sudo apt-get install /PATH/to/fastboot-assistant.deb 
 ```
-***oder über eine grafische Benutzeroberfläche.***
+***or via a graphical user interface.***
 
-## Entfernen von Projekt 122
-1. Terminal öffnen
-2. folgenden Befehl ausführen:
+##  Removing fastboot-assistant
+1. open terminal
+2. Execute the following command:
 ```sh
 sudo dpkg -r --force-all Projekt-122-l
 ```
 
-## weitere Infos
-- siehe Anleitungen in der Anwendungen selbst
+## Further information
+- see instructions in the applications themselves
 
-## Bei Fehlern
-- Keine Scheu, einfach meckern. 
-- Oder es besser machen (*siehe Build*)
-- und gerne bei Issues eintragen 
-## Build
-*siehe <https://github.com/NachtsternBuild/fastboot-assistant/tree/main/Anwendung>*
+## In case of errors
+- Don't be shy, just complain. 
+- Or do it better (*see build*)
+## build
+*see build: <https://github.com/NachtsternBuild/fastboot-assistant/tree/main/Anwendung>*
