@@ -66,10 +66,3 @@ void instruction_custom_rom(int argc, char *argv[])
     // Run the GTK main loop
     gtk_main();
 }
-
-int main(int argc, char *argv[]) 
-{
-    instruction_custom_rom(argc, argv);
-    return 0;
-}
-
