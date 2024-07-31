@@ -61,6 +61,7 @@ sudo dpkg -r --force-all Projekt-122-l
 
 ## Bei Fehlern
 - Keine Scheu, einfach meckern. 
-- Oder es besser machen (*siehe Build*) 
+- Oder es besser machen (*siehe Build*)
+- und gerne bei Issues eintragen 
 ## Build
 *siehe <https://github.com/NachtsternBuild/fastboot-assistant/tree/main/Anwendung>*
