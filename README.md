@@ -17,6 +17,12 @@ Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erle
 ## Versionen
  *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
 - ***siehe Changelog.md für alle Änderungen oder halt GitHub.***
+
+### Versionshinweis
+- **dev** - noch in Arbeit, aber einiges funktioniert schon
+- **beta** - das meiste funktioniert, aber einige Fehler
+- **Projekt-122-l** - alte Versionen oder Entwicklungsversionen
+  
 ### Sweet Unix v.0.5.x
 - **fastboot-assistant (noch Projekt-122-l) v.0.5.1.dev** → Linux (Ubuntu/Debian) / *Windows über WSL (ist noch experimentell)*
 
