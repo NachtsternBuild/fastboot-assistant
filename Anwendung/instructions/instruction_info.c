@@ -31,7 +31,7 @@ void instruction_info(int argc, char *argv[])
     // Create main window
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Anleitung Info");
-    gtk_widget_set_size_request(window, 500, 400);
+    gtk_widget_set_size_request(window, 1000, 950);
 
     // Connect close function to 'destroy' signal
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
