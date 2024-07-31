@@ -76,17 +76,6 @@ void instruction_adb(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(frame12), label_connect3);
     gtk_box_pack_start(GTK_BOX(vbox), frame12, TRUE, TRUE, 5);
 
-    // show-text for additional information
-    GtkWidget *inst4_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst4_label), "<b><u>Weiteres</u></b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst4_label, FALSE, FALSE, 5);
-
-    // Frame and label for additional information
-    GtkWidget *frame13 = gtk_frame_new(NULL);
-    GtkWidget *label_more = gtk_label_new("\nWollen sie mehr über die \nBedienung von Fastboot erfahren \nstarten sie die Fastboot-Hilfe.\n");
-    gtk_container_add(GTK_CONTAINER(frame13), label_more);
-    gtk_box_pack_start(GTK_BOX(vbox), frame13, TRUE, TRUE, 5);
-
     // show-text for Bootloader/Preloader
     GtkWidget *inst5_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(inst5_label), "<b><u>Bootloader/Preloader</u></b>");
