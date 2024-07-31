@@ -9,68 +9,26 @@
 ```sh
 git clone https://github.com/NachtsternBuild/fastboot-assistant.git
 ```
-2. bearbeiten sie diesen nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
-3. Nutzen von der ***build.sh*** oder ***build_deb.sh*** via:
-```sh
-bash build.sh
-# oder
-bash build_deb.sh
-```
-
-*oder manuell:*
-
-1. Installieren sie GCC, ADB/Fastboot, desktop-file-utils :
+2. Installieren sie *GCC, GTK, ADB/Fastboot, desktop-file-utils, dpkg-dev, debhelper, fakeroot, linitian, pbuilder, devscripts*:
 
 ```sh
 # Debian / Ubuntu:
 sudo apt update
-sudo apt install build-essential
-sudo apt-get install adb
-sudo apt-get install fastboot
-sudo apt-get install -y desktop-file-utils
-```
-```sh
-# Fedora:
-sudo dnf install gcc
-sudo dnf install -y android-tools
-sudo dnf install -y desktop-file-utils
-```
-```sh
-# Arch:
-sudo pacman -Syyu
-sudo pacman -S gcc
-sudo pacman -S --noconfirm android-tools
-sudo pacman -S --noconfirm desktop-file-utils
-```
-```sh
-# Open SUSE:
-sudo zypper refresh
-sudo zypper install gcc
-sudo zypper install android-tools
-sudo zypper install desktop-file-utils
-```
-```sh
-# Fedora/SUSE
-sudo yum install gcc
-sudo yum install android-tools
-sudo yum install -y desktop-file-utils
-```
+sudo apt upgrade
+sudo apt-get install build-essential gcc libgtk-3-dev adb fastboot desktop-file-utils dpkg-dev debhelper fakeroot lintian pbuilder devscripts
 
-2. Kompilieren sie den Code indem sie das Makefile ausführen:
-```sh
-make
 ```
-3. Ausführbar machen mit:
+3. bearbeiten sie den Quellcode mit einem Editor ihrer Wahl nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
+
+4. Kompilieren sie den Code und bauen sie das Debian-Paket ausführen:
 ```sh
-chmod +x Projekt-122-l-meineVersion
-```
-oder mit:
-```sh
-sudo chmod +x Projekt-122-l-meineVersion
-```
-4. Aufräumen:
-```sh
-make clean
+./build.sh
+# oder
+bash build.sh
+# oder
+./build-deb.sh
+# oder
+bash build-deb.sh
 ```
 
 ## Programmstruktur
