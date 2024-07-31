@@ -15,6 +15,7 @@ preflash_dir="${source_dir}/preflash"
 instructions_dir="${source_dir}/instructions"
 target_dir="${source_dir}/build_project"
 output_dir="${source_dir}/output"
+build_dir="${source_dir}/Build"
 
 # set Authorisation
 chmod a+x "$source_dir"
