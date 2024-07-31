@@ -34,35 +34,27 @@ void instruction_info(int argc, char *argv[])
     gtk_widget_set_size_request(window, 500, 400);
 
     // Connect close function to 'destroy' signal
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_close), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-    // frame at the box
-    GtkWidget *frame = gtk_frame_new(NULL);
-    gtk_container_add(GTK_CONTAINER(window), frame);
-    
-    // Frame for each information field
-    GtkWidget *frame27 = gtk_frame_new(NULL);
-    
     // Vertical box layout for the frames
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_container_add(GTK_CONTAINER(window), vbox);
-    
-    // show-text
-    GtkWidget *inst25_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst25_label), g_strdup_printf("<b> Bei Samsung Geräten nutzen sie 'heimdall' statt 'fastboot' zum flashen. </b>"));
-    gtk_container_add(GTK_CONTAINER(vbox), inst25_label);
-    
-    // show-text
-    GtkWidget *inst26_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst26_label), g_strdup_printf("<b><u> Weitere Infos </u></b>"));
-    gtk_container_add(GTK_CONTAINER(vbox), inst26_label);
 
-    // Creation of text labels with the text to be displayed
-    const char *info_text = "\nA/B Partitionsschema verwendet zwei Systempartitionen, \num nahtlose Updates zu ermöglichen, \nindem es zwischen ihnen wechselt. \n Das only-A Partitionsschema \nhat nur eine Systempartition und erfordert einen Neustart für Updates. \nA/B bietet redundante Sicherheit und ermöglicht ein \nkontinuierliches Betriebssystem, während Only-A \neinfachere Verwaltung erfordert.\n \nProject Treble ist eine Android-Initiative von Google, \ndie die Trennung von Betriebssystem- und Hardwarekomponenten ermöglicht. \nDies erleichtert Herstellern \ndie Bereitstellung von Android-Updates, \nindem das Betriebssystem unabhängig \nvon den spezifischen Treibern für den Chipsatz ist.\n \nSystem-as-root ist ein Mechanismus in Android, \nbei dem das System-Image als Root-Dateisystem gemountet wird. \nDurch wird die Trennung von System- und Vendor-Partitionen \nverbessert und die Sicherheit erhöht. \nDies erleichtert das Aktualisieren des Systems \nund die Verwaltung von Berechtigungen, \nda systemkritische Dateien \nund Konfigurationen besser geschützt und isoliert werden.\n \nEin System on a Chip (SoC) ist ein integrierter Schaltkreis, \nder alle wesentlichen Komponenten eines Computersystems, \neinschließlich CPU, GPU, Speicher und Ein-/Ausgabeschnittstellen, \nauf einem einzigen Chip vereint. \nSoCs werden häufig verwendet, \num Platz und Energie zu sparen.\n";
+    // show-text for Samsung devices
+    GtkWidget *inst25_label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(inst25_label), "<b>Bei Samsung Geräten nutzen sie 'heimdall' statt 'fastboot' zum flashen.</b>");
+    gtk_box_pack_start(GTK_BOX(vbox), inst25_label, FALSE, FALSE, 5);
+
+    // show-text for more info title
+    GtkWidget *inst26_label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(inst26_label), "<b><u>Weitere Infos</u></b>");
+    gtk_box_pack_start(GTK_BOX(vbox), inst26_label, FALSE, FALSE, 5);
+
+    // Frame and label for detailed information
+    GtkWidget *frame27 = gtk_frame_new(NULL);
+    const char *info_text = "\nA/B Partitionsschema verwendet zwei Systempartitionen, \num nahtlose Updates zu ermöglichen, \nindem es zwischen ihnen wechselt. \nDas only-A Partitionsschema \nhat nur eine Systempartition und erfordert einen Neustart für Updates. \nA/B bietet redundante Sicherheit und ermöglicht ein \nkontinuierliches Betriebssystem, während Only-A \neinfachere Verwaltung erfordert.\n \nProject Treble ist eine Android-Initiative von Google, \ndie die Trennung von Betriebssystem- und Hardwarekomponenten ermöglicht. \nDies erleichtert Herstellern \ndie Bereitstellung von Android-Updates, \nindem das Betriebssystem unabhängig \nvon den spezifischen Treibern für den Chipsatz ist.\n \nSystem-as-root ist ein Mechanismus in Android, \nbei dem das System-Image als Root-Dateisystem gemountet wird. \nDies verbessert die Trennung von System- und Vendor-Partitionen \nund erhöht die Sicherheit. \nDies erleichtert das Aktualisieren des Systems \nund die Verwaltung von Berechtigungen, \nda systemkritische Dateien \nund Konfigurationen besser geschützt und isoliert werden.\n \nEin System on a Chip (SoC) ist ein integrierter Schaltkreis, \nder alle wesentlichen Komponenten eines Computersystems, \neinschließlich CPU, GPU, Speicher und Ein-/Ausgabeschnittstellen, \nauf einem einzigen Chip vereint. \nSoCs werden häufig verwendet, \num Platz und Energie zu sparen.\n";
     GtkWidget *label_info = gtk_label_new(info_text);
     gtk_container_add(GTK_CONTAINER(frame27), label_info);
-    
-    // Add frames to the main window
     gtk_box_pack_start(GTK_BOX(vbox), frame27, TRUE, TRUE, 5);
 
     // Show all elements
@@ -71,5 +63,3 @@ void instruction_info(int argc, char *argv[])
     // Run the GTK main loop
     gtk_main();
 }
-
-
