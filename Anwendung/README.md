@@ -9,13 +9,13 @@
 ```sh
 git clone https://github.com/NachtsternBuild/fastboot-assistant.git
 ```
-2. Installieren sie *GCC, GTK, ADB/Fastboot, desktop-file-utils, dpkg-dev, debhelper, fakeroot, linitian, pbuilder, devscripts*:
+2. Installieren sie *GCC, GTK, ADB/Fastboot, desktop-file-utils, make, dpkg-dev, debhelper, fakeroot, linitian, pbuilder, devscripts*:
 
 ```sh
 # Debian / Ubuntu:
 sudo apt update
 sudo apt upgrade
-sudo apt-get install build-essential gcc libgtk-3-dev adb fastboot desktop-file-utils dpkg-dev debhelper fakeroot lintian pbuilder devscripts
+sudo apt-get install build-essential gcc libgtk-3-dev adb fastboot desktop-file-utils make dpkg-dev debhelper fakeroot lintian pbuilder devscripts
 
 ```
 3. bearbeiten sie den Quellcode mit einem Editor ihrer Wahl nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
