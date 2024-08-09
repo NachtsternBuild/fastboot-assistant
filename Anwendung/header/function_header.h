@@ -7,7 +7,7 @@
  *                                           *
  *  Programm um das installieren von 		 *
  *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern  - functionheader		 *
+ *	zu erleichtern  - function_header		 *
  *                                           *
  *-------------------------------------------*
  *      (C) Copyright 2023 Elias Mörz 		 *
@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 #include "flash_function_header.h"
+#include "file_chooser_header.h"
 #include "instruction_header.h"
 
 // header guards
@@ -57,6 +58,7 @@ void remove_old();
 void backup_function();
 void backup_noroot();
 void backup_root();
+void prepare();
 void prepare_function();
 void erase_data();
 void lock_unlock_bootloader();
