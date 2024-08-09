@@ -53,7 +53,7 @@ GUI.c ––––|
 	  |
 	  |– preflash_GUI.c ––––––––––––|
 	  |				|– backup_function.c –––|
-	  |				|			|––––––––– backup_root.sh
+	  |				|			|––––––––– backup_root.c
 	  |				|			|––––––––– backup_noroot.c
 	  |				|
 	  |				|– prepare_function.c –––––––––––– prepare.sh
