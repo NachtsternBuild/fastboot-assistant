@@ -40,7 +40,7 @@ static void start_backup_function(GtkWidget *widget, gpointer data)
 // start start_prepare-function
 static void start_prepare_function(GtkWidget *widget, gpointer data) 
 {
-    prepare_function();
+    prepare();
 }
 
 // start erase_data-function
