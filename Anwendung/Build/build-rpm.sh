@@ -54,6 +54,7 @@ find "$reboot_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$flash_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$preflash_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$instructions_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+find "$build_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 echo "Copy all files to $target_dir."
 # set Authorisation
 chmod a+x "$target_dir"
