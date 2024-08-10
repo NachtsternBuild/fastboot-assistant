@@ -56,7 +56,13 @@ GUI.c ––––|
 	  |				|			|––––––––– backup_root.c
 	  |				|			|––––––––– backup_noroot.c
 	  |				|
-	  |				|– prepare_function.c –––––––––––– prepare.sh
+	  |				|– prepare.c –––––––––––|
+	  |				|			|––--––––– rename_boot.c
+	  |				|			|––––––––– rename_recovery.c
+	  |				|			|––––––––– rename_vendor.c
+	  |				|			|––––––––– rename_system.c
+	  |				|			|––––––––– rename_payload.c
+	  |				|			|––––––––– unxz_files.c
 	  |				|– erase_data.c
 	  |				|– lock_unlock_bootloader.c
 	  |				|– set_active_slot.c
@@ -105,11 +111,14 @@ GUI.c ––––|
 	  |				|– header_get_info.c
 	  |				|– header_check_active_slot.c
 	  |				|– header_get_slot.c
+	  |				|– header_get_home.c
+	  |				|– header_show_file_chooser.c
 	  |				|
 	  |				|– function_header.h
 	  |				|– flash_function_header.h
 	  |				|– program_functions.h
 	  |				|– instruction_header.h
+	  |				|– file_chooser_header.h
 	  |
 	  |  
 	  + makefile
