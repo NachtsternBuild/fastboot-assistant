@@ -5,4 +5,4 @@
   - andere Arbeit mit Fastboot
   - u.a.
 - Anleitungen im Umgang mit Fastboot/ADB
-- Indormationen über Fastboot/ADB, Android-Geräte und Partitionen 
+- Informationen über Fastboot/ADB, Android-Geräte und Partitionen 
