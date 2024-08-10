@@ -21,56 +21,11 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 #include "function_header.h"
+#include "file_chooser_header.h"
 #include "flash_function_header.h"
 
 #define MAX_BUFFER_SIZE 256
-// includde all functions
-// add functions to header
-extern void prepare_boot();
-extern void prepare_recovery();
-extern void prepare_vendor();
-extern void prepare_system();
-extern void prepare_payload();
-extern void unxz_files();
-
 // Callback functions for each button
-// start function that prepare boot.img
-static void start_prepare_boot(GtkWidget *widget, gpointer data) 
-{
-    prepare_boot();
-}
-
-// start function that prepare recovery.img
-static void start_prepare_recovery(GtkWidget *widget, gpointer data) 
-{
-    prepare_recovery();
-}
-
-// start function that prepare vendor.img
-static void start_prepare_vendor(GtkWidget *widget, gpointer data) 
-{
-    prepare_vendor();
-}
-
-// start function that prepare system.img
-static void start_prepare_system(GtkWidget *widget, gpointer data) 
-{
-    prepare_system();
-}
-
-// start function that prepare payload.zip
-static void start_prepare_payload(GtkWidget *widget, gpointer data) 
-{
-    prepare_payload();
-}
-
-
-// start function that unxz files
-static void start_unxz_files(GtkWidget *widget, gpointer data)
-{ 
-	unxz_files();	
-}
-
 /* main function of prepare*/
 void prepare(int argc, char *argv[]) 
 {
@@ -98,22 +53,22 @@ void prepare(int argc, char *argv[])
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
         switch (i) {
             case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_prepare_boot), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_boot);
                 break;
             case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_prepare_recovery), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_recovery);
                 break;
             case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_prepare_vendor), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_vendor);
                 break;
             case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_prepare_system), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_system);
                 break;
             case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_prepare_payload), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_payload);
                 break;
             case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_unxz_files), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)unxz_files);
                 break;            
         }
     }
