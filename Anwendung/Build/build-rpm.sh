@@ -9,7 +9,7 @@ VERSION="$( cat version.txt )"
 home_dir="$HOME"
 
 # the other directory
-source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5"
+source_dir="$home_dir/fastboot-assistant/Anwendung"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
