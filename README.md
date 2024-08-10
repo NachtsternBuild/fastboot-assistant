@@ -12,7 +12,8 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 - boot into recovery
 - open/wipe the bootloader 
 - delete user data
-- Rename files (recovery.img, boot.img, vendor.img, system.img, vbmeta.img)
+- backup your full system (root) or use the [Open Android Backup](https://github.com/mrrfv/open-android-backup) → ***thanks to @mrrfv***
+- Rename files (recovery.img, boot.img, vendor.img, system.img, payload.zip)
 - flashing recovery.img, boot.img, init_boot.img, vendor_boot.img, vendor.img, system.img, vbmeta.img, dtbo.img, preloader.img, preloader.bin, super.img and many others
 
 ## Versions
@@ -20,7 +21,8 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 - ***see Changelog.md for all changes or just GitHub.***
 
 ### Sweet Unix v.0.5.x
-- **fastboot-assistant (noch Projekt-122-l) v.0.5.1.dev** → Linux (Ubuntu/Debian) / Windows via WSL (still experimental)
+- *fastboot-assistant (Projekt-122-l) v.0.5.2.dev* → Linux (Ubuntu/Debain) / Windows via WSL (still experimental)
+- *fastboot-assistant (Projekt-122-l) v.0.5.1.dev* → Linux (Ubuntu/Debian) / Windows via WSL (still experimental)
 
 ### Effervescent PC cooling v.0.4.x
 - *Projekt-122-l v.0.4.1.beta* → Linux
@@ -36,6 +38,11 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 - Not all operating system variants have the same range of functions.
 - The programme is currently in the **test phase**. *Errors may occur in the programme.*
 
+### Some brownies
+- *A big thank you to:*
+  - **@mrrfv → [Open Android Backup](https://github.com/mrrfv/open-android-backup)**
+  - **@Jean28518 → my [build-deb.sh](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/Anwendung/Build/build-deb.sh) is a modified version of *@Jean28518s* version.**
+  
 ## Installation of the programme
 The following tools are required to run the programme.
 - *Android Debug Bridge (adb)* 
