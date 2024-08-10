@@ -27,8 +27,17 @@
 // rename a file to recovery.img
 void rename_recovery(const gchar *rec_filename) 
 {
-    const gchar *recovery_filename = "recovery.img"; 
-    if (rename(rec_filename, recovery_filename) == 0) 
+    gchar *target_directory_recovery = get_home("~/Downloads/ROM-Install/");
+    if (target_directory_recovery == NULL) 
+    {
+        g_print("Fehler beim Erweitern des Verzeichnispfads.\n");
+        return;
+    }
+    
+    const gchar *recovery_filename = "recovery.img";
+    gchar *target_path_recovery = g_strconcat(target_directory_recovery, recovery_filename, NULL);
+     
+    if (rename(rec_filename, target_path_recovery) == 0) 
     {
         g_print("Datei erfolgreich umbenannt: %s -> %s\n", rec_filename, recovery_filename);
     } 
@@ -37,6 +46,8 @@ void rename_recovery(const gchar *rec_filename)
     {
         g_print("Fehler beim Umbenennen der Datei: %s\n", rec_filename);
     }
+    g_free(target_directory_recovery);
+    g_free(target_path_recovery);
 }
 
 
