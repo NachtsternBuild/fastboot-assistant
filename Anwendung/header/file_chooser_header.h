@@ -21,8 +21,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h>
-#include <unistd.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
 #include "function_header.h"
