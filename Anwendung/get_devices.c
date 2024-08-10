@@ -91,7 +91,7 @@ void get_devices(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(without_function1), NULL);
                 break;
             case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_make_dir_function), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(without_function2), NULL);
                 break;
             case 2:
                 g_signal_connect(button, "clicked", G_CALLBACK(get_adb), NULL);
