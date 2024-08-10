@@ -26,8 +26,8 @@
 // rename a file to system.img
 void rename_system(const gchar *sys_filename) 
 {
-    gchar *target_directory = get_home("~/Downloads/ROM-Install/");
-    if (target_directory == NULL) 
+    gchar *target_directory_system = get_home("~/Downloads/ROM-Install/");
+    if (target_directory_system == NULL) 
     {
         g_print("Fehler beim Erweitern des Verzeichnispfads.\n");
         return;
@@ -35,9 +35,9 @@ void rename_system(const gchar *sys_filename)
 
     const gchar *system_filename = "system.img";
     
-    gchar *target_path = g_strconcat(target_directory, system_filename, NULL);
+    gchar *target_path_system = g_strconcat(target_directory_system, system_filename, NULL);
     
-    if (rename(sys_filename, target_path) == 0) 
+    if (rename(sys_filename, target_path_system) == 0) 
     {
         g_print("Datei erfolgreich umbenannt: %s -> %s\n", sys_filename, system_filename);
     } 
@@ -47,6 +47,6 @@ void rename_system(const gchar *sys_filename)
         g_print("Fehler beim Umbenennen der Datei: %s\n", sys_filename);
     }
     
-    g_free(target_directory);
-    g_free(target_path);
+    g_free(target_directory_system);
+    g_free(target_path_system);
 }
