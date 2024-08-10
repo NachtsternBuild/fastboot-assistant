@@ -40,14 +40,16 @@ static void install_depends(GtkWidget *widget, gpointer data)
 static void download_backup(GtkWidget *widget, gpointer data) 
 {
     GtkWidget *dialog;
-    const char *message = "\nDas Tool 'Open Android Backup' wird heruntergeladen und entpackt.\n";
+    const char *message1 = "\nDas Tool 'Open Android Backup' wird heruntergeladen und entpackt.\n";
+    show_message(message1);
+    
     char function_command[255];
 	open_terminal_by_desktop("wget -O ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && exit");
 
 	system("unzip ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle");
-    const char *message = "\nOpen Android Backup ist nun bereit.\n";
+    const char *message2 = "\nOpen Android Backup ist nun bereit.\n";
     // show message
-    show_message(message);
+    show_message(message2);
 }
 
 // open open android backup
