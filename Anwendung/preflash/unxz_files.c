@@ -25,7 +25,7 @@
 #include "flash_function_header.h"
 
 // use 'unxz' to decompress .xz files
-void decompress_xz_file(const gchar *xz_filename) 
+void unxz_files(const gchar *xz_filename) 
 {
     gchar *command = g_strdup_printf("unxz \"%s\"", xz_filename);
     int result = system(command);
