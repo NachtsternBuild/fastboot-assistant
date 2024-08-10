@@ -33,8 +33,8 @@ void flash_vendor();
 void flash_payload();
 void flash_system();
 void flash_vbmeta_dtbo();
-void flash_preloader();
+void flash_preloader_super();
 void flash_data();
-void flash_others();
+void flash_other();
 
 #endif
