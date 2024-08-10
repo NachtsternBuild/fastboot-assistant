@@ -4,12 +4,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#define OUTPUT_DIR_ENV "HOME" // Name der Umgebungsvariable für das Home-Verzeichnis
-#define TARGET_DIR "Downloads/ROM-Install" // Zielverzeichnis unter dem Home-Verzeichnis
+#define OUTPUT_DIR_ENV "HOME" // home dir
+#define TARGET_DIR "Downloads/ROM-Install" // target dir
 
 void unxz_files(const char *xz_filename) 
 {
-    // Erhalte das Home-Verzeichnis aus der Umgebungsvariable
+    // get home dir
     const char *home_dir = getenv(OUTPUT_DIR_ENV);
     if (home_dir == NULL) 
     {
@@ -17,12 +17,12 @@ void unxz_files(const char *xz_filename)
         exit(EXIT_FAILURE);
     }
 
-    // Erstelle das vollständige Zielverzeichnis
+    // make full path
     char output_dir_xz[512];
     snprintf(output_dir_xz, sizeof(output_dir_xz), "%s/%s", home_dir, TARGET_DIR);
     
 
-    // Entferne die .xz Endung für den Namen der Ausgabedatei
+    // remove .xz from the output
     char output_xz_filename[512];
     const char *dot_xz = strrchr(xz_filename, '.');
     if (dot_xz && strcmp(dot_xz, ".xz") == 0) 
@@ -38,18 +38,18 @@ void unxz_files(const char *xz_filename)
         g_printf("Keine xz-komprimierte Datei!\n");
     }
     
-    // Erstelle den vollständigen Pfad zur Ausgabedatei
+    // make full path to outout file
     char output_file_xz[512];
     snprintf(output_file_xz, sizeof(output_file_xz), "%s", output_xz_filename);
 
-    // Erstelle den Befehl für unxz
+    // create unxz command
     char command[1024];
     snprintf(command, sizeof(command), "unxz -c %s > %s", xz_filename, output_file_xz);
 
-    // Ausgabe des Befehls
+    // output of the command
     g_printf("Führe Befehl aus: %s\n", command);
 
-    // Führe den Befehl aus
+    // run command
     int result = system(command);
     if (result != 0) 
     {
