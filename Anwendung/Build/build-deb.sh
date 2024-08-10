@@ -9,7 +9,7 @@ VERSION="$( cat version.txt )"
 home_dir="$HOME"
 
 # the other directory
-source_dir="$home_dir/fastboot-assistant/Anwendung"
+source_dir="$home_dir/fastboot-assistant"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -31,18 +31,18 @@ chmod a+x "$instructions_dir"
 
 # Check if target directory exists
 while true; do
-    read -p "Muss der Ordner build-project erstellt werden? (j/n): " answer
+    read -p "Must build-project be created? (j/n): " answer
     if [[ "$answer" == "j" ]]; then
-        echo "Erstelle Verzeichnis."
+        echo "Create Directory."
         rm -r "$target_dir"
         mkdir "$target_dir"
-        echo "Fertig"
+        echo "Ready."
         break
     elif [[ "$answer" == "n" ]]; then
-        echo "Wird nicht erstellt."
+        echo "Not created."
         break
     else
-        echo "Ungültige Eingabe. Bitte 'j' oder 'n' eingeben."
+        echo "Invalid input. Please enter 'j' or 'n'."
     fi
 done
     
@@ -54,55 +54,55 @@ find "$reboot_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$flash_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$preflash_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$instructions_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
-echo "Alle Dateien wurden nach $target_dir kopiert."
+echo "Copy all files to $target_dir."
 # set Authorisation
 chmod a+x "$target_dir"
-cd "$target_dir" || { echo "Fehler beim Wechseln ins Verzeichnis $target_dir"; exit 1; }
+cd "$target_dir" || { echo "Error with changing to $target_dir"; exit 1; }
 
 # Build files
-echo "Starte Build."
+echo "Start building application."
 if make; then
-    echo "Build erfolgreich."
+    echo "Build successful."
 else
-    echo "Build fehlgeschlagen."
+    echo "Error in the build process."
     exit 1
 fi
 
 # copy output to output-dir
-echo "Kopieren des Paketes."
+echo "Copy package."
 rm -r "$output_dir"
 mkdir "$output_dir"
 cp Projekt-122-l "$output_dir"
 chmod a+x "$output_dir"
-echo "Fertig kopiert."
+echo "Ready."
 
 # Cleanup prompt
 while true; do
-    read -p "Möchten Sie aufräumen? (j/n): " answer
+    read -p "Do you want cleaning old files? (j/n): " answer
     if [[ "$answer" == "j" ]]; then
-        echo "Starte make clean"
+        echo "Start make clean."
         make clean
         rm -r "$target_dir"
-        echo "Aufräumen abgeschlossen."
+        echo "Cleaning successful."
         break
     elif [[ "$answer" == "n" ]]; then
-        echo "Wird nicht aufgeräumt."
+        echo "No cleaning"
         break
     else
-        echo "Ungültige Eingabe. Bitte 'j' oder 'n' eingeben."
+        echo "Please use 'j' or 'n'."
     fi
 done
 
-echo "Wechseln ins Build Verzeichnis."
-cd "$source_dir" || { echo "Fehler beim Wechseln ins Verzeichnis $source_dir"; exit 1; }
+echo "Changing to build directory."
+cd "$source_dir" || { echo "Error with changing to $source_dir"; exit 1; }
 # Remove files from previous build
-echo "Löschen alter Build-Verzeichnisse"
+echo "Delete old build files."
 rm -r deb/usr/
 
 # Prepare deb files for packaging
-echo "Vorbereitung Build laufen..."
+echo "Start build..."
 mkdir -p deb/usr/bin/projekt-122
-echo "Kopieren der benötigten Dateien..."
+echo "Copy all files..."
 cp -r  "$output_dir/Projekt-122-l" deb/usr/bin/projekt-122/
 cp -r "$preflash_dir/backup_root.sh" deb/usr/bin/projekt-122/
 cp -r "$preflash_dir/prepare.sh" deb/usr/bin/projekt-122/
@@ -111,13 +111,13 @@ cp "$build_dir/sweet_unix.png" deb/usr/share/icons/hicolor/256x256/apps/
 mkdir -p deb/usr/share/applications/
 cp "$build_dir/fastboot-assistant.desktop" deb/usr/share/applications/
 
-echo "Setzen der Berechtigungen..."
+echo "Set authorisations..."
 chmod a+x deb/usr/bin/projekt-122
 chmod 755 deb/DEBIAN
 
 # Build deb package
-echo "Starte Build..."
+echo "Build package..."
 sed -i "2s/.*/Version: $VERSION/" deb/DEBIAN/control
 dpkg-deb --build -Zxz --root-owner-group deb
 mv deb.deb Projekt-122-l-de.deb
-echo "Build beendet."
+echo "Package ready."
