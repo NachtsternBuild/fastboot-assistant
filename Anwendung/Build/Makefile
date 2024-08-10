@@ -26,6 +26,7 @@ SRCS =	header_connected_devices.c \
 		header_show_message_with_title.c \
 		header_check_active_slot.c \
 		header_get_slot.c \
+		header_get_home.c \
 		get_devices.c \
 		reboot_fastboot.c \
 		reboot.c \
