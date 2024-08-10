@@ -8,6 +8,7 @@ CFLAGS = -Wall `pkg-config --cflags gtk+-3.0`
 LIBS = `pkg-config --libs gtk+-3.0`
 # the headers
 HEADERS =	flash_function_header.h \
+			file_chooser_header.h \
 			instruction_header.h \
 			program_functions.h \
 			function_header.h 
@@ -15,12 +16,12 @@ HEADERS =	flash_function_header.h \
 # the source files
 # this is an experimental file
 # header_get_info.c \
-# backup_root.c
-# prepare.c
+# all prepare functions
 SRCS =	header_connected_devices.c \
 		header_delete_files_in_dir.c \
 		header_execute_command.c \
 		header_open_terminal_by_desktop.c \
+		header_show_file_chooser.c \
 		header_show_message.c \
 		header_show_message_with_title.c \
 		header_check_active_slot.c \
@@ -36,8 +37,15 @@ SRCS =	header_connected_devices.c \
 		remove_old.c \
 		preflash_GUI.c \
 		backup_function.c \
+		backup_root.c \
 		backup_noroot.c \
-		prepare_function.c \
+		prepare.c \
+		rename_boot.c \
+		rename_recovery.c \
+		rename_vendor.c \
+		rename_system.c \
+		rename_payload.c \
+		unxz_files.c \
 		erase_data.c \
 		lock_unlock_bootloader.c \
 		set_active_slot.c \
