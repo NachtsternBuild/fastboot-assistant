@@ -27,8 +27,17 @@
 // rename a file to vendor.img
 void rename_vendor(const gchar *ven_filename) 
 {
-    const gchar *vendor_filename = "vendor.img"; 
-    if (rename(ven_filename, vendor_filename) == 0) 
+    gchar *target_directory_vendor = get_home("~/Downloads/ROM-Install/");
+    if (target_directory_vendor == NULL) 
+    {
+        g_print("Fehler beim Erweitern des Verzeichnispfads.\n");
+        return;
+    }
+    
+    const gchar *vendor_filename = "vendor.img";
+    gchar *target_path_vendor = g_strconcat(target_directory_vendor, vendor_filename, NULL);
+     
+    if (rename(ven_filename, target_path_vendor) == 0) 
     {
         g_print("Datei erfolgreich umbenannt: %s -> %s\n", ven_filename, vendor_filename);
     } 
@@ -37,4 +46,6 @@ void rename_vendor(const gchar *ven_filename)
     {
         g_print("Fehler beim Umbenennen der Datei: %s\n", ven_filename);
     }
+    g_free(target_directory_vendor);
+    g_free(target_path_vendor);
 }
