@@ -35,11 +35,11 @@
 typedef void (*FileProcessorFunc)(const gchar *filename);
 
 // the functions
-void prepare_boot(const gchar *boo_filename);
-void prepare_recovery(const gchar *rec_filename);
-void prepare_vendor(const gchar *ven_filename);
-void prepare_system(const gchar *sys_filename);
-void prepare_payload(const gchar *pay_filename);
+void rename_boot(const gchar *bo_filename);
+void rename_recovery(const gchar *rec_filename);
+void rename_vendor(const gchar *ven_filename);
+void rename_system(const gchar *sys_filename);
+void rename_payload(const gchar *pay_filename);
 void unxz_files(const gchar *xz_filename);
 
 #endif
