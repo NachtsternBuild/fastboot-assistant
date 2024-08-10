@@ -16,15 +16,15 @@ void backup_root()
 
     printf("Sicherung aller verfügbaren Partitionen nach %s.\n", BACKUP_DIR);
 
-    // Sicherungspfad erstellen
+    // create backup path
     snprintf(command, sizeof(command), "mkdir -p %s", BACKUP_DIR);
     execute_command(command);
 
-    // Gerät mit adb verbinden
+    // connect device with adb
     snprintf(command, sizeof(command), "%s wait-for-device", ADB);
     execute_command(command);
 
-    // Ermitteln der Partitionen
+    // get partitions
     snprintf(command, sizeof(command), "%s shell %s -c \"ls %s\" > partitions.txt", ADB, SU, BLOCK_PATH);
     execute_command(command);
 
@@ -38,15 +38,15 @@ void backup_root()
     char partition[128];
     while (fgets(partition, sizeof(partition), file)) 
     {
-        // Entfernen des Zeilenumbruchs
+        // delete linebreak
         partition[strcspn(partition, "\r\n")] = 0;
 
-        // Überprüfen, ob die Partition Slots hat
+        // get slots 
         snprintf(command, sizeof(command), "%s shell %s -c \"ls %s%s_a\" >/dev/null 2>&1", ADB, SU, BLOCK_PATH, partition);
         int has_slot_a = system(command);
 
         if (has_slot_a == 0) 
-        { // Partition hat Slots
+        { // devices with a/b slots
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
                 snprintf(command, sizeof(command), "%s/%s_%c.img", BACKUP_DIR, partition, slot);
@@ -59,7 +59,7 @@ void backup_root()
         } 
         
         else 
-        { // Partition hat keine Slots
+        { // devices without a/b slots
             snprintf(command, sizeof(command), "%s/%s.img", BACKUP_DIR, partition);
             printf("Sichere %s nach %s\n", partition, command);
 
@@ -71,5 +71,4 @@ void backup_root()
 
     fclose(file);
     printf("Sicherung abgeschlossen. Dateien befinden sich in %s\n", BACKUP_DIR);
-    return 0;
 }
