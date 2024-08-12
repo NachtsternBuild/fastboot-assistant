@@ -20,94 +20,123 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h>
-#include <unistd.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-void remove_old_function(const char *option) 
+#define MAX_BUFFER_SIZE 256
+// Callback functions for each button
+// remove the 'ROM-Install' dir 
+static void remove_rom_install(GtkWidget *widget, gpointer data) 
 {
     GtkWidget *dialog;
-    const char *title, *message;
-
-    if (strcmp(option, "rom_install") == 0) 
-    {
-        title = "Löschen ROM-Install";
-        message = "Lösche ~/Downloads/ROM-Install\n";
-        system("rm -r ~/Downloads/ROM-Install");
-    } 
+    const char *message; 
+    message = "Lösche ~/Downloads/ROM-Install\n";
+    show_message(message);
     
-    else if (strcmp(option, "update_project") == 0) 
-    {
-        title = "Löschen Update-Verzeichnis";
-        message = "Lösche ~/Downloads/UpdateProjekt122\n";
-        system("rm -r ~/Downloads/UpdateProjekt122");
-    } 
+    system("rm -rf ~/Downloads/ROM-Install");
     
-    else if (strcmp(option, "file_on_rom_install") == 0) 
-    {
-        title = "Lösche Dateien in ROM-Install";
-        message = "Lösche Dateien\n";
-        const char *directory_path = "~/Downloads/ROM-Install/";
-        delete_files_in_dir(directory_path);
-    } 
-    
-    else 
-    {
-        title = "Unbekannte Option";
-        message = "Sie wissen auch nicht was sie wollen, oder?";
-    }
-
-    dialog = gtk_message_dialog_new(NULL,
-                                     GTK_DIALOG_MODAL,
-                                     GTK_MESSAGE_INFO,
-                                     GTK_BUTTONS_OK,
-                                     "%s\n\n%s", title, message);
-
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    message = "Fertig.\n";
+    show_message(message);
 }
 
-// Callback function when the button is clicked
-void button_remove_old_start(GtkWidget *widget, gpointer data) 
+// remove old files in 'ROM-Install'
+static void remove_old_files(GtkWidget *widget, gpointer data) 
 {
-    const char *option = (const char *)data;
-    remove_old_function(option);
+    GtkWidget *dialog;
+    const char *message;
+    message = "Lösche alle Dateien in ROM-Install.\n";
+    show_message(message);
+    
+    system("rm -rf ~/Downloads/ROM-Install/*");
+    system("mkdir ~/Downloads/ROM-Install/Backup");
+    system("mkdir ~/Downloads/ROM-Install/Backup/Noroot");
+    system("mkdir ~/Downloads/ROM-Install/Images");
+    
+    message = "Fertig.\n";
+	show_message(message);
 }
 
-void remove_old(int argc, char *argv[]) 
+// remove backups
+static void remove_backups(GtkWidget *widget, gpointer data) 
 {
-    // Initialize GTK
+    GtkWidget *dialog;
+    const char *message;
+    message = "Lösche alle Dateien im Backup-Ordner.\n";
+    show_message(message);
+    
+    system("rm -rf ~/Downloads/ROM-Install/Backup/*");
+    system("mkdir ~/Downloads/ROM-Install/Backup/Noroot");
+    
+    message = "Fertig.\n";
+	show_message(message);
+}
+
+/* main function of preflash_GUI*/
+void backup_function(int argc, char *argv[]) 
+{
+    GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
+    char button_labels[6][20] = {"ROM-Install", "alte Dateien", "Backups"};
+
     gtk_init(&argc, &argv);
 
-    // Create the main window
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Löschen von:");
-    gtk_window_set_default_size(GTK_WINDOW(window), 300, 200);
+    // create new windows
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Löschen von:");
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
-    // Create a vertical box
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
+    // create a grid
+    grid = gtk_grid_new();
+    gtk_container_add(GTK_CONTAINER(window), grid);
 
-    // Create buttons
-    GtkWidget *button_rom_install = gtk_button_new_with_label("ROM-Install");
-    g_signal_connect(button_rom_install, "clicked", G_CALLBACK(button_remove_old_start), "rom_install");
+    // add buttons and connect them with callback
+    for (int i = 0; i < 3; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(remove_rom_install), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(remove_old_files), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(remove_backups), NULL);
+                break;
+        }
+    }
 
-    GtkWidget *button_update_project = gtk_button_new_with_label("UpdateProjekt122");
-    g_signal_connect(button_update_project, "clicked", G_CALLBACK(button_remove_old_start), "update_project");
-    
-    GtkWidget *button_files_rom_install = gtk_button_new_with_label("Dateien in ROM-Install");
-    g_signal_connect(button_files_rom_install, "clickes", G_CALLBACK(button_remove_old_start), "file_on_rom_install");
+    /* change the style of the buttons to quick settings buttons from android 12 - css is used for this*/
+    GtkCssProvider *provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_data(provider,
+                                    "button {\n"
+                                    "    background-color: #8B0000;\n" /* darkred */
+            						"	 border: none;\n"
+            						"	 border-radius: 12px;\n" /* round corners */
+            						"	 padding: 12px 24px;\n" /* inside distance */
+            						"	 color: #ffffff;\n" /* White text */
+            						"	 font-size: 16px;\n" /* Font size */
+            						"	 font-weight: 500;\n" /* Medium font */
+            						"	 text-align: center;\n" /* Centre text */
+            						"	 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n" /* Light shade */
+            						"	 transition: background-color 0.3s ease, box-shadow 0.3s ease;\n" /* Animation */
+                                    "}\n"
+                                    "button:hover {\n"
+                                    "    background-color: #A52A2A;\n" /* Brighter red on hover */
+            						"	 box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);\n" /* Amplify shadows */
+                                    "}\n",
+                                    -1,
+                                    NULL);
+    GtkStyleContext *context = gtk_widget_get_style_context(window);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref(provider);
 
-    // Pack buttons into the box
-    gtk_box_pack_start(GTK_BOX(vbox), button_rom_install, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), button_update_project, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), button_files_rom_install, TRUE, TRUE, 0);
-    
-    // Show all the widgets
+    // show window
     gtk_widget_show_all(window);
 
-    // Run the GTK main loop
+    // run main-gtk-loop
     gtk_main();
 }
+
