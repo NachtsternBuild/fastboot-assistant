@@ -28,13 +28,14 @@ chmod a+x "$reboot_dir"
 chmod a+x "$flash_dir"
 chmod a+x "$preflash_dir"
 chmod a+x "$instructions_dir"
+chmod a+x "$build_dir"
 
 # Check if target directory exists
 while true; do
     read -p "Must build-project be created? (j/n): " answer
     if [[ "$answer" == "j" ]]; then
         echo "Create Directory."
-        rm -r "$target_dir"
+        rm -rf "$target_dir"
         mkdir "$target_dir"
         echo "Ready."
         break
@@ -71,7 +72,7 @@ fi
 
 # copy output to output-dir
 echo "Copy package."
-rm -r "$output_dir"
+rm -rf "$output_dir"
 mkdir "$output_dir"
 cp Projekt-122-l "$output_dir"
 chmod a+x "$output_dir"
