@@ -38,5 +38,6 @@ int get_slot_of_device();
 void get_info();
 void show_file_chooser(GtkWidget *widget, gpointer data);
 gchar* get_home(const gchar *path);
+void open_url();
 
 #endif
