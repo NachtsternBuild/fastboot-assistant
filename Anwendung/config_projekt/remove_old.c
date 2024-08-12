@@ -72,7 +72,7 @@ static void remove_backups(GtkWidget *widget, gpointer data)
 }
 
 /* main function of preflash_GUI*/
-void backup_function(int argc, char *argv[]) 
+void remove_old(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
