@@ -9,7 +9,7 @@ VERSION="$( cat version.txt )"
 home_dir="$HOME"
 
 # the other directory
-source_dir="$home_dir/fastboot-assistant"
+source_dir="$home_dir/fastboot-assistant/Anwendung"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -28,13 +28,14 @@ chmod a+x "$reboot_dir"
 chmod a+x "$flash_dir"
 chmod a+x "$preflash_dir"
 chmod a+x "$instructions_dir"
+chmod a+x "$build_dir"
 
 # Check if target directory exists
 while true; do
     read -p "Must build-project be created? (j/n): " answer
     if [[ "$answer" == "j" ]]; then
         echo "Create Directory."
-        rm -r "$target_dir"
+        rm -rf "$target_dir"
         mkdir "$target_dir"
         echo "Ready."
         break
@@ -54,6 +55,7 @@ find "$reboot_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$flash_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$preflash_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 find "$instructions_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+find "$build_dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 echo "Copy all files to $target_dir."
 # set Authorisation
 chmod a+x "$target_dir"
@@ -82,7 +84,7 @@ while true; do
     if [[ "$answer" == "j" ]]; then
         echo "Start make clean."
         make clean
-        rm -r "$target_dir"
+        rm -rf "$target_dir"
         echo "Cleaning successful."
         break
     elif [[ "$answer" == "n" ]]; then
