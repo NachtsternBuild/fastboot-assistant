@@ -54,7 +54,7 @@ void unxz_files(const char *xz_filename)
     int result = system(command);
     if (result != 0) 
     {
-        g_fprintf(stderr, "Fehler beim Ausführen des Befehls\n");
+        g_print("Fehler beim Ausführen des Befehls\n");
         exit(EXIT_FAILURE);
     }
 }
