@@ -16,35 +16,21 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 %prep
 %setup -q
 
-%build
-
-#%install
-#rm -rf %{buildroot}
-#mkdir -p %{buildroot}/%{_bindir}
-#mkdir -p %{buildroot}/%{_libdir}/%{name}
-#mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/256x256/apps/
-#mkdir -p %{buildroot}/%{_datadir}/applications/
-
-# Kopieren Sie die Dateien in das Buildroot-Verzeichnis
-#cp %{_libdir}/%{name}/%{name} %{buildroot}/%{_bindir}/%{name}
-#cp %{_libdir}/%{name}/sweet_unix.png %{buildroot}/%{_datadir}/icons/hicolor/256x256/apps/
-#cp %{_libdir}/%{name}/fastboot-assistant.desktop %{buildroot}/%{_datadir}/applications/
-
 %install
-rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/bin
-mkdir -p %{buildroot}/usr/lib64/fastboot-assistant
-mkdir -p %{buildroot}/usr/share/icons/hicolor/256x256/apps/
-mkdir -p %{buildroot}/usr/share/applications/
+rm -rf %RPM_BUILD_ROOT
+mkdir -p %RPM_BUILD_ROOT/usr/bin
+mkdir -p %RPM_BUILD_ROOT/usr/lib64/fastboot-assistant
+mkdir -p %RPM_BUILD_ROOT/usr/share/icons/hicolor/256x256/apps/
+mkdir -p %RPM_BUILD_ROOT/usr/share/applications/
 
 # Copy the binary and other necessary files
-cp %{_builddir}/fastboot-assistant-0.5.3/fastboot-assistant %{buildroot}/usr/lib64/fastboot-assistant/
-ln -s /usr/lib64/fastboot-assistant/Projekt-122-l %{buildroot}/usr/bin/fastboot-assistant
+cp %{_builddir}/fastboot-assistant-0.5.3/fastboot-assistant %RPM_BUILD_ROOT/usr/lib64/fastboot-assistant/
+ln -s /usr/lib64/fastboot-assistant/Projekt-122-l %RPM_BUILD_ROOT/usr/bin/fastboot-assistant
 cp %{_libdir}/%{name}/sweet_unix.png %{buildroot}/%{_datadir}/icons/hicolor/256x256/apps/
-cp %{_libdir}/%{name}/fastboot-assistant.desktop %{buildroot}/%{_datadir}/applications/
+cp %{_libdir}/%{name}/fastboot-assistant.desktop %RPM_BUILD_ROOT/%{_datadir}/applications/
 
 %clean
-rm -rf %{buildroot}
+rm -rf %RPM_BUILD_ROOT
 
 %files
 %{_bindir}/%{name}
