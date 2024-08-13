@@ -117,5 +117,5 @@ cp -r rpmbuild "$HOME/"
 echo "Set version..."
 sed -i "2s/.*/Version:        $VERSION/" ./rpmbuild/SPECS/fastboot-assistant.spec
 echo "Build package..."
-rpmbuild -ba ./rpmbuild/SPECS/fastboot-assistant.spec
+rpmbuild -ba ./rpmbuild/SPECS/fastboot-assistant.spec --without debuginfo
 echo "Your rpm package is now at $HOME/rpmbuild/RPMS/"
