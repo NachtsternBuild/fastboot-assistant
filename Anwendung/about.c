@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
 #include <stdlib.h>
+#include "program_functions.h"
 
 // function to open the GitHub website from the fastboot-assistant
 void fastboot_assistant(GtkWidget *widget, gpointer data)
