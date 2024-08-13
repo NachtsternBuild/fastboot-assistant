@@ -17,7 +17,7 @@ output_dir="${source_dir}/output"
 build_dir="${source_dir}/Build"
 
 # Set Authorization for directories if they exist
-for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$prflash_dir" "$instruction_dir"; do
+for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instruction_dir"; do
     if [ -d "$dir" ]; then
         chmod a+x "$dir"
     fi
@@ -45,7 +45,7 @@ while true; do
 done
 
 # Copy files$
-for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$prflash_dir" "$instruction_dir"; do
+for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instruction_dir"; do
     find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 done
 
