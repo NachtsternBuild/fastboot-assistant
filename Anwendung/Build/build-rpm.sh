@@ -3,7 +3,7 @@
 # thanks to @jean28518
 # this is a modified version of the bash script, for RPM package building from linux-assistant
 
-VERSION="$( cat version.txt )"
+VERSION="$(cat Build/version.txt)"
 
 # Define directory paths
 home_dir="$HOME"
@@ -103,8 +103,8 @@ rm -rf rpmbuild/SOURCES
 
 # Prepare rpm files for packaging
 mkdir -p rpmbuild/SOURCES/fastboot-assistant-$VERSION
-cp -r "$output_dir/"* rpmbuild/SOURCES/fastboot-assistant-$VERSION/
-chmod +x rpmbuild/SOURCES/fastboot-assistant-$VERSION/fastboot-assistant
+cp -r "$output_dir/"* rpmbuild/SOURCES/fastboot-assistant-$VERSION/fastboot-assistant
+chmod a+x rpmbuild/SOURCES/fastboot-assistant-$VERSION/fastboot-assistant
 
 # Check if files exist before copying
 if [ -f "$build_dir/fastboot-assistant.desktop" ]; then
