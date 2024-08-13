@@ -21,6 +21,11 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
+extern void instruction_root();
+extern void instruction_gsi();
+extern void instruction_custom_rom();
+extern void instruction_recovery();
+
 // button 1 - inst. for root
 static void inst_root(GtkWidget *widget, gpointer data)
 {
