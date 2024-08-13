@@ -2,14 +2,14 @@
  *-------------------------------------------*
  *                Projekt 122 - GUI          *
  *-------------------------------------------*
- *			funkelnde Datenkristalle		 *
+ *              funkende Datenkristalle      *
  *-------------------------------------------*
  *  	Apache License, Version 2.0		     *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
- *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern - updater				 *
+ *  Programm, um das Installieren von 		 *
+ *	Custom-ROMs und GSIs auf Android-Geräte *
+ *	zu erleichtern - Updater				 *
  *                                           *
  *-------------------------------------------*
  *      (C) Copyright 2023 Elias Mörz 		 *
@@ -23,8 +23,8 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-// get the new version from github
-void get_latest_release_url(const char *repo, char *url_buffer) 
+// Funktion, um die neueste Release-URL von GitHub abzurufen
+void get_latest_release_url(const char *repo, char *url_buffer, size_t buffer_size) 
 {
     char command[512];
     snprintf(command, sizeof(command),
@@ -33,21 +33,22 @@ void get_latest_release_url(const char *repo, char *url_buffer)
     FILE *fp = popen(command, "r");
     if (fp == NULL) 
     {
-        perror("popen");
+        perror("Fehler beim Ausführen des Befehls");
         exit(EXIT_FAILURE);
     }
     
-    if (fgets(url_buffer, 256, fp) == NULL) 
+    if (fgets(url_buffer, buffer_size, fp) == NULL) 
     {
-        perror("fgets");
+        fprintf(stderr, "Fehler beim Abrufen der URL\n");
+        pclose(fp);
         exit(EXIT_FAILURE);
     }
     
-    url_buffer[strcspn(url_buffer, "\n")] = '\0';  // remove line breaks
+    url_buffer[strcspn(url_buffer, "\n")] = '\0';  // Entfernen des Zeilenumbruchs
     pclose(fp);
 }
 
-// download the file
+// Funktion, um eine Datei herunterzuladen
 int download_file(const char *url, const char *outfilename) 
 {
     char command[512];
@@ -55,57 +56,56 @@ int download_file(const char *url, const char *outfilename)
     return system(command);
 }
 
-// show message function (assuming it is implemented elsewhere)
-void show_message(const char *message);
-
-// open terminal function (assuming it is implemented elsewhere)
-void open_terminal_by_desktop(const char *command);
-
-// main function
+// Hauptfunktion
 void updater(void) 
 {
-    int argc = 0;         // Declare argc
-    char **argv = NULL;   // Declare argv
+    int argc = 0;
+    char **argv = NULL;
 
-    const char *repo = "NachtsternBuild/fastboot-assitant"; 
+    const char *repo = "NachtsternBuild/fastboot-assistant"; 
     char download_url[256];
-    get_latest_release_url(repo, download_url);  // run get url
+    get_latest_release_url(repo, download_url, sizeof(download_url));  // Abrufen der URL
+
     if (strlen(download_url) > 0) 
     {
         printf("Neueste Version URL: %s\n", download_url);
         gtk_init(&argc, &argv);
 
-        // buffer for the message
         char message[256];
-        snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeuste Version wird heruntergeladen.\n", download_url);
-        // show message
+        snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeueste Version wird heruntergeladen.\n", download_url);
         show_message(message);
 
-        const char *output_directory = getenv("HOME"); // set home as main dir
+        const char *output_directory = getenv("HOME");
+        if (output_directory == NULL) 
+        {
+            fprintf(stderr, "Fehler: HOME-Verzeichnis nicht gefunden\n");
+            exit(EXIT_FAILURE);
+        }
+
         char output_file[512];
-        snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant.deb", output_directory);
+        snprintf(output_file, sizeof(output_file), "%s/Downloads/Projekt-122-l.deb", output_directory);
 
         const char *download_message = "Paket heruntergeladen.\nWird installiert.\n";
-        // show message
         show_message(download_message);
 
-        // download the .deb-file
+        // Datei herunterladen
         if (download_file(download_url, output_file) == 0) 
         {
             printf("Paket heruntergeladen: %s\n", output_file);
 
-            // install the .deb-file
-            open_terminal_by_desktop("sudo apt install ~/fastboot-assistant.deb && exit");
+            char install_command[512];
+            snprintf(install_command, sizeof(install_command), "sudo apt-get install -y %s && exit", output_file);
+            open_terminal_by_desktop(install_command);
             printf("Fertig!\n");
         } 
         else 
         {
-            printf("Fehler beim Herunterladen des Pakets\n");
+            fprintf(stderr, "Fehler beim Herunterladen des Pakets\n");
         }
+        gtk_main();
     } 
     else 
     {
-        printf("Fehler beim Abrufen der neuesten Version\n");
+        fprintf(stderr, "Fehler beim Abrufen der neuesten Version\n");
     }
 }
-
