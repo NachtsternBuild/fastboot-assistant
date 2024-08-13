@@ -31,8 +31,7 @@ void backup_root()
     FILE *file = fopen("partitions.txt", "r");
     if (!file) 
     {
-        perror("Fehler beim Öffnen der partitions.txt");
-        return EXIT_FAILURE;
+        g_print("Fehler beim Öffnen der partitions.txt");
     }
 
     char partition[128];
@@ -50,7 +49,7 @@ void backup_root()
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
                 snprintf(command, sizeof(command), "%s/%s_%c.img", BACKUP_DIR, partition, slot);
-                printf("Sichere %s (Slot %c) nach %s\n", partition, slot, command);
+                g_printf("Sichere %s (Slot %c) nach %s\n", partition, slot, command);
 
                 snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", 
                         ADB, SU, DD, BLOCK_PATH, partition, slot, DD, BACKUP_DIR, partition, slot);
@@ -61,7 +60,7 @@ void backup_root()
         else 
         { // devices without a/b slots
             snprintf(command, sizeof(command), "%s/%s.img", BACKUP_DIR, partition);
-            printf("Sichere %s nach %s\n", partition, command);
+            g_printf("Sichere %s nach %s\n", partition, command);
 
             snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", 
                     ADB, SU, DD, BLOCK_PATH, partition, DD, BACKUP_DIR, partition);
