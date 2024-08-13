@@ -107,11 +107,15 @@ if [ -f "$build_dir/sweet_unix.png" ]; then
     cp "$build_dir/sweet_unix.png" rpmbuild/SOURCES/fastboot-assistant-$VERSION/
 fi
 
+echo "Build RPM..."
 cd rpmbuild/SOURCES/
+echo "Create Tar..."
 tar -czvf fastboot-assistant-$VERSION.tar.gz fastboot-assistant-$VERSION
 cd ../../
+echo "Copy everything to $HOME"
 cp -r rpmbuild "$HOME/"
+echo "Set version..."
 sed -i "2s/.*/Version:        $VERSION/" ./rpmbuild/SPECS/fastboot-assistant.spec
+echo "Build package..."
 rpmbuild -ba ./rpmbuild/SPECS/fastboot-assistant.spec
 echo "Your rpm package is now at $HOME/rpmbuild/RPMS/"
-
