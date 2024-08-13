@@ -2,8 +2,6 @@
  *-------------------------------------------*
  *                Projekt 122 - GUI          *
  *-------------------------------------------*
- *              funkende Datenkristalle      *
- *-------------------------------------------*
  *  	Apache License, Version 2.0		     *
  *-------------------------------------------*
  *                                           *
@@ -102,10 +100,11 @@ void updater(void)
         {
             fprintf(stderr, "Fehler beim Herunterladen des Pakets\n");
         }
-        gtk_main();
+        gtk_main_quit();
     } 
     else 
     {
         fprintf(stderr, "Fehler beim Abrufen der neuesten Version\n");
     }
+    gtk_main();
 }
