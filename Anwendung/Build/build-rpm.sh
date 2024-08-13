@@ -2,7 +2,7 @@
 # build-rpm.sh
 # thanks to @jean28518
 # this is a modified version of the bash script, for RPM package building from linux-assistant
-VERSION="$( cat version.txt )"
+VERSION="$(cat Build/version.txt)"
 
 # Define directory
 # home directory
