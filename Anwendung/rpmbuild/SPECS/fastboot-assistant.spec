@@ -1,5 +1,5 @@
 Name:           fastboot-assistant
-Version:        0.5.2
+Version:        0.5.3
 Release:        1%{?dist}
 Summary:        Program to facilitate the installation of custom ROMs and GSIs on Android devices.
 License:        Apache License Version 2.0
@@ -39,7 +39,7 @@ mkdir -p %{buildroot}/usr/share/applications/
 
 # Copy the binary and other necessary files
 cp %{_builddir}/fastboot-assistant-0.5.3/fastboot-assistant %{buildroot}/usr/lib64/fastboot-assistant/
-ln -s /usr/lib64/fastboot-assistant/fastboot-assistant %{buildroot}/usr/bin/fastboot-assistant
+ln -s /usr/lib64/fastboot-assistant/Projekt-122-l %{buildroot}/usr/bin/fastboot-assistant
 cp %{_libdir}/%{name}/sweet_unix.png %{buildroot}/%{_datadir}/icons/hicolor/256x256/apps/
 cp %{_libdir}/%{name}/fastboot-assistant.desktop %{buildroot}/%{_datadir}/applications/
 
