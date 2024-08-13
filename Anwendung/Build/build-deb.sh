@@ -2,7 +2,7 @@
 # build-deb.sh
 # thanks to @jean28518
 # this is a modified version of the bash script, for Debian package building from linux-assistant
-VERSION="$( cat version.txt )"
+VERSION="$(cat Build/version.txt)"
 
 # Define directory
 # home directory
@@ -119,7 +119,9 @@ chmod 755 deb/DEBIAN
 
 # Build deb package
 echo "Build package..."
+echo "Set version..."
 sed -i "2s/.*/Version: $VERSION/" deb/DEBIAN/control
+echo "Build DEBIAN package..."
 dpkg-deb --build -Zxz --root-owner-group deb
 mv deb.deb Projekt-122-l-de.deb
 echo "Package ready."
