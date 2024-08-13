@@ -14,7 +14,7 @@ void backup_root()
 {
     char command[512];
 
-    printf("Sicherung aller verfügbaren Partitionen nach %s.\n", BACKUP_DIR);
+    g_print("Sicherung aller verfügbaren Partitionen nach %s.\n", BACKUP_DIR);
 
     // create backup path
     snprintf(command, sizeof(command), "mkdir -p %s", BACKUP_DIR);
@@ -49,7 +49,7 @@ void backup_root()
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
                 snprintf(command, sizeof(command), "%s/%s_%c.img", BACKUP_DIR, partition, slot);
-                g_printf("Sichere %s (Slot %c) nach %s\n", partition, slot, command);
+                g_print("Sichere %s (Slot %c) nach %s\n", partition, slot, command);
 
                 snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", 
                         ADB, SU, DD, BLOCK_PATH, partition, slot, DD, BACKUP_DIR, partition, slot);
@@ -60,7 +60,7 @@ void backup_root()
         else 
         { // devices without a/b slots
             snprintf(command, sizeof(command), "%s/%s.img", BACKUP_DIR, partition);
-            g_printf("Sichere %s nach %s\n", partition, command);
+            g_print("Sichere %s nach %s\n", partition, command);
 
             snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", 
                     ADB, SU, DD, BLOCK_PATH, partition, DD, BACKUP_DIR, partition);
