@@ -6,12 +6,18 @@ VERSION="$(cat Build/version.txt)"
 # Directory paths
 home_dir="$HOME"
 source_dir="$home_dir/fastboot-assistant/Anwendung"
+header_dir="${source_dir}/header"
+config_dir="${source_dir}/config_projekt"
+reboot_dir="${source_dir}/reboot"
+flash_dir="${source_dir}/flash"
+preflash_dir="${source_dir}/preflash"
+instructions_dir="${source_dir}/instructions"
 target_dir="${source_dir}/build_project"
 output_dir="${source_dir}/output"
 build_dir="${source_dir}/Build"
 
 # Set Authorization for directories if they exist
-for dir in "$source_dir" "$build_dir"; do
+for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$prflash_dir" "$instruction_dir"; do
     if [ -d "$dir" ]; then
         chmod a+x "$dir"
     fi
@@ -38,8 +44,8 @@ while true; do
     esac
 done
 
-# Copy files
-for dir in "$source_dir" "$build_dir"; do
+# Copy files$
+for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$prflash_dir" "$instruction_dir"; do
     find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 done
 
