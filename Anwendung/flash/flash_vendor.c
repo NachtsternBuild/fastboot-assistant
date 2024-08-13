@@ -81,6 +81,9 @@ void flash_vendor(int argc, char *argv[])
     gtk_widget_set_size_request(window, 800, 750);
 	gtk_widget_show(window);
 	
+	// Connect close function to 'destroy' signal
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	
 	// make button for every function with label
     GtkWidget *button_vendor_on_a = gtk_button_new_with_label("Flash Venodr (only-a-devices)");
     GtkWidget *button_vendor_on_ab = gtk_button_new_with_label("Flash Vendor (a/b-devices)");
