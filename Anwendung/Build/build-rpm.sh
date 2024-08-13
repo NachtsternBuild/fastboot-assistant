@@ -64,7 +64,7 @@ fi
 # Copy output to output-dir
 rm -rf "$output_dir"
 mkdir -p "$output_dir"
-cp fastboot-assistant "$output_dir"
+cp Projekt-122-l "$output_dir"
 chmod a+x "$output_dir"
 echo "Ready."
 
