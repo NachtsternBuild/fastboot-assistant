@@ -23,6 +23,9 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
+extern void instruction_backup();
+extern void instruction_preflash();
+
 // button 1 - inst. for root
 static void inst_backup(GtkWidget *widget, gpointer data)
 {

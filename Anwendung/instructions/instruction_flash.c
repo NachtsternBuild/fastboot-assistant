@@ -22,6 +22,7 @@
 #include "program_functions.h"
 
 extern void instruction_root();
+extern void instruction_vendor();
 extern void instruction_gsi();
 extern void instruction_custom_rom();
 extern void instruction_recovery();
