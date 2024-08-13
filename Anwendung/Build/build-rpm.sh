@@ -68,10 +68,6 @@ cp fastboot-assistant "$output_dir"
 chmod a+x "$output_dir"
 echo "Ready."
 
-# Copy the built executable to /usr/lib64/fastboot-assistant
-mkdir -p /usr/lib64/fastboot-assistant
-cp fastboot-assistant /usr/lib64/fastboot-assistant/
-
 # Cleanup prompt
 while true; do
     read -p "Do you want cleaning old files? (j/n): " answer
@@ -99,8 +95,8 @@ cd "$source_dir" || { echo "Error with changing to $source_dir"; exit 1; }
 rm -rf rpmbuild/SOURCES
 
 mkdir -p rpmbuild/SOURCES/fastboot-assistant-$VERSION
-cp -r "$output_dir/"* rpmbuild/SOURCES/fastboot-assistant-$VERSION/fastboot-assistant
-chmod a+x rpmbuild/SOURCES/fastboot-assistant-$VERSION/fastboot-assistant
+cp -r "$output_dir/Projekt-122-l" rpmbuild/SOURCES/fastboot-assistant-$VERSION/Projekt-122-l
+chmod a+x rpmbuild/SOURCES/fastboot-assistant-$VERSION/Projekt-122-l
 
 # Check if files exist before copying
 if [ -f "$build_dir/fastboot-assistant.desktop" ]; then
