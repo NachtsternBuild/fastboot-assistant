@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gtk/gtk.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
@@ -13,7 +14,7 @@ void unxz_files(const char *xz_filename)
     const char *home_dir = getenv(OUTPUT_DIR_ENV);
     if (home_dir == NULL) 
     {
-        g_fprintf(stderr, "Fehler: Home-Verzeichnis nicht gefunden.\n");
+        fprintf(stderr, "Fehler: Home-Verzeichnis nicht gefunden.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -35,7 +36,7 @@ void unxz_files(const char *xz_filename)
     else 
     {
         strncpy(output_xz_filename, xz_filename, sizeof(output_xz_filename));
-        g_printf("Keine xz-komprimierte Datei!\n");
+        g_print("Keine xz-komprimierte Datei!\n");
     }
     
     // make full path to outout file
@@ -47,7 +48,7 @@ void unxz_files(const char *xz_filename)
     snprintf(command, sizeof(command), "unxz -c %s > %s", xz_filename, output_file_xz);
 
     // output of the command
-    g_printf("Führe Befehl aus: %s\n", command);
+    g_print("Führe Befehl aus: %s\n", command);
 
     // run command
     int result = system(command);
