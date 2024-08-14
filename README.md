@@ -21,6 +21,7 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 - ***see Changelog.md for all changes or just GitHub.***
 
 ### Sweet Unix v.0.5.x
+- **fastboot-assistant (Projekt-122-l) v0.5.3.beta** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL (still experimental)
 - *fastboot-assistant (Projekt-122-l) v.0.5.2.dev* → Linux (Ubuntu/Debain) / Windows via WSL (still experimental)
 - *fastboot-assistant (Projekt-122-l) v.0.5.1.dev* → Linux (Ubuntu/Debian) / Windows via WSL (still experimental)
 
@@ -59,12 +60,19 @@ These are installed automatically with the Debian package.
 sudo apt-get install /PATH/to/fastboot-assistant.deb 
 ```
 ***or via a graphical user interface.***
+- **Install the RPM:**
+```sh
+sudo rpm -i /PATH/to/fastboot-assistant-0.5.3-1.fc40.x86_64.rpm
+```
 
 ##  Removing fastboot-assistant
 1. open terminal
 2. Execute the following command:
 ```sh
+# Debian/Ubuntu
 sudo dpkg -r --force-all Projekt-122-l
+# Fedora/RHEL/CentOS
+sudo rpm -e fastboot-assistant
 ```
 
 ## Further information
