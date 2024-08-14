@@ -45,13 +45,14 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
   - **@Jean28518 → my [build-deb.sh](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/Anwendung/Build/build-deb.sh) is a modified version of *@Jean28518s* version.**
   
 ## Installation of the programme
+### Linux
 The following tools are required to run the programme.
 - *Android Debug Bridge (adb)* 
 - *Fastboot*
 - *xz-utils*
 - *unzip*
 - *wget*
-- *heimdall*
+- *heimdall → heimdall must be installed manually on all distributions that use RPMs*
 
 These are installed automatically with the Debian package.
 *Root rights are required for installation.*
@@ -64,6 +65,9 @@ sudo apt-get install /PATH/to/fastboot-assistant.deb
 ```sh
 sudo rpm -i /PATH/to/fastboot-assistant-0.5.3-1.fc40.x86_64.rpm
 ```
+### Windows
+1. unzip the zip file
+2. Follow the steps in the README.md
 
 ##  Removing fastboot-assistant
 1. open terminal
