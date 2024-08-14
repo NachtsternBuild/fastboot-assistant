@@ -18,12 +18,12 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/bin/fastboot-assistant
+mkdir -p %{buildroot}/usr/bin/projekt-122
 mkdir -p %{buildroot}/usr/share/icons/hicolor/256x256/apps
 mkdir -p %{buildroot}/usr/share/applications
 
 # Copy the binary and other necessary files
-cp %{_builddir}/fastboot-assistant-0.5.3/Projekt-122-l %{buildroot}/usr/bin/fastboot-assistant/Projekt-122-l
+cp %{_builddir}/fastboot-assistant-0.5.3/Projekt-122-l %{buildroot}/usr/bin/projekt-122/Projekt-122-l
 # cp %{_builddir}/fastboot-assistant-0.5.3/sweet_unix.png %RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/256x256/apps/sweet_unix.png
 # cp %{_builddir}/fastboot-assistant-0.5.3/fastboot-assistant.desktop %RPM_BUILD_ROOT/%{_datadir}/applications/fastboot-assistant.desktop
 cp /home/elias/rpmbuild/BUILD/fastboot-assistant-0.5.3/sweet_unix.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
@@ -33,7 +33,7 @@ cp /home/elias/rpmbuild/BUILD/fastboot-assistant-0.5.3/fastboot-assistant.deskto
 rm -rf %{buildroot}
 
 %files
-%{_bindir}/%{name}
+%{_bindir}/projekt-122/%{name}
 %{_datadir}/applications/fastboot-assistant.desktop
 %{_datadir}/icons/hicolor/256x256/apps/sweet_unix.png
 
