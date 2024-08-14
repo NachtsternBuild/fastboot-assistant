@@ -17,18 +17,30 @@ sudo apt update
 sudo apt upgrade
 sudo apt-get install build-essential gcc libgtk-3-dev adb fastboot desktop-file-utils make dpkg-dev debhelper fakeroot lintian pbuilder devscripts
 
+# Feodra / RHEL / CentOS
+sudo dnf install -y \
+    @development-tools \
+    gcc \
+    gtk3-devel \
+    adb \
+    fastboot \
+    desktop-file-utils \
+    rpm-build \
+    rpmdevtools \
+    make
+
 ```
 3. bearbeiten sie den Quellcode mit einem Editor ihrer Wahl nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
+4. wechseln sie in das Verzeichnis *Anwendungen*
+   ```sh
+   cd ~/fastboot-assistant
+   ```
 
-4. Kompilieren sie den Code und bauen sie das Debian-Paket ausführen:
+5. Kompilieren sie den Code und bauen sie das Debian-Paket ausführen:
 ```sh
-./build.sh
+bash Build/build-deb.sh
 # oder
-bash build.sh
-# oder
-./build-deb.sh
-# oder
-bash build-deb.sh
+bash Build/build-rpm.sh
 ```
 
 ## Programmstruktur
