@@ -33,7 +33,7 @@ cp /home/elias/rpmbuild/BUILD/fastboot-assistant-0.5.3/fastboot-assistant.deskto
 rm -rf %{buildroot}
 
 %files
-%{_bindir}/projekt-122/%{name}
+%{_bindir}/projekt-122/Projekt-122-l
 %{_datadir}/applications/fastboot-assistant.desktop
 %{_datadir}/icons/hicolor/256x256/apps/sweet_unix.png
 
