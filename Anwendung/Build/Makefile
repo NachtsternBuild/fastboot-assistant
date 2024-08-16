@@ -16,7 +16,6 @@ HEADERS =	flash_function_header.h \
 # the source files
 # this is an experimental file
 # header_get_info.c \
-# all prepare functions
 SRCS =	header_connected_devices.c \
 		header_delete_files_in_dir.c \
 		header_execute_command.c \
@@ -79,7 +78,7 @@ SRCS =	header_connected_devices.c \
 		GUI.c \
 		
 OBJS = $(SRCS:.c=.o)
-TARGET = Projekt-122-l
+TARGET = fastboot-assistant
 
 all: $(TARGET)
 
