@@ -6,8 +6,8 @@ VERSION="$(cat Build/version.txt)"
 
 # Directory paths
 home_dir="$HOME"
-source_dir="$home_dir/fastboot-assistant/Anwendung"
-# source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5"
+# source_dir="$home_dir/fastboot-assistant/Anwendung"
+source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -332,8 +332,10 @@ while true; do
   			windows_zip_build
   			echo "Build finished."
   			echo "The package are at the $source_dir"
+  			break
+  			;;
 		* )
-			echo "No packet building."
+			echo "No package building."
 			break
 			;;
 	esac
