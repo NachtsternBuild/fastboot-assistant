@@ -122,6 +122,7 @@ void updater(void)
             
             if (strcmp(package_type, ".deb") == 0) 
             {
+                g_print("Start install Debian package.\n");
                 system("cd ~/Downloads/");
                 snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", output_file);
                 snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
@@ -129,6 +130,7 @@ void updater(void)
              
             else if (strcmp(package_type, ".rpm") == 0) 
             {
+                g_print("Start install RPM.\n");
                 system("cd ~/Downlaods/");
                 snprintf(install_command, sizeof(install_command), "sudo rpm -i %s && exit", output_file);
                 snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
