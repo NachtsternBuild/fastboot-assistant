@@ -14,8 +14,6 @@ HEADERS =	flash_function_header.h \
 			function_header.h 
 
 # the source files
-# this is an experimental file
-# header_get_info.c \
 SRCS =	header_connected_devices.c \
 		header_delete_files_in_dir.c \
 		header_execute_command.c \
@@ -76,7 +74,7 @@ SRCS =	header_connected_devices.c \
 		updater.c \
 		about.c \
 		GUI.c \
-		
+
 OBJS = $(SRCS:.c=.o)
 TARGET = fastboot-assistant
 
@@ -90,5 +88,7 @@ $(TARGET): $(OBJS) $(HEADERS)
 
 # make clean
 clean:
-	rm -f *.o 
+	rm -f *.o
+	rm -f $(TARGET)
+
 
