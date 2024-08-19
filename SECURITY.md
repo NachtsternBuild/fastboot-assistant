@@ -4,7 +4,7 @@
 
 | Version     | Supported          | Informations                        | Release Code                 | For the operating systems (OS)                                   |
 | ----------- | ------------------ | ----------------------------------- | ---------------------------- |----------------------------------------------------------------- |
-| 0.6.x       | :crystal_ball:     | *future versions*                   |                              |                                                                  |
+| 0.6.x       | :crystal_ball:     | *future versions*                   | *Glitschiges Gnome*          |                                                                  |
 | 0.5.5       | :crystal_ball:     | *future version*                    | *Sweet Unix System V*        |                                                                  |
 | 0.5.4.beta  | :crystal_ball:     | **the next version**                | **Sweet Unix System IV**     | **Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL**    |
 | 0.5.3.beta  | :white_check_mark: | ***active version***                | ***Sweet Unix System III***  | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)***                   |
