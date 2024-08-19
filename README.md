@@ -19,18 +19,10 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 ## Versions
 *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
 - ***see Changelog.md for all changes or just GitHub.***
+- ***see the SECURTIY.md***
 
 ### Sweet Unix v.0.5.x
 - **fastboot-assistant (Projekt-122-l) v0.5.3.beta** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL (still experimental)
-- *fastboot-assistant (Projekt-122-l) v.0.5.2.dev* → Linux (Ubuntu/Debain) / Windows via WSL (still experimental)
-- *fastboot-assistant (Projekt-122-l) v.0.5.1.dev* → Linux (Ubuntu/Debian) / Windows via WSL (still experimental)
-
-### Effervescent PC cooling v.0.4.x
-- *Projekt-122-l v.0.4.1.beta* → Linux
-- *Projekt-122-l v.0.4.beta* → Linux
-
-### Sparkling data crystals v.0.3.x
-- *Projekt-122-l v.0.3.beta* → für Linux Debian/Ubuntu
 
 ## Notes
 - Use at your own risk.
