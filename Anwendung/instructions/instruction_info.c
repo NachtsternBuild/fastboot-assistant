@@ -40,11 +40,6 @@ void instruction_info(int argc, char *argv[])
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
-    // show-text for Samsung devices
-    GtkWidget *inst25_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst25_label), "<b>Bei Samsung Geräten nutzen sie 'heimdall' statt 'fastboot' zum flashen.</b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst25_label, FALSE, FALSE, 5);
-
     // show-text for more info title
     GtkWidget *inst26_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(inst26_label), "<b><u>Weitere Infos</u></b>");
@@ -56,6 +51,16 @@ void instruction_info(int argc, char *argv[])
     GtkWidget *label_info = gtk_label_new(info_text);
     gtk_container_add(GTK_CONTAINER(frame27), label_info);
     gtk_box_pack_start(GTK_BOX(vbox), frame27, TRUE, TRUE, 5);
+    
+    // show-text for Samsung devices
+    GtkWidget *inst27_label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(inst27_label), "<b><u>Für Samsung Nutzer</b></u>");
+    gtk_box_pack_start(GTK_BOX(vbox), inst27_label, FALSE, FALSE, 5);
+    
+    // show-text for Samsung devices
+    GtkWidget *inst28_label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(inst28_label), "<b>Nutzen sie 'heimdall' statt 'fastboot' zum flashen!</b>");
+    gtk_box_pack_start(GTK_BOX(vbox), inst28_label, FALSE, FALSE, 5);
 
     // Show all elements
     gtk_widget_show_all(window);
