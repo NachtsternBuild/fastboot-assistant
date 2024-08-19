@@ -14,12 +14,54 @@
  *-------------------------------------------*
  *
  */
-
 /* headers that used in the programm */
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
+
+// function to open the GitHub website from the fastboot-assistant
+void twrp(GtkWidget *widget, gpointer data)
+{
+    const char *twrp_url = "https://www.twrp.me/";
+    
+	open_url(twrp_url);
+}
+
+// function that open the GitHub Releases page
+void e_OS(GtkWidget *widget, gpointer data)
+{
+    const char *e_OS_url = "https://e.foundation/e-os/";
+	open_url(e_OS_url);
+}
+
+// function to open the website that used for the feedback for the fastboot-assistant
+void lineage_os(GtkWidget *widget, gpointer data)
+{
+    const char *lineage_os_url = "https://lineageos.org/";
+	open_url(lineage_os);
+}
+
+// function to open the website from 'Open Android Backup'
+void project_elixir(GtkWidget *widget, gpointer data)
+{
+    const char *project_elixir_url = "https://projectelixiros.com/home";
+	open_url(project_elixir_url);
+}
+
+// function to open the website from 'Open Android Backup'
+void crdroid(GtkWidget *widget, gpointer data)
+{
+    const char *crdroid_url = "https://crdroid.net/";
+	open_url(crdroid_url);
+}
+
+// function to open the website from 'Open Android Backup'
+void evolution_x(GtkWidget *widget, gpointer data)
+{
+    const char *evolution_x_url = "https://sourceforge.net/projects/evolution-x/";
+	open_url(evolution_x_url);
+}
 
 void instruction_preflash(int argc, char *argv[]) 
 {
@@ -58,29 +100,33 @@ void instruction_preflash(int argc, char *argv[])
     gtk_label_set_markup(GTK_LABEL(inst18_label), "<b><u>Einige Custom-ROMs und Recoverys</u></b>");
     gtk_box_pack_start(GTK_BOX(vbox), inst18_label, FALSE, FALSE, 5);
     
-    GtkWidget *inst19_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst19_label), "<b>TWRP:</b> https://www.twrp.me/\n");
-    gtk_box_pack_start(GTK_BOX(vbox), inst19_label, FALSE, FALSE, 5);
-
-    GtkWidget *inst20_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst20_label), "<b>/e/ OS:</b> https://e.foundation/e-os/\n");
-    gtk_box_pack_start(GTK_BOX(vbox), inst20_label, FALSE, FALSE, 5);
-
-    GtkWidget *inst21_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst21_label), "<b>LineageOS:</b> https://lineageos.org/\n");
-    gtk_box_pack_start(GTK_BOX(vbox), inst21_label, FALSE, FALSE, 5);
-
-    GtkWidget *inst22_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst22_label), "<b>Project Elixir:</b> https://projectelixiros.com/home\n");
-    gtk_box_pack_start(GTK_BOX(vbox), inst22_label, FALSE, FALSE, 5);
-
-    GtkWidget *inst23_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst23_label), "<b>crDroid:</b> https://crdroid.net/\n");
-    gtk_box_pack_start(GTK_BOX(vbox), inst23_label, FALSE, FALSE, 5);
-
-    GtkWidget *inst24_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst24_label), "<b>Evolution X:</b> https://sourceforge.net/projects/evolution-x/\n");
-    gtk_box_pack_start(GTK_BOX(vbox), inst24_label, FALSE, FALSE, 5);
+    // Create button box for the buttons
+    GtkWidget *button_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    gtk_box_pack_start(GTK_BOX(vbox), button_box, FALSE, FALSE, 10);
+    
+    GtkWidget *button_twrp = gtk_button_new_with_label("TWRP");
+    g_signal_connect(button_twrp, "clicked", G_CALLBACK(twrp), NULL);
+    gtk_box_pack_start(GTK_BOX(button_box), button_twrp, TRUE, TRUE, 10);
+    
+    GtkWidget *button_e_OS = gtk_button_new_with_label("/e/ OS");
+    g_signal_connect(button_e_OS, "clicked", G_CALLBACK(e_OS), NULL);
+    gtk_box_pack_start(GTK_BOX(button_box), button_e_OS, TRUE, TRUE, 10);
+    
+    GtkWidget *button_lineage_os = gtk_button_new_with_label("LineageOS");
+    g_signal_connect(button_lineage_os, "clicked", G_CALLBACK(lineage_os), NULL);
+    gtk_box_pack_start(GTK_BOX(button_box), button_lineage_os, TRUE, TRUE, 10);
+    
+    GtkWidget *button_project_elixir = gtk_button_new_with_label("Project Elixir");
+    g_signal_connect(button_project_elixir, "clicked", G_CALLBACK(project_elixir), NULL);
+    gtk_box_pack_start(GTK_BOX(button_box), button_project_elixir, TRUE, TRUE, 10);
+    
+    GtkWidget *button_crdroid = gtk_button_new_with_label("crDroid");
+    g_signal_connect(button_crdroid, "clicked", G_CALLBACK(crdroid), NULL);
+    gtk_box_pack_start(GTK_BOX(button_box), button_crdroid, TRUE, TRUE, 10);
+    
+    GtkWidget *button_evolution_x = gtk_button_new_with_label("Evolution X");
+    g_signal_connect(button_evolution_x, "clicked", G_CALLBACK(evolution_x), NULL);
+    gtk_box_pack_start(GTK_BOX(button_box), button_evolution_x, TRUE, TRUE, 10);
     
     // Show all elements
     gtk_widget_show_all(window);
@@ -88,3 +134,5 @@ void instruction_preflash(int argc, char *argv[])
     // Run the GTK main loop
     gtk_main();
 }
+
+
