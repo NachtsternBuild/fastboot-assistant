@@ -2,17 +2,17 @@
 
 ## Supported Versions
 
-| Version     | Supported          | Informations                        | Release Code                 |
-| ----------- | ------------------ | ----------------------------------- | ---------------------------- |
-| 0.6.x       | :crystal_ball:     | *future versions*                   |                              |
-| 0.5.5       | :crystal_ball:     | *future version*                    | *Sweet Unix System V*        |
-| 0.5.4.beta  | :crystal_ball:     | **the next version**                | **Sweet Unix System IV**     |
-| 0.5.3.beta  | :white_check_mark: | ***active version***                | ***Sweet Unix System III***  |
-| 0.5.2.dev   | :x:                | *old version*                       | *Sweet Unix System II*       |
-| 0.5.1.dev   | :x:                | *old version*                       | *Sweet Unix System I*        |
-| 0.5.x       | :white_check_mark: | ***all Sweet Unix versions***       | ***Sweet Unix***             |               
-| 0.4.x       | :x:                | *old version*                       | *Effervescent PC cooling*    |
-| < 0.4       | :x:                | *very old versions*                 | *Sparkling data crystals*    |
+| Version     | Supported          | Informations                        | Release Code                 | For the operating systems (OS)                                   |
+| ----------- | ------------------ | ----------------------------------- | ---------------------------- |----------------------------------------------------------------- |
+| 0.6.x       | :crystal_ball:     | *future versions*                   |                              |                                                                  |
+| 0.5.5       | :crystal_ball:     | *future version*                    | *Sweet Unix System V*        |                                                                  |
+| 0.5.4.beta  | :crystal_ball:     | **the next version**                | **Sweet Unix System IV**     | **Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL**    |
+| 0.5.3.beta  | :white_check_mark: | ***active version***                | ***Sweet Unix System III***  | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)***                   |
+| 0.5.2.dev   | :x:                | *old version*                       | *Sweet Unix System II*       | *Linux (Debian/Ubuntu)*                                          |
+| 0.5.1.dev   | :x:                | *old version*                       | *Sweet Unix System I*        | *Linux (Debian/Ubuntu)*                                          |
+| 0.5.x       | :white_check_mark: | ***all Sweet Unix versions***       | ***Sweet Unix***             | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)***                   |
+| 0.4.x       | :x:                | *old version*                       | *Effervescent PC cooling*    | *Linux (Debian/Ubuntu)*                                          |    
+| < 0.4       | :x:                | *very old versions*                 | *Sparkling data crystals*    | *Linux (Debian/Ubuntu)*                                          |
 
 ***→ for all changes see Changlog.md***
 
