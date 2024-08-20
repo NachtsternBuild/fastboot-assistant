@@ -5,60 +5,78 @@
  *  	Apache License, Version 2.0		     *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
+ *  Programm um das Installieren von 		 *
  *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern - flash_vbmeta_dtbo		 *
+ *	zu erleichtern - flash_data				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
 
-/* headers that used in the programm */
+/* headers that used in the program */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
 #include "flash_function_header.h"
 
-// button 1 - flash metadata.img
+// Button 1 - flash metadata.img
 static void metadata_img(GtkWidget *widget, gpointer data)
 {
+    char image_path[512];
+    set_main_dir_with_wsl(image_path, sizeof(image_path), "metadata.img");
+    
     system("fastboot devices");
-	char function_command[255];
-	open_terminal_by_desktop("fastboot flash metadata ~/Downloads/ROM-Install/metadata.img && exit");
+    char function_command[255];
+    snprintf(function_command, sizeof(function_command), "fastboot flash metadata %s && exit", image_path);
+    open_terminal_by_desktop(function_command);
 }
 
-// button 2 - flash userdata.img
+// Button 2 - flash userdata.img
 static void userdata_img(GtkWidget *widget, gpointer data)
 {
-	system("fastboot devices");
-	char function_command[255];
-	open_terminal_by_desktop("fastboot flash userdata ~/Downloads/ROM-Install/userdata.img && exit");
+    char image_path[512];
+    set_main_dir_with_wsl(image_path, sizeof(image_path), "userdata.img");
+
+    system("fastboot devices");
+    char function_command[255];
+    snprintf(function_command, sizeof(function_command), "fastboot flash userdata %s && exit", image_path);
+    open_terminal_by_desktop(function_command);
 }
 
-// button 3 - flash metadata.img heimdall
+// Button 3 - flash metadata.img with Heimdall
 static void metadata_img_heimdall(GtkWidget *widget, gpointer data)
 {
-	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --METADATA ~/Downloads/ROM-Install/metadata.img --no-reboot && exit");
+    char image_path[512];
+    set_main_dir_with_wsl(image_path, sizeof(image_path), "metadata.img");
+
+    char function_command[255];
+    snprintf(function_command, sizeof(function_command), "heimdall flash --METADATA %s --no-reboot && exit", image_path);
+    open_terminal_by_desktop(function_command);
 }
 
-// button 4 - flash userdata.img heimdall
+// Button 4 - flash userdata.img with Heimdall
 static void userdata_img_heimdall(GtkWidget *widget, gpointer data)
 {
-	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --USERDATA ~/Downloads/ROM-Install/userdata.img --no-reboot && exit");
+    char image_path[512];
+    set_main_dir_with_wsl(image_path, sizeof(image_path), "userdata.img");
+
+    char function_command[255];
+    snprintf(function_command, sizeof(function_command), "heimdall flash --USERDATA %s --no-reboot && exit", image_path);
+    open_terminal_by_desktop(function_command);
 }
 
-/* start main programm */
+
+/* Start main program */
 void flash_data(int argc, char *argv[])
 {
-	// int gtk
+	// Initialize GTK
 	gtk_init(&argc, &argv);
 	
-	// make main window
+	// Create main window
 	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash metadata/userdata");
     gtk_container_set_border_width(GTK_CONTAINER(window), 500);
@@ -68,7 +86,7 @@ void flash_data(int argc, char *argv[])
 	// Connect close function to 'destroy' signal
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	
-	// make button for every function with label
+	// Create buttons for each function with label
 	GtkWidget *button_metadata_img = gtk_button_new_with_label("Flash metadata.img");
     GtkWidget *button_userdata_img = gtk_button_new_with_label("Flash userdata.img");
     GtkWidget *button_metadata_img_heimdall = gtk_button_new_with_label("Flash metadata.img (heimdall)");
@@ -102,7 +120,7 @@ void flash_data(int argc, char *argv[])
     // Add the main HBox to the main window
     gtk_container_add(GTK_CONTAINER(window), hbox);
 
-    // show all button
+    // Show all buttons
     gtk_widget_show(button_metadata_img);
     gtk_widget_show(button_userdata_img);
     gtk_widget_show(button_metadata_img_heimdall);
@@ -111,6 +129,7 @@ void flash_data(int argc, char *argv[])
     gtk_widget_show(right_vbox);
     gtk_widget_show(hbox);
 	
-	// gtk main loop
+	// Start GTK main loop
 	gtk_main();
 }
+
