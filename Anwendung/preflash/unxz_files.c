@@ -7,6 +7,7 @@
 
 #define OUTPUT_DIR_ENV "HOME" // home dir
 #define TARGET_DIR "Downloads/ROM-Install" // target dir
+// #define OUTPUT_DIR_ENV "/mnt/c/Users/USERNAME/"
 
 void unxz_files(const char *xz_filename) 
 {
