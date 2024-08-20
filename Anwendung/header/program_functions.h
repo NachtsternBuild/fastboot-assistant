@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *       Headerfile - program_functions		 *
@@ -40,5 +40,8 @@ void show_file_chooser(GtkWidget *widget, gpointer data);
 gchar* get_home(const gchar *path);
 void open_url();
 void set_main_dir();
+const char* get_home_directory_flash();
+void get_wsl_directory(char* wsl_dir, size_t size);
+void set_main_dir_with_wsl(char *path, size_t size, const char *filename);
 
 #endif
