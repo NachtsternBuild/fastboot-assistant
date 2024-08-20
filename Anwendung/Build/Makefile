@@ -26,6 +26,9 @@ SRCS =	header_connected_devices.c \
 		header_get_home.c \
 		header_open_url.c \
 		header_set_main_dir.c \
+		header_get_home_dir_flash.c \
+		header_get_wsl_directory.c \
+		header_set_main_dir_with_wsl.c \
 		get_devices.c \
 		reboot_fastboot.c \
 		reboot.c \
