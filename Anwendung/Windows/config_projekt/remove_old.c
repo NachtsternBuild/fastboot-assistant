@@ -25,32 +25,7 @@
 
 #define MAX_BUFFER_SIZE 256
 
-// Function to get the user's home directory
-const char* get_home_directory() 
-{
-    const char* home_dir = getenv("HOME");
-    if (!home_dir) 
-    {
-        g_print("Fehler: Konnte das Home-Verzeichnis nicht ermitteln.\n");
-        exit(1);
-    }
-    return home_dir;
-}
-
-// Function to get the WSL equivalent path
-void get_wsl_directory(char* wsl_dir, size_t size) 
-{
-    const char* user = getenv("USER");
-    if (!user) 
-    {
-        g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
-        exit(1);
-    }
-    snprintf(wsl_dir, size, "/mnt/c/Users/%s/Downloads/ROM-Install", user);
-}
-
 // Callback functions for each button
-
 // Remove the 'ROM-Install' directory
 static void remove_rom_install(GtkWidget *widget, gpointer data) 
 {
@@ -59,7 +34,7 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
 	
 	/*
     char command[MAX_BUFFER_SIZE];
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", get_home_directory());
+    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", get_home_directory_flash());
     system(command);
 	
 	*/
@@ -81,13 +56,13 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
 	
 	/*
     char command[MAX_BUFFER_SIZE];
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory());
+    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory_flash());
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup", get_home_directory());
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup", get_home_directory_flash());
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory());
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory_flash());
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Images", get_home_directory());
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Images", get_home_directory_flash());
     system(command);
 	
 	*/
@@ -115,9 +90,9 @@ static void remove_backups(GtkWidget *widget, gpointer data)
 	
 	/*
     char command[MAX_BUFFER_SIZE];
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", get_home_directory());
+    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", get_home_directory_flash());
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory());
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory_flash());
     system(command);
 	
 	*/
@@ -127,7 +102,7 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     system(command);
     snprintf(command, sizeof(command), "mkdir -p %s/Backup/Noroot", wsl_dir);
     system(command);
-
+	
 	
     message = "Fertig.\n";
     show_message(message);
