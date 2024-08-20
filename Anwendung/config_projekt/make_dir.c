@@ -5,31 +5,6 @@
  *  	Apache License, Version 2.0		     *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
- *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern  						 *
- *                                           *
- *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
- *-------------------------------------------*
- *											 *
- *              make_dir					 *
- *											 *
- *-------------------------------------------*
- */
- 
- /* headers that used in the main programm */
-#include <stdio.h>
-#include <stdlib.h>
-#include "program_functions.h"
-
-/*
- *-------------------------------------------*
- *                Projekt 122                *
- *-------------------------------------------*
- *  	Apache License, Version 2.0		     *
- *-------------------------------------------*
- *                                           *
  *  Programm um das Installieren von 		 *
  *	Custom-ROM und GSIs auf Android-Geräte 	 *
  *	zu erleichtern  						 *
