@@ -32,8 +32,8 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
     const char *message = "Lösche ~/Downloads/ROM-Install\n";
     show_message(message);
 	
-	/*
     char command[MAX_BUFFER_SIZE];
+    /*
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", get_home_directory_flash());
     system(command);
 	
@@ -54,8 +54,9 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
     const char *message = "Lösche alle Dateien in ROM-Install.\n";
     show_message(message);
 	
-	/*
+	
     char command[MAX_BUFFER_SIZE];
+    /*
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory_flash());
     system(command);
     snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup", get_home_directory_flash());
@@ -88,8 +89,8 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     const char *message = "Lösche alle Dateien im Backup-Ordner.\n";
     show_message(message);
 	
-	/*
     char command[MAX_BUFFER_SIZE];
+    /*
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", get_home_directory_flash());
     system(command);
     snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory_flash());
