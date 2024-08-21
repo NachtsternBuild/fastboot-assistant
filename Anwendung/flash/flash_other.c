@@ -23,79 +23,76 @@
 #include "flash_function_header.h"
 #include <string.h>
 #include <dirent.h>
+#include <unistd.h>
 
-// a function for flash the files
 void flash_partition(const char *partition, const char *img_file) 
 {
-    char command[256];
+    char command[512];
     snprintf(command, sizeof(command), "fastboot flash %s %s", partition, img_file);
-    printf("Executing: %s\n", command);
-    system(command);
+    g_print("Executing: %s\n", command);
+    int ret = system(command);
+    if (ret != 0)
+    {
+        g_print("Fehler: Der Befehl '%s' wurde nicht erfolgreich ausgeführt.\n", command);
+    }
 }
 
-// the list of files that flashable
-void process_file(const char *filename) 
+void process_file(const char *filepath) 
 {
-    if (strstr(filename, "gz.img")) 
+    if (strstr(filepath, "gz.img")) 
     {
-        flash_partition("gz_a", filename);
-        flash_partition("gz_b", filename);
+        flash_partition("gz_a", filepath);
+        flash_partition("gz_b", filepath);
     } 
-    
-    else if (strstr(filename, "lk.img")) 
+    else if (strstr(filepath, "lk.img")) 
     {
-        flash_partition("lk_a", filename);
-        flash_partition("lk_b", filename);
+        flash_partition("lk_a", filepath);
+        flash_partition("lk_b", filepath);
     } 
-    
-    else if (strstr(filename, "logo.img")) 
+    else if (strstr(filepath, "logo.img")) 
     {
-        flash_partition("logo", filename);
+        flash_partition("logo", filepath);
     } 
-    
-    else if (strstr(filename, "md1img.img")) 
+    else if (strstr(filepath, "md1img.img")) 
     {
-        flash_partition("md1img_a", filename);
-        flash_partition("md1img_b", filename);
+        flash_partition("md1img_a", filepath);
+        flash_partition("md1img_b", filepath);
+    } 
+    else if (strstr(filepath, "metadata.img")) 
+    {
+        flash_partition("metadata", filepath);
     }
-    
-    else if (strstr(filename, "metadata.img")) 
+    else if (strstr(filepath, "protect.img")) 
     {
-        flash_partition("metadata", filename);
-    }
-    // Weitere Partitionen je nach Bedarf hinzufügen
-    else if (strstr(filename, "protect.img")) 
-    {
-        flash_partition("protect_a", filename);
-        flash_partition("protect_b", filename);
+        flash_partition("protect_a", filepath);
+        flash_partition("protect_b", filepath);
     } 
-    
-    else if (strstr(filename, "scp.img")) 
+    else if (strstr(filepath, "scp.img")) 
     {
-        flash_partition("scp_a", filename);
-        flash_partition("scp_b", filename);
-    }
-     
-    else if (strstr(filename, "spmfw.img")) 
-    {
-        flash_partition("spmfw_a", filename);
-        flash_partition("spmfw_b", filename);
+        flash_partition("scp_a", filepath);
+        flash_partition("scp_b", filepath);
     } 
-    
-    else if (strstr(filename, "sspm.img")) 
+    else if (strstr(filepath, "spmfw.img")) 
     {
-        flash_partition("sspm_a", filename);
-        flash_partition("sspm_b", filename);
-    }
-    
-    else if (strstr(filename, "tee.img")) 
-    {
-        flash_partition("tee_a", filename);
-        flash_partition("tee_b", filename);
+        flash_partition("spmfw_a", filepath);
+        flash_partition("spmfw_b", filepath);
     } 
+    else if (strstr(filepath, "sspm.img")) 
+    {
+        flash_partition("sspm_a", filepath);
+        flash_partition("sspm_b", filepath);
+    } 
+    else if (strstr(filepath, "tee.img")) 
+    {
+        flash_partition("tee_a", filepath);
+        flash_partition("tee_b", filepath);
+    } 
+    else 
+    {
+        g_print("Unbekannte Datei: %s, wird übersprungen.\n", filepath);
+    }
 }
 
-// function that open the dir, read the filenames and flash it
 void flash_images_in_directory(const char *directory) 
 {
     DIR *dir;
@@ -107,26 +104,23 @@ void flash_images_in_directory(const char *directory)
         {
             if (ent->d_type == DT_REG) 
             {
-                char filepath[256];
+                char filepath[512];
                 snprintf(filepath, sizeof(filepath), "%s/%s", directory, ent->d_name);
-                // flash the partitions
                 process_file(filepath);
             }
         }
-        // close the dir
         closedir(dir);
     } 
-    
     else 
     {
-        perror("Could not open directory");
+        g_print("Fehler: Konnte Verzeichnis '%s' nicht öffnen.\n", directory);
     }
 }
 
-void  flash_other() 
+void flash_other() 
 {
-    // path to the other .img-files
-    const char *directory = "~/Downloads/ROM-Install/Images"; 
+    const char *directory = g_strdup_printf("%s/Downloads/ROM-Install/Images", get_home_directory_flash());
     flash_images_in_directory(directory);
+    g_free((void*)directory);
 }
 
