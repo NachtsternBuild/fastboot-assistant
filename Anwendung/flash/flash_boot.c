@@ -22,7 +22,7 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
-// Button-Handler-Funktionen
+// Button handler functions
 // function to flash boot.img on only-a-devices
 void boot_on_a(GtkWidget *widget, GtkWindow *window)
 {
@@ -80,7 +80,7 @@ void flash_boot(int argc, char *argv[])
     GtkWidget *button_boot_heimdall = gtk_button_new_with_label("Flash boot (heimdall)");
     GtkWidget *button_init_boot_heimdall= gtk_button_new_with_label("Flash init_boot (heimdall)");
     
-    // Verknüpfung der Click-Callback-Funktion mit den Buttons
+    // connection for gtk callback
 	g_signal_connect(button_boot_on_a, "clicked", G_CALLBACK(boot_on_a), (gpointer) window);
 	g_signal_connect(button_boot_on_ab, "clicked", G_CALLBACK(boot_on_ab), (gpointer) window);
 	g_signal_connect(button_init_boot_on_a, "clicked", G_CALLBACK(init_boot_on_a), (gpointer) window);
@@ -88,7 +88,7 @@ void flash_boot(int argc, char *argv[])
 	g_signal_connect(button_boot_heimdall, "clicked", G_CALLBACK(boot_heimdall), (gpointer) window);
 	g_signal_connect(button_init_boot_heimdall, "clicked", G_CALLBACK(init_boot_heimdall), (gpointer) window);
 
-    
+    // create widget
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
     GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
     GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
@@ -104,8 +104,10 @@ void flash_boot(int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
 
+	// add all to the container
     gtk_container_add(GTK_CONTAINER(window), hbox);
-    
+
+    // show all widgets
     gtk_widget_show_all(window);
     
     gtk_main();
