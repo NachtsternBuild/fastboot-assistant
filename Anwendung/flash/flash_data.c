@@ -32,6 +32,7 @@ static void metadata_img(GtkWidget *widget, gpointer data)
     system("fastboot devices");
     char function_command[255];
     snprintf(function_command, sizeof(function_command), "fastboot flash metadata %s && exit", image_path);
+    g_print(function_command);
     open_terminal_by_desktop(function_command);
 }
 
@@ -44,6 +45,7 @@ static void userdata_img(GtkWidget *widget, gpointer data)
     system("fastboot devices");
     char function_command[255];
     snprintf(function_command, sizeof(function_command), "fastboot flash userdata %s && exit", image_path);
+    g_print(function_command);
     open_terminal_by_desktop(function_command);
 }
 
@@ -55,6 +57,7 @@ static void metadata_img_heimdall(GtkWidget *widget, gpointer data)
 
     char function_command[255];
     snprintf(function_command, sizeof(function_command), "heimdall flash --METADATA %s --no-reboot && exit", image_path);
+    g_print(function_command);
     open_terminal_by_desktop(function_command);
 }
 
@@ -66,6 +69,7 @@ static void userdata_img_heimdall(GtkWidget *widget, gpointer data)
 
     char function_command[255];
     snprintf(function_command, sizeof(function_command), "heimdall flash --USERDATA %s --no-reboot && exit", image_path);
+    g_print(function_command);
     open_terminal_by_desktop(function_command);
 }
 
