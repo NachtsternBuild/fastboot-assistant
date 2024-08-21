@@ -20,7 +20,6 @@ build_dir="${source_dir}/Build"
 # some path for the build for Windows
 windows_dir="${source_dir}/Windows"
 config_dir_win="${windows_dir}/config_projekt"
-flash_dir_win="${windows_dir}/flash"
 preflash_dir_win="${windows_dir}/preflash"
 
 # define the name of the zip-file for windows
@@ -28,10 +27,10 @@ zip_name="fastboot-assistant.zip"
 # some files that are not needed for the Windows part
 # need some work later
 unused_files=(
-    "datei1.c"
-    "datei2.c"
-    "datei3.c"
-    "datei4.c"
+    "mkdir.c"
+    "remove_old.c"
+    "backup_root.c"
+    "unxz_files.c"
 )
 
 # file that needed in the zip-file
@@ -126,7 +125,7 @@ build_program_windows() {
 	
 	# Copy all windows specific files to the target dir
 	echo "Copy windows specific files to $target_dir..."
-	for dir in "$windows_dir" "$config_dir_win" "$flash_dir_win" "$preflash_dir_win"; do
+	for dir in "$windows_dir" "$config_dir_win" "$preflash_dir_win"; do
     	find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 	done
 	echo "Copied all files to $target_dir."
