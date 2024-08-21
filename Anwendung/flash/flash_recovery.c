@@ -27,13 +27,13 @@
 // function to flash boot.img on only-a-devices
 void recovery_img(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "boot", NULL, "boot.img");
+    flash_image(widget, window, "recovery", NULL, "recovery.img");
 }
 
 // function to flash init_boot.img (heimdall)
 void recovery_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "INIT_BOOT", "init_boot.img");
+    flash_heimdall(widget, window, "RECOVERY", "recovery.img");
 }
 
 // main function
@@ -43,7 +43,7 @@ void flash_recovery(int argc, char *argv[])
     
     // create a windows
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash Boot");
+    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash Recovery");
     gtk_container_set_border_width(GTK_CONTAINER(window), 500);
     gtk_widget_set_size_request(window, 800, 750);
 
