@@ -24,13 +24,13 @@
 #include "flash_function_header.h"
 
 // Button handler functions
-// function to flash boot.img on only-a-devices
+// function to flash recovery.img on only-a-devices
 void recovery_img(GtkWidget *widget, GtkWindow *window)
 {
     flash_image(widget, window, "recovery", NULL, "recovery.img");
 }
 
-// function to flash init_boot.img (heimdall)
+// function to flash recovery.img (heimdall)
 void recovery_heimdall(GtkWidget *widget, GtkWindow *window)
 {
     flash_heimdall(widget, window, "RECOVERY", "recovery.img");
