@@ -24,7 +24,7 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-static void metadata_img(GtkWidget *widget, gpointer data)
+static void button_flash_payload(GtkWidget *widget, gpointer data)
 {
     // flash payload.zip via adb sideload
     GtkWidget *dialog;
