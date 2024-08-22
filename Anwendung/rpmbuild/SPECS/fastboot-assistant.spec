@@ -23,9 +23,9 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/256x256/apps
 mkdir -p %{buildroot}/usr/share/applications
 
 # Copy the binary and other necessary files
-cp %{_builddir}/fastboot-assistant-0.5.3/fastboot-assistant %{buildroot}/usr/bin/fastboot-assistant/fastboot-assistant
-cp /home/elias/rpmbuild/BUILD/fastboot-assistant-0.5.3/sweet_unix.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
-cp /home/elias/rpmbuild/BUILD/fastboot-assistant-0.5.3/fastboot-assistant.desktop %{buildroot}/usr/share/applications/fastboot-assistant.desktop
+cp %{_builddir}/fastboot-assistant/fastboot-assistant %{buildroot}/usr/bin/fastboot-assistant/fastboot-assistant
+cp %{_builddir}/fastboot-assistant/sweet_unix.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
+cp %{_builddir}/fastboot-assistant/fastboot-assistant.desktop %{buildroot}/usr/share/applications/fastboot-assistant.desktop
 
 %clean
 rm -rf %{buildroot}
@@ -36,5 +36,5 @@ rm -rf %{buildroot}
 %{_datadir}/icons/hicolor/256x256/apps/sweet_unix.png
 
 %changelog
-* Tue Aug 13 2024 Elias Mörz<elias.moerz@mail.de> - 0.5.3
+* Tue Aug 13 2024 Elias Mörz<elias.moerz@mail.de> - 0.5.4
 - Initial package
