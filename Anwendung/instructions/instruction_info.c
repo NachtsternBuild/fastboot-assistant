@@ -39,6 +39,17 @@ void instruction_info(int argc, char *argv[])
     // Vertical box layout for the frames
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_container_add(GTK_CONTAINER(window), vbox);
+    
+    // show-text for Samsung devices
+    GtkWidget *inst27_label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(inst27_label), "<b><u>Für Samsung Nutzer</u></b>");
+    gtk_box_pack_start(GTK_BOX(vbox), inst27_label, FALSE, FALSE, 5);
+    
+    // show-text for Samsung devices
+    GtkWidget *inst28_label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(inst28_label), "<b>Nutzen sie 'heimdall' statt 'fastboot' zum flashen!</b>");
+    gtk_box_pack_start(GTK_BOX(vbox), inst28_label, FALSE, FALSE, 5);
+
 
     // show-text for more info title
     GtkWidget *inst26_label = gtk_label_new(NULL);
@@ -47,21 +58,11 @@ void instruction_info(int argc, char *argv[])
 
     // Frame and label for detailed information
     GtkWidget *frame27 = gtk_frame_new(NULL);
-    const char *info_text = "\nA/B Partitionsschema verwendet zwei Systempartitionen, \num nahtlose Updates zu ermöglichen, \nindem es zwischen ihnen wechselt. \nDas only-A Partitionsschema \nhat nur eine Systempartition und erfordert einen Neustart für Updates. \nA/B bietet redundante Sicherheit und ermöglicht ein \nkontinuierliches Betriebssystem, während Only-A \neinfachere Verwaltung erfordert.\n \nProject Treble ist eine Android-Initiative von Google, \ndie die Trennung von Betriebssystem- und Hardwarekomponenten ermöglicht. \nDies erleichtert Herstellern \ndie Bereitstellung von Android-Updates, \nindem das Betriebssystem unabhängig \nvon den spezifischen Treibern für den Chipsatz ist.\n \nSystem-as-root ist ein Mechanismus in Android, \nbei dem das System-Image als Root-Dateisystem gemountet wird. \nDies verbessert die Trennung von System- und Vendor-Partitionen \nund erhöht die Sicherheit. \nDies erleichtert das Aktualisieren des Systems \nund die Verwaltung von Berechtigungen, \nda systemkritische Dateien \nund Konfigurationen besser geschützt und isoliert werden.\n \nEin System on a Chip (SoC) ist ein integrierter Schaltkreis, \nder alle wesentlichen Komponenten eines Computersystems, \neinschließlich CPU, GPU, Speicher und Ein-/Ausgabeschnittstellen, \nauf einem einzigen Chip vereint. \nSoCs werden häufig verwendet, \num Platz und Energie zu sparen.\n";
+    const char *info_text = "A/B Partitionsschema verwendet zwei Systempartitionen, \num nahtlose Updates zu ermöglichen, \nindem es zwischen ihnen wechselt. \nDas only-A Partitionsschema \nhat nur eine Systempartition und erfordert einen Neustart für Updates. \nA/B bietet redundante Sicherheit und ermöglicht ein \nkontinuierliches Betriebssystem, während Only-A \neinfachere Verwaltung erfordert.\n \nProject Treble ist eine Android-Initiative von Google, \ndie die Trennung von Betriebssystem- und Hardwarekomponenten ermöglicht. \nDies erleichtert Herstellern \ndie Bereitstellung von Android-Updates, \nindem das Betriebssystem unabhängig \nvon den spezifischen Treibern für den Chipsatz ist.\n \nSystem-as-root ist ein Mechanismus in Android, \nbei dem das System-Image als Root-Dateisystem gemountet wird. \nDies verbessert die Trennung von System- und Vendor-Partitionen \nund erhöht die Sicherheit. \nDies erleichtert das Aktualisieren des Systems \nund die Verwaltung von Berechtigungen, \nda systemkritische Dateien \nund Konfigurationen besser geschützt und isoliert werden.\n \nEin System on a Chip (SoC) ist ein integrierter Schaltkreis, \nder alle wesentlichen Komponenten eines Computersystems, \neinschließlich CPU, GPU, Speicher und Ein-/Ausgabeschnittstellen, \nauf einem einzigen Chip vereint. \nSoCs werden häufig verwendet, \num Platz und Energie zu sparen.";
     GtkWidget *label_info = gtk_label_new(info_text);
     gtk_container_add(GTK_CONTAINER(frame27), label_info);
     gtk_box_pack_start(GTK_BOX(vbox), frame27, TRUE, TRUE, 5);
     
-    // show-text for Samsung devices
-    GtkWidget *inst27_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst27_label), "<b><u>Für Samsung Nutzer</b></u>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst27_label, FALSE, FALSE, 5);
-    
-    // show-text for Samsung devices
-    GtkWidget *inst28_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst28_label), "<b>Nutzen sie 'heimdall' statt 'fastboot' zum flashen!</b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst28_label, FALSE, FALSE, 5);
-
     // Show all elements
     gtk_widget_show_all(window);
 
