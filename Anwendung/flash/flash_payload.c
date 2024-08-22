@@ -23,9 +23,8 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
- 
-// button clicked callback
-void button_flash_payload(GtkWidget *widget, gpointer data)
+
+static void metadata_img(GtkWidget *widget, gpointer data)
 {
     // flash payload.zip via adb sideload
     GtkWidget *dialog;
@@ -39,13 +38,14 @@ void button_flash_payload(GtkWidget *widget, gpointer data)
     // Show a message that the flash is starting
     snprintf(message, sizeof(message), "Sideload payload.zip.\n");
     show_message(message);
-
-    // Show the device list
-    system("fastboot devices");
     
-	// start sideload
+    char image_path[512];
+    set_main_dir_with_wsl(image_path, sizeof(image_path), "payload.zip");
+
     char function_command[255];
-	open_terminal_by_desktop("adb sideload ~/Downloads/ROM-Install/payload.zip && exit");
+    snprintf(function_command, sizeof(function_command), "adb sideload %s && exit", image_path);
+    g_print(function_command);
+    open_terminal_by_desktop(function_command);
 
     // Show a message that the flash is completed
     snprintf(message, sizeof(message), "Sideload beendet!\n");
