@@ -66,7 +66,7 @@ sudo rpm -i /PATH/to/fastboot-assistant-0.5.3-1.fc40.x86_64.rpm
 2. Execute the following command:
 ```sh
 # Debian/Ubuntu
-sudo dpkg -r --force-all Projekt-122-l
+sudo dpkg -r --force-all fastboot-assistant
 # Fedora/RHEL/CentOS
 sudo rpm -e fastboot-assistant
 ```
