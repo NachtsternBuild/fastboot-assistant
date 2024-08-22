@@ -112,8 +112,8 @@ void flash_preloader_super(int argc, char *argv[])
     
     gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_bin_on_a, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_bin_on_ab, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), preloader_img_on_a, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), preloader_img_on_ab, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_img_on_a, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_img_on_ab, TRUE, TRUE, 0);
     
     gtk_box_pack_start(GTK_BOX(right_vbox), button_super_img, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(right_vbox), button_super_img_heimdall, TRUE, TRUE, 0);
@@ -131,4 +131,3 @@ void flash_preloader_super(int argc, char *argv[])
     
     gtk_main();
 }
-
