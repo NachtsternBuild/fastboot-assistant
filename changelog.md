@@ -23,7 +23,8 @@
 - rework the info
 - remove all bash-scripts
 - rework the update-engine
-- fix a lot of errors → # 
+- fix a lot of littel errors
+- fix some big errors → #6, #7, #8, #11, #12, #13, #14, #15, #16, #17, #19, #20
 
 ```
 ##  v.0.4.x
