@@ -22,120 +22,94 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
-// button 1 - flash vendor.img on only-a-devices
-static void vendor_on_a(GtkWidget *widget, gpointer data)
+// Button handler functions
+// function to flash vendor.img on only-a-devices
+void vendor_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    system("fastboot devices");
-	char function_command[255];
-	open_terminal_by_desktop("fastboot flash vendor ~/Downloads/ROM-Install/vendor.img && exit");
+    flash_image(widget, window, "vendor", NULL, "vendor.img");
 }
 
-// button 2 - flash vendor.img on a/b-devices
-static void vendor_on_ab(GtkWidget *widget, gpointer data)
+// function to flash vendor.img (a/b-devices)
+void vendor_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-	system("fastboot devices");
-	char function_command[255];
-	open_terminal_by_desktop("fastboot flash vendor_a ~/Downloads/ROM-Install/vendor.img && fastboot flash vendor_b ~/Downloads/ROM-Install/vendor.img && exit");
+    flash_image(widget, window, "vendor_a", "vendor_b", "vendor.img");
 }
 
-// button 3 - flash vendor_boot.img on only-a-devices
-static void vendor_boot_on_a(GtkWidget *widget, gpointer data)
+// function to flash vendor_boot.img (only-a-devices)
+void vendor_boot_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    system("fastboot devices");
-	char function_command[255];
-	open_terminal_by_desktop("fastboot flash vendor_boot ~/Downloads/ROM-Install/vendor_boot.img && exit");
+    flash_image(widget, window, "vendor_boot", NULL, "vendor_boot.img");
 }
 
-// button 4 - flash vendor_boot.img on a/b-devices
-static void vendor_boot_on_ab(GtkWidget *widget, gpointer data)
+// function to flash vendor_boot.img (a/b-devices)
+void vendor_boot_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-	system("fastboot devices");
-	char function_command[255];
-	open_terminal_by_desktop("fastboot flash vendor_boot_a ~/Downloads/ROM-Install/vendor_boot.img && fastboot flash vendor_boot_b ~/Downloads/ROM-Install/vendor_boot.img && exit");
+    flash_image(widget, window, "vendor_boot_a", "vendor_boot_b", "vendor_boot.img");
 }
 
-// button 5 - flash vendor.img heimdall
-static void vendor_heimdall(GtkWidget *widget, gpointer data)
+// function to flash boot.img (heimdall)
+void vendor_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --VENDOR ~/Downloads/ROM-Install/vendor.img --no-reboot && exit");
+    flash_heimdall(widget, window, "VENDOR", "vendor.img");
 }
 
-// button 6 - flash vendor_boot.img heimdall
-static void vendor_boot_heimdall(GtkWidget *widget, gpointer data)
+// function to flash init_boot.img (heimdall)
+void vendor_boot_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-	char function_command[255];
-	open_terminal_by_desktop("heimdall flash --VENDOR_BOOT ~/Downloads/ROM-Install/vendor_boot.img --no-reboot && exit");
+    flash_heimdall(widget, window, "VENDOR_BOOT", "vendor_boot.img");
 }
 
-/* start main programm */
+// main function
 void flash_vendor(int argc, char *argv[])
 {
-	// int gtk
-	gtk_init(&argc, &argv);
-	
-	// make main window
-	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash Vendor");
+    gtk_init(&argc, &argv);
+    
+    // create a windows
+    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash Vendor");
     gtk_container_set_border_width(GTK_CONTAINER(window), 500);
     gtk_widget_set_size_request(window, 800, 750);
-	gtk_widget_show(window);
-	
-	// Connect close function to 'destroy' signal
+
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	
-	// make button for every function with label
-    GtkWidget *button_vendor_on_a = gtk_button_new_with_label("Flash Venodr (only-a-devices)");
+
+    // create button
+    GtkWidget *button_vendor_on_a = gtk_button_new_with_label("Flash Vendor (only-a-devices)");
     GtkWidget *button_vendor_on_ab = gtk_button_new_with_label("Flash Vendor (a/b-devices)");
     GtkWidget *button_vendor_boot_on_a = gtk_button_new_with_label("Flash vendor_boot (only-a-devices)");
     GtkWidget *button_vendor_boot_on_ab = gtk_button_new_with_label("Flash vendor_boot (a/b-devices)");
-    GtkWidget *button_vendor_heimdall = gtk_button_new_with_label("Flash vendor (heimdall)");
+    GtkWidget *button_vendor_heimdall = gtk_button_new_with_label("Flash Vendor (heimdall)");
     GtkWidget *button_vendor_boot_heimdall = gtk_button_new_with_label("Flash vendor_boot (heimdall)");
     
-    // Link the click callback function with the buttons 
-    g_signal_connect(button_vendor_on_a, "clicked", G_CALLBACK(vendor_on_a), NULL);
-    g_signal_connect(button_vendor_on_ab, "clicked", G_CALLBACK(vendor_on_ab), NULL);
-    g_signal_connect(button_vendor_boot_on_a, "clicked", G_CALLBACK(vendor_boot_on_a), NULL);
-    g_signal_connect(button_vendor_boot_on_ab, "clicked", G_CALLBACK(vendor_boot_on_ab), NULL);
-    g_signal_connect(button_vendor_heimdall, "clicked", G_CALLBACK(vendor_heimdall), NULL);
-    g_signal_connect(button_vendor_boot_heimdall, "clicked", G_CALLBACK(vendor_boot_heimdall), NULL);
-    
-    // Create a layout container (HBox) for the buttons
+    // connection for gtk callback
+	g_signal_connect(button_vendor_on_a, "clicked", G_CALLBACK(vendor_on_a), (gpointer) window);
+	g_signal_connect(button_vendor_on_ab, "clicked", G_CALLBACK(vendor_on_ab), (gpointer) window);
+	g_signal_connect(button_vendor_boot_on_a, "clicked", G_CALLBACK(vendor_boot_on_a), (gpointer) window);
+	g_signal_connect(button_vendor_boot_on_ab, "clicked", G_CALLBACK(vendor_boot_on_ab), (gpointer) window);
+	g_signal_connect(button_vendor_heimdall, "clicked", G_CALLBACK(vendor_heimdall), (gpointer) window);
+	g_signal_connect(button_vendor_boot_heimdall, "clicked", G_CALLBACK(vendor_boot_heimdall), (gpointer) window);
+
+    // create widget
     GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    
-    // Create a layout container (VBox) for the left and right buttons
     GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
     GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
     
-    // Add the first two buttons to the left VBox
     gtk_box_pack_start(GTK_BOX(left_vbox), button_vendor_on_a, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(left_vbox), button_vendor_on_ab, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(left_vbox), button_vendor_heimdall, TRUE, TRUE, 0);
     
-    // Add the other two buttons to the right VBox
     gtk_box_pack_start(GTK_BOX(right_vbox), button_vendor_boot_on_a, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(right_vbox), button_vendor_boot_on_ab, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(right_vbox), button_vendor_boot_heimdall, TRUE, TRUE, 0);
     
-     // Add the left and right VBoxes to the main HBox
     gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
 
-    // Add the main HBox to the main window
+	// add all to the container
     gtk_container_add(GTK_CONTAINER(window), hbox);
 
-    // show all button
-    gtk_widget_show(button_vendor_on_a);
-    gtk_widget_show(button_vendor_on_ab);
-    gtk_widget_show(button_vendor_boot_on_a);
-    gtk_widget_show(button_vendor_boot_on_ab);
-    gtk_widget_show(button_vendor_heimdall);
-    gtk_widget_show(button_vendor_boot_heimdall);
-    gtk_widget_show(left_vbox);
-    gtk_widget_show(right_vbox);
-    gtk_widget_show(hbox);
-	
-	// gtk main loop
-	gtk_main();
-}
+    // show all widgets
+    gtk_widget_show_all(window);
     
+    gtk_main();
+}
+
