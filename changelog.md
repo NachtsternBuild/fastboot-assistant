@@ -23,6 +23,7 @@
 - rework the info
 - remove all bash-scripts
 - rework the update-engine
+- rework the name of the program
 - fix a lot of littel errors
 - fix some big errors → #6, #7, #8, #11, #12, #13, #14, #15, #16, #17, #19, #20
 
