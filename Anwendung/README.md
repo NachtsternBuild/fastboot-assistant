@@ -36,13 +36,22 @@ sudo dnf install -y \
    cd ~/fastboot-assistant
    ```
 
-5. Kompilieren sie den Code und bauen sie das Debian-Paket ausführen:
+5. Kompilieren sie den Code und bauen sie das Debian-Paket oder RPM ausführen:
 ```sh
 bash Build/build-deb.sh
 # oder
 bash Build/build-rpm.sh
 ```
-
+**fastboot-assistant kann auch für die WSL als Zip-Datei gepackt werden.**
+- Dafür wählen sie nach dem sie den Build-Ordner angelegt haben:
+```sh
+For which operating system (OS) should the fastboot-assistant be built?
+Linux (l) / Windows via WSL (w):
+w
+```
+- Und geben nach dem erfolgreichem Build-Prozess an, dass sie die Zip-Datei bauen möchten.
+*→ Das funktioniert nur auf **Debian/Ubuntu-Systemen**, da der Build-Skript automatisch ein Debian-Packet für das Zip baut.*
+ 
 ## Programmstruktur
 - *Ein Blick auf die Programmstruktur lohnt sich.*
 ```
