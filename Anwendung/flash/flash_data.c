@@ -65,7 +65,7 @@ void flash_data(int argc, char *argv[])
     GtkWidget *button_metadata_img = gtk_button_new_with_label("Flash Metadaten");
     GtkWidget *button_metadata_img_heimdall = gtk_button_new_with_label("Flash Metadaten (heimdall)");
     GtkWidget *button_userdata_img = gtk_button_new_with_label("Flash Userdaten");
-    GtkWidget *button_init_boot_on_ab = gtk_button_new_with_label("Flash Userdaten (heimdall)");
+    GtkWidget *button_userdata_img_heimdall = gtk_button_new_with_label("Flash Userdaten (heimdall)");
     
     // connection for gtk callback
 	g_signal_connect(button_metadata_img, "clicked", G_CALLBACK(metadata_img), (gpointer) window);
