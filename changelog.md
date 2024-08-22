@@ -4,22 +4,26 @@
 
 **Codename:** *Süßes Unix/ Sweet Unix*
 ```
-- rework the UI
+- rework the UI from all function → like QS button of Android 12 
 - add Instructions
 - add flash via heimdall
 - add support to flash a lot of partitions
 - add backup function
-- add some headers
+- add some new headers
 - add function to set active slot
 - add a build-deb.sh → build the program as DEB package
 - add some scripts to install the the package at Windows → experimental
+- add customisations for WSL operation
+- add some new rename function with file chooser dialog
+- add reboot to download and check heimdall
 - rework every function
 - rework the Icon
-- rework the UI from about
+- rework the UI from about 
+- rework the function about
 - rework the info
-- reduce the amount of bash scripts
+- remove all bash-scripts
 - rework the update-engine
-- fix a lot of errors
+- fix a lot of errors → # 
 
 ```
 ##  v.0.4.x
