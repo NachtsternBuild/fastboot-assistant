@@ -83,7 +83,7 @@ void updater(void)
 
     if (strlen(download_url) > 0) 
     {
-        g_printf("Neueste Version URL: %s\n", download_url);
+        g_print("Neueste Version URL: %s\n", download_url);
         gtk_init(&argc, &argv);
 
         char message[256];
@@ -106,7 +106,7 @@ void updater(void)
         // download the file
         if (download_file(download_url, output_file) == 0) 
         {
-            g_printf("Paket heruntergeladen: %s\n", output_file);
+            g_print("Paket heruntergeladen: %s\n", output_file);
 
             // check the package typ
             if (!verify_package_type(output_file, package_type)) 
@@ -150,7 +150,7 @@ void updater(void)
 			}
             open_terminal_by_desktop(install_command);
             system(remove_command);
-            g_printf("Fertig!\n");
+            g_print("Fertig!\n");
         } 
         else 
         {
