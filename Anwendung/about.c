@@ -80,7 +80,7 @@ void about(int argc, char *argv[])
     GtkWidget *label_information = gtk_label_new(information_text);
     gtk_container_add(GTK_CONTAINER(frame3), label_information);
 
-    const char *copyright_text = "(C) Copyright 2023 Elias Mörz";
+    const char *copyright_text = "(C) Copyright 2024 Elias Mörz";
     GtkWidget *label_copyright = gtk_label_new(copyright_text);
     gtk_container_add(GTK_CONTAINER(frame4), label_copyright);
     
@@ -88,7 +88,7 @@ void about(int argc, char *argv[])
     GtkWidget *label_github = gtk_label_new(github_text);
     gtk_container_add(GTK_CONTAINER(frame5), label_github);
 
-    const char *build_version_text = "\nVersion 0.5.3.beta\n";
+    const char *build_version_text = "\nVersion 0.5.4.beta\n";
     GtkWidget *label_build_version = gtk_label_new(build_version_text);
     gtk_container_add(GTK_CONTAINER(frame6), label_build_version);
 
@@ -96,7 +96,7 @@ void about(int argc, char *argv[])
     GtkWidget *label_build_name = gtk_label_new(build_name_text);
     gtk_container_add(GTK_CONTAINER(frame7), label_build_name);
     
-    const char *brownies_text = "\nthanks to:\n@mrrfv → Open Android Backup\n@Jean28518 → my build-deb.sh \nand build-rpm.sh is a modified version.\n";
+    const char *brownies_text = "\nthanks to:\n@mrrfv → Open Android Backup\n@Jean28518 → my build-fastboot-assistant.sh \nis a modified version.\n";
     GtkWidget *label_brownies = gtk_label_new(brownies_text);
     gtk_container_add(GTK_CONTAINER(frame8), label_brownies);
 
@@ -115,7 +115,7 @@ void about(int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(vbox), button_box, FALSE, FALSE, 10);
 
     // Create and add buttons to the button box
-     // the button for the website of 'Open Android Backup'
+    // the button for the website of 'Open Android Backup'
     GtkWidget *button_open_android_backup = gtk_button_new_with_label("Open Android Backup");
     g_signal_connect(button_open_android_backup, "clicked", G_CALLBACK(open_android_backup), NULL);
     gtk_box_pack_start(GTK_BOX(button_box), button_open_android_backup, TRUE, TRUE, 10);
