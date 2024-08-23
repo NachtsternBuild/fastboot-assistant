@@ -119,6 +119,10 @@ void updater(void)
             char install_command[512];
             char remove_command[512];
             char cd_command[512];
+            char output_path[512];
+            char deb_on_wsl[512];
+            char wsl_dir[512];
+            char unzip_command[512];
             
             if (strcmp(package_type, ".deb") == 0) 
             {
@@ -135,26 +139,15 @@ void updater(void)
                 snprintf(install_command, sizeof(install_command), "sudo rpm -i %s && exit", output_file);
                 snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
             }
-            
-            else if (strcmp(package_type, ".zip") == 0)
-            {
-            	g_print("Start install Windows file.\n");
-            	snprintf(win_command, sizeof(win_command), "unzip %s -d %s/Downloads/", output_file, output_directory);
-            	system(win_command);
-            	system("rm -f WSL_install.bat");
-    			system("Enable_WSL.bat");
-    			system("README.md");
-            	system("cd ~/Downloads/");
-                snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", output_file);
-                snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
                 
             else if (strcmp(package_type, ".zip") == 0)
 			{
     			g_print("Start install Windows file.\n");
-				char wsl_dir[512];
-    			const char *windows_download_directory = get_wsl_directory(wsl_dir, sizeof(wsl_dir))
-    			snprintf(output_file, sizeof(output_file), "%s/fastboot-assistant.zip", windows_download_directory);
-    			snprintf(output_path, sizeof(output_path), "%s/ROM-Install/", windows_download_directory);
+    			get_wsl_directory(wsl_dir, sizeof(wsl_dir));
+    			g_print(wsl_dir);
+    			snprintf(output_file, sizeof(output_file), "%s/fastboot-assistant.zip", wsl_dir);
+    			snprintf(output_path, sizeof(output_path), "%s/ROM-Install", wsl_dir);
+    			snprintf(deb_on_wsl, sizeof(deb_on_wsl), "%s/fastboot-assistant.deb", output_path);
 
     			// Download the file to the Windows Downloads directory
     			if (download_file(download_url, output_file) == 0) 
@@ -162,14 +155,13 @@ void updater(void)
         			g_print("Paket heruntergeladen: %s\n", output_file);
 
         			// Unzip the file in the Windows Downloads directory
-        			char unzip_command[512];
         			snprintf(unzip_command, sizeof(unzip_command), "unzip %s -d %s", output_file, output_path);
         			system(unzip_command);
         			
         			// change to to wsl dir and install the new file
         			snprintf(cd_command, sizeof(cd_command), "cd %s", output_path);
         			system(cd_command);
-        			snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", output_file);
+        			snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", deb_on_wsl);
 					
 					// remove the other files
 					system("rm -f WSL_install.bat");
