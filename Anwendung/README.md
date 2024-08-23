@@ -38,9 +38,7 @@ sudo dnf install -y \
 
 5. Kompilieren sie den Code und bauen sie das Debian-Paket oder RPM ausführen:
 ```sh
-bash Build/build-deb.sh
-# oder
-bash Build/build-rpm.sh
+bash Build/build-fastboot-assistant.sh
 ```
 **fastboot-assistant kann auch für die WSL als Zip-Datei gepackt werden.**
 - Dafür wählen sie nach dem sie den Build-Ordner angelegt haben:
@@ -134,6 +132,14 @@ GUI.c ––––|
 	  |				|– header_get_slot.c
 	  |				|– header_get_home.c
 	  |				|– header_show_file_chooser.c
+	  |				|– header_flash_heimdall.c
+	  |				|– header_flash_image.c
+	  |				|– header_get_home_dir_flash.c
+	  |				|– header_get_wsl_directory.c
+	  |				|– header_open_url.c
+	  |				|– header_set_main_dir.c
+	  |				|– header_set_main_dir_with_wsl.c
+	  |				|– header_show_error_message.c
 	  |				|
 	  |				|– function_header.h
 	  |				|– flash_function_header.h
@@ -142,15 +148,17 @@ GUI.c ––––|
 	  |				|– file_chooser_header.h
 	  |
 	  |  
-	  + makefile
-	  + build.sh
-	  + build_deb.sh ← by @Jean28518, thank you
+	  + Build/Makefile
+	  + Build/build-fastboot-assistant.sh ← by @Jean28518, thank you
 	  
-	  + setup_win.bat
+	  + Enable_WSL.bat
+	  + WSL_install.bat
 	  
 	  + fastboot-assistent.desktop ← by @Jean28518, thank you
-	  + control ← by @Jean28518, thank you
+	  + /deb/DEBIAN/control ← by @Jean28518, thank you
+	  + /deb/DEBIAN/install ← by @Jean28518, thank you
 	  + version.txt
 	  + icon.png
+	  + /rpmbuild/SPECS/fastboot-assistant.spec
 	  						
 ```
