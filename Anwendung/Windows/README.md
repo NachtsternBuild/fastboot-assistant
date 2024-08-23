@@ -5,7 +5,8 @@
 3. Check whether a user is set up for the *Ubuntu*.
 - **If yes, then start Ubuntu and install the package:**
 ```sh
-cd /mnt/c/Users/UserName/Downloads/Path/to/unpack/Zipfile
+cd /mnt/c/Users/UserName/Downloads/Path/to/unpacked/Zipfile
+sudo apt update && sudo apt upgrade
 sudo dpkg -i Projekt-122-l.deb
 ```
 
@@ -19,14 +20,18 @@ Enable_WSL.bat
 ```bat
 WSL_install.bat
 ```
-- Then define the users and execute the following commands:
+- Then define the users and run:
+```sh
+sudo apt update && sudo apt upgrade
+```
+- Execute the following commands:
 ```sh
 cd /mnt/c/Users/UserName/Downloads/Path/to/unpack/Zipfile
-sudo dpkg -i Projekt-122-l.deb
+sudo dpkg -i fastboot-assistant.deb
 ```
 
 ## Remove fastboot-assistant
 1. Start WSL and run:
 ```sh
-sudo dpkg -r --force-all Projekt-122-l
+sudo dpkg -r --force-all Fastboot-Assistant
 ```
