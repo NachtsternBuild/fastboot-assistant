@@ -117,8 +117,8 @@ void updater(void)
 
             // install the package
             char install_command[512];
-            char win_command[512];
             char remove_command[512];
+            char cd_command[512];
             
             if (strcmp(package_type, ".deb") == 0) 
             {
@@ -147,7 +147,46 @@ void updater(void)
             	system("cd ~/Downloads/");
                 snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", output_file);
                 snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
+                
+            else if (strcmp(package_type, ".zip") == 0)
+			{
+    			g_print("Start install Windows file.\n");
+				char wsl_dir[512];
+    			const char *windows_download_directory = get_wsl_directory(wsl_dir, sizeof(wsl_dir))
+    			snprintf(output_file, sizeof(output_file), "%s/fastboot-assistant.zip", windows_download_directory);
+    			snprintf(output_path, sizeof(output_path), "%s/ROM-Install/", windows_download_directory);
+
+    			// Download the file to the Windows Downloads directory
+    			if (download_file(download_url, output_file) == 0) 
+    			{
+        			g_print("Paket heruntergeladen: %s\n", output_file);
+
+        			// Unzip the file in the Windows Downloads directory
+        			char unzip_command[512];
+        			snprintf(unzip_command, sizeof(unzip_command), "unzip %s -d %s", output_file, output_path);
+        			system(unzip_command);
+        			
+        			// change to to wsl dir and install the new file
+        			snprintf(cd_command, sizeof(cd_command), "cd %s", output_path);
+        			system(cd_command);
+        			snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", output_file);
+					
+					// remove the other files
+					system("rm -f WSL_install.bat");
+					system("rm -f Enable_WSL.bat");
+					system("rm -f README.md");
+        			// Remove the ZIP file after extraction
+        			snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
+    			}
+    			 
+    			else 
+    			{
+        			fprintf(stderr, "Fehler beim Herunterladen des ZIP-Pakets\n");
+        			exit(EXIT_FAILURE);
+    			}
 			}
+			g_print(install_command);
+			g_print(remove_command);
             open_terminal_by_desktop(install_command);
             system(remove_command);
             g_print("Fertig!\n");
