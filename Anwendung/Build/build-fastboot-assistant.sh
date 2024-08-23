@@ -127,7 +127,7 @@ build_program_windows() {
 	
 	# Copy all windows specific files to the target dir
 	echo "Copy windows specific files to $target_dir..."
-	for dir in "$windows_dir" "$config_dir_win" "$preflash_dir_win"; do
+	for dir in "$windows_dir" "$config_dir_win" "$preflash_dir_win" "$header_dir_win"; do
     	find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
 	done
 	echo "Copied all files to $target_dir."
