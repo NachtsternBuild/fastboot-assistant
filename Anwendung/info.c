@@ -24,9 +24,26 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
+// function to check if an android device is connected
+int is_android_device_connected() 
+{
+    char *output = execute_command("adb devices | grep -w 'device'");
+    if (output == NULL || strlen(output) == 0) 
+    {
+        return 0; // No device connected
+    }
+    return 1; // Device connected
+}
+
 // function to get android-device and desktop info
 void get_android_info(char *android_version, char *kernel_version, char *device_name, char *project_treble, char *active_slot, char *get_root, char *get_soc, char *get_distro, char *get_version, char *get_desktop, char *get_language, char *get_session_type) 
 {
+    if (!is_android_device_connected()) 
+    {
+        g_print("Kein Android-Gerät verbunden.\n");
+        return;
+    }
+
     // get android-version
     strcpy(android_version, execute_command("adb shell getprop ro.build.version.release"));
     
@@ -48,7 +65,6 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
     // get SoC
     strcpy(get_soc, execute_command("adb shell cat /proc/cpuinfo"));
     
-    /* thanks to @jean28518*/
     // get distribution
     strcpy(get_distro, execute_command("grep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d ''"));
     
@@ -60,8 +76,8 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
     
     // get language
     strcpy(get_language, execute_command("echo $LANG | cut -d'_' -f1"));
-	
-	// get session type
+    
+    // get session type
     strcpy(get_session_type, execute_command("echo $XDG_SESSION_TYPE"));
 }
 
@@ -71,23 +87,40 @@ void info(int argc, char *argv[])
     gtk_init(&argc, &argv);
 
     // strings for system-info
-    char android_version[128];
-    char kernel_version[128];
-    char device_name[128];
-    char project_treble[128];
-    char active_slot[128];
-    char get_root[255];
-    char get_soc[128];
-    // thanks to @jean28518
-    char get_distro[128];
-    char get_version[128];
-    char get_desktop[128];
-    char get_language[128];
-    char get_session_type[128];
-    
+    char android_version[128] = "Unbekannt";
+    char kernel_version[128] = "Unbekannt";
+    char device_name[128] = "Unbekannt";
+    char project_treble[128] = "Unbekannt";
+    char active_slot[128] = "Unbekannt";
+    char get_root[255] = "Unbekannt";
+    char get_soc[128] = "Unbekannt";
+    char get_distro[128] = "Unbekannt";
+    char get_version[128] = "Unbekannt";
+    char get_desktop[128] = "Unbekannt";
+    char get_language[128] = "Unbekannt";
+    char get_session_type[128] = "Unbekannt";
+
+    if (!is_android_device_connected()) 
+    {
+        // create windows
+        GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_title(GTK_WINDOW(window), "Info");
+        gtk_widget_set_size_request(window, 400, 200);
+        // connect the 'destroy'-function
+    	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+        GtkWidget *label = gtk_label_new("Kein Android-Gerät verbunden. \nWarte auf Android-Gerät. \nSchließen sie, bitte, das Fenster!");
+        gtk_container_add(GTK_CONTAINER(window), label);
+        // show everything
+        gtk_widget_show_all(window);
+        // start gtk mainloop
+        gtk_main();
+        return;
+    }
+	
+	// get all infos
     get_android_info(android_version, kernel_version, device_name, project_treble, active_slot, get_root, get_soc, get_distro, get_version, get_desktop, get_language, get_session_type);
 
-    // create gtk-main windows
+    // create gtk-main window
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Info");
     gtk_widget_set_size_request(window, 700, 600);
@@ -142,87 +175,33 @@ void info(int argc, char *argv[])
     GtkWidget *soc_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(soc_label), g_strdup_printf("<b>System-on-Chip:</b> %s", get_soc));
     gtk_container_add(GTK_CONTAINER(vbox), soc_label);
-    
-    // the following info will be in instructions
-	/*
-    // create label for text
-    GtkWidget *text_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(text_label), "ADB (Android Debug Bridge) stellt\n "
-    											"eine Kommunikationsschnittstelle zwischen einem Computer\n "
-    											"und einem Android-Gerät zur Verfügung,\n "
-    											"die für Debugging und Dateiübertragung genutzt werden kann.\n "
-    											"Fastboot ist ein Befehlszeilenwerkzeug\n "
-    											"für den Bootloader-Modus von Android-Geräten,\n "
-    											"mit dem Systemabbilder geflasht und benutzerdefinierte Firmware\n "
-    											"installiert werden können.\n "
-    											"Beide Tools sind für Entwickler und fortgeschrittene Nutzer\n "
-    											"von großem Nutzen, wenn es darum geht, Android-Geräte\n "
-    											"über eine USB-Verbindung zu modifizieren und zu diagnostizieren.\n "
-    											" \n "
-    											"Der Kernel stellt den zentralen Bestandteil\n "
-    											"eines Betriebssystems dar.\n "
-    											"Er kommuniziert direkt mit der Hardware und verwaltet\n "
-    											"grundlegende Systemressourcen wie CPU, Speicher und Geräte.\n "
-    											"Er stellt eine Schnittstelle zwischen der Hardware\n "
-    											"und den Anwendungsprogrammen bereit,\n "
-    											"um eine effiziente und sichere Ausführung zu gewährleisten.\n "
-    											" \n "
-    											"Ein System on a Chip (SoC) ist ein integrierter Schaltkreis,\n "
-    											"der alle wesentlichen Komponenten eines Computersystems,\n "
-    											"einschließlich CPU, GPU, Speicher und Ein-/Ausgabeschnittstellen,\n "
-    											"auf einem einzigen Chip vereint.\n "
-    											"SoCs werden häufig in mobilen Geräten\n "
-    											"und eingebetteten Systemen verwendet,\n "
-    											"um Platz und Energie zu sparen.\n "
-    											" \n "
-    											"Die VNDK-Version (Vendor Native Development Kit)\n "
-    											"stellt eine Sammlung von Bibliotheken und Richtlinien dar,\n "
-    											"die es ermöglichen, den hardware-spezifischen Teil\n "
-    											"eines Android-Systems von\n "
-    											"der generischen Systemimplementierung zu trennen.\n "
-    											"Dadurch lassen sich Updates und Wartung erleichtern,\n "
-    											"indem sichergestellt wird, dass herstellerspezifische\n "
-    											"Anpassungen nicht die Kompatibilität und Stabilität\n "
-    											"des Android-Betriebssystems beeinträchtigen.\n "
-    											" \n "
-    											"System-as-root ist ein Mechanismus in Android,\n "
-    											"bei dem das System-Image als Root-Dateisystem gemountet wird.\n "
-    											"Dadurch wird die Trennung von System- und Vendor-Partitionen\n "
-    											"verbessert und die Sicherheit erhöht.\n "
-    											"Dies erleichtert das Aktualisieren des Systems\n "
-    											"und die Verwaltung von Berechtigungen,\n "
-    											"da systemkritische Dateien\n "
-    											"und Konfigurationen besser geschützt und isoliert werden.\n"
-                                                 
-);
-    gtk_container_add(GTK_CONTAINER(vbox), text_label);
-    */
+
     // show-text
     GtkWidget *info2_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(info2_label), g_strdup_printf("<b><u> Computer-Info: </u></b>"));
     gtk_container_add(GTK_CONTAINER(vbox), info2_label);
     
-     // Distro-label
+    // Distro-label
     GtkWidget *distro_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(distro_label), g_strdup_printf("<b>Distribuation:</b> %s", get_distro));
     gtk_container_add(GTK_CONTAINER(vbox), distro_label);
     
-     // Version-label
+    // Version-label
     GtkWidget *version_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(version_label), g_strdup_printf("<b>Version:</b> %s", get_version));
     gtk_container_add(GTK_CONTAINER(vbox), version_label);
     
-     // Desktop-label
+    // Desktop-label
     GtkWidget *desktop_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(desktop_label), g_strdup_printf("<b>Desktop:</b> %s", get_desktop));
     gtk_container_add(GTK_CONTAINER(vbox), desktop_label);
     
-     // Language-label
+    // Language-label
     GtkWidget *language_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(language_label), g_strdup_printf("<b>Sprache:</b> %s", get_language));
     gtk_container_add(GTK_CONTAINER(vbox), language_label);
     
-     // Session-type-label
+    // Session-type-label
     GtkWidget *session_type_label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(session_type_label), g_strdup_printf("<b>Session Typ:</b> %s", get_session_type));
     gtk_container_add(GTK_CONTAINER(vbox), session_type_label);
