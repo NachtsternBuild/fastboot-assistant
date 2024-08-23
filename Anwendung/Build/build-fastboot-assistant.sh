@@ -21,6 +21,7 @@ build_dir="${source_dir}/Build"
 windows_dir="${source_dir}/Windows"
 config_dir_win="${windows_dir}/config_projekt"
 preflash_dir_win="${windows_dir}/preflash"
+header_dir_win="${windows_dir}/header"
 
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
@@ -31,6 +32,7 @@ unused_files=(
     "remove_old.c"
     "backup_root.c"
     "unxz_files.c"
+    "header_set_main_dir_with_wsl.c"
 )
 
 # file that needed in the zip-file
@@ -289,7 +291,7 @@ done
 # choose between the build for linux or windows
 echo "For which operating system (OS) should the fastboot-assistant be built?"
 while true; do
-	read -p "Linux (l) / Windows via WSL (w)" answer
+	read -p "Linux (l) / Windows via WSL (w) / or not (n): " answer
 	case "$answer" in 
 		l|L)
         	build_program_linux
@@ -301,8 +303,12 @@ while true; do
 			echo "Build finished."
 			break
 			;;
+		n|N)
+			echo "No building."
+			break
+			;;
 		* )
-			echo "Please use 'l' or 'w'."
+			echo "Please use 'l' or 'w' or 'n'."
 			;;
 	esac
 done
@@ -310,7 +316,7 @@ done
 # choose between Debian package, RPM build or neither.
 echo "As which package should the fastboot-assistant be built?"
 while true; do
-	read -p "Debian package (d) / RPM (r) / the Zip-file for Windows (w) /nothing (n) " answer
+	read -p "Debian package (d) / RPM (r) / the Zip-file for Windows (w) / nothing (n): " answer
 	case "$answer" in 
 		d|D)
         	debian_package_build
@@ -340,7 +346,123 @@ while true; do
 	esac
 done
 
+# change to the source_dir
 cd "$source_dir"
+
+# choose between Debian package, RPM build or neither.
+echo "Should another package be built??"
+while true; do
+	read -p "Debian package (d) / RPM (r) / the Zip-file for Windows (w) / nothing (n): " answer
+	case "$answer" in 
+		d|D)
+        	echo "Cleaning..."
+        	rm -rf "$output_dir"
+        	rm -rf "$target_dir"
+        	
+        	# start another loop to run make
+        	while true; do
+        		read -p "Must the program be built beforehand? (j/n) (y/n): " answer
+        		case "$answer" in
+        			j|J|y|Y)
+        				build_program_linux
+        				echo "Build finished."
+        				break
+        				;;
+        			* )
+        				echo "No building."
+        				break
+        				;;
+        		esac
+        	done
+        	# start package build
+  			echo "Ready."
+        	debian_package_build
+        	echo "Build finished."
+  			echo "The package are at the $source_dir"
+			break
+			;;
+		r|R)
+			echo "Cleaning..."
+        	rm -rf "$output_dir"
+        	rm -rf "$target_dir"
+        	
+        	# start another loop to run make
+        	while true; do
+        		read -p "Must the program be built beforehand? (j/n) (y/n): " answer
+        		case "$answer" in
+        			j|J|y|Y)
+        				build_program_linux
+        				echo "Build finished."
+        				break
+        				;;
+        			* )
+        				echo "No building."
+        				break
+        				;;
+        		esac
+        	done
+        	# start package building
+  			echo "Ready."
+			rpm_build
+			echo "Build finished."
+  			echo "The package are at $HOME/rpmbuild/RPMS/"
+			break
+			;;
+		w|W)
+			echo "Cleaning..."
+        	rm -rf "$output_dir"
+        	rm -rf "$target_dir"
+  			echo "Ready."
+  			
+  			# start another loop to run make
+        	while true; do
+        		read -p "Must the program be built beforehand? (j/n) (y/n): " answer
+        		case "$answer" in
+        			j|J|y|Y)
+        				build_program_windows
+        				echo "Build finished."
+        				break
+        				;;
+        			* )
+        				echo "No building."
+        				break
+        				;;
+        		esac
+        	done
+        	# start package building
+			debian_package_build
+			echo "Build finished."
+  			echo "The package are at the $source_dir"
+  			windows_zip_build
+  			echo "Build finished."
+  			echo "The package are at the $source_dir"
+  			break
+  			;;
+		* )
+			echo "No package building."
+			break
+			;;
+	esac
+done
+
+
+cd "$source_dir"
+while true; do
+	read -p "Should the output directory be deleted? (j/n) (y/n): " answer
+	case "$answer" in 
+		j|J|y|Y)
+        	echo "Cleaning..."
+        	rm -rf "$output_dir"
+  			echo "Ready."
+  			break
+			;;
+		* )
+			echo "No cleaning."
+			break
+			;;
+	esac
+done
+
 echo "------------------------------------------------"
 echo "Build script of the fastboot-assistant finished!"
 echo "------------------------------------------------"
