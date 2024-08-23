@@ -4,7 +4,7 @@
 #include "program_functions.h"
 
 #define BACKUP_DIR "/home/USER/Downloads/ROM-Install/Backup"
-// #define BACKUP_DIR "/mnt/c/Users/USERNAME/Downloads/ROM-Install/Backup"
+// #define BACKUP_DIR "/mnt/c/Users/USER/Downloads/ROM-Install/Backup"
 #define ADB "adb"
 #define SU "su"
 #define DD "dd"
