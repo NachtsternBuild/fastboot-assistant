@@ -6,11 +6,11 @@
 | ----------- | ------------------ | ----------------------------------- | ----------------- | ---------------------------- | ---------------------------------------------------------------- |
 | 0.6.x       | :crystal_ball:     | *future versions*                   |                   | *Glitschiges Gnome*          |                                                                  |
 | 0.5.5       | :crystal_ball:     | *future version*                    |                   | *Sweet Unix System V*        |                                                                  |
-| 0.5.4.beta  | :crystal_ball:     | **the next version**                | **beta**          | **Sweet Unix System IV**     | **Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL**    |
-| 0.5.3.beta  | :white_check_mark: | ***active version***                | ***beta***        | ***Sweet Unix System III***  | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)***                   |
+| 0.5.4.beta  | :white_check_mark: | ***active version***                | ***beta***        | ***Sweet Unix System IV***   | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL***  |
+| 0.5.3.beta  | :x:                | *old version*                       | *beta*            | *Sweet Unix System III*      | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)*                       |
 | 0.5.2.dev   | :x:                | *old version*                       | *dev*             | *Sweet Unix System II*       | *Linux (Debian/Ubuntu)*                                          |
 | 0.5.1.dev   | :x:                | *old version*                       | *dev*             | *Sweet Unix System I*        | *Linux (Debian/Ubuntu)*                                          |
-| 0.5.x       | :white_check_mark: | ***all Sweet Unix versions***       | **dev/beta**      | ***Sweet Unix***             | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)***                   |
+| 0.5.x       | :white_check_mark: | ***all Sweet Unix versions***       | ***dev/beta***    | ***Sweet Unix***             | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)***                   |
 | 0.4.x       | :x:                | *old version*                       | *dev/beta*        | *Effervescent PC cooling*    | *Linux (Debian/Ubuntu)*                                          |    
 | < 0.4       | :x:                | *very old versions*                 | *dev/beta*        | *Sparkling data crystals*    | *Linux (Debian/Ubuntu)*                                          |
 
