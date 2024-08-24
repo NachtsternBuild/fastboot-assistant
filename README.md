@@ -22,7 +22,7 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 - ***see the SECURTIY.md***
 
 ### Sweet Unix v.0.5.x
-- **fastboot-assistant (Projekt-122-l) v0.5.3.beta** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL (still experimental)
+- **fastboot-assistant v0.5.4.beta** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL (still experimental)
 
 ## Notes
 - Use at your own risk.
