@@ -10,7 +10,7 @@
  *	zu erleichtern  - function_header		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -37,6 +37,7 @@ void instruction_GUI();
 void info();
 void updater();
 void about();
+void setup_assistant();
 
 // function for the header - other GUIs
 void get_devices();
