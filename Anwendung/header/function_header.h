@@ -37,7 +37,6 @@ void instruction_GUI();
 void info();
 void updater();
 void about();
-void setup_assistant();
 
 // function for the header - other GUIs
 void get_devices();
