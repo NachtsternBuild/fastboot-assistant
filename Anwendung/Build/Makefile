@@ -32,6 +32,9 @@ SRCS =	header_connected_devices.c \
 		header_show_error_message.c \
 		header_flash_image.c \
 		header_flash_heimdall.c \
+		header_check_first_run.c \
+		header_css_provider.c \
+		header_next_page.c \
 		get_devices.c \
 		reboot_fastboot.c \
 		reboot.c \
@@ -77,6 +80,7 @@ SRCS =	header_connected_devices.c \
 		instruction_prepare_flash.c \
 		instruction_info.c \
 		instruction_GUI.c \
+		setup_assistant.c \
 		info.c \
 		updater.c \
 		about.c \
