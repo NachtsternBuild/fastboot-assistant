@@ -51,8 +51,6 @@ void show_error_message(GtkWidget *parent_window, const char *message);
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
 void css_provider();
-gboolean check_first_run();
 void next_page(GtkButton *button, gpointer data);
-char* program_path();
 
 #endif
