@@ -38,7 +38,6 @@ SRCS = \
 	header_show_error_message.c \
 	header_flash_image.c \
 	header_flash_heimdall.c \
-	header_check_first_run.c \
 	header_css_provider.c \
 	header_next_page.c \
 	get_devices.c \
