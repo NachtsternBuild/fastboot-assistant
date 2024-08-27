@@ -119,15 +119,20 @@ void config_dir_setup(const char *pfad)
 
 
 // config the program
-static void create_required_directories() 
+static void config_start() 
 {
     make_dir();
 }
 
 // button after the setup finished
-static void on_button_finish(GtkButton *button, gpointer data) 
+static void button_finish(GtkButton *button, gpointer data) 
 {
     gtk_main_quit();
+}
+
+static void setup_text(GtkButton *button, gpointer data) 
+{
+	g_print("Hier gibt's nichts!\n");
 }
 
 // function that run the setup
@@ -136,8 +141,8 @@ static void run_first_run_setup(GtkCssProvider *provider)
     GtkWidget *window;
     GtkWidget *notebook;
     GtkWidget *page1, *page2, *page3;
-    GtkWidget *label1, *label2, *label3;
-    GtkWidget *button1, *button_dir, *button2, *button3;
+    GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label3;
+    GtkWidget *button_welcome_1, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button3;
     GtkStyleContext *context;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -147,47 +152,65 @@ static void run_first_run_setup(GtkCssProvider *provider)
     notebook = gtk_notebook_new();
     gtk_container_add(GTK_CONTAINER(window), notebook);
 
-    // Seite 1
+    // page 1
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    label1 = gtk_label_new("Willkommen zum Fastboot Assistant!");
-    button1 = gtk_button_new_with_label("Weiter");
-    gtk_box_pack_start(GTK_BOX(page1), label1, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page1), button1, FALSE, FALSE, 0);
-    g_signal_connect(button1, "clicked", G_CALLBACK(next_page), notebook);
+    label_welcome_1 = gtk_label_new(" ");
+    button_welcome_1 = gtk_button_new_with_label("Willkommen zum Fastboot Assistant!");
+    label_welcome_2 = gtk_label_new(" ");
+    button_welcome_2 = gtk_button_new_with_label("Weiter");
+    gtk_box_pack_start(GTK_BOX(page1), label_welcome_1, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page1), button_welcome_1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page1), label_welcome_2, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page1), button_welcome_2, FALSE, FALSE, 0);
+    g_signal_connect(button_welcome_1, "clicked", G_CALLBACK(setup_text), notebook);
+    g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(next_page), notebook);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Begrüßung"));
 
-    // CSS-Provider anwenden
-    context = gtk_widget_get_style_context(button1);
+    // run css-provider
+    context = gtk_widget_get_style_context(button_welcome_1);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    context = gtk_widget_get_style_context(button_welcome_2);
     gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
     // page 2
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    label2 = gtk_label_new("Konfiguration");
+    button_page2_1 = gtk_button_new_with_label("Zum korrekten Ausführen muss der \nFastboot-Assistant einige Konfigurationen vornehmen.");
+    label_page2_1 = gtk_label_new("1. Es werden alle benötigten Ordner erstellt.");
+    label_page2_2 = gtk_label_new("2. Anpassungen an das Betriebssystem werden durchgeführt.");
     button_dir = gtk_button_new_with_label("Konfigurieren");
-    button2 = gtk_button_new_with_label("Weiter");
-    gtk_box_pack_start(GTK_BOX(page2), label2, TRUE, TRUE, 0);
+    button_page2_2 = gtk_button_new_with_label("Weiter");
+    gtk_box_pack_start(GTK_BOX(page2), button_page2_1, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page2), label_page2_1, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page2), label_page2_2, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(page2), button_dir, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page2), button2, FALSE, FALSE, 0);
-    g_signal_connect(button_dir, "clicked", G_CALLBACK(create_required_directories), NULL);
-    g_signal_connect(button2, "clicked", G_CALLBACK(next_page), notebook);
+    gtk_box_pack_start(GTK_BOX(page2), button_page2_2, FALSE, FALSE, 0);
+    g_signal_connect(button_page2_1, "clicked", G_CALLBACK(setup_text), notebook);
+    g_signal_connect(button_dir, "clicked", G_CALLBACK(config_start), NULL);
+    g_signal_connect(button_page2_2, "clicked", G_CALLBACK(next_page), notebook);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("Konfiguration"));
 
-    // CSS-Provider anwenden
+    // run css-provider
+    context = gtk_widget_get_style_context(button_page2_1);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    context = gtk_widget_get_style_context(label_page2_1);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    context = gtk_widget_get_style_context(label_page2_2);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     context = gtk_widget_get_style_context(button_dir);
     gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-    context = gtk_widget_get_style_context(button2);
+    context = gtk_widget_get_style_context(button_page2_2);
     gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
-    // Seite 3
+    // page 3
     page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     label3 = gtk_label_new("Hinweise zu Projekt-122.");
     button3 = gtk_button_new_with_label("Fertig");
     gtk_box_pack_start(GTK_BOX(page3), label3, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(page3), button3, FALSE, FALSE, 0);
-    g_signal_connect(button3, "clicked", G_CALLBACK(on_button_finish), NULL);
+    g_signal_connect(button3, "clicked", G_CALLBACK(button_finish), NULL);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("Hinweise"));
 
-    // CSS-Provider anwenden
+    // run css-provider
     context = gtk_widget_get_style_context(button3);
     gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
@@ -221,19 +244,19 @@ int main(int argc, char *argv[])
         return;
     }
     
-    // Erstellen des Verzeichnisses, falls nicht vorhanden
+    // create the config dir
     snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config", homeDir);
     config_dir_setup(fish_path);
     
-    // Erstellen des vollständigen Pfades zur Datei
+    // create the full path to the config.txt
     snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config/config.txt", homeDir);
 
     FILE *file;
 
-    // Überprüfen, ob die Datei existiert
+    // check whether the file still exists
     if ((file = fopen(fish_path, "r")) != NULL) 
     {
-        // Datei existiert
+        // file exists
         fclose(file);
         g_print("No Setup\n");
         // the crazy output came from the experiment with this
@@ -242,7 +265,7 @@ int main(int argc, char *argv[])
     
     else 
     {
-        // Datei existiert nicht
+        // file not exists
         file = fopen(fish_path, "w");
         if (file == NULL) 
         {
@@ -252,7 +275,7 @@ int main(int argc, char *argv[])
         fprintf(file, "%s", content);
         fclose(file);
         // the crazy output came from the experiment with this
-        g_printf("Fisch\n");
+        g_print("Fisch\n");
         // run the setup
         run_first_run_setup(provider);
     }
