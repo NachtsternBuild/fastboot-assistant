@@ -52,5 +52,6 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
 void css_provider();
 void next_page(GtkButton *button, gpointer data);
+void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
 
 #endif
