@@ -12,7 +12,7 @@
  *	zu erleichtern - remove_old			 	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,6 +24,8 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 350
 
 // Callback functions for each button
 // Remove the 'ROM-Install' directory
@@ -31,13 +33,12 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
 {
     const char *message = "Lösche ~/Downloads/ROM-Install\n";
     show_message(message);
-	
+	/*
     char command[MAX_BUFFER_SIZE];
-    /*
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", get_home_directory_flash());
     system(command);
-	
 	*/
+	
     char wsl_dir[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "rm -rf %s", wsl_dir);
@@ -54,9 +55,8 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
     const char *message = "Lösche alle Dateien in ROM-Install.\n";
     show_message(message);
 	
-	
+	/*
     char command[MAX_BUFFER_SIZE];
-    /*
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory_flash());
     system(command);
     snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup", get_home_directory_flash());
@@ -65,8 +65,8 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
     system(command);
     snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Images", get_home_directory_flash());
     system(command);
-	
 	*/
+	
     char wsl_dir[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "rm -rf %s/*", wsl_dir);
@@ -77,8 +77,7 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
     system(command);
     snprintf(command, sizeof(command), "mkdir -p %s/Images", wsl_dir);
     system(command);
-	
-	
+		
     message = "Fertig.\n";
     show_message(message);
 }
@@ -89,14 +88,14 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     const char *message = "Lösche alle Dateien im Backup-Ordner.\n";
     show_message(message);
 	
+	/*
     char command[MAX_BUFFER_SIZE];
-    /*
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", get_home_directory_flash());
     system(command);
     snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory_flash());
     system(command);
-	
 	*/
+	
     char wsl_dir[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "rm -rf %s/Backup/*", wsl_dir);
@@ -109,30 +108,45 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     show_message(message);
 }
 
-/* main function of preflash_GUI */
+/* main function of remove_old */
 void remove_old(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[3][20] = {"ROM-Install", "alte Dateien", "Backups"};
+    GtkStyleContext *context;
+    
+    char button_labels[3][30] = {"ROM-Install", "alte Dateien", "Backups"};
 
     gtk_init(&argc, &argv);
+    
+    css_provider(); // load css-provider
 
-    // create new windows
+    
+    // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Löschen von:");
+    gtk_window_set_title(GTK_WINDOW(window), "Löschen von:");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    gtk_container_set_border_width(GTK_CONTAINER(window), 10);
 
-    // create a grid
+    // create the grid and centre it
     grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+
+    // add the grid to the window
     gtk_container_add(GTK_CONTAINER(window), grid);
 
-    // add buttons and connect them with callback
+    // add and centre all button
     for (int i = 0; i < 3; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
         switch (i) {
             case 0:
                 g_signal_connect(button, "clicked", G_CALLBACK(remove_rom_install), NULL);
@@ -146,35 +160,13 @@ void remove_old(int argc, char *argv[])
         }
     }
 
-    // change the style of the buttons to quick settings buttons from android 12 - css is used for this
-    GtkCssProvider *provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_data(provider,
-                                    "button {\n"
-                                    "    background-color: #8B0000;\n" /* dark red */
-                                    "    border: none;\n"
-                                    "    border-radius: 12px;\n" /* round corners */
-                                    "    padding: 12px 24px;\n" /* inside distance */
-                                    "    color: #ffffff;\n" /* white text */
-                                    "    font-size: 16px;\n" /* font size */
-                                    "    font-weight: 500;\n" /* medium font */
-                                    "    text-align: center;\n" /* center text */
-                                    "    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);\n" /* light shade */
-                                    "    transition: background-color 0.3s ease, box-shadow 0.3s ease;\n" /* animation */
-                                    "}\n"
-                                    "button:hover {\n"
-                                    "    background-color: #A52A2A;\n" /* brighter red on hover */
-                                    "    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);\n" /* amplify shadows */
-                                    "}\n",
-                                    -1,
-                                    NULL);
-    GtkStyleContext *context = gtk_widget_get_style_context(window);
-    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-    g_object_unref(provider);
-
     // show window
     gtk_widget_show_all(window);
 
     // run main gtk loop
     gtk_main();
+    
+    // clean the provider
+    g_object_unref(provider);
 }
 
