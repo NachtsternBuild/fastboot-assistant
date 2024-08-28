@@ -165,8 +165,5 @@ void remove_old(int argc, char *argv[])
 
     // run main gtk loop
     gtk_main();
-    
-    // clean the provider
-    g_object_unref(provider);
 }
 
