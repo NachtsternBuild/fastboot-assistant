@@ -37,6 +37,7 @@ void instruction_GUI();
 void info();
 void updater();
 void about();
+void wsl_config();
 
 // function for the header - other GUIs
 void get_devices();
