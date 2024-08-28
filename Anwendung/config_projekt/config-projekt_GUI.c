@@ -115,8 +115,5 @@ void config_projekt_GUI(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
-    
-    //clean the provider
-    g_object_unref(provider);
 }
 
