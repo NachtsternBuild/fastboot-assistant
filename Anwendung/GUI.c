@@ -32,7 +32,7 @@
 
 #define MAX_BUFFER_SIZE 256
 #define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 450
+#define WINDOW_HEIGHT 400
 
 // include all functions
 extern void get_devices();
@@ -121,7 +121,13 @@ void config_dir_setup(const char *pfad)
 // config the program
 static void config_start() 
 {
+    GtkWidget *dialog;
+    const char *message;
+    message = "Konfiguration beendet!\n";
     make_dir();
+    wsl_config();
+    show_message(message);
+    
 }
 
 // button after the setup finished
@@ -293,6 +299,7 @@ int main(int argc, char *argv[])
     // the crazy output came from the experiment with this
     const char *content = "Fisch";
     char fish_path[256];
+    char setup_dir[1024];
     char *homeDir = getenv("HOME");
     if (homeDir == NULL) 
     {
@@ -300,12 +307,30 @@ int main(int argc, char *argv[])
         return;
     }
     
+    // the wsl logic
+    const char *user = getenv("USER");
+    if (user == NULL) 
+    {
+        g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+        return;
+    }
+
+    char wsl_setup_base[1024];
+    snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
+    
+    // set the needed path construction active
+    // this is for linux
+    snprintf(setup_dir, sizeof(setup_dir), "%s", homeDir);
+    // this for the WSL
+    // snprintf(setup_dir, sizeof(setup_dir), "%s", wsl_setup_base);
+    g_print(setup_dir);
+    
     // create the config dir
-    snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config", homeDir);
+    snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config", setup_dir);
     config_dir_setup(fish_path);
     
     // create the full path to the config.txt
-    snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config/config.txt", homeDir);
+    snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config/config.txt", setup_dir);
 
     FILE *file;
 
@@ -360,8 +385,7 @@ int main(int argc, char *argv[])
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
 
         // execute css-provider for all buttons
-        context = gtk_widget_get_style_context(button);
-        gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+        add_css_provider(button, provider);
 
         switch (i) {
             case 0:
