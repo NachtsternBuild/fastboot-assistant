@@ -25,6 +25,8 @@
 #include "flash_function_header.h"
 
 #define MAX_BUFFER_SIZE 256
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 // Callback functions for each button
 /* main function of prepare*/
 void prepare(int argc, char *argv[]) 
