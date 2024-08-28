@@ -27,6 +27,7 @@
 
 GtkCssProvider *provider = NULL;
 
+// the main css-provider
 void css_provider()
 {
     // Initialising and loading the CSS provider in the style of android 12 qs
@@ -47,10 +48,17 @@ void css_provider()
         "    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);\n"
         "}\n"
         "label {\n"
-        "    color: #8B0000;\n"
-        "    font-size: 18px;\n"
+        "    color: #FFFFFF;\n"
+        "    font-size: 16px;\n"
         "    font-weight: bold;\n"
         "}\n",
         -1,
         NULL);
+}
+
+// function that load the css provider
+void add_css_provider(GtkWidget *widget, GtkCssProvider *provider) 
+{
+    GtkStyleContext *context = gtk_widget_get_style_context(widget);
+    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 }
