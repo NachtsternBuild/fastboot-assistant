@@ -10,7 +10,7 @@
  *	zu erleichtern - preflash_GUI			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,7 +24,7 @@
 
 #define MAX_BUFFER_SIZE 256
 #define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
+#define WINDOW_HEIGHT 350
 
 // include all functions
 extern void make_dir();
@@ -45,11 +45,7 @@ static void start_make_dir_function(GtkWidget *widget, gpointer data)
 // function without any function
 static void start_remove_old(GtkWidget *widget, gpointer data) 
 {
-    GtkWidget *dialog;
-    const char *message;
-    message = "Fertig!\n";
     remove_old();
-    show_message(message);
 }
 
 // start make_dir-function
