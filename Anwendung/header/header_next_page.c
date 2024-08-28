@@ -27,7 +27,17 @@
 
 void next_page(GtkButton *button, gpointer data) 
 {
+    // Überprüfe, ob der Zeiger 'data' ein gültiges GtkNotebook ist
+    if (!GTK_IS_NOTEBOOK(data)) 
+    {
+        g_warning("next_page: data is not a valid GtkNotebook pointer.");
+        return;
+    }
+
     GtkNotebook *notebook = GTK_NOTEBOOK(data);
     gint current_page = gtk_notebook_get_current_page(notebook);
     gtk_notebook_set_current_page(notebook, current_page + 1);
+
+    g_print("Switched to page: %d\n", current_page + 1);
 }
+
