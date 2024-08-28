@@ -36,7 +36,7 @@ void css_provider()
         "button {\n"
         "    background-color: #8B0000;\n"
         "    border: 2px solid #8B0000;\n"
-        "    border-radius: 12px;\n"
+        "    border-radius: 15px;\n"
         "    padding: 24px 48px;\n"
         "    color: #ffffff;\n"
         "    font-size: 16px;\n"
