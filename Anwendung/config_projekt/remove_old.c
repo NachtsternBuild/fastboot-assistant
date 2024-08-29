@@ -114,7 +114,6 @@ void remove_old(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    GtkStyleContext *context;
     
     char button_labels[3][30] = {"ROM-Install", "alte Dateien", "Backups"};
 
@@ -159,14 +158,14 @@ void remove_old(int argc, char *argv[])
                 break;
         }
     }
-
+	
+	// clean the storage
+    g_object_unref(provider);
+    
     // show window
     gtk_widget_show_all(window);
 
     // run main gtk loop
     gtk_main();
-    
-    // clean the storage
-    g_object_unref(provider);
 }
 
