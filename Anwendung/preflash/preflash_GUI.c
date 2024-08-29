@@ -76,7 +76,6 @@ void preflash_GUI(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    GtkStyleContext *context;
     char button_labels[6][30] = {"Backup", "Dateien vorbereiten", "Lösche Nutzerdaten", 
                                  "Set active slot", "Bootloader", "Partitionierung"};
 
@@ -129,13 +128,14 @@ void preflash_GUI(int argc, char *argv[])
                 break;
         }
     }
+    
+    // clean the storage
+    g_object_unref(provider);
+    
     // show window
     gtk_widget_show_all(window);
 
     // run main-gtk-loop
     gtk_main();
-    
-    // clean the storage
-    g_object_unref(provider);
 }
 
