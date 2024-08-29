@@ -139,5 +139,8 @@ void backup_function(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    
+    // clean the storage
+    g_object_unref(provider);
 }
 
