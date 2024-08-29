@@ -417,15 +417,15 @@ int main(int argc, char *argv[])
                 break;
         }
     }
-
+	
+	// clean the storage
+    g_object_unref(provider);
+    
     // show all button
     gtk_widget_show_all(window);
 
     // gtk mainloop
-    gtk_main();
-
-    // clean the storage
-    g_object_unref(provider);
+    gtk_main();    
 
     return 0;
 }
