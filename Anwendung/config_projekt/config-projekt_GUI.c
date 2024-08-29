@@ -35,7 +35,6 @@ extern void wsl_config();
 // function without any function
 static void start_make_dir_function(GtkWidget *widget, gpointer data) 
 {
-	GtkWidget *dialog;
     const char *message;
     message = "Fertig!\n";
     make_dir();
@@ -51,7 +50,6 @@ static void start_remove_old(GtkWidget *widget, gpointer data)
 // start make_dir-function
 static void start_wsl_config(GtkWidget *widget, gpointer data) 
 {
-    GtkWidget *dialog;
     const char *message;
     message = "Fertig!\n";
     wsl_config();
@@ -64,7 +62,6 @@ void config_projekt_GUI(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    GtkStyleContext *context;
     
     char button_labels[3][30] = {"Anlegen Ordner", "Aufräumen", "Konfigurieren"};
 
@@ -109,14 +106,14 @@ void config_projekt_GUI(int argc, char *argv[])
                 break;
         }
     }
+    
+    // clean the storage
+    g_object_unref(provider);
 
     // show window
     gtk_widget_show_all(window);
 
     // run main-gtk-loop
     gtk_main();
-    
-    // clean the storage
-    g_object_unref(provider);
 }
 
