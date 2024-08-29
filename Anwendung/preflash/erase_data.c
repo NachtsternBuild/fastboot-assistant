@@ -10,7 +10,7 @@
  *	zu erleichtern - erase_data				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,8 +24,7 @@
 // Function to erase user data
 void erase_data(GtkWidget *widget, gpointer data) 
 {
-    GtkWidget *dialog;
-    const char *message = "!!!Achtung!!!\nBenutzung auf eigene Gefahr!\n!!!Achtung!!!:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um Nutzerdaten zu löschen.";
+    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
 
     // show message
     show_message(message);
