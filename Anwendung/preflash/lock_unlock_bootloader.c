@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              lock_unlock_bootloader		 *
@@ -25,11 +25,12 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 
 // button 1 - unlock bootloader new
 static void bootloader_new(GtkWidget *widget, gpointer data)
 {
-    GtkWidget *dialog;
     const char *title, *message;
     
     title = "Unlock bootloader new";
@@ -42,7 +43,6 @@ static void bootloader_new(GtkWidget *widget, gpointer data)
 // button 2 - unlock bootloader old
 static void bootloader_old(GtkWidget *widget, gpointer data)
 {
-	GtkWidget *dialog;
     const char *title, *message;
     
     title = "Unlock bootloader old";
@@ -55,7 +55,6 @@ static void bootloader_old(GtkWidget *widget, gpointer data)
 // button 3 - lock bootloader
 static void bootloader_lock(GtkWidget *widget, gpointer data)
 {
-	GtkWidget *dialog;
     const char *title, *message;
     
     title = "Lock bootloader";
@@ -69,58 +68,61 @@ static void bootloader_lock(GtkWidget *widget, gpointer data)
 /* start main programm */
 void lock_unlock_bootloader(int argc, char *argv[])
 {
-	// int gtk
-	gtk_init(&argc, &argv);
-	
-	// make main window
-	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - öffnen/schließen Bootloader");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 500);
-    gtk_widget_set_size_request(window, 800, 750);
-	gtk_widget_show(window);
-	
-	// Connect close function to 'destroy' signal
+	GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
+    
+    char button_labels[3][30] = {"Öffnen (neu)", "Öffnen (alt)", "Schließen"};
+
+    gtk_init(&argc, &argv);
+    
+    css_provider(); // load css-provider
+
+    
+    // create the window
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Bootloader:");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	
-	// make button for every function
-    GtkWidget *button_bootloader_new = gtk_button_new_with_label("Öffnen Booloader neue Methode");
-    GtkWidget *button_bootloader_old = gtk_button_new_with_label("Öffnen Bootlader alte Methode");
-    GtkWidget *button_bootloader_lock = gtk_button_new_with_label("Schließen des Bootloaders");     
-    
-    // Link the click callback function with the buttons 
-    g_signal_connect(button_bootloader_new, "clicked", G_CALLBACK(bootloader_new), NULL);
-    g_signal_connect(button_bootloader_old, "clicked", G_CALLBACK(bootloader_old), NULL);
-    g_signal_connect(button_bootloader_lock, "clicked", G_CALLBACK(bootloader_lock), NULL);
-    
-    // Create a layout container (HBox) for the buttons
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    
-    // Create a layout container (VBox) for the left and right buttons
-    GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    
-    // Add the first two buttons to the left VBox
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_bootloader_new, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_bootloader_old, TRUE, TRUE, 0);
-   
-    // Add the other two buttons to the right VBox
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_bootloader_lock, TRUE, TRUE, 0);
 
-    // Add the left and right VBoxes to the main HBox
-    gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
+    // create the grid and centre it
+    grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 
-    // Add the main HBox to the main window
-    gtk_container_add(GTK_CONTAINER(window), hbox);
+    // add the grid to the window
+    gtk_container_add(GTK_CONTAINER(window), grid);
 
-    // show all button
-    gtk_widget_show(button_bootloader_new);
-    gtk_widget_show(button_bootloader_old);
-    gtk_widget_show(button_bootloader_lock);
-    gtk_widget_show(left_vbox);
-    gtk_widget_show(right_vbox);
-    gtk_widget_show(hbox);
-	
-	// gtk main loop
-	gtk_main();
+    // add and centre all button
+    for (int i = 0; i < 3; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(bootloader_new), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(bootloader_old), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(bootloader_lock), NULL);
+                break;
+        }
+    }
+    
+    // clean the storage
+    g_object_unref(provider);
+
+    // show window
+    gtk_widget_show_all(window);
+
+    // run main gtk loop
+    gtk_main();
 }
+
