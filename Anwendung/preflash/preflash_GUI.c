@@ -10,7 +10,7 @@
  *	zu erleichtern - preflash_GUI			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -31,6 +31,7 @@ extern void prepare_function();
 extern void erase_data();
 extern void lock_unlock_bootloader();
 extern void set_active_slot();
+extern void partitions();
 
 // Callback functions for each button
 // start backup_function-function
@@ -64,9 +65,9 @@ static void start_lock_unlock_bootloader(GtkWidget *widget, gpointer data)
 }
 
 // function without any function
-static void start_zero_function_6(GtkWidget *widget, gpointer data) 
+static void start_partitions(GtkWidget *widget, gpointer data) 
 {
-    printf("Keine Funktion!\n");
+    partitions();
 }
 
 /* main function of preflash_GUI*/
@@ -77,7 +78,7 @@ void preflash_GUI(int argc, char *argv[])
     GtkWidget *button;
     GtkStyleContext *context;
     char button_labels[6][30] = {"Backup", "Dateien vorbereiten", "Lösche Nutzerdaten", 
-                                 "Set active slot", "Bootloader", " "};
+                                 "Set active slot", "Bootloader", "Partitionierung"};
 
     gtk_init(&argc, &argv);
     css_provider(); // load css-provider
@@ -124,7 +125,7 @@ void preflash_GUI(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(start_lock_unlock_bootloader), NULL);
                 break;
             case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_6), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(start_partitions), NULL);
                 break;
         }
     }
@@ -133,5 +134,8 @@ void preflash_GUI(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    
+    // clean the storage
+    g_object_unref(provider);
 }
 
