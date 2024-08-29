@@ -54,7 +54,8 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
 {
     const char *message = "Lösche alle Dateien in ROM-Install.\n";
     show_message(message);
-
+	
+	// add the config.txt
     char command[MAX_BUFFER_SIZE];
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory_flash());
     system(command);
@@ -164,5 +165,8 @@ void remove_old(int argc, char *argv[])
 
     // run main gtk loop
     gtk_main();
+    
+    // clean the storage
+    g_object_unref(provider);
 }
 
