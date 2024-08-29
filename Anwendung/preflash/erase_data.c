@@ -30,11 +30,8 @@ void erase_data(GtkWidget *widget, gpointer data)
     show_message(message);
     
     // Erase user data and metadata
-    system("fastboot erase userdata");
+    open_terminal_by_desktop("fastboot erase userdata && exit");
     // I don't now if you need this command
     // system("fastboot erase metadata");
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
 }
 
