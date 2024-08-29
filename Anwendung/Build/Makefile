@@ -64,6 +64,7 @@ SRCS = \
 	erase_data.c \
 	lock_unlock_bootloader.c \
 	set_active_slot.c \
+	partitions.c \
 	flash_recovery.c \
 	flash_boot.c \
 	flash_vendor.c \
