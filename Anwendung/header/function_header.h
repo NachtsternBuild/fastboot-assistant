@@ -51,6 +51,7 @@ void reboot_heimdall();
 // for config-projekt
 void make_dir();
 void remove_old();
+void wsl_config();
 
 // for preflash_GUI
 void backup_function();
@@ -61,5 +62,6 @@ void prepare_function();
 void erase_data();
 void lock_unlock_bootloader();
 void set_active_slot();
+void partitions();
 
 #endif
