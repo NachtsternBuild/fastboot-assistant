@@ -34,13 +34,12 @@ extern void backup_noroot();
 // function without any function
 static void start_zero_function_20(GtkWidget *widget, gpointer data) 
 {
-    printf("Keine Funktion!\n");
+    g_print("Keine Funktion!\n");
 }
 
 // function backup via root
 static void start_backup_root(GtkWidget *widget, gpointer data) 
 {
-    GtkWidget *dialog;
     const char *message;
     message = "Der Prozess kann eine Weile dauern. \nIgnorien sie alle beenden erzwingen Meldungen.\n";
     show_message(message);
@@ -54,13 +53,13 @@ static void start_backup_root(GtkWidget *widget, gpointer data)
 // no function
 static void start_zero_function_21(GtkWidget *widget, gpointer data) 
 {
-    printf("Keine Funktion!\n");
+    g_print("Keine Funktion!\n");
 }
 
 // function without any function
 static void start_zero_function_22(GtkWidget *widget, gpointer data) 
 {
-    printf("Keine Funktion!\n");
+    g_print("Keine Funktion!\n");
 }
 
 // function backup with no root
@@ -72,7 +71,7 @@ static void start_backup_noroot(GtkWidget *widget, gpointer data)
 // function without any function
 static void start_zero_function_23(GtkWidget *widget, gpointer data) 
 {
-    printf("Keine Funktion!\n");
+    g_print("Keine Funktion!\n");
 }
 
 /* main function of preflash_GUI*/
@@ -81,7 +80,6 @@ void backup_function(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    GtkStyleContext *context;
     char button_labels[6][30] = {" ", "Backup mit Root", " ", 
                                  " ", "Backup ohne Root", " "};
 
@@ -133,14 +131,14 @@ void backup_function(int argc, char *argv[])
                 break;
         }
     }
-
+	
+	// clean the storage
+    g_object_unref(provider);
+    
     // show window
     gtk_widget_show_all(window);
 
     // run main-gtk-loop
     gtk_main();
-    
-    // clean the storage
-    g_object_unref(provider);
 }
 
