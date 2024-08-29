@@ -34,7 +34,6 @@ void prepare(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    GtkStyleContext *context;
     char button_labels[6][30] = {"Boot.img", "Recovery.img", "Vendor.img", 
                                  "System.img", "payload.zip", "Dekomprimieren (xz)"};
 
@@ -86,7 +85,10 @@ void prepare(int argc, char *argv[])
                 break;            
         }
     }
-
+	
+	// clean the storage
+    g_object_unref(provider);
+	
     // show window
     gtk_widget_show_all(window);
 
