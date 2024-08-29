@@ -10,7 +10,7 @@
  *	zu erleichtern - set_active_slot		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -23,12 +23,34 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
+#define MAX_BUFFER_SIZE 256
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
+
+// function without any function
+static void start_zero_function_20(GtkWidget *widget, gpointer data) 
+{
+    g_print("Keine Funktion!\n");
+}
+
 // button 1 - set slot a
 static void set_slot_a(GtkWidget *widget, gpointer data)
 {
     system("fastboot devices");
 	char function_command[255];
 	open_terminal_by_desktop("fastboot set_active a && fastboot getvar current-slot && exit");
+}
+
+// no function
+static void start_zero_function_21(GtkWidget *widget, gpointer data) 
+{
+    g_print("Keine Funktion!\n");
+}
+
+// function without any function
+static void start_zero_function_22(GtkWidget *widget, gpointer data) 
+{
+    g_print("Keine Funktion!\n");
 }
 
 // button 2 - set slot b
@@ -39,55 +61,77 @@ static void set_slot_b(GtkWidget *widget, gpointer data)
 	open_terminal_by_desktop("fastboot set_active b && fastboot getvar current-slot && exit");
 }
 
+// function without any function
+static void start_zero_function_23(GtkWidget *widget, gpointer data) 
+{
+    g_print("Keine Funktion!\n");
+}
+
 /* start main programm */
 void set_active_slot(int argc, char *argv[])
 {
-	// int gtk
-	gtk_init(&argc, &argv);
-	
-	// make main window
-	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Setzen aktiven  des Slots");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 500);
-    gtk_widget_set_size_request(window, 800, 750);
-	gtk_widget_show(window);
-	
-	// make button for every function with label
-    GtkWidget *button_set_slot_a = gtk_button_new_with_label("neuer aktiver Slot 'a'");
-    GtkWidget *button_set_slot_b = gtk_button_new_with_label("neuer aktiver Slot 'b'");
-    
-    // Link the click callback function with the buttons 
-    g_signal_connect(button_set_slot_a, "clicked", G_CALLBACK(set_slot_a), NULL);
-    g_signal_connect(button_set_slot_b, "clicked", G_CALLBACK(set_slot_b), NULL);
-    
-    // Create a layout container (HBox) for the buttons
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    
-    // Create a layout container (VBox) for the left and right buttons
-    GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    
-    // Add the first two buttons to the left VBox
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_set_slot_a, TRUE, TRUE, 0);
-    
-    // Add the other two buttons to the right VBox
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_set_slot_b, TRUE, TRUE, 0);
-    
-     // Add the left and right VBoxes to the main HBox
-    gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
+    GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
+    char button_labels[6][30] = {" ", "Setze 'a'", " ", 
+                                 " ", "Setze 'b'", " "};
 
-    // Add the main HBox to the main window
-    gtk_container_add(GTK_CONTAINER(window), hbox);
+    gtk_init(&argc, &argv);
+    css_provider(); // load css-provider
 
-    // show all button
-    gtk_widget_show(button_set_slot_a);
-    gtk_widget_show(button_set_slot_b);
-    gtk_widget_show(left_vbox);
-    gtk_widget_show(right_vbox);
-    gtk_widget_show(hbox);
+    // create the window
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Setzen des aktiven Slots:");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	
-	// gtk main loop
-	gtk_main();
+    // create the grid and centre it
+    grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+
+    // add the grid to the window
+    gtk_container_add(GTK_CONTAINER(window), grid);
+
+    // add and centre all button
+    for (int i = 0; i < 6; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_20), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(set_slot_a), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_21), NULL);
+                break;
+            case 3:
+                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_22), NULL);
+                break;
+            case 4:
+                g_signal_connect(button, "clicked", G_CALLBACK(set_slot_b), NULL);
+                break;
+            case 5:
+                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_23), NULL);
+                break;
+        }
+    }
+	
+	// clean the storage
+    g_object_unref(provider);
+    
+    // show window
+    gtk_widget_show_all(window);
+
+    // run main-gtk-loop
+    gtk_main();
 }
-    
+
