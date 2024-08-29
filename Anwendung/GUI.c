@@ -287,7 +287,6 @@ int main(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    GtkStyleContext *context;
     char button_labels[9][30] = {"Geräte", "Gerät neustarten", "Einstellungen", 
                                  "Flash vorbereiten", "Flashen", "Anleitungen", 
                                  "Info", "Updater", "Über das Programm"};
