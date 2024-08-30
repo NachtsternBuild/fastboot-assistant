@@ -44,7 +44,6 @@ extern void instruction_GUI();
 extern void info();
 extern void updater();
 extern void about();
-// a function for the setup
 extern void make_dir();
 
 
@@ -121,19 +120,12 @@ void config_dir_setup(const char *pfad)
 // config the program
 static void config_start() 
 {
-    GtkWidget *dialog;
     const char *message;
     message = "Konfiguration beendet!\n";
     make_dir();
     wsl_config();
     show_message(message);
     
-}
-
-// button after the setup finished
-static void button_finish(GtkButton *button, gpointer data) 
-{
-    gtk_main_quit();
 }
 
 static void setup_text(GtkButton *button, gpointer data) 
@@ -153,10 +145,15 @@ static void run_first_run_setup(GtkCssProvider *provider)
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot Assistant Setup");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
+    
+    // Connect close function to 'destroy' signal
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	
+	// create notebook
 	GtkWidget *notebook = gtk_notebook_new();
     gtk_container_add(GTK_CONTAINER(window), notebook);
     
+    // for debugging
     if (!GTK_IS_NOTEBOOK(notebook)) 
     {
     	g_warning("Notebook is not initialized properly.");
