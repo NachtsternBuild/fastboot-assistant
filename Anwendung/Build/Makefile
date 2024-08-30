@@ -40,6 +40,7 @@ SRCS = \
 	header_flash_heimdall.c \
 	header_css_provider.c \
 	header_next_page.c \
+	header_button_finish.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
