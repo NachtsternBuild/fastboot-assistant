@@ -10,7 +10,7 @@
  *	zu erleichtern - get_devices			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,28 +27,10 @@
 #define WINDOW_HEIGHT 400
 
 // Callback functions for each button
-// function without any function
-static void without_function1(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
 // check connected adb devices
 static void get_adb(GtkWidget *widget, gpointer data) 
 {
     connected_devices("adb devices", "Verbundene Geräte über ADB");
-}
-
-// no function
-static void without_function2(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
-// function without any function
-static void without_function3(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
 }
 
 // check connected fastboot devices
@@ -57,20 +39,13 @@ static void get_fastboot(GtkWidget *widget, gpointer data)
     connected_devices("fastboot devices", "Verbundene Geräte über Fastboot");
 }
 
-// function without any function
-static void without_function4(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
 /* main function of get_devices*/
 void get_devices(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[6][20] = {" ", "ADB", " ", 
-                                 " ", "Fastboot", " "};
+    char button_labels[2][20] = {"ADB", "Fastboot"};
 
     gtk_init(&argc, &argv);
     
@@ -94,7 +69,7 @@ void get_devices(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // add and centre all button
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 2; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
 
@@ -102,22 +77,10 @@ void get_devices(int argc, char *argv[])
         add_css_provider(button, provider);
         switch (i) {
             case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(without_function1), NULL);
-                break;
-            case 1:
                 g_signal_connect(button, "clicked", G_CALLBACK(get_adb), NULL);
                 break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(without_function2), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(without_function3), NULL);
-                break;
-            case 4:
+            case 1:
                 g_signal_connect(button, "clicked", G_CALLBACK(get_fastboot), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(without_function4), NULL);
                 break;
         }
     }
