@@ -87,7 +87,7 @@ void reboot_GUI(int argc, char *argv[])
     // add and centre all button
     for (int i = 0; i < 4; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
 
         // execute css-provider for all buttons
         add_css_provider(button, provider);
