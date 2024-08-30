@@ -51,22 +51,10 @@ static void start_reboot_recovery(GtkWidget *widget, gpointer data)
     reboot_recovery();
 }
 
-// start no function
-static void start_no_function1(GtkWidget *widget, gpointer data) 
-{
-    g_print("Nix zu sehen!\n");
-}
-
 // start reboot-function heimdall
 static void start_reboot_heimdall(GtkWidget *widget, gpointer data) 
 {
     reboot_heimdall();
-}
-
-// start no function
-static void start_no_function2(GtkWidget *widget, gpointer data) 
-{
-    g_print("Nix zu sehen!\n");
 }
 
 void reboot_GUI(int argc, char *argv[]) 
@@ -74,8 +62,7 @@ void reboot_GUI(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[6][30] = {"Neustart Fastboot", "Neustart", "Neustart in Recovery", 
-                                 " ", "Neustart Heimdall", " "};
+    char button_labels[4][30] = {"Neustart Fastboot", "Neustart", "Neustart in Recovery", "Neustart Heimdall"};
 
     gtk_init(&argc, &argv);
     css_provider(); // load css-provider
@@ -98,7 +85,7 @@ void reboot_GUI(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // add and centre all button
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 4; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
 
@@ -116,14 +103,8 @@ void reboot_GUI(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_recovery), NULL);
                 break;
             case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_no_function1), NULL);
-                break;
-            case 4:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_heimdall), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_no_function2), NULL);
-                break;            
+                break;          
         }
     }
 	// cleaning the provider
