@@ -21,6 +21,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h> 
+#include <gtk/gtk.h>
 
 // run a command in terminal via system()
 void run_command(const char *command) 
@@ -38,7 +40,16 @@ void open_terminal_by_desktop(const char *function_command)
     char *desktop = getenv("XDG_CURRENT_DESKTOP");
     char command[512];
 
-    // get desktop
+    // check if run as wsl
+    if (system("grep -q Microsoft /proc/version") == 0) 
+    {
+        // use the cmd.exe 
+        snprintf(command, sizeof(command), "cmd.exe /C start cmd.exe /K \"%s\"", function_command);
+        run_command(command);
+        return;
+    }
+
+    // use the linux desktop
     if (desktop != NULL) 
     {
         // GNOME
@@ -51,7 +62,7 @@ void open_terminal_by_desktop(const char *function_command)
         {
             snprintf(command, sizeof(command), "konsole -e bash -c '%s; exec bash'", function_command);
         }
-        // Xfce
+        // Xfce oder Cinnamon
         else if (strstr(desktop, "X-Cinnamon") != NULL) 
         {
             snprintf(command, sizeof(command), "gnome-terminal -- bash -c '%s; exec bash'", function_command);
@@ -65,16 +76,20 @@ void open_terminal_by_desktop(const char *function_command)
         else if (strstr(desktop, "MATE") != NULL) 
         {
             snprintf(command, sizeof(command), "mate-terminal -- bash -c '%s; exec bash'", function_command);
-        }
+        } 
+        
         else 
         {
             fprintf(stderr, "Unsupported desktop environment: %s\n", desktop);
             return;
         }
 
-        // run command
+        // debugging
+        g_print(command);
+        // run the command
         run_command(command);
-    }
+    } 
+    
     else 
     {
         fprintf(stderr, "Desktop environment not found.\n");
