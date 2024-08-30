@@ -27,30 +27,12 @@
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 400
 
-// function without any function
-static void start_zero_function_20(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
 // button 1 - set slot a
 static void set_slot_a(GtkWidget *widget, gpointer data)
 {
     system("fastboot devices");
 	char function_command[255];
 	open_terminal_by_desktop("fastboot set_active a && fastboot getvar current-slot && exit");
-}
-
-// no function
-static void start_zero_function_21(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
-// function without any function
-static void start_zero_function_22(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
 }
 
 // button 2 - set slot b
@@ -61,20 +43,13 @@ static void set_slot_b(GtkWidget *widget, gpointer data)
 	open_terminal_by_desktop("fastboot set_active b && fastboot getvar current-slot && exit");
 }
 
-// function without any function
-static void start_zero_function_23(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
 /* start main programm */
 void set_active_slot(int argc, char *argv[])
 {
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[6][30] = {" ", "Setze 'a'", " ", 
-                                 " ", "Setze 'b'", " "};
+    char button_labels[2][30] = {"Setze 'a'", "Setze 'b'"};
 
     gtk_init(&argc, &argv);
     css_provider(); // load css-provider
@@ -97,7 +72,7 @@ void set_active_slot(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // add and centre all button
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 2; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
 
@@ -105,22 +80,10 @@ void set_active_slot(int argc, char *argv[])
         add_css_provider(button, provider);
         switch (i) {
             case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_20), NULL);
-                break;
-            case 1:
                 g_signal_connect(button, "clicked", G_CALLBACK(set_slot_a), NULL);
                 break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_21), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_22), NULL);
-                break;
-            case 4:
+            case 1:
                 g_signal_connect(button, "clicked", G_CALLBACK(set_slot_b), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_23), NULL);
                 break;
         }
     }
