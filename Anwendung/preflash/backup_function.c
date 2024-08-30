@@ -10,7 +10,7 @@
  *	zu erleichtern - backup_function		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -31,12 +31,6 @@ extern void backup_root();
 extern void backup_noroot();
 
 // Callback functions for each button
-// function without any function
-static void start_zero_function_20(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
 // function backup via root
 static void start_backup_root(GtkWidget *widget, gpointer data) 
 {
@@ -50,28 +44,10 @@ static void start_backup_root(GtkWidget *widget, gpointer data)
 	show_message(message);
 }
 
-// no function
-static void start_zero_function_21(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
-// function without any function
-static void start_zero_function_22(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
-}
-
 // function backup with no root
 static void start_backup_noroot(GtkWidget *widget, gpointer data) 
 {
     backup_noroot();
-}
-
-// function without any function
-static void start_zero_function_23(GtkWidget *widget, gpointer data) 
-{
-    g_print("Keine Funktion!\n");
 }
 
 /* main function of preflash_GUI*/
@@ -80,8 +56,7 @@ void backup_function(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[6][30] = {" ", "Backup mit Root", " ", 
-                                 " ", "Backup ohne Root", " "};
+    char button_labels[2][30] = {"Backup mit Root", "Backup ohne Root"};
 
     gtk_init(&argc, &argv);
     css_provider(); // load css-provider
@@ -104,7 +79,7 @@ void backup_function(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // add and centre all button
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 2; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
 
@@ -112,22 +87,10 @@ void backup_function(int argc, char *argv[])
         add_css_provider(button, provider);
         switch (i) {
             case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_20), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(start_backup_root), NULL);
                 break;
             case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_backup_root), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_21), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_22), NULL);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_backup_root), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_zero_function_23), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(start_backup_noroot), NULL);
                 break;
         }
     }
