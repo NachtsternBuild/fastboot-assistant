@@ -29,4 +29,4 @@ If applicable, add screenshots to help explain your problem.
  - **Browser:** e.g. chrome, firefox
  - **Browser version:** e.g. 22
  - **Program version:** e.g. v.0.5.3.beta
- - **Operating mode:**
+ - **Operating mode:** e.g. native/WSL/VM
