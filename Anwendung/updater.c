@@ -24,7 +24,7 @@
 // Function to retrieve the latest release URL from GitHub
 void get_latest_release_url(const char *repo, const char *package_type, char *url_buffer, size_t buffer_size) 
 {
-    char command[512];
+    char command[2048];
     // get the url from the github api
     snprintf(command, sizeof(command),
              "curl -s https://api.github.com/repos/%s/releases/latest | grep 'browser_download_url' | grep '%s' | head -n 1 | cut -d '\"' -f 4",
@@ -50,7 +50,7 @@ void get_latest_release_url(const char *repo, const char *package_type, char *ur
 // function to download the file
 int download_file(const char *url, const char *outfilename) 
 {
-    char command[512];
+    char command[2048];
     snprintf(command, sizeof(command), "curl -L %s -o %s", url, outfilename);
     return system(command);
 }
@@ -73,7 +73,7 @@ void updater(void)
     char **argv = NULL;
     
     const char *repo = "NachtsternBuild/fastboot-assistant";
-    char download_url[256];
+    char download_url[2048];
     /* please change the package type for the different packages → .rpm or .deb or .zip*/
     const char *package_type = ".deb"; 
 	// const char *package_type = ".rpm";
@@ -86,7 +86,7 @@ void updater(void)
         g_print("Neueste Version URL: %s\n", download_url);
         gtk_init(&argc, &argv);
 
-        char message[256];
+        char message[2048];
         snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeueste Version wird heruntergeladen.\n", download_url);
         show_message(message);
 
@@ -97,7 +97,7 @@ void updater(void)
             exit(EXIT_FAILURE);
         }
 
-        char output_file[512];
+        char output_file[2048];
         snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant%s", output_directory, package_type);
 
         const char *download_message = "Paket heruntergeladen.\nWird installiert.\n";
@@ -116,13 +116,13 @@ void updater(void)
             }
 
             // install the package
-            char install_command[512];
-            char remove_command[512];
-            char cd_command[512];
-            char output_path[512];
-            char deb_on_wsl[512];
-            char wsl_dir[512];
-            char unzip_command[512];
+            char install_command[2048];
+            char remove_command[2048];
+            char cd_command[2048];
+            char output_path[2048];
+            char deb_on_wsl[2048];
+            char wsl_dir[2048];
+            char unzip_command[2048];
             
             if (strcmp(package_type, ".deb") == 0) 
             {
