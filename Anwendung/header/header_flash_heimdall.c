@@ -27,12 +27,12 @@
 // function to flash images via heimdall
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name)
 {
-    char image_path[512];
+    char image_path[2048];
     set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
 
     if (access(image_path, F_OK) == -1) 
     {
-        char error_message[256];
+        char error_message[2048];
         snprintf(error_message, sizeof(error_message), "Fehler: Image-Datei '%s' nicht gefunden.", image_path);
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
