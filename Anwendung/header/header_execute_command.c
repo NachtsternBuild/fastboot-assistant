@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              Headerpart - run command	 *
@@ -27,7 +27,7 @@
 char *execute_command(const char *command) 
 {
     FILE *fp;
-    char buffer[128];
+    char buffer[2048];
     char *result = NULL;
 
     fp = popen(command, "r");
