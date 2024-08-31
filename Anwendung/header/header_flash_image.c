@@ -28,8 +28,8 @@
 // Function to flash images, utilizing the modified path handling for WSL
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name) 
 {
-    char image_path[2048];
-    char windows_image_path[2048];
+    char image_path[3072];
+    char windows_image_path[3072];
     
     // Set the path to the image file considering WSL
     set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
@@ -37,7 +37,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     // Check if the image exists
     if (access(image_path, F_OK) == -1) 
     {
-        char error_message[256];
+        char error_message[3072];
         snprintf(error_message, sizeof(error_message), "Fehler: Image-Datei '%s' nicht gefunden.", image_path);
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
@@ -49,7 +49,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     // Get fastboot devices
     system("fastboot devices");
 
-    char function_command[512];
+    char function_command[3072];
 
     // Check if running inside WSL
     if (system("grep -q Microsoft /proc/version") == 0) 
