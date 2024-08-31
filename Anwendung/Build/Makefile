@@ -41,6 +41,7 @@ SRCS = \
 	header_css_provider.c \
 	header_next_page.c \
 	header_button_finish.c \
+	header_convert_wsl_path.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
