@@ -49,8 +49,7 @@ static void download_backup(GtkWidget *widget, gpointer data)
     show_message(message1);
     
     char function_command[3072];
-	open_terminal_by_desktop("wget -O ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && exit");
-	system("unzip ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle");
+	open_terminal_by_desktop("wget -O ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle && exit");
 	// for Windows
 	/*
 	char wsl_dir[MAX_BUFFER_SIZE];
@@ -84,7 +83,7 @@ void backup_noroot(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[3][30] = {"Vorbereiten" "Download", "Starten"};
+    char button_labels[3][30] = {"Vorbereiten", "Download", "Starten"};
 
     gtk_init(&argc, &argv);
     
