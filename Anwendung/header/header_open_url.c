@@ -23,7 +23,7 @@
 // function that open the browser 
 void open_url(const char *url)
 {
-    char url_command[256];
+    char url_command[2048];
 
     // check if the program run via wsl
     if (system("grep -q Microsoft /proc/version") == 0) 
