@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - check_active_slot	 *
@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BUFFER_SIZE 128
+#define BUFFER_SIZE 2048
 
 
 void check_active_slot() 
@@ -58,5 +58,5 @@ void check_active_slot()
     pclose(pipe);
 
     // Ausgabe des Slots
-    printf("Aktueller Slot: %s\n", slot);
+    g_print("Aktueller Slot: %s\n", slot);
 }
