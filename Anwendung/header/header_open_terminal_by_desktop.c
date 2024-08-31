@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              Headerpart - start_terminal	 *
@@ -38,7 +38,7 @@ void run_command(const char *command)
 void open_terminal_by_desktop(const char *function_command) 
 {
     char *desktop = getenv("XDG_CURRENT_DESKTOP");
-    char command[512];
+    char command[2048];
 
     // check if run as wsl
     if (system("grep -q Microsoft /proc/version") == 0) 
