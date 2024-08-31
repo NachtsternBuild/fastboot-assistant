@@ -24,11 +24,9 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Please complete the following information:**
- - OS: [e.g. Ubuntu]
- - OS version: [e.g. 24.04.]
- - Browser: [e.g. chrome, firefox]
- - Browser version: [e.g. 22]
- - Program version: [e.g. v.0.5.3.beta]
-
-**Additional context**
-Add any other context about the problem here.
+ - **OS:** e.g. Ubuntu
+ - **OS version:** e.g. 24.04.
+ - **Browser:** e.g. chrome, firefox
+ - **Browser version:** e.g. 22
+ - **Program version:** e.g. v.0.5.3.beta
+ - **Operating mode:**
