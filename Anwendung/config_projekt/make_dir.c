@@ -27,10 +27,10 @@
 // Function to construct a directory path and create the directory
 void create_directory(const char *base_dir, const char *sub_dir) 
 {
-    char path[512];
+    char path[2048];
     snprintf(path, sizeof(path), "%s/%s", base_dir, sub_dir);
     
-    char command[512];
+    char command[2048];
     snprintf(command, sizeof(command), "mkdir -p %s", path);
     
     if (system(command) == -1) 
@@ -58,6 +58,7 @@ void make_dir()
     create_directory(home_dir, "Downloads/ROM-Install");
     create_directory(home_dir, "Downloads/ROM-Install/Backup");
     create_directory(home_dir, "Downloads/ROM-Install/Images");
+    create_directory(home_dir, "Downloads/ROM-Install/config");
 	
 	/*
     // the wsl logic
@@ -74,6 +75,7 @@ void make_dir()
     create_directory(wsl_base_dir, "");
     create_directory(wsl_base_dir, "Backup");
     create_directory(wsl_base_dir, "Images");
+    create_directory(wsl_base_dir, "config");
 	*/
 	
     g_print("Alle Verzeichnisse erfolgreich erstellt.\n");
