@@ -140,7 +140,6 @@ static void run_first_run_setup(GtkCssProvider *provider)
     GtkWidget *page1, *page2, *page3, *page4, *page5;
     GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label_page3_1, *label_page3_2, *label_page3_3, *label_page3_4, *label_page4_1, *label_page4_2, *label_page4_3, *label_page4_4, *label_end_1, *label_end_2;
     GtkWidget *button_welcome_1, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button_page3_1, *button_page3_2, *button_page4_1, *button_page4_2, *button_end_1, *button_end_2;
-    GtkStyleContext *context;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot Assistant Setup");
@@ -294,8 +293,8 @@ int main(int argc, char *argv[])
     // function that check if the setup run the first time
     // the crazy output came from the experiment with this
     const char *content = "Fisch";
-    char fish_path[256];
-    char setup_dir[1024];
+    char fish_path[2048];
+    char setup_dir[2048];
     char *homeDir = getenv("HOME");
     if (homeDir == NULL) 
     {
@@ -311,7 +310,7 @@ int main(int argc, char *argv[])
         return;
     }
 
-    char wsl_setup_base[1024];
+    char wsl_setup_base[2048];
     snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
     
     // set the needed path construction active
