@@ -57,6 +57,7 @@ static void download_backup(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "wget -O %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && exit", wsl_dir);
     system(command);
     snprintf(command, sizeof(command), "unzip %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle", wsl_dir, wsl_dir);
+    system(command);
     const char *message2 = "\nOpen Android Backup ist nun bereit.\n";
     // show message
     show_message(message2);
@@ -82,7 +83,7 @@ void backup_noroot(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[3][30] = {"Vorbereiten" "Download", "Starten"};
+    char button_labels[3][30] = {"Vorbereiten", "Download", "Starten"};
 
     gtk_init(&argc, &argv);
     
