@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - connected_devices	 *
@@ -25,7 +25,7 @@
 
 void connected_devices(const char *command, const char *label) 
 {
-    char message[512];
+    char message[2048];
     FILE *fp;
 
     // Execute the command and capture the output
