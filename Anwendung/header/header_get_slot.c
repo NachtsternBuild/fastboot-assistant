@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - get_slot			 *
@@ -28,7 +28,7 @@
 int get_slot_of_device() 
 {
     FILE *fp;
-    char result[128];
+    char result[2048];
 
     // Execute the command to check for A/B partition scheme
     fp = popen("fastboot getvar slot-count 2>&1", "r");
