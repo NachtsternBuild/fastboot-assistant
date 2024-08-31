@@ -23,7 +23,7 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-#define MAX_BUFFER_SIZE 256
+#define MAX_BUFFER_SIZE 2048
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 350
 

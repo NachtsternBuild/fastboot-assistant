@@ -27,7 +27,7 @@
 // check if file exists
 int file_exists(const char *path) 
 {
-    char command[256];
+    char command[2048];
     snprintf(command, sizeof(command), "test -e %s", path);
     return system(command) == 0;
 }
@@ -35,7 +35,7 @@ int file_exists(const char *path)
 // check if path exists
 int directory_exists(const char *path) 
 {
-    char command[256];
+    char command[2048];
     snprintf(command, sizeof(command), "test -d %s", path);
     return system(command) == 0;
 }
@@ -57,16 +57,19 @@ void wsl_config()
             if (directory_exists(base_paths[j]) && file_exists(path)) 
             {
                 // Paths to the possible locations of adb.exe and fastboot.exe
-                char path[256];
-                char config[1024];
-    
-    			const char *mv_adb[] = {"sudo mv /usr/bin/adb /usr/bin/adb_bk"};
-    			const char *mv_fastboot[] = {"sudo mv /usr/bin/fastboot /usr/bin/fastboot_bk"};
-    
+                char path[3072];
+                char config[3072];
+                char mv_adb[3072];
+                char mv_fastboot[3072];
+                char command_adb[3072];
+                char command_fastboot[3072];
+                snprintf(mv_adb, sizeof(mv_adb), "sudo mv /usr/bin/adb /usr/bin/adb_bk");
+    			snprintf(mv_fastboot, sizeof(mv_fastboot), "sudo mv /usr/bin/fastboot /usr/bin/fastboot_bk");
+   
 				snprintf(path, sizeof(path), "%s/%s", base_paths[j], files[i]);
-				const char *command_adb[] = {"sudo ln -s %s /usr/bin/adb", path};
-				const char *command_fastboot[] = {"sudo ln -s %s /usr/bin/fastboot", path};
-				
+				snprintf(command_adb, sizeof(command_adb), "sudo ln -s %s /usr/bin/adb", path);
+				snprintf(command_fastboot, sizeof(command_fastboot), "sudo ln -s %s /usr/bin/fastboot", path);
+							
 				// move the files
     			g_print(mv_adb);
     			g_print(mv_fastboot);
