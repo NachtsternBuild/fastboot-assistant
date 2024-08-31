@@ -28,7 +28,7 @@
 void set_main_dir_with_wsl(char *path, size_t size, const char *filename) 
 {
     const char *home_dir = get_home_directory_flash();
-    char wsl_dir[512];
+    char wsl_dir[2048];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     
     // Use the Linux path if available, otherwise use the WSL path
@@ -52,7 +52,7 @@ void set_main_dir_with_wsl(char *path, size_t size, const char *filename)
 void set_main_dir_with_wsl(char *path, size_t size, const char *filename) 
 {
     const char *home_dir = get_home_directory_flash();
-    char wsl_dir[512];
+    char wsl_dir[2048];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     
     // Use the Linux path if available, otherwise use the WSL path
