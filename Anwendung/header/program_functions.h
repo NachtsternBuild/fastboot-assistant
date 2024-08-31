@@ -54,5 +54,6 @@ void css_provider();
 void next_page(GtkButton *button, gpointer data);
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
 void button_finish(GtkButton *button, gpointer data);
+void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 
 #endif
