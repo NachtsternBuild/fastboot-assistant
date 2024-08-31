@@ -7,7 +7,7 @@ VERSION="$(cat Build/version.txt)"
 # Directory paths
 home_dir="$HOME"
 source_dir="$home_dir/fastboot-assistant/Anwendung"
-# source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5"
+# source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5_5"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -31,6 +31,7 @@ unused_files=(
     "mkdir.c"
     "remove_old.c"
     "backup_root.c"
+    "backup_noroot.c"
     "unxz_files.c"
     "header_set_main_dir_with_wsl.c"
 )
