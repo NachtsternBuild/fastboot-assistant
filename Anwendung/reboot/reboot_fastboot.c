@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              reboot_fastboot				 *
@@ -35,8 +35,8 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
     
     title = "Reboot from ADB";
     message = "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!\n";
-    
     show_message_with_title(title, message);
+    
     system("adb -d reboot bootloader");
     // this is the old command
     // system("adb reboot bootloader");
@@ -45,11 +45,9 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
 // reboot to bootloader from fastboot
 static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
 {
-    const char *message;
-    
-    message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
-    
+    const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
+    
     system("fastboot reboot bootloader");
 }
 	
@@ -57,8 +55,8 @@ static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
 static void fastboot_help(GtkWidget *widget, gpointer data) 
 {
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
-    
     show_message(message);
+    
     char function_command[255];
     open_terminal_by_desktop("fastboot help");
 }
@@ -67,8 +65,8 @@ static void fastboot_help(GtkWidget *widget, gpointer data)
 static void list_bootloader_var(GtkWidget *widget, gpointer data) 
 {
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
-    
     show_message(message);
+    
     char function_command[255];
     open_terminal_by_desktop("fastboot getvar all");
 }
