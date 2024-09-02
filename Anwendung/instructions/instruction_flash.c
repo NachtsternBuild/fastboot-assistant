@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_flash		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -20,12 +20,18 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
+#include "instruction_header.h"
+
+#define MAX_BUFFER_SIZE 256
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 
 extern void instruction_root();
 extern void instruction_vendor();
 extern void instruction_gsi();
 extern void instruction_custom_rom();
 extern void instruction_recovery();
+extern void instruction_others();
 
 // button 1 - inst. for root
 static void inst_root(GtkWidget *widget, gpointer data)
@@ -51,76 +57,83 @@ static void inst_custom_rom(GtkWidget *widget, gpointer data)
 	instruction_custom_rom();
 }
 
-// button 4 - inst. for recovery
+// button 5 - inst. for recovery
 static void inst_recovery(GtkWidget *widget, gpointer data)
 {
 	instruction_recovery();
 }
 
+// button 6 - inst. for other images
+static void inst_others(GtkWidget *widget, gpointer data)
+{
+	instruction_others();
+}
+
 /* start main programm */
 void instruction_flash(int argc, char *argv[])
 {
-	// int gtk
-	gtk_init(&argc, &argv);
-	
-	// make main window
-	GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Anleitungen Flash");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 500);
-    gtk_widget_set_size_request(window, 800, 750);
-	gtk_widget_show(window);
-	
-	// Connect close function to 'destroy' signal
+	GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
+    char button_labels[6][30] = {"Rooten", "Vendor (VNDK)", "Generic System Image (GSI)", 
+    							 "Custom ROMs", "Recovery", "Anderes"};
+
+    gtk_init(&argc, &argv);
+    css_provider(); // load css-provider
+    
+     // create the window
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Anleitungen - Flash");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	
-	// make button for every function with label
-    GtkWidget *button_inst_root = gtk_button_new_with_label("Rooten des Gerätes");
-    GtkWidget *button_inst_vendor = gtk_button_new_with_label("Vendor");
-    GtkWidget *button_inst_gsi = gtk_button_new_with_label("Generic System Image (GSI)");
-    GtkWidget *button_inst_custom_rom = gtk_button_new_with_label("Custom ROMs");
-    GtkWidget *button_inst_recovery = gtk_button_new_with_label("Recovery");
+    // create the grid and centre it
+    grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
     
-    // Link the click callback function with the buttons 
-    g_signal_connect(button_inst_root, "clicked", G_CALLBACK(inst_root), NULL);
-    g_signal_connect(button_inst_vendor, "clicked", G_CALLBACK(inst_vendor), NULL);
-    g_signal_connect(button_inst_gsi, "clicked", G_CALLBACK(inst_gsi), NULL);
-    g_signal_connect(button_inst_custom_rom, "clicked", G_CALLBACK(inst_custom_rom), NULL);
-    g_signal_connect(button_inst_recovery, "clicked", G_CALLBACK(inst_recovery), NULL);
-    
-    // Create a layout container (HBox) for the buttons
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    
-    // Create a layout container (VBox) for the left and right buttons
-    GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    
-    // Add the first two buttons to the left VBox
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_inst_root, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_inst_vendor, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_inst_recovery, TRUE, TRUE, 0);
-    
-    // Add the other two buttons to the right VBox
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_inst_gsi, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_inst_custom_rom, TRUE, TRUE, 0);
-    
-     // Add the left and right VBoxes to the main HBox
-    gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 
-    // Add the main HBox to the main window
-    gtk_container_add(GTK_CONTAINER(window), hbox);
+    // add the grid to the window
+    gtk_container_add(GTK_CONTAINER(window), grid);
 
-    // show all button
-    gtk_widget_show(button_inst_root);
-    gtk_widget_show(button_inst_vendor);
-    gtk_widget_show(button_inst_recovery);
-    gtk_widget_show(button_inst_gsi);
-    gtk_widget_show(button_inst_custom_rom);
-    gtk_widget_show(left_vbox);
-    gtk_widget_show(right_vbox);
-    gtk_widget_show(hbox);
-	
-	// gtk main loop
-	gtk_main();
+    // add and centre all button
+    for (int i = 0; i < 6; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
+        
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(inst_root), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(inst_vendor), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(inst_gsi), NULL);
+                break;
+            case 3:
+                g_signal_connect(button, "clicked", G_CALLBACK(inst_custom_rom), NULL);
+                break;
+            case 4:
+                g_signal_connect(button, "clicked", G_CALLBACK(inst_recovery), NULL);
+                break;
+            case 5:
+                g_signal_connect(button, "clicked", G_CALLBACK(inst_others), NULL);
+                break;          
+        }
+    }
+	// cleaning the provider
+    g_object_unref(provider);
+
+    // show window
+    gtk_widget_show_all(window);
+
+    // run main-gtk-loop
+    gtk_main();
 }
-    
+   
