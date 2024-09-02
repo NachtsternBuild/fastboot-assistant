@@ -36,6 +36,7 @@ void instruction_root();
 void instruction_vendor();
 void instruction_gsi();
 void instruction_custom_rom();
+void instruction_others();
 
 //function for instruction_preflash-function
 void instruction_backup();
