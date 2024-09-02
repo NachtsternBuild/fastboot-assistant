@@ -35,8 +35,8 @@ void flash_payload(GtkWidget *widget, gpointer data)
     show_message_with_title(title, message);
     
     // Show a message that the flash is starting
-    snprintf(message, sizeof(message), "Sideload payload.zip.\n");
-    show_message(message);
+    const char *message1 = "Sideload payload.zip.\n";
+    show_message(message1);
     
     char image_path[2048];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "payload.zip");
@@ -47,6 +47,6 @@ void flash_payload(GtkWidget *widget, gpointer data)
     open_terminal_by_desktop(function_command);
 
     // Show a message that the flash is completed
-    snprintf(message, sizeof(message), "Sideload beendet!\n");
-    show_message(message);
+    const char *message2 = "Sideload beendet!\n";
+    show_message(message2);
 }
