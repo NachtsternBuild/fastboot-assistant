@@ -34,7 +34,6 @@ static void install_depends(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-	char function_command[255];
 	open_terminal_by_desktop("sudo apt update && sudo apt-get install p7zip-full adb curl whiptail pv bc secure-delete zenity && exit");
 	// for Windows
 	/*
@@ -48,7 +47,6 @@ static void download_backup(GtkWidget *widget, gpointer data)
     const char *message1 = "\nDas Tool 'Open Android Backup' wird heruntergeladen und entpackt.\n";
     show_message(message1);
     
-    char function_command[3072];
 	open_terminal_by_desktop("wget -O ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle && exit");
 	// for Windows
 	/*
@@ -66,7 +64,6 @@ static void download_backup(GtkWidget *widget, gpointer data)
 // open open android backup
 static void open_backup(GtkWidget *widget, gpointer data) 
 {
-    char function_command[3072];
 	open_terminal_by_desktop("bash ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh");
 	// for Windows
 	/*
