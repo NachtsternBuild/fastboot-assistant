@@ -23,6 +23,9 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
+
 // Button handler functions
 // function to flash metadata.img
 void metadata_img(GtkWidget *widget, GtkWindow *window)
@@ -51,48 +54,62 @@ void userdata_img_heimdall(GtkWidget *widget, GtkWindow *window)
 // main function
 void flash_data(int argc, char *argv[])
 {
+	GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
+    char button_labels[4][30] = {"Metadata", "Metadata (heimdall)", "Userdata", "Userdata (heimdall)"};
+
     gtk_init(&argc, &argv);
-    
-    // create a windows
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Metadaten/Userdaten");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 500);
-    gtk_widget_set_size_request(window, 800, 750);
+    css_provider(); // load css-provider
 
+     // create the window
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Flash:");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // create button
-    GtkWidget *button_metadata_img = gtk_button_new_with_label("Flash Metadaten");
-    GtkWidget *button_metadata_img_heimdall = gtk_button_new_with_label("Flash Metadaten (heimdall)");
-    GtkWidget *button_userdata_img = gtk_button_new_with_label("Flash Userdaten");
-    GtkWidget *button_userdata_img_heimdall = gtk_button_new_with_label("Flash Userdaten (heimdall)");
-    
-    // connection for gtk callback
-	g_signal_connect(button_metadata_img, "clicked", G_CALLBACK(metadata_img), (gpointer) window);
-	g_signal_connect(button_metadata_img_heimdall, "clicked", G_CALLBACK(metadata_img_heimdall), (gpointer) window);
-	g_signal_connect(button_userdata_img, "clicked", G_CALLBACK(userdata_img), (gpointer) window);
-	g_signal_connect(button_userdata_img_heimdall, "clicked", G_CALLBACK(userdata_img_heimdall), (gpointer) window);
 	
-    // create widget
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
+    // create the grid and centre it
+    grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
     
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_metadata_img, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_metadata_img_heimdall, TRUE, TRUE, 0);
-    
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_userdata_img, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_userdata_img_heimdall, TRUE, TRUE, 0);
-    
-    gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 
-	// add all to the container
-    gtk_container_add(GTK_CONTAINER(window), hbox);
+    // add the grid to the window
+    gtk_container_add(GTK_CONTAINER(window), grid);
 
-    // show all widgets
+    // add and centre all button
+    for (int i = 0; i < 4; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
+        
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(metadata_img), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(metadata_img_heimdall), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(userdata_img), NULL);
+                break;
+            case 3:
+                g_signal_connect(button, "clicked", G_CALLBACK(userdata_img_heimdall), NULL);
+                break;          
+        }
+    }
+	// cleaning the provider
+    g_object_unref(provider);
+
+    // show window
     gtk_widget_show_all(window);
-    
+
+    // run main-gtk-loop
     gtk_main();
 }
+
 
