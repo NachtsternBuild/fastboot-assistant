@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_preloader_super	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -22,6 +22,8 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 
 // Button handler functions
 // function to flash preloader.bin on only-a-devices
@@ -75,59 +77,73 @@ void super_img_heimdall(GtkWidget *widget, GtkWindow *window)
 // main function
 void flash_preloader_super(int argc, char *argv[])
 {
+	GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
+    char button_labels[9][30] = {"preloader.bin (only-a)", "preloader.bin (a/b)", "preloader.img (only-a)", "preloader.img (a/b)", 
+                                 "preloader.bin (heimdall)", "preloader.img (heimdall)", "super.img", "super.img (heimdall)"};
+
     gtk_init(&argc, &argv);
-    
-    // create a windows
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash Preloader/Super");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 500);
-    gtk_widget_set_size_request(window, 800, 750);
+    css_provider(); // load css-provider
 
+    // create the window
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Flash:");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // create button
-    GtkWidget *button_preloader_bin_on_a = gtk_button_new_with_label("Flashen preloader.bin (only-a-devices)");
-    GtkWidget *button_preloader_bin_on_ab = gtk_button_new_with_label("Flashen preloader.bin (a/b-devices)");
-    GtkWidget *button_preloader_img_on_a = gtk_button_new_with_label("Flashen preloader.img (only-a-devices)");
-    GtkWidget *button_preloader_img_on_ab = gtk_button_new_with_label("Flashen preloader.img (a/b-devices)");
-    GtkWidget *button_super_img = gtk_button_new_with_label("Flashen super.img");
-    GtkWidget *button_preloader_bin_heimdall= gtk_button_new_with_label("Flashen preloader.bin (heimdall)");
-    GtkWidget *button_preloader_img_heimdall = gtk_button_new_with_label("Flashen preloader.img (heimdall)");
-    GtkWidget *button_super_img_heimdall= gtk_button_new_with_label("Flashen super.img (heimdall)");
-    
-    // connection for gtk callback
-	g_signal_connect(button_preloader_bin_on_a, "clicked", G_CALLBACK(preloader_bin_on_a), (gpointer) window);
-	g_signal_connect(button_preloader_bin_on_ab, "clicked", G_CALLBACK(preloader_bin_on_ab), (gpointer) window);
-	g_signal_connect(button_preloader_img_on_a, "clicked", G_CALLBACK(preloader_img_on_a), (gpointer) window);
-	g_signal_connect(button_preloader_img_on_ab, "clicked", G_CALLBACK(preloader_img_on_ab), (gpointer) window);
-	g_signal_connect(button_super_img, "clicked", G_CALLBACK(super_img), (gpointer) window);
-	g_signal_connect(button_preloader_bin_heimdall, "clicked", G_CALLBACK(preloader_bin_heimdall), (gpointer) window);
-	g_signal_connect(button_preloader_img_heimdall, "clicked", G_CALLBACK(preloader_img_heimdall), (gpointer) window);
-	g_signal_connect(button_super_img_heimdall, "clicked", G_CALLBACK(super_img_heimdall), (gpointer) window);
 	
-    // create widget
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
+    // create the grid and centre it
+    grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
     
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_bin_on_a, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_bin_on_ab, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_img_on_a, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_preloader_img_on_ab, TRUE, TRUE, 0);
-    
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_super_img, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_super_img_heimdall, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_preloader_bin_heimdall, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_preloader_img_heimdall, TRUE, TRUE, 0);
-    
-    gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 
-	// add all to the container
-    gtk_container_add(GTK_CONTAINER(window), hbox);
+    // add the grid to the window
+    gtk_container_add(GTK_CONTAINER(window), grid);
 
-    // show all widgets
+    // add and centre all button
+    for (int i = 0; i < 8; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
+
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(preloader_bin_on_a), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(preloader_bin_on_ab), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(preloader_img_on_a), NULL);
+                break;
+            case 3:
+                g_signal_connect(button, "clicked", G_CALLBACK(preloader_img_on_ab), NULL);
+                break;
+            case 4:
+                g_signal_connect(button, "clicked", G_CALLBACK(preloader_bin_heimdall), NULL);
+                break;
+            case 5:
+                g_signal_connect(button, "clicked", G_CALLBACK(preloader_img_heimdall), NULL);
+                break;
+            case 6:
+            	g_signal_connect(button, "clicked", G_CALLBACK(super_img), NULL);
+            	break;
+            case 7:
+            	g_signal_connect(button, "clicked", G_CALLBACK(super_img_heimdall), NULL);
+            	break;            
+        }
+    }
+    // cleaning the provider
+    g_object_unref(provider);
+
+    // show window
     gtk_widget_show_all(window);
-    
+
+    // run main-gtk-loop
     gtk_main();
 }
