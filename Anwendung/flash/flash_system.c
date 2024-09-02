@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_system			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,13 +24,16 @@
 #include "function_header.h"
 #include "flash_function_header.h"
 
-#define BUFFER_SIZE 255
+#define BUFFER_SIZE 2048
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 
 // function to flash system.img to slot
-void flash_system_to_inactive(const char *slot) 
+// start by system_to_inactive
+void flash_system_inactive(const char *slot) 
 {
     char function_command[BUFFER_SIZE];
-    char image_path[512];
+    char image_path[2048];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "system.img");
 
     // make command to flash system.img
@@ -86,50 +89,67 @@ void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
     }
 
     // flash system.img to inactive slot
-    flash_system_to_inactive(inactive_slot);
+    flash_system_inactive(inactive_slot);
 }
 
 // main function
 void flash_system(int argc, char *argv[])
 {
-    gtk_init(&argc, &argv);
+	GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
     
-    // create a windows
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash System");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 500);
-    gtk_widget_set_size_request(window, 800, 750);
+    char button_labels[3][30] = {"System", "System (heimdall)", "System (inactive)"};
 
+    gtk_init(&argc, &argv);
+	
+	css_provider(); // load css-provider
+	
+    // create the window
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Flash:");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-    // create button
-    GtkWidget *button_system_to_activ = gtk_button_new_with_label("Flash System");
-    GtkWidget *button_system_to_activ_heimdall = gtk_button_new_with_label("Flash System (heimdall)");
-    GtkWidget *button_system_to_inactiv = gtk_button_new_with_label("Flash System (inactive)");
+    // create the grid and centre it
+    grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
     
-    // connection for gtk callback
-	g_signal_connect(button_system_to_activ, "clicked", G_CALLBACK(system_to_activ), (gpointer) window);
-	g_signal_connect(button_system_to_activ_heimdall, "clicked", G_CALLBACK(system_to_activ_heimdall), (gpointer) window);
-	g_signal_connect(button_system_to_inactiv, "clicked", G_CALLBACK(system_to_inactiv), (gpointer) window);
-	
-    // create widget
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+
+    // add the grid to the window
+    gtk_container_add(GTK_CONTAINER(window), grid);
+
+    // add and centre all button
+    for (int i = 0; i < 3; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
+        
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(system_to_activ), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(system_to_activ_heimdall), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(system_to_inactiv), NULL);
+                break;
+        }
+    }
     
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_system_to_activ, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_system_to_activ_heimdall, TRUE, TRUE, 0);
-     
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_system_to_inactiv, TRUE, TRUE, 0);
-   
-    gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
-	
-	// add all to the container
-    gtk_container_add(GTK_CONTAINER(window), hbox);
-    
-    // show all widgets
+    // clean the storage
+    g_object_unref(provider);
+
+    // show window
     gtk_widget_show_all(window);
-    
+
+    // run main-gtk-loop
     gtk_main();
 }
+
