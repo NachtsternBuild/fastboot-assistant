@@ -31,7 +31,6 @@
 static void set_slot_a(GtkWidget *widget, gpointer data)
 {
     system("fastboot devices");
-	char function_command[255];
 	open_terminal_by_desktop("fastboot set_active a && fastboot getvar current-slot && exit");
 }
 
@@ -39,7 +38,6 @@ static void set_slot_a(GtkWidget *widget, gpointer data)
 static void set_slot_b(GtkWidget *widget, gpointer data)
 {
 	system("fastboot devices");
-	char function_command[255];
 	open_terminal_by_desktop("fastboot set_active b && fastboot getvar current-slot && exit");
 }
 
