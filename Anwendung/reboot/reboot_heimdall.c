@@ -43,7 +43,6 @@ static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
 // heimdall help
 static void heimdall_help(GtkWidget *widget, gpointer data)
 { 
-    char function_command[255];
     open_terminal_by_desktop("heimdall help");
 }
 	
@@ -52,9 +51,8 @@ static void get_pit(GtkWidget *widget, gpointer data)
 {
 
     const char *message = "Beachten sie, dass sich ihr Gerät im Download-Modus befindet!\n";
-    
     show_message(message);
-    char function_command[255];
+    
     open_terminal_by_desktop("heimdall print-pit");
 }
 
