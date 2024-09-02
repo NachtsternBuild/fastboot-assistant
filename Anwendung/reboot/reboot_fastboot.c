@@ -57,7 +57,6 @@ static void fastboot_help(GtkWidget *widget, gpointer data)
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
-    char function_command[255];
     open_terminal_by_desktop("fastboot help");
 }
 
@@ -67,7 +66,6 @@ static void list_bootloader_var(GtkWidget *widget, gpointer data)
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
-    char function_command[255];
     open_terminal_by_desktop("fastboot getvar all");
 }
 
