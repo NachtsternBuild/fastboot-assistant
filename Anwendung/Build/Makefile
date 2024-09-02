@@ -87,6 +87,7 @@ SRCS = \
 	instruction_backup.c \
 	instruction_preflash.c \
 	instruction_prepare_flash.c \
+	instruction_others.c \
 	instruction_info.c \
 	instruction_GUI.c \
 	info.c \
