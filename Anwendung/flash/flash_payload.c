@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              flash_payload				 *
@@ -24,10 +24,9 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-static void button_flash_payload(GtkWidget *widget, gpointer data)
+void flash_payload(GtkWidget *widget, gpointer data)
 {
     // flash payload.zip via adb sideload
-    GtkWidget *dialog;
     const char *title, *message;
     
     // first dialog called 'Hinweis'
@@ -39,7 +38,7 @@ static void button_flash_payload(GtkWidget *widget, gpointer data)
     snprintf(message, sizeof(message), "Sideload payload.zip.\n");
     show_message(message);
     
-    char image_path[512];
+    char image_path[2048];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "payload.zip");
 
     char function_command[255];
@@ -50,36 +49,4 @@ static void button_flash_payload(GtkWidget *widget, gpointer data)
     // Show a message that the flash is completed
     snprintf(message, sizeof(message), "Sideload beendet!\n");
     show_message(message);
-}
-
-// UI for flashsystem
-void flash_payload(int argc, char *argv[])
-{
-    // Initialize GTK
-    gtk_init(&argc, &argv);
-
-    // Create the main window
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Flash payload.zip");
-    gtk_window_set_default_size(GTK_WINDOW(window), 400, 200);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // Create a vertical box
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    // Create an entry for entering the filename
-    GtkWidget *entry = gtk_entry_new();
-    gtk_box_pack_start(GTK_BOX(vbox), entry, FALSE, FALSE, 5);
-
-    // Create a button
-    GtkWidget *button_payload = gtk_button_new_with_label("Flash starten");
-    g_signal_connect(button_payload, "clicked", G_CALLBACK(button_flash_payload), entry);
-    gtk_box_pack_start(GTK_BOX(vbox), button_payload, FALSE, FALSE, 5);
-
-    // Show all the widgets
-    gtk_widget_show_all(window);
-
-    // Run the GTK main loop
-    gtk_main();
 }
