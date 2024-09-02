@@ -107,13 +107,13 @@ void flash_boot(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(boot_on_ab), NULL);
                 break;
             case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(init_boot_on_a), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(boot_heimdall), NULL);
                 break;
             case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(init_boot_on_ab), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(init_boot_on_a), NULL);
                 break;
             case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(boot_heimdall), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(init_boot_on_ab), NULL);
                 break;
             case 5:
                 g_signal_connect(button, "clicked", G_CALLBACK(init_boot_heimdall), NULL);
