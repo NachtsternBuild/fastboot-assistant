@@ -12,11 +12,11 @@
 ```c
 /*
  *-------------------------------------------*
- *                Projekt 122 - GUI          *
+ *         Fastboot Assistant - GUI          *
  *-------------------------------------------*
  *          Apache License, Version 2.0      *
  *-------------------------------------------*
- *    (C) Copyright *year* *contributor*     *
+ *    (C) Copyright <year> <contributor>     *
  *-------------------------------------------*
  *          name_of_the_code_part            *
  *-------------------------------------------*
@@ -38,3 +38,4 @@ VERSION="$(cat Build/version.txt)"
 ## Other things
 **If you use source code from other open source projects, please write a thank you to the person in the source code, in the pull request and in the Readme.md under Heinzelmännchen. 
 You can mention them in the e-mail.**
+**→All source code is published under the Apache Licence 2.0.**
