@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_recovery			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -20,8 +20,10 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
-#include "function_header.h"
 #include "flash_function_header.h"
+
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 
 // Button handler functions
 // function to flash recovery.img on only-a-devices
@@ -39,41 +41,56 @@ void recovery_heimdall(GtkWidget *widget, GtkWindow *window)
 // main function
 void flash_recovery(int argc, char *argv[])
 {
+    GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *button;
+    char button_labels[2][30] = {"Recovery", "Recovery (heimdall)"};
+
     gtk_init(&argc, &argv);
-    
-    // create a windows
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Projekt 122 - Flash Recovery");
-    gtk_container_set_border_width(GTK_CONTAINER(window), 500);
-    gtk_widget_set_size_request(window, 800, 750);
 
+    gtk_init(&argc, &argv);
+    css_provider(); // load css-provider
+
+     // create the window
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Flash:");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	
+    // create the grid and centre it
+    grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    
+    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 
-    // create button
-    GtkWidget *button_recovery_img = gtk_button_new_with_label("Flash Recovery");
-    GtkWidget *button_recovery_heimdall = gtk_button_new_with_label("Flash Recovery (heimdall)");
-    
-    // connection for gtk callback
-	g_signal_connect(button_recovery_img, "clicked", G_CALLBACK(recovery_img), (gpointer) window);
-	g_signal_connect(button_recovery_heimdall, "clicked", G_CALLBACK(recovery_heimdall), (gpointer) window);
-	
-    // create widget
-    GtkWidget *hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    GtkWidget *left_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    GtkWidget *right_vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 7);
-    
-    gtk_box_pack_start(GTK_BOX(left_vbox), button_recovery_img, TRUE, TRUE, 0);
-     
-    gtk_box_pack_start(GTK_BOX(right_vbox), button_recovery_heimdall, TRUE, TRUE, 0);
-   
-    gtk_box_pack_start(GTK_BOX(hbox), left_vbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), right_vbox, TRUE, TRUE, 0);
-	
-	// add all to the container
-    gtk_container_add(GTK_CONTAINER(window), hbox);
-    
-    // show all widgets
+    // add the grid to the window
+    gtk_container_add(GTK_CONTAINER(window), grid);
+
+    // add and centre all button
+    for (int i = 0; i < 2; i++) {
+        button = gtk_button_new_with_label(button_labels[i]);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+
+        // execute css-provider for all buttons
+        add_css_provider(button, provider);
+        switch (i) {
+            case 0:
+                g_signal_connect(button, "clicked", G_CALLBACK(recovery_img), NULL);
+                break;
+            case 1:
+                g_signal_connect(button, "clicked", G_CALLBACK(recovery_heimdall), NULL);
+                break;
+        }
+    }
+	// cleaing the provider
+    g_object_unref(provider);
+
+    // show window
     gtk_widget_show_all(window);
-    
+
+    // run main-gtk-loop
     gtk_main();
 }
+
