@@ -24,9 +24,6 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 3072
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 350
-
 // Callback functions for each button
 // Remove the 'ROM-Install' directory
 static void remove_rom_install(GtkWidget *widget, gpointer data) 
