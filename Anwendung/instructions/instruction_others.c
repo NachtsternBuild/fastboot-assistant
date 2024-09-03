@@ -21,9 +21,6 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
-
 static void others_text()
 {
 	g_print("Nix los!\n");

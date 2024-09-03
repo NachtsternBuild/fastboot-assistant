@@ -22,8 +22,6 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
 
 static void info_text()
 {
@@ -89,7 +87,7 @@ void instruction_info(int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(page_info2), button_info4, FALSE, FALSE, 0);
     g_signal_connect(button_info3, "clicked", G_CALLBACK(info_text), notebook);
     g_signal_connect(button_info4, "clicked", G_CALLBACK(next_page), notebook);
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info2, gtk_label_new("Das Programm"));
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info2, gtk_label_new("a/b Partitionierung"));
 
     // run css-provider
     add_css_provider(button_info3, provider);
