@@ -22,9 +22,6 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
-
 // Button handler functions
 // function to flash vendor.img on only-a-devices
 void vendor_on_a(GtkWidget *widget, GtkWindow *window)
