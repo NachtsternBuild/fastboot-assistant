@@ -24,8 +24,6 @@
 #include "flash_function_header.h"
 
 #define MAX_BUFFER_SIZE 256
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
 
 // button 1 - set slot a
 static void set_slot_a(GtkWidget *widget, gpointer data)
