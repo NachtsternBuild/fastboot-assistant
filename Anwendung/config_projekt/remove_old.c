@@ -24,8 +24,6 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 2048
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 350
 
 // Callback functions for each button
 // Remove the 'ROM-Install' directory
