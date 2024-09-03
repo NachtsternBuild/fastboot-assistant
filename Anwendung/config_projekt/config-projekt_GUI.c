@@ -23,8 +23,6 @@
 #include "function_header.h"
 
 #define MAX_BUFFER_SIZE 256
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 350
 
 // include all functions
 extern void make_dir();
