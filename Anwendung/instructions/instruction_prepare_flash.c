@@ -25,8 +25,6 @@
 #include "instruction_header.h"
 
 #define MAX_BUFFER_SIZE 256
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
 
 extern void instruction_backup();
 extern void instruction_preflash();
