@@ -23,8 +23,6 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 500
 
 // function to open the GitHub website from the fastboot-assistant
 void fastboot_assistant(GtkWidget *widget, gpointer data)
