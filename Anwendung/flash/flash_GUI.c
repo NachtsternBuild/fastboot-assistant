@@ -24,8 +24,7 @@
 #include "flash_function_header.h"
 
 #define MAX_BUFFER_SIZE 256
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
+
 // includde all functions
 extern void flash_recovery();
 extern void flash_boot();
