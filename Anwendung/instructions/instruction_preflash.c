@@ -39,7 +39,7 @@ void e_OS(GtkWidget *widget, gpointer data)
 void lineage_os(GtkWidget *widget, gpointer data)
 {
     const char *lineage_os_url = "https://lineageos.org/";
-	open_url(lineage_os);
+	open_url(lineage_os_url);
 }
 
 // function to open the website from 'Open Android Backup'
