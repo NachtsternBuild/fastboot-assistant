@@ -25,8 +25,6 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 3072
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 350
 
 // reboot to download from adb
 static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
