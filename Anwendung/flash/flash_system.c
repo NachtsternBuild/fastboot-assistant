@@ -25,15 +25,13 @@
 #include "flash_function_header.h"
 
 #define BUFFER_SIZE 2048
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
 
 // function to flash system.img to slot
 // start by system_to_inactive
 void flash_system_inactive(const char *slot) 
 {
     char function_command[BUFFER_SIZE];
-    char image_path[2048];
+    char image_path[3072];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "system.img");
 
     // make command to flash system.img
