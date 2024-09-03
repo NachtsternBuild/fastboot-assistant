@@ -28,6 +28,9 @@
 #ifndef PROGRAM_FUNCTIONS_H
 #define PROGRAM_FUNCTIONS_H
 
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
+
 extern GtkCssProvider *provider;
 
 void delete_files_in_dir();
