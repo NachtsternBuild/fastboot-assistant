@@ -41,7 +41,7 @@ void flash_payload(GtkWidget *widget, gpointer data)
     char image_path[2048];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "payload.zip");
 
-    char function_command[255];
+    char function_command[3071];
     snprintf(function_command, sizeof(function_command), "adb sideload %s && exit", image_path);
     g_print(function_command);
     open_terminal_by_desktop(function_command);
