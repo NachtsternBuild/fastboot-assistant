@@ -66,7 +66,7 @@ void instruction_info(int argc, char *argv[])
     gtk_box_pack_start(GTK_BOX(page_info1), button_info2, FALSE, FALSE, 0);
     g_signal_connect(button_info1, "clicked", G_CALLBACK(info_text), notebook);
     g_signal_connect(button_info2, "clicked", G_CALLBACK(next_page), notebook);
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info1, gtk_label_new("Version"));
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info1, gtk_label_new("Project Treble"));
 
     // run css-provider
     add_css_provider(button_info1, provider);
