@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_preflash	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -63,76 +63,103 @@ void evolution_x(GtkWidget *widget, gpointer data)
 	open_url(evolution_x_url);
 }
 
-void instruction_preflash(int argc, char *argv[]) 
+static void preflash_text()
 {
-    // Initiate GTK
-    gtk_init(&argc, &argv);
-
-    // Create main window
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Anleitung Vorbereitungen flash");
-    gtk_widget_set_size_request(window, 1000, 950);
-
-    // Connect close function to 'destroy' signal
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // Vertical box layout for the frames
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    // Creation of text labels with the text to be displayed
-    const char *preflash_text = "\n1. Informieren sie genauer über \nihr Gerät und den Chipsatz ihres Gerätes. \n2. Suchen sie nach entsprechenden \nCustom-ROMs, Custom-Recoverys oder GSIs. \n3. Prüfen sie die Verfügbarkeit von Project Treble für ihr Gerät. \n4. Prüfen sie welches Partitionierungsschema \nauf ihrem Gerät vorliegt (a/b-devices oder only-a-devices).\n5. Sichern sie ihre Daten lokal und wenn sie wollen in einer Cloud. \n6. Laden sie alle Dateien herunter die für das Custom-ROM \noder GSI gebraucht werden und lesen sie die Anleitungen \nder Entwickler der Custom-ROMs vor dem Flash. \n7. Benennen sie alle Dateien der folgenden Liste nach um. \nEs gibt eine Funktion, die das übernimmt, \naber es ist nicht garantiert, dass es funktioniert. \n8. Kopieren sie alle Dateien \ndie geflasht werden sollen in das Verzeichnis:\n \n'~/Downloads/ROM-Install/'\n";
-    GtkWidget *label_preflash = gtk_label_new(preflash_text);
-    gtk_box_pack_start(GTK_BOX(vbox), label_preflash, TRUE, TRUE, 5);
-    
-    // show-text for list of all file names that are flashed
-    GtkWidget *inst17_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst17_label), "<b><u>Liste aller Dateien</u></b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst17_label, FALSE, FALSE, 5);
-
-    // Creation of text labels with the text to be displayed
-    const char *file_list_text = "\n- preloader.bin \n- preloader.img \n- super.img \n- recovery.img \n- boot.img \n- init_boot.img \n- vendor_boot.img \n- vendor.img \n- system.img \n- vbmeta.img \n- dtbo.img \n- metadata.img \n- userdata.img \n- payload.zip (das ist die Zip-Datei eines jeden Custom-ROMs)\n";
-    GtkWidget *label_file_list = gtk_label_new(file_list_text);
-    gtk_box_pack_start(GTK_BOX(vbox), label_file_list, TRUE, TRUE, 5);
-
-    // show-text for some interesting links
-    GtkWidget *inst18_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst18_label), "<b><u>Einige Custom-ROMs und Recoverys</u></b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst18_label, FALSE, FALSE, 5);
-    
-    // Create button box for the buttons
-    GtkWidget *button_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
-    gtk_box_pack_start(GTK_BOX(vbox), button_box, FALSE, FALSE, 10);
-    
-    GtkWidget *button_twrp = gtk_button_new_with_label("TWRP");
-    g_signal_connect(button_twrp, "clicked", G_CALLBACK(twrp), NULL);
-    gtk_box_pack_start(GTK_BOX(button_box), button_twrp, TRUE, TRUE, 10);
-    
-    GtkWidget *button_e_OS = gtk_button_new_with_label("/e/ OS");
-    g_signal_connect(button_e_OS, "clicked", G_CALLBACK(e_OS), NULL);
-    gtk_box_pack_start(GTK_BOX(button_box), button_e_OS, TRUE, TRUE, 10);
-    
-    GtkWidget *button_lineage_os = gtk_button_new_with_label("LineageOS");
-    g_signal_connect(button_lineage_os, "clicked", G_CALLBACK(lineage_os), NULL);
-    gtk_box_pack_start(GTK_BOX(button_box), button_lineage_os, TRUE, TRUE, 10);
-    
-    GtkWidget *button_project_elixir = gtk_button_new_with_label("Project Elixir");
-    g_signal_connect(button_project_elixir, "clicked", G_CALLBACK(project_elixir), NULL);
-    gtk_box_pack_start(GTK_BOX(button_box), button_project_elixir, TRUE, TRUE, 10);
-    
-    GtkWidget *button_crdroid = gtk_button_new_with_label("crDroid");
-    g_signal_connect(button_crdroid, "clicked", G_CALLBACK(crdroid), NULL);
-    gtk_box_pack_start(GTK_BOX(button_box), button_crdroid, TRUE, TRUE, 10);
-    
-    GtkWidget *button_evolution_x = gtk_button_new_with_label("Evolution X");
-    g_signal_connect(button_evolution_x, "clicked", G_CALLBACK(evolution_x), NULL);
-    gtk_box_pack_start(GTK_BOX(button_box), button_evolution_x, TRUE, TRUE, 10);
-    
-    // Show all elements
-    gtk_widget_show_all(window);
-
-    // Run the GTK main loop
-    gtk_main();
+	g_print("Die Lösung ist: ");
 }
 
+void instruction_preflash(int argc, char *argv[]) 
+{
+    GtkWidget *window;
+    GtkWidget *page_preflash1, *page_preflash2;
+    GtkWidget *label_preflash1_1, *label_preflash1_2, *label_preflash1_3, *label_preflash1_4;
+    GtkWidget *button_preflash1, *button_preflash2, *button_preflash3, *button_preflash2_1, *button_preflash2_2, *button_preflash2_3, *button_preflash2_4, *button_preflash2_5, *button_preflash2_6;
 
+    gtk_init(&argc, &argv);
+    css_provider(); // load css-provider
+    
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Vorbereitung");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
+    
+     // Connect close function to 'destroy' signal
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	
+	GtkWidget *notebook = gtk_notebook_new();
+    gtk_container_add(GTK_CONTAINER(window), notebook);
+    
+    if (!GTK_IS_NOTEBOOK(notebook)) 
+    {
+    	g_warning("Notebook is not initialized properly.");
+    	return;
+	}
+	
+	// page 1
+    page_preflash1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    button_preflash1 = gtk_button_new_with_label("Vorbereitung Flash");
+    label_preflash1_1 = gtk_label_new("1. Informieren sie genauer über ihr Gerät und den Chipsatz des Gerätes. \n2. Suchen sie nach entsprechenden Custom-ROMs, Custom-Recoverys \noder GSIs.");
+    label_preflash1_2 = gtk_label_new("3. Prüfen sie die Verfügbarkeit von Project Treble für ihr Gerät. \n4. Prüfen sie welches Partitionierungsschema auf ihrem Gerät vorliegt \n(a/b-devices oder only-a-devices).");
+    label_preflash1_3 = gtk_label_new("5. Sichern sie ihre Daten lokal und wenn sie wollen in einer Cloud. \n6. Laden sie alle Dateien herunter die sie für den flash brauchen.");
+    label_preflash1_4 = gtk_label_new("7. Lesen sie die Anleitungen der Entwickler vor dem Flash. \n8. Kopieren sie alle Dateien die geflasht werden, nach: '~/Downloads/ROM-Install/'");
+    button_preflash2 = gtk_button_new_with_label("Weiter");
+    gtk_box_pack_start(GTK_BOX(page_preflash1), button_preflash1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash1), label_preflash1_1, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash1), label_preflash1_2, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash1), label_preflash1_3, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash1), label_preflash1_4, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash1), button_preflash2, FALSE, FALSE, 0);
+    g_signal_connect(button_preflash1, "clicked", G_CALLBACK(preflash_text), notebook);
+    g_signal_connect(button_preflash2, "clicked", G_CALLBACK(next_page), notebook);
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_preflash1, gtk_label_new("Vorbereitung"));
+    
+    // run css-provider
+    add_css_provider(button_preflash1, provider);
+    add_css_provider(label_preflash1_1, provider);
+    add_css_provider(label_preflash1_2, provider);
+    add_css_provider(label_preflash1_3, provider);
+    add_css_provider(label_preflash1_4, provider);
+    add_css_provider(button_preflash2, provider);
+    
+    // page 2
+    page_preflash2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    button_preflash3 = gtk_button_new_with_label("Einige Custom ROMs");
+    button_preflash2_1 = gtk_button_new_with_label("TWRP (ein Recovery)");
+    button_preflash2_2 = gtk_button_new_with_label("/e/ OS");
+    button_preflash2_3 = gtk_button_new_with_label("LineageOS");
+    button_preflash2_4 = gtk_button_new_with_label("Project Elixir");
+    button_preflash2_5 = gtk_button_new_with_label("CrDroid");
+    button_preflash2_6 = gtk_button_new_with_label("Evolution X");
+    gtk_box_pack_start(GTK_BOX(page_preflash2), button_preflash3, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash2), button_preflash2_1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash2), button_preflash2_2, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash2), button_preflash2_3, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash2), button_preflash2_4, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash2), button_preflash2_5, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_preflash2), button_preflash2_6, FALSE, FALSE, 0);
+    g_signal_connect(button_preflash3, "clicked", G_CALLBACK(preflash_text), notebook);
+    g_signal_connect(button_preflash2_1, "clicked", G_CALLBACK(twrp), notebook);
+    g_signal_connect(button_preflash2_2, "clicked", G_CALLBACK(e_OS), notebook);
+    g_signal_connect(button_preflash2_3, "clicked", G_CALLBACK(lineage_os), notebook);
+    g_signal_connect(button_preflash2_4, "clicked", G_CALLBACK(project_elixir), notebook);
+    g_signal_connect(button_preflash2_5, "clicked", G_CALLBACK(crdroid), notebook);
+    g_signal_connect(button_preflash2_6, "clicked", G_CALLBACK(evolution_x), notebook);
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_preflash2, gtk_label_new("Custom ROMs"));
+    
+    // run css-provider
+    add_css_provider(button_preflash3, provider);
+    add_css_provider(button_preflash2_1, provider);
+    add_css_provider(button_preflash2_2, provider);
+    add_css_provider(button_preflash2_3, provider);
+    add_css_provider(button_preflash2_4, provider);
+    add_css_provider(button_preflash2_5, provider);
+    add_css_provider(button_preflash2_6, provider);
+    
+    // clean the storage
+    g_object_unref(provider);
+	
+	// show all widgets
+    gtk_widget_show_all(window);
+	
+	// run gtk mainloop
+    gtk_main();
+}
