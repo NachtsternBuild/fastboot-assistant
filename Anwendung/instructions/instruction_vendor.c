@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_vendor		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -21,37 +21,62 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-void instruction_vendor(int argc, char *argv[]) 
+static void vndk_text()
 {
-    // Initiate GTK
-    gtk_init(&argc, &argv);
-
-    // Create main window
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Anleitung und Info Vendor");
-    gtk_widget_set_size_request(window, 1000, 950);
-
-    // Connect close function to 'destroy' signal
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // Create vertical box layout for the frames
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
-    
-    // Vendor Native Development Kit (VNDK) header
-    GtkWidget *inst9_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst9_label), "<b><u>Vendor Native Development Kit (VNDK)</u></b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst9_label, FALSE, FALSE, 5);
-
-    // Description about VNDK
-    const char *vndk_text = "\nAlles was mit 'Vendor' bezeichnet wird, \nstellen hersteller- oder \ngerätspezifische Komponenten des Betriebssystems da. \nÄnderungen daran sind mit äußerster Vorsicht zu betrachten.\n \nDie VNDK-Version (Vendor Native Development Kit) \nstellt eine Sammlung von Bibliotheken und Richtlinien dar, \ndie es ermöglichen, den hardware-spezifischen Teil \neines Android-Systems von \ngenerischen Systemimplementierungen zu trennen. \nDadurch lassen sich Updates und Wartung erleichtern, \nindem sichergestellt wird, dass herstellerspezifische \nAnpassungen nicht die Kompatibilität und Stabilität \ndes Android-Betriebssystems beeinträchtigen.\n";
-    GtkWidget *label_vndk = gtk_label_new(vndk_text);
-    gtk_box_pack_start(GTK_BOX(vbox), label_vndk, TRUE, TRUE, 5);
-
-    // Show all elements
-    gtk_widget_show_all(window);
-
-    // Run the GTK main loop
-    gtk_main();
+	g_print("Die Lösung ist: 42–39+38+1");
 }
 
+void instruction_vendor(int argc, char *argv[]) 
+{
+    GtkWidget *window;
+    GtkWidget *page_vndk1;
+    GtkWidget *label_vndk1_1, *label_vndk1_2, *label_vndk1_3;
+    GtkWidget *button_vndk1;
+
+    gtk_init(&argc, &argv);
+    css_provider(); // load css-provider
+    
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Vendor Native Development Kit (VNDK)");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
+    
+     // Connect close function to 'destroy' signal
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	
+	GtkWidget *notebook = gtk_notebook_new();
+    gtk_container_add(GTK_CONTAINER(window), notebook);
+    
+    if (!GTK_IS_NOTEBOOK(notebook)) 
+    {
+    	g_warning("Notebook is not initialized properly.");
+    	return;
+	}
+	
+	// page 1
+    page_vndk1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    button_vndk1 = gtk_button_new_with_label("VNDK");
+    label_vndk1_1 = gtk_label_new("Alles was mit 'Vendor' bezeichnet wird, sind hersteller- oder \ngerätspezifische Komponenten des Betriebssystems. \nÄnderungen daran können zu Problemen führen.");
+    label_vndk1_2 = gtk_label_new("Die VNDK-Version (Vendor Native Development Kit) ist eine Sammlung von \nBibliotheken und Richtlinien, durch die den hardwarespezifische Teil \nvon Rest des Androids trennt.");
+    label_vndk1_3 = gtk_label_new("Dadurch lassen sich Updates und Wartung erleichtern, weil herstellerspezifische \nAnpassungen nicht die Kompatibilität und Stabilität \ndes Android-Systems beeinträchtigen.");
+    gtk_box_pack_start(GTK_BOX(page_vndk1), button_vndk1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_vndk1), label_vndk1_1, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_vndk1), label_vndk1_2, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_vndk1), label_vndk1_3, TRUE, TRUE, 0);
+    g_signal_connect(button_vndk1, "clicked", G_CALLBACK(vndk_text), notebook);
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_vndk1, gtk_label_new("VNDK"));
+    
+    // run css-provider
+    add_css_provider(button_vndk1, provider);
+    add_css_provider(label_vndk1_1, provider);
+    add_css_provider(label_vndk1_2, provider);
+    add_css_provider(label_vndk1_3, provider);
+    
+    // clean the storage
+    g_object_unref(provider);
+	
+	// show all widgets
+    gtk_widget_show_all(window);
+	
+	// run gtk mainloop
+    gtk_main();
+}
