@@ -51,6 +51,7 @@ static void download_backup(GtkWidget *widget, gpointer data)
 	*/
 	// for Windows
 	char wsl_dir[MAX_BUFFER_SIZE];
+	char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "wget -O %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && exit", wsl_dir);
     system(command);
@@ -70,6 +71,7 @@ static void open_backup(GtkWidget *widget, gpointer data)
 	*/
 	// for Windows
 	char wsl_dir[MAX_BUFFER_SIZE];
+	char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "%s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh", wsl_dir);
     open_terminal_by_desktop(command);
