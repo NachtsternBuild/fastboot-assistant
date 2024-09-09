@@ -37,6 +37,7 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
 	*/
 	
     char wsl_dir[MAX_BUFFER_SIZE];
+    char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "rm -rf %s", wsl_dir);
     system(command);
@@ -65,6 +66,7 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
 	*/
 	
     char wsl_dir[MAX_BUFFER_SIZE];
+    char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "rm -rf %s/*", wsl_dir);
     system(command);
@@ -94,6 +96,7 @@ static void remove_backups(GtkWidget *widget, gpointer data)
 	*/
 	
     char wsl_dir[MAX_BUFFER_SIZE];
+    char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "rm -rf %s/Backup/*", wsl_dir);
     system(command);
