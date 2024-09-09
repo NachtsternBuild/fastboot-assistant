@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_gsi		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -115,7 +115,7 @@ void instruction_gsi(int argc, char *argv[])
     // page 4
     page_gsi4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     button_gsi7 = gtk_button_new_with_label("Dirty Flash");
-    label_gsi4_1 = gtk_label_new("Nach einem'dirty flash' bleiben die Nutzerdaten erhalten, \naber nicht jedes GSI startet danach. \n1. Flashen sie das System-Image. \n2. Starten sie ihr Gerät neu.");
+    label_gsi4_1 = gtk_label_new("Nach einem'dirty flash' bleiben die Nutzerdaten erhalten, \naber nicht jedes GSI startet danach. \n \n1. Flashen sie das System-Image. \n2. Starten sie ihr Gerät neu.");
     gtk_box_pack_start(GTK_BOX(page_gsi4), button_gsi7, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page_gsi4), label_gsi4_1, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(page_gsi4), button_gsi2, FALSE, FALSE, 0);
