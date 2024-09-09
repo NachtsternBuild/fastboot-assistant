@@ -21,48 +21,85 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
+static void rom_text()
+{
+	g_print("Auch nix Neues.\n");
+}
+
 void instruction_custom_rom(int argc, char *argv[]) 
 {
-    // Initiate GTK
-    gtk_init(&argc, &argv);
-
-    // Create main window
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Anleitung Custom ROMs");
-    gtk_widget_set_size_request(window, 1000, 950);
-
-    // Connect close function to 'destroy' signal
+	GtkWidget *window;
+    GtkWidget *page_rom1, *page_rom2;
+    GtkWidget *label_rom1_1, *label_rom1_2, *label_rom2_1, *label_rom2_2, *label_rom2_3, *label_rom2_4;
+    GtkWidget *button_rom1, *button_rom2, *button_rom3;
+    
+	gtk_init(&argc, &argv);
+    css_provider(); // load css-provider
+    
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Custom ROMs");
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
+    
+     // Connect close function to 'destroy' signal
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // Vertical box layout for the frames
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    // show-text for Custom ROMs title
-    GtkWidget *inst13_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst13_label), "<b><u>Custom ROMs</u></b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst13_label, FALSE, FALSE, 5);
-
-    // Frame and label for Custom ROMs description
-    GtkWidget *frame21 = gtk_frame_new(NULL);
-    GtkWidget *label_custom_rom = gtk_label_new("\nCustom-ROMs sind modifizierte Versionen \ndes Android, die von unabhängigen Entwicklern erstellt werden, \num zusätzliche Funktionen, \nLeistungsverbesserungen oder eine andere Benutzeroberfläche zu bieten. \nSie ersetzen das vorinstallierte Betriebssystem \nauf einem Android-Gerät und enthalten oft \nneuere Softwareversionen oder spezielle Anpassungen, \ndie der Hersteller nicht anbietet.\n");
-    gtk_container_add(GTK_CONTAINER(frame21), label_custom_rom);
-    gtk_box_pack_start(GTK_BOX(vbox), frame21, TRUE, TRUE, 5);
-
-    // show-text for Flashing Custom ROMs title
-    GtkWidget *inst14_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(inst14_label), "<b><u>Flashen von Custom-ROMs</u></b>");
-    gtk_box_pack_start(GTK_BOX(vbox), inst14_label, FALSE, FALSE, 5);
-
-    // Frame and label for Flashing Custom ROMs steps
-    GtkWidget *frame22 = gtk_frame_new(NULL);
-    GtkWidget *label_flash_custom_rom = gtk_label_new("\n1. Prüfen sie ob es für ihr Gerät Custom-Roms gibt und laden sie es herunter. \n2. Booten sie ihr Gerät in den Fastboot-Modus. \n3. Öffnen sie den Bootloader. \nManche Geräte unterstützen nicht \ndie Methode über Fastboot. \nInformieren sie sich genauer \nüber ihr Chipssatz und das Gerät. \n \n4. Flashen sie den Custom-Recovery, das Boot-Image und dtbo.img. \n5. Führen sie einen Neustart in den Recovery aus. \n6. Kopieren sie das Zip des Custom-ROMs auf ihr Gerät.\n7. Tippen sie installieren und flashen sie das Zip. \nOptional kann jetzt noch ein Magisk.zip, \nzum rooten des Gerätes geflasht werden \noder falls nicht im Custom-ROM enthalten, \ndie Google-Dienste. \n8. Starten sie ihr Gerät neu.\n");
-    gtk_container_add(GTK_CONTAINER(frame22), label_flash_custom_rom);
-    gtk_box_pack_start(GTK_BOX(vbox), frame22, TRUE, TRUE, 5);
-
-    // Show all elements
+	
+	GtkWidget *notebook = gtk_notebook_new();
+    gtk_container_add(GTK_CONTAINER(window), notebook);
+    
+    if (!GTK_IS_NOTEBOOK(notebook)) 
+    {
+    	g_warning("Notebook is not initialized properly.");
+    	return;
+	}
+	
+	// page 1
+    page_rom1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    button_rom1 = gtk_button_new_with_label("Hinweise");
+    label_rom1_1 = gtk_label_new("Custom-ROMs sind modifizierte Versionen des Android, um zusätzliche Funktionen, \nLeistungsverbesserungen oder eine andere Benutzeroberfläche \nzu bieten.");
+    label_rom1_2 = gtk_label_new("Sie ersetzen das vorinstallierte Android und enthalten oft neuere Softwareversionen \noder spezielle Anpassungen, die der Hersteller nicht \nanbietet.");
+    button_rom2 = gtk_button_new_with_label("Weiter");
+    gtk_box_pack_start(GTK_BOX(page_rom1), button_rom1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_rom1), label_rom1_1, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_rom1), label_rom1_2, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_rom1), button_rom2, FALSE, FALSE, 0);
+    g_signal_connect(button_rom1, "clicked", G_CALLBACK(rom_text), notebook);
+    g_signal_connect(button_rom2, "clicked", G_CALLBACK(next_page), notebook);
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_rom1, gtk_label_new("Hinweise"));
+    
+    // run css-provider
+    add_css_provider(button_rom1, provider);
+    add_css_provider(label_rom1_1, provider);
+    add_css_provider(label_rom1_2, provider);
+    add_css_provider(button_rom2, provider);
+    
+    // page 2
+    page_rom2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    button_rom3 = gtk_button_new_with_label("Custom ROM Flashen");
+    label_rom2_1 = gtk_label_new("1. Laden sie ein Custom-ROM für ihr Gerät herunter. \n2. Booten sie ihr Gerät in den Fastboot-Modus. \n3. Öffnen sie den Bootloader.");
+    label_rom2_2 = gtk_label_new("4. Flashen sie den Custom-Recovery, das Boot-Image (boot.img/init_boot.img), \nfalls nötig das dtbo.img. \n5. Führen sie einen Neustart in den Recovery aus.");
+    label_rom2_3 = gtk_label_new("6. Kopieren sie das Zip des Custom-ROMs auf ihr Gerät. \n7. Tippen sie installieren und flashen sie das Zip.");
+    label_rom2_4 = gtk_label_new("8. Optional können sie jetzt Magisk (als Zip) oder Google Dienste \n(nur falls ihr Custom-ROM keine enthält) flashen. \n9. Starten sie ihr Gerät neu.");
+    gtk_box_pack_start(GTK_BOX(page_rom2), button_rom3, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_rom2), label_rom2_1, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_rom2), label_rom2_2, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_rom2), label_rom2_3, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page_rom2), label_rom2_4, TRUE, TRUE, 0);
+    g_signal_connect(button_rom3, "clicked", G_CALLBACK(rom_text), notebook);
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_rom2, gtk_label_new("Flashen"));
+    
+    // run css-provider
+    add_css_provider(button_rom3, provider);
+    add_css_provider(label_rom2_1, provider);
+    add_css_provider(label_rom2_2, provider);
+    add_css_provider(label_rom2_3, provider);
+    add_css_provider(label_rom2_4, provider);
+    
+    // clean the storage
+    g_object_unref(provider);
+	
+	// show all widgets
     gtk_widget_show_all(window);
-
-    // Run the GTK main loop
+	
+	// run gtk mainloop
     gtk_main();
 }
