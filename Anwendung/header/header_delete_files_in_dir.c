@@ -23,6 +23,7 @@
 #include <string.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <gtk/gtk.h>
 
 void delete_files_in_dir(const char *path) 
 {
