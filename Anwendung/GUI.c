@@ -101,18 +101,23 @@ static void start_about(GtkWidget *widget, gpointer data)
 }
 
 // create the dir for the setup
-void config_dir_setup(const char *pfad) 
-{
-    struct stat st = {0};
-    if (stat(pfad, &st) == -1) 
+void config_dir_setup(const char *pfad) {
+    char tmp[2048];
+    snprintf(tmp, sizeof(tmp), "%s", pfad);  // copy the path
+    char *p = tmp;
+
+    for (; *p; p++) 
     {
-        if (mkdir(pfad, 0700) != 0)
+        if (*p == '/')
          {
-            perror("Fehler beim Erstellen des Verzeichnisses");
-            exit(EXIT_FAILURE);
+            *p = '\0';  // set temp end
+            mkdir(tmp, 0700);  // create the dir
+            *p = '/';  // reset the option
         }
     }
+    mkdir(tmp, 0700);  // create the dir
 }
+
 
 
 // config the program
