@@ -101,7 +101,8 @@ static void start_about(GtkWidget *widget, gpointer data)
 }
 
 // create the dir for the setup
-void config_dir_setup(const char *pfad) {
+void config_dir_setup(const char *pfad) 
+{
     char tmp[2048];
     snprintf(tmp, sizeof(tmp), "%s", pfad);  // copy the path
     char *p = tmp;
@@ -142,7 +143,7 @@ static void run_first_run_setup(GtkCssProvider *provider)
     GtkWidget *window;
     GtkWidget *page1, *page2, *page3, *page4, *page5;
     GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label_page3_1, *label_page3_2, *label_page3_3, *label_page3_4, *label_page4_1, *label_page4_2, *label_page4_3, *label_page4_4, *label_end_1, *label_end_2;
-    GtkWidget *button_welcome_1, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button_page3_1, *button_page3_2, *button_page4_1, *button_page4_2, *button_end_1, *button_end_2;
+    GtkWidget *button_welcome_1, *button_toggle_theme, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button_page3_1, *button_page3_2, *button_page4_1, *button_page4_2, *button_end_1, *button_end_2;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot Assistant Setup");
@@ -166,18 +167,22 @@ static void run_first_run_setup(GtkCssProvider *provider)
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     label_welcome_1 = gtk_label_new(" ");
     button_welcome_1 = gtk_button_new_with_label("Willkommen zum Fastboot Assistant!");
+    button_toggle_theme = gtk_button_new_with_label("Thema wechseln (hell/dunkel)");
     label_welcome_2 = gtk_label_new(" ");
     button_welcome_2 = gtk_button_new_with_label("Weiter");
     gtk_box_pack_start(GTK_BOX(page1), label_welcome_1, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(page1), button_welcome_1, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page1), button_toggle_theme, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page1), label_welcome_2, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(page1), button_welcome_2, FALSE, FALSE, 0);
     g_signal_connect(button_welcome_1, "clicked", G_CALLBACK(setup_text), notebook);
+    g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme), notebook);
     g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(next_page), notebook);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Begrüßung"));
 
     // run css-provider
     add_css_provider(button_welcome_1, provider);
+    add_css_provider(button_toggle_theme, provider);
     add_css_provider(button_welcome_2, provider);
     
 
@@ -291,7 +296,7 @@ int main(int argc, char *argv[])
                                  "Info", "Updater", "Über das Programm"};
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
 
     // function that check if the setup run the first time
     // the crazy output came from the experiment with this
