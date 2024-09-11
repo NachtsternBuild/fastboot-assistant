@@ -76,7 +76,7 @@ void instruction_preflash(int argc, char *argv[])
     GtkWidget *button_preflash1, *button_preflash2, *button_preflash3, *button_preflash2_1, *button_preflash2_2, *button_preflash2_3, *button_preflash2_4, *button_preflash2_5, *button_preflash2_6;
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Vorbereitung");
