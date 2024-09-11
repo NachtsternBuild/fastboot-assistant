@@ -81,7 +81,7 @@ void flash_preloader_super(int argc, char *argv[])
                                  "preloader.bin (heimdall)", "preloader.img (heimdall)", "super.img", "super.img (heimdall)"};
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
 
     // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
