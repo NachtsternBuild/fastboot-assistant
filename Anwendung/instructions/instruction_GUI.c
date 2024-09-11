@@ -65,7 +65,7 @@ void instruction_GUI(int argc, char *argv[])
     char button_labels[4][20] = {"Umgang mit ADB", "Flash Images", "Vorbereitungen", "Info"};
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
 
      // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
