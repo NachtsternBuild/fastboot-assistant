@@ -34,7 +34,7 @@ void instruction_gsi(int argc, char *argv[])
     GtkWidget *button_gsi1, *button_gsi2, *button_gsi3, *button_gsi4, *button_gsi5, *button_gsi6, *button_gsi7;
     
 	gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+	apply_theme();
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Generic System Image");
