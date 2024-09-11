@@ -22,9 +22,6 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
-
 // Button handler functions
 // function to flash boot.img on only-a-devices
 void boot_on_a(GtkWidget *widget, GtkWindow *window)
@@ -72,7 +69,7 @@ void flash_boot(int argc, char *argv[])
                                  "init_boot (only-a)", "init_boot (a/b)", "init_boot (heimdall)"};
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
 
      // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
