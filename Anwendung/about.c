@@ -74,7 +74,7 @@ void about(int argc, char *argv[])
     GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5;
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Über das Programm");
