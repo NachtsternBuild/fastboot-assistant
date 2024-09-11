@@ -34,7 +34,7 @@ void instruction_custom_rom(int argc, char *argv[])
     GtkWidget *button_rom1, *button_rom2, *button_rom3;
     
 	gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+	apply_theme();
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Custom ROMs");
