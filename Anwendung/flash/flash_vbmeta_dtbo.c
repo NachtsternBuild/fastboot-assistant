@@ -81,7 +81,7 @@ void flash_vbmeta_dtbo(int argc, char *argv[])
                                  "dtbo (only-a)", "dtbo (a/b)", "dtbo (heimdall)"};
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
 
      // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
