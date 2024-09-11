@@ -36,7 +36,7 @@ void instruction_info(int argc, char *argv[])
     GtkWidget *button_info1, *button_info2, *button_info3, *button_info4, *button_info5, *button_info6, *button_info7;
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Weitere Infos");
