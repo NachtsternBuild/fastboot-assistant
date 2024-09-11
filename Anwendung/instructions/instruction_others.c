@@ -35,7 +35,7 @@ void instruction_others(int argc, char *argv[])
     GtkWidget *button_others_1, *button_others_2, *button_others_3, *button_others_4, *button_others_5;
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Anderes");
