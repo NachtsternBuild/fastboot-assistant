@@ -87,7 +87,7 @@ void backup_noroot(int argc, char *argv[])
 
     gtk_init(&argc, &argv);
     
-    css_provider(); // load css-provider
+    apply_theme();
 
     
     // create the window
