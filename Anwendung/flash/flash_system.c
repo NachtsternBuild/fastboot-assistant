@@ -100,8 +100,7 @@ void flash_system(int argc, char *argv[])
     char button_labels[3][30] = {"System", "System (heimdall)", "System (inactive)"};
 
     gtk_init(&argc, &argv);
-	
-	css_provider(); // load css-provider
+	apply_theme();
 	
     // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
