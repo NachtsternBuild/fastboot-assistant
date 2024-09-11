@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gtk/gtk.h>
 #include "program_functions.h"
 
 // check if file exists
