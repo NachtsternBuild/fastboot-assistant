@@ -34,7 +34,8 @@ void instruction_vendor(int argc, char *argv[])
     GtkWidget *button_vndk1;
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
+    //css_provider(); // load css-provider
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Vendor Native Development Kit (VNDK)");
