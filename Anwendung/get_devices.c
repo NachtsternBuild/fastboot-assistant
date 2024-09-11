@@ -46,8 +46,7 @@ void get_devices(int argc, char *argv[])
     char button_labels[2][20] = {"ADB", "Fastboot"};
 
     gtk_init(&argc, &argv);
-    
-    css_provider(); // load css-provider
+    apply_theme();
 
     // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
