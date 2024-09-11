@@ -50,7 +50,8 @@ void instruction_root(int argc, char *argv[])
     GtkWidget *button_root1, *button_root2, *button_root3, *button_root4, *button_root5, *button_root6, *button_root7;
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
+    //css_provider(); // load css-provider
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "Rooten");
