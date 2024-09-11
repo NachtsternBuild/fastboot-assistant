@@ -69,7 +69,7 @@ void flash_vendor(int argc, char *argv[])
                                  "vendor_boot (only-a)", "vendor_boot (a/b)", "vendor_boot (heimdall)"};
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
 
      // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
