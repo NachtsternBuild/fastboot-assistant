@@ -32,6 +32,8 @@
 #define WINDOW_HEIGHT 400
 
 extern GtkCssProvider *provider;
+// global use of the theme 
+extern const char *current_theme;
 
 void delete_files_in_dir();
 char *execute_command();
@@ -53,10 +55,14 @@ void set_main_dir_with_wsl(char *path, size_t size, const char *filename);
 void show_error_message(GtkWidget *parent_window, const char *message);
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
-void css_provider();
 void next_page(GtkButton *button, gpointer data);
-void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
 void button_finish(GtkButton *button, gpointer data);
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
+// everything for the css provider
+// void css_provider();
+void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
+void load_css(const char *theme);
+void toggle_theme(GtkWidget *button, gpointer user_data);
+void apply_theme();
 
 #endif
