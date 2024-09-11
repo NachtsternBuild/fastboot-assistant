@@ -85,7 +85,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
 void info(int argc, char *argv[]) 
 {  
 	gtk_init(&argc, &argv);
-    css_provider(); // Initialize CSS provider
+	apply_theme();
 
     // Strings for system-info
     char android_version[2048] = "Unbekannt";
