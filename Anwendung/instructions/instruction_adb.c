@@ -34,7 +34,7 @@ void instruction_adb(int argc, char *argv[])
     GtkWidget *button_adb1, *button_adb2, *button_adb3, *button_adb4, *button_adb5, *button_adb6, *button_adb7;
 
     gtk_init(&argc, &argv);
-    css_provider(); // load css-provider
+    apply_theme();
     
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(window), "ADB/Fastboot");
