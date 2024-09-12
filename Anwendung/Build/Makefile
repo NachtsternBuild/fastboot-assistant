@@ -39,6 +39,7 @@ SRCS = \
 	header_flash_image.c \
 	header_flash_heimdall.c \
 	header_css_provider.c \
+	header_dark_theme.c \
 	header_next_page.c \
 	header_button_finish.c \
 	header_convert_wsl_path.c \
