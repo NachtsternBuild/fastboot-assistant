@@ -37,10 +37,11 @@ windows_dir="${source_dir}/Windows"
 config_dir_win="${windows_dir}/config_projekt"
 preflash_dir_win="${windows_dir}/preflash"
 header_dir_win="${windows_dir}/header"
+other_dir_win="${windows_dir}/Others"
 
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
-unused_files=("mkdir.c" "remove_old.c" "backup_root.c" "backup_noroot.c" "unxz_files.c" "header_set_main_dir_with_wsl.c")
+unused_files=("mkdir.c" "remove_old.c" "backup_root.c" "backup_noroot.c" "unxz_files.c" "header_set_main_dir_with_wsl.c" "header_dark_theme.c" "GUI.c" "updater.c")
 zip_files=("WSL_install.bat" "Enable_WSL.bat" "README.md" "fastboot-assistant.deb")
 
 # function that have output with color
@@ -274,7 +275,7 @@ build_program_windows() {
     build_info "Dies ist keine native Windows-Version, sondern läuft nur über WSL."
     echo "Starte Build für Windows..."
     echo "Kopiere alle Dateien nach $target_dir..."
-    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir"; do
+    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$other_dir_win"; do
         find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
     done
 
