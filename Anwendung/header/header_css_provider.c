@@ -23,108 +23,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include <unistd.h>  // Für getcwd()
-#include <sys/stat.h> // Für mkdir
-#include <sys/types.h> // Für mkdir
+#include <unistd.h>  
+#include <sys/stat.h> 
+#include <sys/types.h> 
 #include "program_functions.h"
-
-#define CONFIG_DIR "~/Downloads/ROM-Install/config"
-#define CONFIG_FILE "dark.txt"
 
 GtkCssProvider *provider = NULL;
 GtkCssProvider *darkblue_provider = NULL;
-const char *current_theme = "light";
-// function that create the dark.txt
-// thanks to my book for programming for linux
-void create_directory_if_not_exists(const char *path) 
-{
-    char expanded_path[512];
-    snprintf(expanded_path, sizeof(expanded_path), "%s", path);
-    char *home = getenv("HOME");
-    if (home != NULL) 
-    {
-        // Ersetze ~ durch den absoluten Pfad des Home-Verzeichnisses
-        char *tilde_pos = strchr(expanded_path, '~');
-        if (tilde_pos != NULL) 
-        {
-            memmove(expanded_path + strlen(home), tilde_pos + 1, strlen(tilde_pos));
-            memcpy(expanded_path, home, strlen(home));
-        }
-    }
-
-    struct stat st = {0};
-    if (stat(expanded_path, &st) == -1) 
-    {
-        if (mkdir(expanded_path, 0700) == -1) 
-        {
-            perror("Fehler beim Erstellen des Verzeichnisses");
-            exit(EXIT_FAILURE);
-        }
-    }
-}
-
-// Funktion zum Schreiben in die Datei dark.txt
-// thanks to my book for programming for linux
-void write_dark_file() 
-{
-    // Ersetze ~ durch den absoluten Pfad des Home-Verzeichnisses
-    char *home = getenv("HOME");
-    if (home == NULL) 
-    {
-        perror("Fehler beim Abrufen des Home-Verzeichnisses");
-        exit(EXIT_FAILURE);
-    }
-
-    char dir_path[512];
-    snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
-    
-    // Erstelle das Verzeichnis, falls es nicht existiert
-    create_directory_if_not_exists(dir_path);
-
-    char path[512];
-    snprintf(path, sizeof(path), "%s/%s", dir_path, CONFIG_FILE);
-
-    FILE *file = fopen(path, "w");
-    if (file == NULL) 
-    {
-        perror("Fehler beim Öffnen der Datei zum Schreiben");
-        exit(EXIT_FAILURE);
-    }
-    fprintf(file, "dunkel");
-    fclose(file);
-    printf("In die Datei '%s' geschrieben.\n", path);
-}
-
-// Funktion zum Überprüfen der Datei und Ausgabe
-void check_dark_file() 
-{
-    // Ersetze ~ durch den absoluten Pfad des Home-Verzeichnisses
-    char *home = getenv("HOME");
-    if (home == NULL) 
-    {
-        perror("Fehler beim Abrufen des Home-Verzeichnisses");
-        exit(EXIT_FAILURE);
-    }
-
-    char dir_path[512];
-    snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
-
-    char path[512];
-    snprintf(path, sizeof(path), "%s/%s", dir_path, CONFIG_FILE);
-
-    FILE *file = fopen(path, "r");
-    if (file != NULL) 
-    {
-        g_print("Dunkelheit\n");
-        current_theme = "dark";
-        fclose(file);
-    }
-     
-    else 
-    {
-        g_print("Tag\n");
-    }
-}
 
 void load_css(const char *theme) 
 {
@@ -140,7 +45,7 @@ void load_css(const char *theme)
         "button {"
         "    border: 2px solid #8B0000;"
         "    border-radius: 15px;"
-        "    padding: 12px 24px;"
+        "    padding: 24px 48px;"
         "    color: #ffffff;"
         "    font-size: 16px;"
         "    font-weight: 500;"
@@ -285,6 +190,7 @@ void toggle_theme(GtkWidget *button, gpointer user_data)
     else 
     {
         current_theme = "light";
+        check_dark_file_light();
     }
 
     // run the theme
