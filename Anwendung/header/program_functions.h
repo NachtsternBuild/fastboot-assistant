@@ -59,10 +59,14 @@ void next_page(GtkButton *button, gpointer data);
 void button_finish(GtkButton *button, gpointer data);
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 // everything for the css provider
-// void css_provider();
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
+void add_css_provider_blue(GtkWidget *widget, GtkCssProvider *darkblue_provider);
 void load_css(const char *theme);
+void load_css_blue(const char *theme);
 void toggle_theme(GtkWidget *button, gpointer user_data);
 void apply_theme();
+void write_dark_file();
+void check_dark_file();
+void check_dark_file_light();
 
 #endif
