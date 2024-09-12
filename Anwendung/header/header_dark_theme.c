@@ -73,8 +73,21 @@ void write_dark_file()
         perror("Fehler beim Abrufen des Home-Verzeichnisses");
         exit(EXIT_FAILURE);
     }
+    
+    // WSL Logik
+	const char *user = getenv("USER");
+	if (user == NULL) 
+	{	
+    	g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+    	exit(1);  // close the program if there are errors
+	}
+
 
     char dir_path[512];
+    char wsl_dir[512];
+    // for windows
+	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
+	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
     snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
     
     // create the dir 
@@ -107,6 +120,10 @@ void delete_dark_file()
     }
 
     char dir_path[512];
+    char wsl_dir[512];
+    // for windows
+	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
+	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
     snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
 
     char path[512];
@@ -135,6 +152,10 @@ void check_dark_file()
     }
 
     char dir_path[512];
+    char wsl_dir[512];
+    // for windows
+	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
+	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
     snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
 
     char path[512];
@@ -165,6 +186,10 @@ void check_dark_file_light()
     }
 
     char dir_path[512];
+    char wsl_dir[512];
+    // for windows
+	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
+	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
     snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
 
     char path[512];
