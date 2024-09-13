@@ -82,7 +82,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
 }
 
 // create function to show info windows
-void info(int argc, char *argv[]) 
+void info(int argc, char *argv[], GtkWindow *parent_window) 
 {  
 	gtk_init(&argc, &argv);
 	apply_theme();
@@ -102,20 +102,10 @@ void info(int argc, char *argv[])
     char get_session_type[2048] = "Unbekannt";
 
     if (!is_android_device_connected()) 
-    {
-        // Create window
-        GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_title(GTK_WINDOW(window), "Info");
-        gtk_widget_set_size_request(window, 400, 200);
-        g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-        // Create label
-        GtkWidget *label = gtk_label_new("Kein Android-Gerät verbunden. \nWarte auf Android-Gerät. \nSchließen sie, bitte, das Fenster!");
-        add_css_provider(label, provider); // Apply CSS to the label
-        gtk_container_add(GTK_CONTAINER(window), label);
-
-        gtk_widget_show_all(window);
-        gtk_main();
+    {      
+        char error_message[1024];
+        snprintf(error_message, sizeof(error_message), "Kein Android-Gerät verbunden. \nSchließen sie, bitte, das Fenster!");
+        show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
 
