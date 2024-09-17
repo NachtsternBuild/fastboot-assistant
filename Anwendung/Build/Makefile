@@ -15,6 +15,7 @@ HEADERS = \
 	flash_function_header.h \
 	file_chooser_header.h \
 	instruction_header.h \
+	loading_spinner.h \
 	program_functions.h \
 	function_header.h 
 
