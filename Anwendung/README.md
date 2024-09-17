@@ -15,7 +15,7 @@ git clone https://github.com/NachtsternBuild/fastboot-assistant.git
 # Debian / Ubuntu:
 sudo apt update
 sudo apt upgrade
-sudo apt-get install build-essential gcc libgtk-3-dev adb fastboot desktop-file-utils make dpkg-dev debhelper fakeroot lintian pbuilder devscripts
+sudo apt-get install build-essential gcc libgtk-3-dev adb fastboot desktop-file-utils make dpkg-dev debhelper fakeroot lintian pbuilder devscripts libsecret-1-dev
 
 # Feodra / RHEL / CentOS
 sudo dnf install -y \
