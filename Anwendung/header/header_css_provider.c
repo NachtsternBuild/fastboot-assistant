@@ -122,7 +122,21 @@ void load_css(const char *theme)
         "    padding: 10px;"
         "    border: 2px solid #8B0000;"
         "    border-radius: 35px;"              
-        "}";
+        "}"
+         "spinner {"
+        "   border: 2px solid #8B0000;"  
+        "   min-width: 50px;"            
+        "   min-height: 50px;"           
+        "   border-radius: 25px;"        
+        "   animation: spin 1s linear infinite;" 
+        "}"
+        "entry {"
+    	"   background-color: #f0f0f0;"
+    	"   color: #000000;"
+    	"   border: 2px solid #8B0000;"
+    	"   border-radius: 35px;"
+    	"   padding: 12px;"
+    	"}";
 
     // Define CSS for the dark theme
     // "    background-color: #8B0000;"
@@ -191,7 +205,21 @@ void load_css(const char *theme)
         "    padding: 10px;"
         "    border: 2px solid #8B0000;"
         "    border-radius: 35px;"              
-        "}";
+        "}"
+         "spinner {"
+        "   border: 2px solid #8B0000;"  
+        "   min-width: 50px;"            
+        "   min-height: 50px;"           
+        "   border-radius: 25px;"        
+        "   animation: spin 1s linear infinite;" 
+        "}"
+        "entry {"
+    	"   background-color: #2e3436;"
+    	"   color: #FFFFFF;"
+    	"   border: 2px solid #8B0000;"
+    	"   border-radius: 35px;"
+    	"   padding: 12px;"
+    	"}";
 
     // Load the appropriate CSS based on the selected theme
     if (strcmp(theme, "dark") == 0) 
@@ -287,7 +315,21 @@ void load_css_blue(const char *theme)
         "    padding: 10px;"
         "    border: 2px solid #00008B;"
         "    border-radius: 35px;"              
-        "}";
+        "}"
+         "spinner {"
+        "   border: 2px solid #00008B;"  
+        "   min-width: 50px;"            
+        "   min-height: 50px;"           
+        "   border-radius: 25px;"        
+        "   animation: spin 1s linear infinite;"
+        "}"
+        "entry {"
+    	"   background-color: #f0f0f0;"
+    	"   color: #000000;"
+    	"   border: 2px solid #8B0000;"
+    	"   border-radius: 35px;"
+    	"   padding: 12px;"
+    	"}";
 
     // Define CSS for the dark theme
     // "    background-color: #00008B;"
@@ -357,7 +399,21 @@ void load_css_blue(const char *theme)
         "    padding: 10px;"
         "    border: 2px solid #00008B;"
         "    border-radius: 35px;"              
-        "}";
+        "}"
+         "spinner {"
+        "   border: 2px solid #00008B;"  
+        "   min-width: 50px;"            
+        "   min-height: 50px;"           
+        "   border-radius: 25px;"        
+        "   animation: spin 1s linear infinite;"
+        "}"
+        "entry {"
+    	"   background-color: #2e3436;"
+    	"   color: #FFFFFF;"
+    	"   border: 2px solid #8B0000;"
+    	"   border-radius: 35px;"
+    	"   padding: 12px;"
+    	"}";
 
     // Load the appropriate CSS based on the selected theme
     if (strcmp(theme, "dark") == 0) 
