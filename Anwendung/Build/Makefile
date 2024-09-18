@@ -5,10 +5,10 @@
 CC = gcc
 
 # compiler flags
-CFLAGS = -Wall `pkg-config --cflags gtk+-3.0`
+CFLAGS = -Wall `pkg-config --cflags gtk+-3.0 libsecret-1`
 
 # linker flags
-LIBS = `pkg-config --libs gtk+-3.0`
+LIBS = `pkg-config --libs gtk+-3.0 libsecret-1`
 
 # header files
 HEADERS = \
@@ -44,6 +44,8 @@ SRCS = \
 	header_next_page.c \
 	header_button_finish.c \
 	header_convert_wsl_path.c \
+	header_install_with_root.c \
+	header_loading_spinner.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
