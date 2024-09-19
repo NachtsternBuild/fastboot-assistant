@@ -25,18 +25,22 @@
 
 #define MAX_BUFFER_SIZE 256
 
+char slot_command[2048];
+
 // button 1 - set slot a
 static void set_slot_a(GtkWidget *widget, gpointer data)
 {
-    system("fastboot devices");
-	open_terminal_by_desktop("fastboot set_active a && fastboot getvar current-slot && exit");
+	snprintf(slot_command, sizeof(slot_command), "fastboot set_active a && fastboot getvar current-slot && exit");
+	g_print("Führe aus: %s", slot_command);
+    command_with_spinner(slot_command);
 }
 
 // button 2 - set slot b
 static void set_slot_b(GtkWidget *widget, gpointer data)
 {
-	system("fastboot devices");
-	open_terminal_by_desktop("fastboot set_active b && fastboot getvar current-slot && exit");
+	snprintf(slot_command, sizeof(slot_command), "fastboot set_active b && fastboot getvar current-slot && exit");
+	g_print("Führe aus: %s", slot_command);
+    command_with_spinner(slot_command);
 }
 
 /* start main programm */
