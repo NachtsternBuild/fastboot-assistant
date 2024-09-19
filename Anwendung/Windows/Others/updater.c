@@ -10,7 +10,7 @@
  *	zu erleichtern - Updater				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -20,6 +20,31 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
+
+char output_file[2048];
+char deb_on_wsl[2048];
+char install_command[2048];
+
+static void install_wsl(GtkButton *button, GtkEntry *password_entry) 
+{
+    snprintf(install_command, sizeof(install_command), "dpkg -i %s && rm -f %s", deb_on_wsl, deb_on_wsl);
+    g_print("Installiere: %s", install_command);
+    install_with_root(button, password_entry, install_command);
+}
+
+static void install_rpm(GtkButton *button, GtkEntry *password_entry) 
+{
+    snprintf(install_command, sizeof(install_command), "rpm -u %s && rm -f %s", output_file, output_file);
+    g_print("Installiere: %s", install_command);
+    install_with_root(button, password_entry, install_command);
+}
+
+static void install_deb(GtkButton *button, GtkEntry *password_entry) 
+{
+    snprintf(install_command, sizeof(install_command), "dpkg -i %s && rm -f %s", output_file, output_file);
+    g_print("Installiere: %s", install_command);
+    install_with_root(button, password_entry, install_command);
+}
 
 // Function to retrieve the latest release URL from GitHub
 void get_latest_release_url(const char *repo, const char *package_type, char *url_buffer, size_t buffer_size) 
@@ -71,11 +96,18 @@ void updater(void)
 {
     int argc = 0;
     char **argv = NULL;
+    GtkWidget *window;
+    GtkWidget *vbox;
+    GtkWidget *password_entry;
+    GtkWidget *install_deb_button, *install_rpm_button, *install_wsl_button;
+
+    gtk_init(&argc, &argv);
+    apply_theme();
     
     const char *repo = "NachtsternBuild/fastboot-assistant";
     char download_url[2048];
     /* please change the package type for the different packages → .rpm or .deb or .zip*/
-    // const char *package_type = ".deb"; 
+    //const char *package_type = ".deb"; 
 	// const char *package_type = ".rpm";
 	const char *package_type =".zip";
 
@@ -84,7 +116,6 @@ void updater(void)
     if (strlen(download_url) > 0) 
     {
         g_print("Neueste Version URL: %s\n", download_url);
-        gtk_init(&argc, &argv);
 
         char message[2048];
         snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeueste Version wird heruntergeladen.\n", download_url);
@@ -96,9 +127,22 @@ void updater(void)
             fprintf(stderr, "Fehler: HOME-Verzeichnis nicht gefunden\n");
             exit(EXIT_FAILURE);
         }
+        
+		const char *user = getenv("USER");
+		if (user == NULL) 
+		{	
+    		g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+    		exit(1);  // close the program if there are errors
+		}
 
-        char output_file[2048];
-        snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant%s", output_directory, package_type);
+		char wsl_setup_base[2048];
+		snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
+		
+		// for linux
+        //snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant%s", output_directory, package_type);
+        
+        // for wsl
+		snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant%s", wsl_setup_base, package_type);
 
         const char *download_message = "Paket heruntergeladen.\nWird installiert.\n";
         show_message(download_message);
@@ -120,7 +164,6 @@ void updater(void)
             char remove_command[2048];
             char cd_command[2048];
             char output_path[2048];
-            char deb_on_wsl[2048];
             char wsl_dir[2048];
             char unzip_command[2048];
             
@@ -128,16 +171,52 @@ void updater(void)
             {
                 g_print("Start install Debian package.\n");
                 system("cd ~/Downloads/");
-                snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", output_file);
-                snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
+                // create window
+    			window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    			gtk_window_set_title(GTK_WINDOW(window), "Aktualisieren");
+    			gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
+    			g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    			vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    			gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    			// password input 
+    			password_entry = gtk_entry_new();
+    			gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
+    			gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+
+    			// install button
+    			install_deb_button = gtk_button_new_with_label("Installieren");
+    			g_signal_connect(install_deb_button, "clicked", G_CALLBACK(install_deb), password_entry);
+   	 			gtk_box_pack_start(GTK_BOX(vbox), install_deb_button, TRUE, TRUE, 0);
+
+    			gtk_widget_show_all(window);
             }
              
             else if (strcmp(package_type, ".rpm") == 0) 
             {
                 g_print("Start install RPM.\n");
                 system("cd ~/Downlaods/");
-                snprintf(install_command, sizeof(install_command), "sudo rpm -i %s && exit", output_file);
-                snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
+                // create window
+    			window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    			gtk_window_set_title(GTK_WINDOW(window), "Aktualisieren");
+    			gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
+    			g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    			vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    			gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    			// password input 
+    			password_entry = gtk_entry_new();
+    			gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
+    			gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+
+    			// install button
+    			install_rpm_button = gtk_button_new_with_label("Installieren");
+    			g_signal_connect(install_rpm_button, "clicked", G_CALLBACK(install_rpm), password_entry);
+   	 			gtk_box_pack_start(GTK_BOX(vbox), install_rpm_button, TRUE, TRUE, 0);
+
+    			gtk_widget_show_all(window);
             }
                 
             else if (strcmp(package_type, ".zip") == 0)
@@ -161,14 +240,32 @@ void updater(void)
         			// change to to wsl dir and install the new file
         			snprintf(cd_command, sizeof(cd_command), "cd %s", output_path);
         			system(cd_command);
-        			snprintf(install_command, sizeof(install_command), "sudo dpkg -i %s && exit", deb_on_wsl);
+
+    				// create window
+    				window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    				gtk_window_set_title(GTK_WINDOW(window), "Aktualisieren");
+    				gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
+    				g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+    				vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    				gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    				// password input 
+    				password_entry = gtk_entry_new();
+    				gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
+    				gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+
+    				// install button
+    				install_wsl_button = gtk_button_new_with_label("Installieren");
+    				g_signal_connect(install_wsl_button, "clicked", G_CALLBACK(install_wsl), password_entry);
+   	 				gtk_box_pack_start(GTK_BOX(vbox), install_wsl_button, TRUE, TRUE, 0);
+
+    				gtk_widget_show_all(window);
 					
 					// remove the other files
 					system("rm -f WSL_install.bat");
 					system("rm -f Enable_WSL.bat");
 					system("rm -f README.md");
-        			// Remove the ZIP file after extraction
-        			snprintf(remove_command, sizeof(remove_command), "rm -f %s", output_file);
     			}
     			 
     			else 
@@ -177,9 +274,7 @@ void updater(void)
         			exit(EXIT_FAILURE);
     			}
 			}
-			g_print(install_command);
 			g_print(remove_command);
-            open_terminal_by_desktop(install_command);
             system(remove_command);
             g_print("Fertig!\n");
         } 
@@ -195,4 +290,3 @@ void updater(void)
     }
     gtk_main();
 }
-
