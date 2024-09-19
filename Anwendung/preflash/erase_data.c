@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
+char erase_data_command[2048];
+
 // Function to erase user data
 void erase_data(GtkWidget *widget, gpointer data) 
 {
@@ -30,8 +32,10 @@ void erase_data(GtkWidget *widget, gpointer data)
     show_message(message);
     
     // Erase user data and metadata
-    open_terminal_by_desktop("fastboot erase userdata && exit");
+    snprintf(erase_data_command, sizeof(erase_data_command), "fastboot erase userdata && exit");
     // I don't now if you need this command
     // system("fastboot erase metadata");
+    g_print("Führe aus: %s", erase_data_command);
+    command_with_spinner(erase_data_command);
 }
 
