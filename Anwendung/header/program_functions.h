@@ -68,7 +68,8 @@ void apply_theme();
 void write_dark_file();
 void check_dark_file();
 void check_dark_file_light();
-// function that install files with root
+// functions with spinner
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command);
+void command_with_spinner(const gchar *command);
 
 #endif
