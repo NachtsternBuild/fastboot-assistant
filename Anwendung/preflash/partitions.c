@@ -23,6 +23,9 @@
 #include "function_header.h"
 
 #define MAX_BUFFER_SIZE 256
+
+char partition_command[2048];
+
 // Callback functions for each button
 // remove the boot partition
 static void remove_boot(GtkWidget *widget, gpointer data) 
@@ -31,11 +34,10 @@ static void remove_boot(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot delete-logical-partition boot_a && fastboot delete-logical-partition boot_b && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot delete-logical-partition boot_a && fastboot delete-logical-partition boot_b && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // remove the vendor partition
@@ -45,11 +47,10 @@ static void remove_vendor(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot delete-logical-partition vendor_a && fastboot delete-logical-partition vendor_b && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot delete-logical-partition vendor_a && fastboot delete-logical-partition vendor_b && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // remove the system partition
@@ -59,11 +60,10 @@ static void remove_system(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot delete-logical-partition system_a && fastboot delete-logical-partition system_b && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot delete-logical-partition system_a && fastboot delete-logical-partition system_b && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // resize of the boot partition
@@ -73,11 +73,10 @@ static void resize_boot(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot resize-logical-partition boot_a 400000000 && fastboot resize-logical-partition boot_b 400000000 && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot resize-logical-partition boot_a 400000000 && fastboot resize-logical-partition boot_b 400000000 && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // resize of the vendor partition
@@ -87,11 +86,10 @@ static void resize_vendor(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot resize-logical-partition vendor_a 900000000 && fastboot resize-logical-partition vendor_b 900000000 && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot resize-logical-partition vendor_a 900000000 && fastboot resize-logical-partition vendor_b 900000000 && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // resize of the system partition
@@ -101,11 +99,10 @@ static void resize_system(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot resize-logical-partition system_a 7500000000 && fastboot resize-logical-partition system_b 7500000000 && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot resize-logical-partition system_a 7500000000 && fastboot resize-logical-partition system_b 7500000000 && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // create boot partition
@@ -115,11 +112,10 @@ static void create_boot(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot create-logical-partition boot_a 400000000 && fastboot create-logical-partition boot_b 400000000 && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot create-logical-partition boot_a 400000000 && fastboot create-logical-partition boot_b 400000000 && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // create vendor partition
@@ -129,11 +125,10 @@ static void create_vendor(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot create-logical-partition vendor_a 900000000 && fastboot create-logical-partition vendor_b 900000000 && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot create-logical-partition vendor_a 900000000 && fastboot create-logical-partition vendor_b 900000000 && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 // create system partition
@@ -143,11 +138,10 @@ static void create_system(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    open_terminal_by_desktop("fastboot create-logical-partition system_a 7500000000 && fastboot create-logical-partition system_b 7500000000 && exit");
+    snprintf(partition_command, sizeof(partition_command), "fastboot create-logical-partition system_a 7500000000 && fastboot create-logical-partition system_b 7500000000 && exit");
     
-    const char *message2 = "Fertig!\n";
-    // show message
-    show_message(message2);
+    g_print("Führe aus: %s", partition_command);
+    command_with_spinner(partition_command);
 }
 
 
