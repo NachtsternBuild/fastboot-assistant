@@ -65,6 +65,7 @@ GtkWidget* create_spinner_window()
     spinner_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(spinner_window), " ");
     gtk_window_set_default_size(GTK_WINDOW(spinner_window), 200, 100);
+    g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     // add the spinner
     spinner = gtk_spinner_new();
