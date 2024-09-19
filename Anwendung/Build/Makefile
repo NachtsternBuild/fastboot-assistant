@@ -46,6 +46,7 @@ SRCS = \
 	header_convert_wsl_path.c \
 	header_install_with_root.c \
 	header_loading_spinner.c \
+	header_command_with_spinner.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
