@@ -22,6 +22,7 @@
 #include "program_functions.h"
 #include "function_header.h"
 #include "flash_function_header.h"
+#include "loading_spinner.h"
 
 #define MAX_BUFFER_SIZE 256
 
@@ -92,10 +93,16 @@ static void start_flash_others(GtkWidget *widget, gpointer data)
     message = "Der Prozess kann eine Weile dauern. \nIgnorien sie alle beenden erzwingen Meldungen.\n";
     show_message(message);
     
-	flash_other();
+    GtkSpinner *spinner_flash = GTK_SPINNER(data);  // Get the spinner_backup from the callback data
+
+    start_loading_spinner(spinner_flash);  // Start the spinner
+    
+	 // Run the backup process with a spinner in a separate thread
+    run_with_spinner((void *)flash_other);
+    
+    stop_loading_spinner(spinner_flash);  // Stop the spinner when the process finishesflash_other();
 	
-	message = "Prozess beendet.\n";
-	show_message(message);	
+
 }
 
 /* main function of flash_GUI*/
@@ -114,7 +121,7 @@ void flash_GUI(int argc, char *argv[])
 
     // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant - Flash");
+    gtk_window_set_title(GTK_WINDOW(window), "Flashen");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	
