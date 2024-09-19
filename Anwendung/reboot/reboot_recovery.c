@@ -36,10 +36,7 @@ static void start_recovery_adb(GtkWidget *widget, gpointer data)
     
     show_message_with_title(title, message);
     
-    system("adb reboot recovery");
-    const char *message1 = "Fertig!\n";
-    show_message(message1);
-    
+    system("adb reboot recovery");    
 }
 
 // start reboot_recovery fastboot
@@ -49,9 +46,6 @@ static void start_recovery_fastboot(GtkWidget *widget, gpointer data)
     show_message(message);
     
     system("fastboot reboot recovery");
-    
-    const char *message1 = "Fertig!\n";
-    show_message(message1);
 }
 
 /* main function of reboot*/
