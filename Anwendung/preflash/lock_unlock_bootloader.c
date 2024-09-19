@@ -26,6 +26,8 @@
 
 #define MAX_BUFFER_SIZE 256
 
+char bootloader_lock_command[2048];
+
 // button 1 - unlock bootloader new
 static void bootloader_new(GtkWidget *widget, gpointer data)
 {
@@ -35,7 +37,9 @@ static void bootloader_new(GtkWidget *widget, gpointer data)
     message = "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen.\n";
     show_message_with_title(title, message);
     
-    system("fastboot flashing unlock");
+    snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "fastboot flashing unlock");
+    g_print("Führe aus: %s", bootloader_lock_command);
+    command_with_spinner(bootloader_lock_command);
 }
 
 // button 2 - unlock bootloader old
@@ -47,7 +51,9 @@ static void bootloader_old(GtkWidget *widget, gpointer data)
     message = "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen.";
     show_message_with_title(title, message);
     
-    system("fastboot oem unlock");
+    snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "fastboot oem unlock");
+    g_print("Führe aus: %s", bootloader_lock_command);
+    command_with_spinner(bootloader_lock_command);
 }
 
 // button 3 - lock bootloader
@@ -59,7 +65,9 @@ static void bootloader_lock(GtkWidget *widget, gpointer data)
     message = "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu schließen.";
     show_message_with_title(title, message);
     
-    system("fastboot flashing lock");
+    snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "fastboot flashing lock");
+    g_print("Führe aus: %s", bootloader_lock_command);
+    command_with_spinner(bootloader_lock_command);
 }
 
 
