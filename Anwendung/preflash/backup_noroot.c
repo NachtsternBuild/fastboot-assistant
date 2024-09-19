@@ -34,9 +34,6 @@ static void install_depends(GtkButton *button, GtkEntry *password_entry)
     //snprintf(install_command, sizeof(install_command), "apt-get install p7zip-full secure-delete whiptail curl dos2unix pv bc zenity '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev -y");
     g_print("Installiere: %s", install_command_backup);
     install_with_root(button, password_entry, install_command_backup);
-    const char *message = "Fertig.\n";
-    // show message
-    show_message(message);
 }
 
 // Callback functions for each button
