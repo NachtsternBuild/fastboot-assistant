@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <gtk/gtk.h>
+#include <pthread.h>
 #include "program_functions.h"
 #include "loading_spinner.h"
 
@@ -40,12 +41,16 @@ void *run_install_command(void *command)
     // close the spinner and the window
     gtk_spinner_stop(GTK_SPINNER(spinner_install));
     gtk_widget_destroy(spinner_install_window);
+    
+    const char *message = "Fertig\n";
+    // show message
+    show_message(message);
 
     free(full_command);  // free memory
     return NULL;
 }
 
-// Funktion zum Starten des Spinners und Ausführen des Befehls
+// function to start the command and run the spinner
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command) 
 {
     int argc = 0;
