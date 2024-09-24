@@ -38,7 +38,6 @@ const char *files[] = {"adb.exe", "fastboot.exe"};
 static void config_adb(GtkButton *button, GtkEntry *password_entry) 
 {
     // Define i and j as static variables for accessing the right path/file
-    int i, j;
     for (int i = 0; i < 2; ++i) 
     {
     	for (int j = 0; j < 2; ++j) 
@@ -92,11 +91,11 @@ void wsl_config()
     gtk_init(&argc, &argv);
     apply_theme();
     
+    int found = 0;
+
     // Check for the presence of adb.exe and fastboot.exe in known directories
     for (int i = 0; i < 2; ++i) 
     {
-        int found = 0;
-
         for (int j = 0; j < 2; ++j) 
         {
             snprintf(path, sizeof(path), "%s/%s", base_paths[j], files[i]);
@@ -104,39 +103,55 @@ void wsl_config()
             if (directory_exists(base_paths[j]) && file_exists(path)) 
             {
                 found = 1;
-
-                // Create GTK window after a valid path is found
-                window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-                gtk_window_set_title(GTK_WINDOW(window), "Konfigurieren");
-                gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
-                g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-                vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-                gtk_container_add(GTK_CONTAINER(window), vbox);
-
-                // Password input field
-                password_entry = gtk_entry_new();
-                gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // Hide password input
-                gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
-
-                // Install button
-                config_adb_button = gtk_button_new_with_label("Installieren");
-                g_signal_connect(config_adb_button, "clicked", G_CALLBACK(config_adb), password_entry);
-                gtk_box_pack_start(GTK_BOX(vbox), config_adb_button, TRUE, TRUE, 0);
-
-                gtk_widget_show_all(window);
-                
                 break;
             }
         }
 
-        if (!found) 
-        {
-            g_print("Kein WSL-System gefunden.\n");
-        }
+        if (found)
+            break;
     }
 
-    g_print("Fertig.\n");
+    if (found == 1) 
+    {
+        // Create GTK window after a valid path is found
+        window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+        gtk_window_set_title(GTK_WINDOW(window), "Konfigurieren");
+        gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
+
+        // the "destroy" signal to gtk_main_quit
+        g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+        vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+        gtk_container_add(GTK_CONTAINER(window), vbox);
+
+        // Password input field
+        password_entry = gtk_entry_new();
+        gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // Hide password input
+        gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+
+        // Install button
+        config_adb_button = gtk_button_new_with_label("Installieren");
+        g_signal_connect(config_adb_button, "clicked", G_CALLBACK(config_adb), password_entry);
+        gtk_box_pack_start(GTK_BOX(vbox), config_adb_button, TRUE, TRUE, 0);
+
+        gtk_widget_show_all(window);
+        g_print("Fertig.\n");
+        
+        // Show message
+        const char *message = "Fertig!\n";
+        show_message(message);
+    }
+    else 
+    {
+        g_print("Kein WSL-System gefunden.\n");
+
+        // Show message
+        const char *message = "Kein WSL-System gefunden.\n";
+        show_message(message);
+        gtk_main_quit();
+    }
+
+    // Start the GTK main loop
     gtk_main();
 }
 
