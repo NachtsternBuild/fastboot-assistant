@@ -20,25 +20,27 @@
 
 #include <stdlib.h>
 #include <gtk/gtk.h>
-// function that open the browser 
+#include "program_functions.h"
+
+// Function that opens the browser
 void open_url(const char *url)
 {
     char url_command[2048];
 
-    // check if the program run via wsl
-    if (system("grep -q Microsoft /proc/version") == 0) 
+    // Check if the program is running in WSL by looking for the /mnt/c/Users directory
+    if (directory_exists("/mnt/c/Users")) 
     {
-        // use the cmd.exe and close it at the end
-        sprintf(url_command, "cmd.exe /C start %s", url);
+        // Use cmd.exe in WSL and close it at the end
+        snprintf(url_command, sizeof(url_command), "cmd.exe /C start %s", url);
     } 
-    
     else 
     {
-        // use xdg-open on native linux
-        sprintf(url_command, "xdg-open %s", url);
+        // Use xdg-open on native Linux
+        snprintf(url_command, sizeof(url_command), "xdg-open %s", url);
     }
 
-    // run command
+    // Run the command
     system(url_command);
 }
+
 
