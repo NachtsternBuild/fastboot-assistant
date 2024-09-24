@@ -48,10 +48,7 @@ static void start_remove_old(GtkWidget *widget, gpointer data)
 // start make_dir-function
 static void start_wsl_config(GtkWidget *widget, gpointer data) 
 {
-    const char *message;
-    message = "Fertig!\n";
     wsl_config();
-    show_message(message);
 }
 
 /* main function of preflash_GUI*/
