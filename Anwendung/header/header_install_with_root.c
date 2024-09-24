@@ -35,7 +35,6 @@ void *run_install_command(void *command)
     char *full_command = (char *)command;
 
     // run the command
-    g_print("Executing: %s\n", full_command);
     system(full_command);
 
     // close the spinner and the window
