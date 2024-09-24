@@ -50,10 +50,13 @@ void stop_loading_spinner()
     if (GTK_IS_SPINNER(spinner)) 
     {
         gtk_spinner_stop(GTK_SPINNER(spinner));
+        g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
     }
     if (spinner_window) 
     {
         gtk_widget_destroy(spinner_window);  // close the window
+        g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
         spinner_window = NULL;  // Set to NULL after destroying
     }
 }
@@ -65,6 +68,7 @@ GtkWidget* create_spinner_window()
     spinner_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(spinner_window), " ");
     gtk_window_set_default_size(GTK_WINDOW(spinner_window), 200, 100);
+    // the "destroy" signal to gtk_main_quit
     g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     // add the spinner
