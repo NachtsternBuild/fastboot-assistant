@@ -66,6 +66,9 @@ void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar 
     spinner_install_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title(GTK_WINDOW(spinner_install_window), " ");
     gtk_window_set_default_size(GTK_WINDOW(spinner_install_window), 200, 100);
+    
+    // the "destroy" signal to gtk_main_quit
+    g_signal_connect(spinner_install_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
     // create spinner 
     spinner_install = gtk_spinner_new();
