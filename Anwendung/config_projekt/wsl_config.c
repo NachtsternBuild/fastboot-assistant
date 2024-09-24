@@ -69,7 +69,7 @@ int file_exists(const char *path)
     snprintf(command, sizeof(command), "test -e %s", path);
     return system(command) == 0;
 }
-
+/*
 // Check if directory exists
 int directory_exists(const char *path) 
 {
@@ -77,7 +77,7 @@ int directory_exists(const char *path)
     snprintf(command, sizeof(command), "test -d %s", path);
     return system(command) == 0;
 }
-
+*/
 // Main function
 void wsl_config() 
 {
