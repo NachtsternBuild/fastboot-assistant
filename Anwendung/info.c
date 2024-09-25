@@ -17,25 +17,31 @@
  *											 *
  *-------------------------------------------*
  */
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-// function to check if an android device is connected
+// check if device are connected
 int is_android_device_connected() 
 {
-    char *output = execute_command("adb devices | grep -w 'device'");
+    char *info_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s devices | grep -w 'device'", info_command);
+    
+    char *output = execute_command(command);
+    free(info_command);  // clean memory
+
     if (output == NULL || strlen(output) == 0) 
     {
-        return 0; // No device connected
+        return 0;  // no device
     }
-    return 1; // Device connected
+    return 1;  // device
 }
 
-// function to get android-device and desktop info
+// create function to show info windows
 void get_android_info(char *android_version, char *kernel_version, char *device_name, char *project_treble, char *active_slot, char *get_root, char *get_soc, char *get_distro, char *get_version, char *get_desktop, char *get_language, char *get_session_type) 
 {
     if (!is_android_device_connected()) 
@@ -44,41 +50,37 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
         return;
     }
 
-    // get android-version
-    strcpy(android_version, execute_command("adb shell getprop ro.build.version.release"));
-    
-    // get kernel-info
-    strcpy(kernel_version, execute_command("adb shell uname -r"));
-    
-    // get devicename
-    strcpy(device_name, execute_command("adb shell getprop ro.product.model"));
+    char *info_command = adb_command();
 
-    // get project-treble support info
-    strcpy(project_treble, execute_command("adb shell getprop ro.treble.enabled"));
+    // android version
+    snprintf(android_version, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.build.version.release", info_command)));
+    
+    // android kernel version
+    snprintf(kernel_version, 2048, "%s", execute_command(g_strdup_printf("%s shell uname -r", info_command)));
 
-    // get activ-slot
-    strcpy(active_slot, execute_command("adb shell getprop ro.boot.slot_suffix"));
+    // device name
+    snprintf(device_name, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.product.model", info_command)));
+
+    // project treble support
+    snprintf(project_treble, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.treble.enabled", info_command)));
+
+    // get active slot
+    snprintf(active_slot, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.boot.slot_suffix", info_command)));
     
-    // get superuser
-    strcpy(get_root, execute_command("adb shell su -c id"));
-        
-    // get SoC
-    strcpy(get_soc, execute_command("adb shell cat /proc/cpuinfo"));
+    // check for root
+    snprintf(get_root, 2048, "%s", execute_command(g_strdup_printf("%s shell su -c id", info_command)));
     
-    // get distribution
-    strcpy(get_distro, execute_command("grep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d ''"));
-    
-    // get version
-    strcpy(get_version, execute_command("grep '^VERSION=' /etc/os-release | cut -d'=' -f2 | cut -d' ' -f1 | tr -d ''"));
-    
-    // get desktop
-    strcpy(get_desktop, execute_command("echo $XDG_CURRENT_DESKTOP"));
-    
-    // get language
-    strcpy(get_language, execute_command("echo $LANG | cut -d'_' -f1"));
-    
-    // get session type
-    strcpy(get_session_type, execute_command("echo $XDG_SESSION_TYPE"));
+    // soc info
+    snprintf(get_soc, 2048, "%s", execute_command(g_strdup_printf("%s shell cat /proc/cpuinfo", info_command)));
+
+    free(info_command);  // clean memory
+
+    // get other infos 
+    snprintf(get_distro, 2048, "%s", execute_command("grep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d '\"'"));
+    snprintf(get_version, 2048, "%s", execute_command("grep '^VERSION=' /etc/os-release | cut -d'=' -f2 | cut -d' ' -f1 | tr -d '\"'"));
+    snprintf(get_desktop, 2048, "%s", execute_command("echo $XDG_CURRENT_DESKTOP"));
+    snprintf(get_language, 2048, "%s", execute_command("echo $LANG | cut -d'_' -f1"));
+    snprintf(get_session_type, 2048, "%s", execute_command("echo $XDG_SESSION_TYPE"));
 }
 
 // create function to show info windows
