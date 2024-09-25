@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <string.h> 
 #include "program_functions.h"
 #include "function_header.h"
 
@@ -28,13 +29,21 @@
 // check connected adb devices
 static void get_adb(GtkWidget *widget, gpointer data) 
 {
-    connected_devices("adb devices", "Verbundene Geräte über ADB");
+    const char *device_command = adb_command();
+    char command[MAX_BUFFER_SIZE];
+    snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
+    connected_devices(command, "Verbundene Geräte über ADB");
+    free(device_command);
 }
 
 // check connected fastboot devices
 static void get_fastboot(GtkWidget *widget, gpointer data) 
 {
-    connected_devices("fastboot devices", "Verbundene Geräte über Fastboot");
+    const char *device_command = fastboot_command();
+    char command[MAX_BUFFER_SIZE];
+    snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
+    connected_devices(command, "Verbundene Geräte über Fastboot");
+    free(device_command);
 }
 
 /* main function of get_devices*/
