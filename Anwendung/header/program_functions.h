@@ -59,6 +59,8 @@ void next_page(GtkButton *button, gpointer data);
 void button_finish(GtkButton *button, gpointer data);
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 int directory_exists(const char *path);
+char* adb_command();
+char* fastboot_command();
 // everything for the css provider
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
 void add_css_provider_blue(GtkWidget *widget, GtkCssProvider *darkblue_provider);
