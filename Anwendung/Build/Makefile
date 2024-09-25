@@ -48,6 +48,7 @@ SRCS = \
 	header_loading_spinner.c \
 	header_command_with_spinner.c \
 	header_directory_exists.c \
+	header_command_adb_fastboot.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
