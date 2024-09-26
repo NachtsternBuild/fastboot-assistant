@@ -25,13 +25,20 @@
 #include "program_functions.h"
 #include "function_header.h"
 
+#define BUFFER_SIZE 2048
+
 int get_slot_of_device() 
 {
     FILE *fp;
     char result[2048];
-
+	
+	// fastboot-command for get boot-slots
+    char *device_command = fastboot_command();
+    char command[BUFFER_SIZE];
+    snprintf(command, BUFFER_SIZE, "%s getvar current-slot 2>&1", device_command);
+    
     // Execute the command to check for A/B partition scheme
-    fp = popen("fastboot getvar slot-count 2>&1", "r");
+    fp = popen(command, "r");
     if (fp == NULL) 
     {
         fprintf(stderr, "Failed to run command\n" );
