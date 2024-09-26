@@ -21,77 +21,92 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h> 
+#include <unistd.h>
 #include <gtk/gtk.h>
+#include <pthread.h>
 #include "program_functions.h"
 
-// Function to flash images, utilizing the modified path handling for WSL
-void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name) 
+// global var for spinner
+GtkWidget *spinner_window_flash;
+GtkWidget *spinner_flash;
+
+// function that run flash command
+void *run_flash_command(void *command)
+{
+    char *function_command = (char *)command;
+
+    // run the command
+    g_print("Executing: %s\n", function_command);
+    system(function_command);
+
+    // close the spinner and the window
+    gtk_spinner_stop(GTK_SPINNER(spinner_flash));
+    gtk_widget_destroy(spinner_window_flash);
+    
+    const char *message = "Fertig\n";
+    // show message
+    show_message(message);
+
+    free(function_command);  // free memory
+    return NULL;
+}
+
+// function to flash images with spinner
+void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name)
 {
     char image_path[3072];
     char windows_image_path[3072];
-    
-    // Set the path to the image file considering WSL
-    set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
+    apply_theme();  // runing css
 
-    // Check if the image exists
-    if (access(image_path, F_OK) == -1) 
+    // path for the image
+    set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
+	
+	char *function_command = malloc(4096);
+	 
+    // check if the image exsists
+    if (access(image_path, F_OK) == -1)
     {
         char error_message[3072];
         snprintf(error_message, sizeof(error_message), "Fehler: Image-Datei '%s' nicht gefunden.", image_path);
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
-
-    // Convert the WSL path to Windows path
-    convert_wsl_path(windows_image_path, sizeof(windows_image_path), image_path);
-
-    // Get fastboot devices
-    system("fastboot devices");
-
-    char function_command[3072];
-
-    // Check if running inside WSL
-    if (system("grep -q Microsoft /proc/version") == 0) 
-    {
-        // Use cmd.exe to execute fastboot commands from WSL with converted Windows path
-        if (partition2) 
-        {
-            snprintf(function_command, sizeof(function_command),
-                     "cmd.exe /C start cmd.exe /K \"fastboot flash %s %s && fastboot flash %s %s\"",
-                     partition1, windows_image_path, partition2, windows_image_path);
-        } 
         
-        else 
-        {
-            snprintf(function_command, sizeof(function_command),
-                     "cmd.exe /C start cmd.exe /K \"fastboot flash %s %s\"",
-                     partition1, windows_image_path);
-        }
-    } 
-    
-    else 
+    if (partition2)
     {
-        // For native Linux environment
-        if (partition2) 
-        {
-            snprintf(function_command, sizeof(function_command),
-                     "fastboot flash %s %s && fastboot flash %s %s && exit",
-                     partition1, image_path, partition2, image_path);
-        } 
-        
-        else 
-        {
-            snprintf(function_command, sizeof(function_command),
-                     "fastboot flash %s %s && exit", partition1, image_path);
-        }
+         const char *device_command = fastboot_command();
+         snprintf(function_command, 4096,
+         "%s flash %s %s && fastboot flash %s %s && exit", device_command, partition1, image_path, partition2, image_path);
+         free(device_command);
+    }
+    else
+    {
+          const char *device_command = fastboot_command();
+          snprintf(function_command, 4096,
+          "%s flash %s %s && exit", device_command, partition1, image_path);
+          free(device_command);
     }
 
-    // Debug output
-    g_print("Executing: %s\n", function_command);
-    // Run the command using the appropriate terminal
-    open_terminal_by_desktop(function_command);
+    // new windows with the spinner
+    spinner_window_flash= gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(spinner_window_flash), " ");
+    gtk_window_set_default_size(GTK_WINDOW(spinner_window_flash), 200, 100);
+
+    // create spinner 
+    spinner_flash = gtk_spinner_new();
+    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_box_pack_start(GTK_BOX(vbox), spinner_flash, TRUE, TRUE, 0);
+    gtk_container_add(GTK_CONTAINER(spinner_window_flash), vbox);
+
+    // run spinner
+    gtk_spinner_start(GTK_SPINNER(spinner_flash));
+
+    // show new window
+    gtk_widget_show_all(spinner_window_flash);
+
+    // flash the image in new thread
+    pthread_t thread;
+    pthread_create(&thread, NULL, run_flash_command, function_command);
+    pthread_detach(thread);  // thread in the background 
 }
-
-
 
