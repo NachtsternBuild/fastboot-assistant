@@ -26,7 +26,6 @@
 
 #define BUFFER_SIZE 2048
 
-
 void check_active_slot() 
 {
     char buffer[BUFFER_SIZE];
@@ -34,7 +33,9 @@ void check_active_slot()
     FILE *pipe;
 
     // fastboot-command for get boot-slots
-    const char *command = "fastboot getvar current-slot 2>&1";
+    char *device_command = fastboot_command();
+    char command[BUFFER_SIZE];
+    snprintf(command, BUFFER_SIZE, "%s getvar current-slot 2>&1", device_command);
 
     // open pipe to run command
     pipe = popen(command, "r");
