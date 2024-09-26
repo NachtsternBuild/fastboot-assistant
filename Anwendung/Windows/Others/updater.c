@@ -24,28 +24,131 @@
 char output_file[2048];
 char deb_on_wsl[2048];
 char install_command[2048];
+char remove_command[2048];
+char cd_command[2048];
+char output_path[2048];
+char wsl_dir[2048];
+char unzip_command[2048];
+
+GtkWidget *update_window_install;
 
 static void install_wsl(GtkButton *button, GtkEntry *password_entry) 
-{
+{ 
     snprintf(install_command, sizeof(install_command), "dpkg -i %s && rm -f %s", deb_on_wsl, deb_on_wsl);
-    g_print("Installiere: %s", install_command);
+    g_print("Installiere: %s\n", install_command);
     install_with_root(button, password_entry, install_command);
+    gtk_widget_destroy(update_window_install);
 }
 
 static void install_rpm(GtkButton *button, GtkEntry *password_entry) 
 {
     snprintf(install_command, sizeof(install_command), "rpm -u %s && rm -f %s", output_file, output_file);
-    g_print("Installiere: %s", install_command);
+    g_print("Installiere: %s\n", install_command);
     install_with_root(button, password_entry, install_command);
+    gtk_widget_destroy(update_window_install);
 }
 
 static void install_deb(GtkButton *button, GtkEntry *password_entry) 
 {
     snprintf(install_command, sizeof(install_command), "dpkg -i %s && rm -f %s", output_file, output_file);
-    g_print("Installiere: %s", install_command);
+    g_print("Installiere: %s\n", install_command);
     install_with_root(button, password_entry, install_command);
+    gtk_widget_destroy(update_window_install);
 }
 
+static void install_window_deb(GtkButton *button)
+{
+    g_print("Start install DEB.\n");
+    system("cd ~/Downloads/");
+    
+    // create window
+    update_window_install = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(update_window_install), "Aktualisieren");
+    gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
+    g_signal_connect(update_window_install, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
+    
+    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_container_add(GTK_CONTAINER(update_window_install), vbox);
+
+    // password input 
+    GtkWidget *password_entry = gtk_entry_new();
+    gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
+    gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+
+    // install button
+    GtkWidget *install_deb_button = gtk_button_new_with_label("Installieren");
+    g_signal_connect(install_deb_button, "clicked", G_CALLBACK(install_deb), password_entry);
+    gtk_box_pack_start(GTK_BOX(vbox), install_deb_button, TRUE, TRUE, 0);
+
+    gtk_widget_show_all(update_window_install);
+}
+
+static void install_window_rpm(GtkButton *button)
+{
+    g_print("Start install RPM.\n");
+    system("cd ~/Downloads/");
+    
+    // create window
+    update_window_install = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(update_window_install), "Aktualisieren");
+    gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
+    g_signal_connect(update_window_install, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
+    
+    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_container_add(GTK_CONTAINER(update_window_install), vbox);
+
+    // password input 
+    GtkWidget *password_entry = gtk_entry_new();
+    gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
+    gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+
+    // install button
+    GtkWidget *install_rpm_button = gtk_button_new_with_label("Installieren");
+    g_signal_connect(install_rpm_button, "clicked", G_CALLBACK(install_rpm), password_entry);
+    gtk_box_pack_start(GTK_BOX(vbox), install_rpm_button, TRUE, TRUE, 0);
+
+    gtk_widget_show_all(update_window_install);
+}
+
+static void install_window_wsl(GtkButton *button)
+{
+    g_print("Start install Windows file.\n");
+    get_wsl_directory(wsl_dir, sizeof(wsl_dir));
+    g_print("Verzeichnis: %s\n", wsl_dir);
+    
+    snprintf(output_file, sizeof(output_file), "%s/fastboot-assistant.zip", wsl_dir);
+    snprintf(output_path, sizeof(output_path), "%s/ROM-Install", wsl_dir);
+    snprintf(deb_on_wsl, sizeof(deb_on_wsl), "%s/fastboot-assistant.deb", output_path);
+    
+    g_print("Paket heruntergeladen: %s\n", output_file);
+
+    snprintf(unzip_command, sizeof(unzip_command), "unzip %s -d %s", output_file, output_path);
+    system(unzip_command);       			
+    
+    snprintf(cd_command, sizeof(cd_command), "cd %s", output_path);
+    system(cd_command);
+    
+    // create window
+    update_window_install = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(update_window_install), "Aktualisieren");
+    gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
+    g_signal_connect(update_window_install, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
+    
+    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_container_add(GTK_CONTAINER(update_window_install), vbox);
+
+    // password input 
+    GtkWidget *password_entry = gtk_entry_new();
+    gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
+    gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+
+    // install button
+    GtkWidget *install_wsl_button = gtk_button_new_with_label("Installieren");
+    g_signal_connect(install_wsl_button, "clicked", G_CALLBACK(install_wsl), password_entry);
+    gtk_box_pack_start(GTK_BOX(vbox), install_wsl_button, TRUE, TRUE, 0);
+
+    gtk_widget_show_all(update_window_install);
+}
 // Function to retrieve the latest release URL from GitHub
 void get_latest_release_url(const char *repo, const char *package_type, char *url_buffer, size_t buffer_size) 
 {
@@ -96,10 +199,9 @@ void updater(void)
 {
     int argc = 0;
     char **argv = NULL;
-    GtkWidget *window;
     GtkWidget *vbox;
-    GtkWidget *password_entry;
-    GtkWidget *install_deb_button, *install_rpm_button, *install_wsl_button;
+    GtkWidget *confirmation_window;
+    GtkWidget *confirm_button, *cancel_button;
 
     gtk_init(&argc, &argv);
     apply_theme();
@@ -144,7 +246,7 @@ void updater(void)
         // for wsl
 		snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant%s", wsl_setup_base, package_type);
 
-        const char *download_message = "Paket heruntergeladen.\nWird installiert.\n";
+        const char *download_message = "Paket heruntergeladen.\n";
         show_message(download_message);
 
         // download the file
@@ -159,130 +261,53 @@ void updater(void)
                 exit(EXIT_FAILURE);
             }
 
-            // install the package
-            char install_command[2048];
-            char remove_command[2048];
-            char cd_command[2048];
-            char output_path[2048];
-            char wsl_dir[2048];
-            char unzip_command[2048];
-            
+            // Create confirmation window
+            confirmation_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+            gtk_window_set_title(GTK_WINDOW(confirmation_window), "Bestätigung");
+            gtk_window_set_default_size(GTK_WINDOW(confirmation_window), 400, 350);
+            g_signal_connect(confirmation_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+
+            vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+            gtk_container_add(GTK_CONTAINER(confirmation_window), vbox);
+
+            // Message label
+            GtkWidget *message_label = gtk_label_new("Das Paket wurde heruntergeladen. Möchten Sie es jetzt installieren?");
+            gtk_box_pack_start(GTK_BOX(vbox), message_label, TRUE, TRUE, 0);
+
+            // Confirm button
+            confirm_button = gtk_button_new_with_label("Ja, installieren");
+            gtk_box_pack_start(GTK_BOX(vbox), confirm_button, TRUE, TRUE, 0);
             if (strcmp(package_type, ".deb") == 0) 
             {
-                g_print("Start install Debian package.\n");
-                system("cd ~/Downloads/");
-                // create window
-    			window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    			gtk_window_set_title(GTK_WINDOW(window), "Aktualisieren");
-    			gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
-    			g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    			vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    			gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    			// password input 
-    			password_entry = gtk_entry_new();
-    			gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
-    			gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
-
-    			// install button
-    			install_deb_button = gtk_button_new_with_label("Installieren");
-    			g_signal_connect(install_deb_button, "clicked", G_CALLBACK(install_deb), password_entry);
-   	 			gtk_box_pack_start(GTK_BOX(vbox), install_deb_button, TRUE, TRUE, 0);
-
-    			gtk_widget_show_all(window);
-            }
-             
-            else if (strcmp(package_type, ".rpm") == 0) 
-            {
-                g_print("Start install RPM.\n");
-                system("cd ~/Downlaods/");
-                // create window
-    			window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    			gtk_window_set_title(GTK_WINDOW(window), "Aktualisieren");
-    			gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
-    			g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    			vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    			gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    			// password input 
-    			password_entry = gtk_entry_new();
-    			gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
-    			gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
-
-    			// install button
-    			install_rpm_button = gtk_button_new_with_label("Installieren");
-    			g_signal_connect(install_rpm_button, "clicked", G_CALLBACK(install_rpm), password_entry);
-   	 			gtk_box_pack_start(GTK_BOX(vbox), install_rpm_button, TRUE, TRUE, 0);
-
-    			gtk_widget_show_all(window);
-            }
-                
-            else if (strcmp(package_type, ".zip") == 0)
+    			g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_deb), NULL);
+			} 
+			
+			else if (strcmp(package_type, ".rpm") == 0) 
 			{
-    			g_print("Start install Windows file.\n");
-    			get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    			g_print(wsl_dir);
-    			snprintf(output_file, sizeof(output_file), "%s/fastboot-assistant.zip", wsl_dir);
-    			snprintf(output_path, sizeof(output_path), "%s/ROM-Install", wsl_dir);
-    			snprintf(deb_on_wsl, sizeof(deb_on_wsl), "%s/fastboot-assistant.deb", output_path);
-
-    			// Download the file to the Windows Downloads directory
-    			if (download_file(download_url, output_file) == 0) 
-    			{
-        			g_print("Paket heruntergeladen: %s\n", output_file);
-
-        			// Unzip the file in the Windows Downloads directory
-        			snprintf(unzip_command, sizeof(unzip_command), "unzip %s -d %s", output_file, output_path);
-        			system(unzip_command);
-        			
-        			// change to to wsl dir and install the new file
-        			snprintf(cd_command, sizeof(cd_command), "cd %s", output_path);
-        			system(cd_command);
-
-    				// create window
-    				window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    				gtk_window_set_title(GTK_WINDOW(window), "Aktualisieren");
-    				gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
-    				g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    				vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    				gtk_container_add(GTK_CONTAINER(window), vbox);
-
-    				// password input 
-    				password_entry = gtk_entry_new();
-    				gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
-    				gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
-
-    				// install button
-    				install_wsl_button = gtk_button_new_with_label("Installieren");
-    				g_signal_connect(install_wsl_button, "clicked", G_CALLBACK(install_wsl), password_entry);
-   	 				gtk_box_pack_start(GTK_BOX(vbox), install_wsl_button, TRUE, TRUE, 0);
-
-    				gtk_widget_show_all(window);
-					
-					// remove the other files
-					system("rm -f WSL_install.bat");
-					system("rm -f Enable_WSL.bat");
-					system("rm -f README.md");
-    			}
-    			 
-    			else 
-    			{
-        			fprintf(stderr, "Fehler beim Herunterladen des ZIP-Pakets\n");
-        			exit(EXIT_FAILURE);
-    			}
+    			g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_rpm), NULL);
 			}
-			g_print(remove_command);
-            system(remove_command);
+			
+			else if (strcmp(package_type, ".zip") == 0) 
+			{
+    			g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_wsl), NULL);
+			}
+
+            cancel_button = gtk_button_new_with_label("Nein, später installieren");
+            gtk_box_pack_start(GTK_BOX(vbox), cancel_button, TRUE, TRUE, 0);
+            g_signal_connect(cancel_button, "clicked", G_CALLBACK(gtk_widget_destroy), confirmation_window);
+            
+            add_css_provider(message_label, provider);
+            add_css_provider(confirm_button, provider);
+            add_css_provider(cancel_button, provider);
+
+            gtk_widget_show_all(confirmation_window);
             g_print("Fertig!\n");
         } 
+        
         else 
         {
             fprintf(stderr, "Fehler beim Herunterladen des Pakets\n");
         }
-        gtk_main_quit();
     } 
     else 
     {
@@ -290,3 +315,4 @@ void updater(void)
     }
     gtk_main();
 }
+
