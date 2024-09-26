@@ -30,9 +30,11 @@ void vbmeta_on_a(GtkWidget *widget, GtkWindow *window)
     set_main_dir_with_wsl(image_path, sizeof(image_path), "vbmeta.img");
 
     char function_command[3072];
-    snprintf(function_command, sizeof(function_command), "fastboot flash --disable-verity --disable-verification vbmeta %s && exit", image_path);
-    g_print(function_command);
+    char *device_command = fastboot_command();
+    snprintf(function_command, sizeof(function_command), "%s flash --disable-verity --disable-verification vbmeta %s && exit", device_command, image_path);
+    g_print("Führe aus: %s", function_command);
     open_terminal_by_desktop(function_command);
+    free(device_command);
 }
 
 // function to flash vbmeta.img (a/b-devices)
@@ -42,9 +44,11 @@ void vbmeta_on_ab(GtkWidget *widget, GtkWindow *window)
     set_main_dir_with_wsl(image_path, sizeof(image_path), "vbmeta.img");
 
     char function_command[3072];
-    snprintf(function_command, sizeof(function_command), "fastboot flash --disable-verity --disable-verification vbmeta_a %s && fastboot flash --disable-verity --disable-verification vbmeta_b %s && exit", image_path, image_path);
-    g_print(function_command);
+    char *device_command = fastboot_command();
+    snprintf(function_command, sizeof(function_command), "%s flash --disable-verity --disable-verification vbmeta_a %s && fastboot flash --disable-verity --disable-verification vbmeta_b %s && exit", device_command, image_path, image_path);
+    g_print("Führe aus: %s", function_command);
     open_terminal_by_desktop(function_command);
+    free(device_command);
 }
 
 // function to flash dtbo.img (only-a-devices)
