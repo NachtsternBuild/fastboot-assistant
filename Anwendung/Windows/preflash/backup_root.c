@@ -20,8 +20,6 @@
 #include <string.h>
 #include "program_functions.h"
 
-#define BACKUP_DIR "/home/USER/Downloads/ROM-Install/Backup"
-#define ADB "adb"
 #define SU "su"
 #define DD "dd"
 #define BLOCK_PATH "/dev/block/bootdevice/by-name/"
@@ -31,7 +29,8 @@ void backup_root()
     char command[512];
 	char *homeDir = getenv("HOME");
 	char *backup_predir[2048];
-	char *backup_dir[2048];
+	char *backup_dir[2048];	
+	char *adb = adb_command();
 	// WSL Logik
 	const char *user = getenv("USER");
 	if (user == NULL) 
@@ -62,11 +61,11 @@ void backup_root()
     execute_command(command);
 
     // connect device with adb
-    snprintf(command, sizeof(command), "%s wait-for-device", ADB);
+    snprintf(command, sizeof(command), "%s wait-for-device", adb);
     execute_command(command);
 
     // get partitions
-    snprintf(command, sizeof(command), "%s shell %s -c \"ls %s\" > %s/partitions.txt", ADB, SU, BLOCK_PATH, backup_dir);
+    snprintf(command, sizeof(command), "%s shell %s -c \"ls %s\" > %s/partitions.txt", adb, SU, BLOCK_PATH, backup_dir);
     execute_command(command);
     
     char file_partition[2048];
@@ -86,7 +85,7 @@ void backup_root()
         partition[strcspn(partition, "\r\n")] = 0;
 
         // get slots 
-        snprintf(command, sizeof(command), "%s shell %s -c \"ls %s%s_a\" >/dev/null 2>&1", ADB, SU, BLOCK_PATH, partition);
+        snprintf(command, sizeof(command), "%s shell %s -c \"ls %s%s_a\" >/dev/null 2>&1", adb, SU, BLOCK_PATH, partition);
         int has_slot_a = system(command);
 
         if (has_slot_a == 0) 
@@ -97,7 +96,7 @@ void backup_root()
                 g_print("Sichere %s (Slot %c) nach %s\n", partition, slot, command);
 
                 snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", 
-                        ADB, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
+                        adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
                 execute_command(command);
             }
         } 
@@ -108,11 +107,11 @@ void backup_root()
             g_print("Sichere %s nach %s\n", partition, command);
 
             snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", 
-                    ADB, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
+                    adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
             execute_command(command);
         }
     }
 
     fclose(file);
-    printf("Sicherung abgeschlossen. Dateien befinden sich in %s\n", backup_dir);
+    g_print("Sicherung abgeschlossen. Dateien befinden sich in %s\n", backup_dir);
 }
