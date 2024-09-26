@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
 #define BUFFER_SIZE 2048
 
@@ -58,7 +59,7 @@ void check_active_slot()
 
     // close pipe
     pclose(pipe);
-
+	free(device_command);
     // Ausgabe des Slots
     g_print("Aktueller Slot: %s\n", slot);
 }
