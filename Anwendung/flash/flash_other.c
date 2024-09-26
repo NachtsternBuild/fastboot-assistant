@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 #include "flash_function_header.h"
+#include "loading_spinner.h"
 #include <string.h>
 #include <dirent.h>
 #include <unistd.h>
@@ -28,13 +29,15 @@
 void flash_partition(const char *partition, const char *img_file) 
 {
     char command[512];
-    snprintf(command, sizeof(command), "fastboot flash %s %s", partition, img_file);
+    char *device_command = fastboot_command();
+    snprintf(command, sizeof(command), "%s flash %s %s", device_command, partition, img_file);
     g_print("Executing: %s\n", command);
     int ret = system(command);
     if (ret != 0)
     {
         g_print("Fehler: Der Befehl '%s' wurde nicht erfolgreich ausgeführt.\n", command);
     }
+    free(device_command);
 }
 
 void process_file(const char *filepath) 
@@ -119,8 +122,32 @@ void flash_images_in_directory(const char *directory)
 
 void flash_other() 
 {
-    const char *directory = g_strdup_printf("%s/Downloads/ROM-Install/Images", get_home_directory_flash());
-    flash_images_in_directory(directory);
-    g_free((void*)directory);
-}
+    char *homeDir = getenv("HOME");
+	if (homeDir == NULL) 
+	{
+    	fprintf(stderr, "Fehler: Konnte das Home-Verzeichnis nicht finden.\n");
+    	exit(1);  // close the program if there are errors
+	}
 
+	// WSL Logik
+	const char *user = getenv("USER");
+	if (user == NULL) 
+	{	
+    	g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+    	exit(1);  // close the program if there are errors
+	}
+	
+    char wsl_setup_base[2048];
+    char other_dir[2048];
+    char directory[2048];
+	snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
+
+	// for linux
+	snprintf(other_dir, sizeof(other_dir), "%s", homeDir);
+	// for wsl
+	// snprintf(other_dir, sizeof(other_dir), "%s", wsl_setup_base);
+    snprintf(directory, sizeof(directory), "%s/Downloads/ROM-Install/Images", other_dir);
+    flash_images_in_directory(directory);
+    
+    free(directory);
+}
