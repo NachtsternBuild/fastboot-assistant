@@ -25,22 +25,25 @@
 
 #define MAX_BUFFER_SIZE 3072
 
+GtkWidget *backup_window;
+
 char install_command_backup[2048];
 
 static void install_depends(GtkButton *button, GtkEntry *password_entry) 
 {
+    // for linux
     snprintf(install_command_backup, sizeof(install_command_backup), "apt-get install p7zip-full adb curl whiptail pv bc secure-delete zenity");
     // for windows
     //snprintf(install_command, sizeof(install_command), "apt-get install p7zip-full secure-delete whiptail curl dos2unix pv bc zenity '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev -y");
     g_print("Installiere: %s", install_command_backup);
     install_with_root(button, password_entry, install_command_backup);
+    gtk_widget_destroy(backup_window);
 }
 
 // Callback functions for each button
 // install depends for open android backup
 static void install_depends_function(GtkWidget *widget, gpointer data) 
 {
-    GtkWidget *window;
     GtkWidget *vbox;
     GtkWidget *password_entry;
     GtkWidget *info_button, *install_depends_button;
@@ -49,13 +52,13 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     // create window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Aktualisieren");
-    gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+    backup_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(backup_window), "Aktualisieren");
+    gtk_window_set_default_size(GTK_WINDOW(backup_window), 500, 200);
+    g_signal_connect(backup_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
 	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-	gtk_container_add(GTK_CONTAINER(window), vbox);
+	gtk_container_add(GTK_CONTAINER(backup_window), vbox);
 	
 	// info button
     info_button = gtk_button_new_with_label("Legitimation");
@@ -71,7 +74,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
     g_signal_connect(install_depends_button, "clicked", G_CALLBACK(install_depends), password_entry);
    	gtk_box_pack_start(GTK_BOX(vbox), install_depends_button, TRUE, TRUE, 0);
 
-    gtk_widget_show_all(window);
+    gtk_widget_show_all(backup_window);
 }
 
 // download open android backup
