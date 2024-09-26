@@ -41,10 +41,12 @@ void flash_payload(GtkWidget *widget, gpointer data)
     char image_path[2048];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "payload.zip");
 
-    char function_command[3071];
-    snprintf(function_command, sizeof(function_command), "adb sideload %s && exit", image_path);
-    g_print(function_command);
+    char function_command[3072];
+    char *device_command = adb_command();
+    snprintf(function_command, 3072, "%s sideload %s && exit", device_command, image_path);
+    g_print("Führe aus: %s\n", function_command);
     open_terminal_by_desktop(function_command);
+    free(device_command);
 
     // Show a message that the flash is completed
     const char *message2 = "Sideload beendet!\n";
