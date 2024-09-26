@@ -23,7 +23,7 @@ VERSION="$(cat Build/version.txt)"
 # Directory paths
 home_dir="$HOME"
 source_dir="$home_dir/fastboot-assistant/Anwendung"
-# source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5_5"
+#source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5_5"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -41,7 +41,7 @@ other_dir_win="${windows_dir}/Others"
 
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
-unused_files=("mkdir.c" "remove_old.c" "backup_root.c" "backup_noroot.c" "unxz_files.c" "header_set_main_dir_with_wsl.c" "header_dark_theme.c" "GUI.c" "updater.c")
+unused_files=("mkdir.c" "remove_old.c" "flash_other.c" "backup_root.c" "backup_noroot.c" "unxz_files.c" "header_set_main_dir_with_wsl.c" "header_dark_theme.c" "GUI.c" "updater.c")
 zip_files=("WSL_install.bat" "Enable_WSL.bat" "README.md" "fastboot-assistant.deb")
 
 # function that have output with color
