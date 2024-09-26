@@ -41,10 +41,10 @@ void open_terminal_by_desktop(const char *function_command)
     char command[2048];
 
     // check if run as wsl
-    if (system("grep -q Microsoft /proc/version") == 0) 
+    if (directory_exists("/mnt/c/Users")) 
     {
-        // use the cmd.exe 
-        snprintf(command, sizeof(command), "cmd.exe /C start cmd.exe /K \"%s\"", function_command);
+        // use the cmd.exe to start a new cmd with wsl.exe
+		snprintf(command, sizeof(command), "cmd.exe /C start cmd.exe /K \"wsl.exe %s\"", function_command);
         run_command(command);
         return;
     }
