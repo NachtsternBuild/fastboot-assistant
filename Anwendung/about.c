@@ -46,6 +46,13 @@ void feedback(GtkWidget *widget, gpointer data)
 	open_url(feedback_url);
 }
 
+// function to open the dokumentation of the fastboot-assistant
+void dokumentation(GtkWidget *widget, gpointer data)
+{
+    const char *feedback_url = "https://github.com/NachtsternBuild/fastboot-assistant/wiki";
+	open_url(feedback_url);
+}
+
 // function to open the website from 'Open Android Backup'
 void open_android_backup(GtkWidget *widget, gpointer data)
 {
@@ -71,7 +78,7 @@ void about(int argc, char *argv[])
     GtkWidget *window;
     GtkWidget *page_about1, *page_about2, *page_about3;
     GtkWidget *label_about2;
-    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5;
+    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6;
 
     gtk_init(&argc, &argv);
     apply_theme();
@@ -95,7 +102,7 @@ void about(int argc, char *argv[])
     // page 1
     page_about1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     button_about_1 = gtk_button_new_with_label("Fastboot Assistant");
-    button_about_2 = gtk_button_new_with_label("Version 0.5.5.beta");
+    button_about_2 = gtk_button_new_with_label("Version 0.5.5.2");
     button_about_3 = gtk_button_new_with_label("Sweet Unix System V");
     button_about_4 = gtk_button_new_with_label("Programm um das installieren von Custom-ROM \nund GSIs auf Android-Geräte zu erleichtern.");
     button_about_5 = gtk_button_new_with_label("Weiter");
@@ -149,18 +156,21 @@ void about(int argc, char *argv[])
     button_about3_1 = gtk_button_new_with_label("GitHub Seite");
 	button_about3_2 = gtk_button_new_with_label("Versionen");
 	button_about3_3 = gtk_button_new_with_label("Feedback");
-	button_about3_4 = gtk_button_new_with_label("Open Android Backup");
-	button_about3_5 = gtk_button_new_with_label("Jean28518 GitHub");
+	button_about3_4 = gtk_button_new_with_label("Dokumentation");
+	button_about3_5 = gtk_button_new_with_label("Open Android Backup");
+	button_about3_6 = gtk_button_new_with_label("Jean28518 GitHub");
     gtk_box_pack_start(GTK_BOX(page_about3), button_about3_1, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page_about3), button_about3_2, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page_about3), button_about3_3, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page_about3), button_about3_4, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page_about3), button_about3_5, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page_about3), button_about3_6, FALSE, FALSE, 0);
     g_signal_connect(button_about3_1, "clicked", G_CALLBACK(fastboot_assistant), NULL);
     g_signal_connect(button_about3_2, "clicked", G_CALLBACK(fastboot_assistant_release), NULL);
     g_signal_connect(button_about3_3, "clicked", G_CALLBACK(feedback), NULL);
-    g_signal_connect(button_about3_4, "clicked", G_CALLBACK(open_android_backup), NULL);
-    g_signal_connect(button_about3_5, "clicked", G_CALLBACK(brownie_jean), NULL);
+    g_signal_connect(button_about3_4, "clicked", G_CALLBACK(dokumentation), NULL);
+    g_signal_connect(button_about3_5, "clicked", G_CALLBACK(open_android_backup), NULL);
+    g_signal_connect(button_about3_6, "clicked", G_CALLBACK(brownie_jean), NULL);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_about3, gtk_label_new("Hinweise"));
 
     // run css-provider
@@ -169,6 +179,7 @@ void about(int argc, char *argv[])
     add_css_provider(button_about3_3, provider);
     add_css_provider(button_about3_4, provider);
     add_css_provider(button_about3_5, provider);
+    add_css_provider(button_about3_6, provider);
     
     // clean the storage
     g_object_unref(provider);
