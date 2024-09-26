@@ -53,7 +53,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
     show_message(message);
     // create window
     backup_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(backup_window), "Aktualisieren");
+    gtk_window_set_title(GTK_WINDOW(backup_window), " ");
     gtk_window_set_default_size(GTK_WINDOW(backup_window), 500, 200);
     g_signal_connect(backup_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
@@ -61,7 +61,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
 	gtk_container_add(GTK_CONTAINER(backup_window), vbox);
 	
 	// info button
-    info_button = gtk_button_new_with_label("Legitimation");
+    info_button = gtk_button_new_with_label("Legitimation:");
    	gtk_box_pack_start(GTK_BOX(vbox), info_button, TRUE, TRUE, 0);
 
 	// password input 
