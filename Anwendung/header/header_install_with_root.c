@@ -78,9 +78,7 @@ void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar 
     // Flash the image in a new thread
     pthread_t thread;
     pthread_create(&thread, NULL, run_install_command, full_command);
-    pthread_detach(thread);  // Detach thread to run in the background
-    
-    free(password);   
+    pthread_detach(thread);  // Detach thread to run in the background 
 }
 
 
