@@ -56,5 +56,6 @@ int get_slot_of_device()
     }
 
     pclose(fp);
+    free(device_command);
     return 0;
 }
