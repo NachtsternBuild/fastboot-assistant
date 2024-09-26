@@ -35,11 +35,13 @@ void flash_system_inactive(const char *slot)
     set_main_dir_with_wsl(image_path, sizeof(image_path), "system.img");
 
     // make command to flash system.img
-    snprintf(function_command, sizeof(function_command), "fastboot flash system_%s %s && exit", slot, image_path);
+    char *device_command = fastboot_command();
+    snprintf(function_command, sizeof(function_command), "%s flash system_%s %s && exit", device_command, slot, image_path);
 	
-	g_print(function_command);
+	g_print("Führe aus: %s\n", function_command);
     // run command in the terminal
     open_terminal_by_desktop(function_command);
+    free(device_command);
 }
 
 
