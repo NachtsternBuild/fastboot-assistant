@@ -5,9 +5,9 @@ Summary:        Program to facilitate the installation of custom ROMs and GSIs o
 License:        Apache License Version 2.0
 Source0:        %{name}-%{version}.tar.gz
 %if 0%{?suse_version}
-Requires:       adb fastboot glibc >= 2.15 gtk3 >= 3.0.0 xz wget unzip
+Requires:       adb fastboot glibc >= 2.15 gtk3 >= 3.0.0 xz wget unzip coreutils
 %else
-Requires:       adb fastboot glibc >= 2.15 gtk3 >= 3.0.0 xz wget unzip
+Requires:       adb fastboot glibc >= 2.15 gtk3 >= 3.0.0 xz wget unzip coreutils
 %endif
 
 %description
@@ -23,9 +23,9 @@ mkdir -p %{buildroot}/usr/share/icons/hicolor/256x256/apps
 mkdir -p %{buildroot}/usr/share/applications
 
 # Copy the binary and other necessary files
-cp %{_builddir}/fastboot-assistant-%{version}/fastboot-assistant %{buildroot}/usr/bin/fastboot-assistant/fastboot-assistant
-cp %{_builddir}/fastboot-assistant-%{version}/sweet_unix.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
-cp %{_builddir}/fastboot-assistant-%{version}/fastboot-assistant.desktop %{buildroot}/usr/share/applications/fastboot-assistant.desktop
+cp %{_builddir}/fastboot-assistant/fastboot-assistant %{buildroot}/usr/bin/fastboot-assistant/fastboot-assistant
+cp %{_builddir}/fastboot-assistant/sweet_unix.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
+cp %{_builddir}/fastboot-assistant/fastboot-assistant.desktop %{buildroot}/usr/share/applications/fastboot-assistant.desktop
 
 %clean
 rm -rf %{buildroot}
