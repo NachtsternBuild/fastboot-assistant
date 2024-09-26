@@ -23,6 +23,7 @@
 #include <string.h>
 #include <unistd.h> 
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
 // run a command in terminal via system()
 void run_command(const char *command) 
@@ -85,7 +86,7 @@ void open_terminal_by_desktop(const char *function_command)
         }
 
         // debugging
-        g_print(command);
+        g_print("Führe aus: %s\n", command);
         // run the command
         run_command(command);
     } 
