@@ -33,8 +33,9 @@ static void remove_boot(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot delete-logical-partition boot_a && fastboot delete-logical-partition boot_b && exit");
+
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s delete-logical-partition boot_a && %s delete-logical-partition boot_b", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
@@ -46,11 +47,13 @@ static void remove_vendor(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot delete-logical-partition vendor_a && fastboot delete-logical-partition vendor_b && exit");
+
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s delete-logical-partition vendor_a && %s delete-logical-partition vendor_b", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 // remove the system partition
@@ -59,11 +62,13 @@ static void remove_system(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot delete-logical-partition system_a && fastboot delete-logical-partition system_b && exit");
+
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s delete-logical-partition system_a && %s delete-logical-partition system_b", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 // resize of the boot partition
@@ -72,11 +77,13 @@ static void resize_boot(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot resize-logical-partition boot_a 400000000 && fastboot resize-logical-partition boot_b 400000000 && exit");
+ 
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s resize-logical-partition boot_a 400000000 && %s resize-logical-partition boot_b 400000000", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 // resize of the vendor partition
@@ -85,11 +92,13 @@ static void resize_vendor(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot resize-logical-partition vendor_a 900000000 && fastboot resize-logical-partition vendor_b 900000000 && exit");
+
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s resize-logical-partition vendor_a 900000000 && %s resize-logical-partition vendor_b 900000000", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 // resize of the system partition
@@ -98,11 +107,13 @@ static void resize_system(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot resize-logical-partition system_a 7500000000 && fastboot resize-logical-partition system_b 7500000000 && exit");
+
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s resize-logical-partition system_a 7500000000 && %s resize-logical-partition system_b 7500000000", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 // create boot partition
@@ -111,11 +122,13 @@ static void create_boot(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot create-logical-partition boot_a 400000000 && fastboot create-logical-partition boot_b 400000000 && exit");
+
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s create-logical-partition boot_a 400000000 && %s create-logical-partition boot_b 400000000", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 // create vendor partition
@@ -124,11 +137,13 @@ static void create_vendor(GtkWidget *widget, gpointer data)
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
     // show message
     show_message(message);
-    
-    snprintf(partition_command, sizeof(partition_command), "fastboot create-logical-partition vendor_a 900000000 && fastboot create-logical-partition vendor_b 900000000 && exit");
+
+    char *device_command = fastboot_command();    
+    snprintf(partition_command, sizeof(partition_command), "%s create-logical-partition vendor_a 900000000 && %s create-logical-partition vendor_b 900000000", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 // create system partition
@@ -138,10 +153,12 @@ static void create_system(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    snprintf(partition_command, sizeof(partition_command), "fastboot create-logical-partition system_a 7500000000 && fastboot create-logical-partition system_b 7500000000 && exit");
+    char *device_command = fastboot_command();
+    snprintf(partition_command, sizeof(partition_command), "%s create-logical-partition system_a 7500000000 && %s create-logical-partition system_b 7500000000", device_command, device_command);
     
     g_print("Führe aus: %s", partition_command);
     command_with_spinner(partition_command);
+    free(device_command);
 }
 
 
