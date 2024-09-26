@@ -31,6 +31,7 @@ char wsl_dir[2048];
 char unzip_command[2048];
 
 GtkWidget *update_window_install;
+GtkWidget *info_button;
 
 static void install_wsl(GtkButton *button, GtkEntry *password_entry) 
 { 
@@ -63,12 +64,16 @@ static void install_window_deb(GtkButton *button)
     
     // create window
     update_window_install = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(update_window_install), "Aktualisieren");
+    gtk_window_set_title(GTK_WINDOW(update_window_install), " ");
     gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
     g_signal_connect(update_window_install, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
     
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_container_add(GTK_CONTAINER(update_window_install), vbox);
+    
+    // info button
+    info_button = gtk_button_new_with_label("Legitimation:");
+   	gtk_box_pack_start(GTK_BOX(vbox), info_button, TRUE, TRUE, 0);
 
     // password input 
     GtkWidget *password_entry = gtk_entry_new();
@@ -90,12 +95,16 @@ static void install_window_rpm(GtkButton *button)
     
     // create window
     update_window_install = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(update_window_install), "Aktualisieren");
+    gtk_window_set_title(GTK_WINDOW(update_window_install), " ");
     gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
     g_signal_connect(update_window_install, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
     
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_container_add(GTK_CONTAINER(update_window_install), vbox);
+    
+    // info button
+    info_button = gtk_button_new_with_label("Legitimation:");
+   	gtk_box_pack_start(GTK_BOX(vbox), info_button, TRUE, TRUE, 0);
 
     // password input 
     GtkWidget *password_entry = gtk_entry_new();
@@ -130,12 +139,16 @@ static void install_window_wsl(GtkButton *button)
     
     // create window
     update_window_install = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(update_window_install), "Aktualisieren");
+    gtk_window_set_title(GTK_WINDOW(update_window_install), " ");
     gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
     g_signal_connect(update_window_install, "destroy", G_CALLBACK(gtk_widget_destroy), NULL);
     
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_container_add(GTK_CONTAINER(update_window_install), vbox);
+    
+    // info button
+    info_button = gtk_button_new_with_label("Legitimation:");
+   	gtk_box_pack_start(GTK_BOX(vbox), info_button, TRUE, TRUE, 0);
 
     // password input 
     GtkWidget *password_entry = gtk_entry_new();
