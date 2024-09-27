@@ -27,7 +27,8 @@ sudo dnf install -y \
     desktop-file-utils \
     rpm-build \
     rpmdevtools \
-    make
+    make \
+    libsecret-devel
 
 ```
 3. bearbeiten sie den Quellcode mit einem Editor ihrer Wahl nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
