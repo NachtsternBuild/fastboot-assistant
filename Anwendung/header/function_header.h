@@ -64,4 +64,7 @@ void lock_unlock_bootloader();
 void set_active_slot();
 void partitions();
 
+// other functions
+void run_first_run_setup(GtkCssProvider *provider);
+
 #endif
