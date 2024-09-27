@@ -32,11 +32,14 @@ static void start_recovery_adb(GtkWidget *widget, gpointer data)
 {
     const char *title, *message;
     title = "Reboot Recovery";
-    message = "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!\n";
-    
+    message = "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!\n";    
     show_message_with_title(title, message);
     
-    system("adb reboot recovery");    
+    char *device_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s reboot recovery", device_command);
+    system(command);
+    free(device_command);  
 }
 
 // start reboot_recovery fastboot
@@ -45,7 +48,11 @@ static void start_recovery_fastboot(GtkWidget *widget, gpointer data)
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
-    system("fastboot reboot recovery");
+    char *device_command = fastboot_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s reboot recovery", device_command);
+    system(command);
+    free(device_command);
 }
 
 /* main function of reboot*/
