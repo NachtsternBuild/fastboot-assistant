@@ -29,7 +29,8 @@
 #include "program_functions.h"
 
 GtkCssProvider *provider = NULL;
-GtkCssProvider *darkblue_provider = NULL;
+
+//const char *current_theme = "light"; // Assuming you have this global variable for theme tracking
 
 GtkCssProvider* create_css_provider() 
 {
@@ -42,22 +43,20 @@ GtkCssProvider* create_css_provider()
     return new_provider;
 }
 
+void unload_css_provider(GtkCssProvider *provider) 
+{
+    if (provider && G_IS_OBJECT(provider)) 
+    {
+        g_object_unref(provider);
+    }
+}
+    
 void load_css(const char *theme) 
 {
-    // Create a new CSS provider if it doesn't exist
-    if (!provider) 
-    {
-        provider = create_css_provider();
-        if (!provider) 
-        {
-            fprintf(stderr, "Fehler: CSS-Provider konnte nicht initialisiert werden, CSS wird nicht angewendet.\n");
-            exit(1);
-        }
-    }
+    // Create a new CSS provider
+    provider = create_css_provider();
 
     // Define CSS for the light theme, without universal selectors
-    //"    background-color: #8B0000;"
-    //        "    font-weight: 500;"
     const char *light_css =
         "window {"
         "  	 background-color: #f0f0f0;"
@@ -139,8 +138,6 @@ void load_css(const char *theme)
     	"}";
 
     // Define CSS for the dark theme
-    // "    background-color: #8B0000;"
-    // "    font-weight: 500;"
     const char *dark_css =
         "window {"
         "  	 background-color: #2e3436;"
@@ -221,7 +218,7 @@ void load_css(const char *theme)
     	"   padding: 12px;"
     	"}";
 
-    // Load the appropriate CSS based on the selected theme
+	// Load the appropriate CSS based on the theme
     if (strcmp(theme, "dark") == 0) 
     {
         gtk_css_provider_load_from_data(provider, dark_css, -1, NULL);
@@ -231,255 +228,45 @@ void load_css(const char *theme)
         gtk_css_provider_load_from_data(provider, light_css, -1, NULL);
     }
 
-    // Apply the CSS provider to the entire screen but only to user-defined styles
+    // Apply the CSS to the default screen
+    GtkStyleContext *context = gtk_style_context_new();
     gtk_style_context_add_provider_for_screen(
-        gdk_screen_get_default(),
+        gdk_display_get_default_screen(gdk_display_get_default()),
         GTK_STYLE_PROVIDER(provider),
         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    g_object_unref(context); 
 }
 
-void load_css_blue(const char *theme) 
-{
-    // Create a new CSS provider if it doesn't exist
-    if (!darkblue_provider) 
-    {
-        darkblue_provider = gtk_css_provider_new();
-    }
-
-    // Define CSS for the light theme, without universal selectors
-    //"    background-color: #00008B;"
-    //      "    text-align: center;"
-    //        "    font-weight: 500;"
-    const char *light_css =
-        "window {"
-        "  	 background-color: #f0f0f0;"
-    	"  	 border: 2px solid #00008B;"
-    	"	 border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #000000;"
-        "    font-size: 16px;"
-    	"}"
-        "headerbar {"
-        "  	 background-color: #f0f0f0;"
-        "    font-weight: bold;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #ffffff;"
-        "    font-size: 16px;"
-        "}"
-        "button {"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"
-        "    padding: 24px 48px;"
-        "    color: #ffffff;"
-        "    font-size: 16px;"
-        "    font-weight: 500;"
-        "}"
-        "button:hover {"
-        "    background-color: #A52A2A;"
-        "    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);"
-        "}"
-        "label {"
-        "    color: #000000;"
-        "    font-size: 16px;"
-        "    font-weight: bold;"
-        "}"
-        "GtkNotebook {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #00008B;"  
-        "    border-radius: 35px;"  
-        "}"
-        "GtkNotebook tab {"
-        "    background-color: #2e3436;" 
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"  
-        "}"
-        "GtkNotebook tab:checked {"
-        "    background-color: #FF0000;" 
-        "    color: white;"              
-        "}"
-         "GtkDialog {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"         
-        "    padding: 24px;"             
-        "}"
-        "GtkDialog .content_area {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"     
-        "}"
-        "GtkDialog .button_area {"
-        "    background-color: #2e3436;"  
-        "    padding: 10px;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"              
-        "}"
-         "spinner {"
-        "   border: 2px solid #00008B;"  
-        "   min-width: 50px;"            
-        "   min-height: 50px;"           
-        "   border-radius: 25px;"        
-        "   animation: spin 1s linear infinite;"
-        "}"
-        "entry {"
-    	"   background-color: #f0f0f0;"
-    	"   color: #000000;"
-    	"   border: 2px solid #8B0000;"
-    	"   border-radius: 35px;"
-    	"   padding: 12px;"
-    	"}";
-
-    // Define CSS for the dark theme
-    // "    background-color: #00008B;"
-    //        "    text-align: center;"
-    //        "    font-weight: 500;"
-    const char *dark_css =
-        "window {"
-        "  	 background-color: #f0f0f0;"
-    	"  	 border: 2px solid #00008B;"
-    	"	 border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #000000;"
-        "    font-size: 16px;"
-    	"}"
-        "headerbar {"
-        "  	 background-color: #f0f0f0;"
-        "    font-weight: bold;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #ffffff;"
-        "    font-size: 16px;"
-        "}"
-        "button {"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 15px;"
-        "    padding: 24px 48px;"
-        "    color: #ffffff;"
-        "    font-size: 16px;"
-        "}"
-        "button:hover {"
-        "    background-color: #A52A2A;"
-        "    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);"
-        "}"
-        "label {"
-        "    color: #FFFFFF;"
-        "    font-size: 16px;"
-        "    font-weight: bold;"
-        "}"
-        "GtkNotebook {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #00008B;"  
-        "    border-radius: 15px;"  
-        "}"
-        "GtkNotebook tab {"
-        "    background-color: #2e3436;" 
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"  
-        "}"
-        "GtkNotebook tab:checked {"
-        "    background-color: #FF0000;" 
-        "    color: white;"              
-        "}"
-         "GtkDialog {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"         
-        "    padding: 24px;"             
-        "}"
-        "GtkDialog .content_area {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"     
-        "}"
-        "GtkDialog .button_area {"
-        "    background-color: #2e3436;"  
-        "    padding: 10px;"
-        "    border: 2px solid #00008B;"
-        "    border-radius: 35px;"              
-        "}"
-         "spinner {"
-        "   border: 2px solid #00008B;"  
-        "   min-width: 50px;"            
-        "   min-height: 50px;"           
-        "   border-radius: 25px;"        
-        "   animation: spin 1s linear infinite;"
-        "}"
-        "entry {"
-    	"   background-color: #2e3436;"
-    	"   color: #FFFFFF;"
-    	"   border: 2px solid #8B0000;"
-    	"   border-radius: 35px;"
-    	"   padding: 12px;"
-    	"}";
-
-    // Load the appropriate CSS based on the selected theme
-    if (strcmp(theme, "dark") == 0) 
-    {
-        gtk_css_provider_load_from_data(darkblue_provider, dark_css, -1, NULL);
-    } 
-    else 
-    {
-        gtk_css_provider_load_from_data(darkblue_provider, light_css, -1, NULL);
-    }
-
-    // Apply the CSS provider to the entire screen but only to user-defined styles
-    gtk_style_context_add_provider_for_screen(
-        gdk_screen_get_default(),
-        GTK_STYLE_PROVIDER(darkblue_provider),
-        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
-}
-
-// callback to switch the theme
+// Callback to switch the theme
 void toggle_theme(GtkWidget *button, gpointer user_data) 
 {
-    // change the theme
-    // dark
+    // Switch the theme
     if (strcmp(current_theme, "light") == 0) 
     {
         current_theme = "dark";
-        write_dark_file();
+        write_dark_file(); // Assuming this saves the theme state
     } 
-    
-    // light
     else 
     {
         current_theme = "light";
-        check_dark_file_light();
+        check_dark_file_light(); // Assuming this resets the theme state
     }
 
-    // run the theme
+    // Reload the theme
     load_css(current_theme);
 }
 
 // Apply the current theme when called
 void apply_theme() 
 {
-    check_dark_file();
+    check_dark_file();  // Assuming this checks the current theme state
     load_css(current_theme);
 }
 
-// Apply the blue theme when called
-void apply_theme_blue() 
-{
-    check_dark_file();
-    load_css_blue(current_theme);
-}
-
-
-// load the css provider (main)
+// CSS-Provider zum Widget hinzufügen (Standard)
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider) 
 {
     GtkStyleContext *context = gtk_widget_get_style_context(widget);
     gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 }
-
-// load the css provider (darkblue)
-void add_css_provider_blue(GtkWidget *widget, GtkCssProvider *darkblue_provider) 
-{
-    GtkStyleContext *context = gtk_widget_get_style_context(widget);
-    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(darkblue_provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-}
-// darkblue #00008B
