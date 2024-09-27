@@ -25,12 +25,12 @@
 
 void reboot_system(GtkWidget *widget, gpointer data)
 {
-    const char *message = "Neustart wird durchgeführt.\n";
-    
+    const char *message = "Neustart wird durchgeführt.\n";    
     show_message(message);
-    // reboot from fastboot
-    system("fastboot reboot");
     
-    const char *message1 = "Fertig!\n";
-    show_message(message1);
+    // reboot from fastboot
+    char *device_command = fastboot_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s reboot", device_command);
+    free(device_command);
 }
