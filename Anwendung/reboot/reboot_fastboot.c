@@ -35,7 +35,11 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
     message = "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!\n";
     show_message_with_title(title, message);
     
-    system("adb -d reboot bootloader");
+    char *device_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s -d reboot bootloader", device_command);
+    open_terminal_by_desktop(command);
+    free(device_command);
     // this is the old command
     // system("adb reboot bootloader");
 }
@@ -46,7 +50,11 @@ static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
-    system("fastboot reboot bootloader");
+    char *device_command = fastboot_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s reboot bootloader", device_command);
+    open_terminal_by_desktop(command);
+    free(device_command);
 }
 	
 // start help-function
@@ -55,7 +63,11 @@ static void fastboot_help(GtkWidget *widget, gpointer data)
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
-    open_terminal_by_desktop("fastboot help");
+    char *device_command = fastboot_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s help", device_command);
+    open_terminal_by_desktop(command);
+    free(device_command);
 }
 
 // get bootloader variablen-function
@@ -64,7 +76,11 @@ static void list_bootloader_var(GtkWidget *widget, gpointer data)
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
-    open_terminal_by_desktop("fastboot getvar all");
+    char *device_command = fastboot_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s getvar all", device_command);
+    open_terminal_by_desktop(command);
+    free(device_command);
 }
 
 /* start main programm */
