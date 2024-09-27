@@ -97,6 +97,7 @@ SRCS = \
 	instruction_others.c \
 	instruction_info.c \
 	instruction_GUI.c \
+	run_first_run_setup.c \
 	info.c \
 	updater.c \
 	about.c \
