@@ -33,9 +33,13 @@ static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
     
     title = "Reboot from ADB";
     message = "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!\n";
-    
     show_message_with_title(title, message);
-    system("adb reboot download");
+    
+    char *device_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s reboot download", device_command);
+    system(command);
+    free(device_command);
 }
 
 // heimdall help
