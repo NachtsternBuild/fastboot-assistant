@@ -30,9 +30,9 @@ sudo dnf install -y \
 
 ```
 3. bearbeiten sie den Quellcode mit einem Editor ihrer Wahl nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
-4. wechseln sie in das Verzeichnis *Anwendungen*
+4. wechseln sie in das Verzeichnis *Anwendungen*:
    ```sh
-   cd ~/fastboot-assistant
+   cd ~/fastboot-assistant/Anwendungen
    ```
 
 5. Kompilieren sie den Code und bauen sie das Debian-Paket oder RPM ausführen:
@@ -142,12 +142,28 @@ GUI.c ––––|
 	  |				|– header_set_main_dir.c
 	  |				|– header_set_main_dir_with_wsl.c
 	  |				|– header_show_error_message.c
+	  |				|– header_button_finish.c
+	  |				|– header_flash_heimdall.c
+	  |				|– header_flash_image.c
+	  |				|– header_command_adb_fastboot.c
+	  |				|– header_command_with_spinner.c
+	  |				|– header_convert_wsl_path.c
+	  |				|– header_css_provider.c
+	  |				|– header_dark_theme.c
+	  |				|– header_directory_exists.c
+	  |				|– header_get_home_dir_flash.c
+	  |				|– header_show_error_message.c
+	  |				|– header_install_with_root.c
+	  |				|– header_loading_spinner.c
+	  |				|– header_next_page.c
+	  |				|– header_show_file_chooser.c
 	  |				|
 	  |				|– function_header.h
 	  |				|– flash_function_header.h
 	  |				|– program_functions.h
 	  |				|– instruction_header.h
 	  |				|– file_chooser_header.h
+	  |				|– loading_spinner.h
 	  |
 	  |  
 	  + Build/Makefile
@@ -155,12 +171,13 @@ GUI.c ––––|
 	  
 	  + Enable_WSL.bat
 	  + WSL_install.bat
+	  + Anpassungen einiger Programmteile für Windows
 	  
 	  + fastboot-assistent.desktop ← by @Jean28518, thank you
 	  + /deb/DEBIAN/control ← by @Jean28518, thank you
 	  + /deb/DEBIAN/install ← by @Jean28518, thank you
 	  + version.txt
-	  + icon.png
+	  + sweet_unix.png
 	  + /rpmbuild/SPECS/fastboot-assistant.spec
 	  						
 ```
