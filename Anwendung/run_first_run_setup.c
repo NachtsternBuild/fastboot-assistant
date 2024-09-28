@@ -88,12 +88,6 @@ void run_first_run_setup(GtkCssProvider *provider)
     g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(next_page), notebook);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Begrüßung"));
 
-    // run css-provider
-    add_css_provider(button_welcome_1, provider);
-    add_css_provider(button_toggle_theme, provider);
-    add_css_provider(button_welcome_2, provider);
-    
-
     // page 2
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     button_page2_1 = gtk_button_new_with_label("Zum korrekten Ausführen muss der \nFastboot-Assistant einige Konfigurationen vornehmen.");
@@ -111,13 +105,6 @@ void run_first_run_setup(GtkCssProvider *provider)
     g_signal_connect(button_page2_2, "clicked", G_CALLBACK(next_page), notebook);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("Konfiguration"));
 
-    // run css-provider
-    add_css_provider(button_page2_1, provider);
-    add_css_provider(label_page2_1, provider);
-    add_css_provider(label_page2_2, provider);
-    add_css_provider(button_dir, provider);
-    add_css_provider(button_page2_2, provider);
-	
     // page 3
     page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     button_page3_1 = gtk_button_new_with_label("Hinweise:");
@@ -136,14 +123,6 @@ void run_first_run_setup(GtkCssProvider *provider)
     g_signal_connect(button_page3_2, "clicked", G_CALLBACK(next_page), notebook);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("Hinweise"));
 
-    // run css-provider
-    add_css_provider(button_page3_1, provider);
-    add_css_provider(label_page3_1, provider);
-    add_css_provider(label_page3_2, provider);
-    add_css_provider(label_page3_3, provider);
-    add_css_provider(label_page3_4, provider);
-    add_css_provider(button_page3_2, provider);
-    
     // page 4
     page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     button_page4_1 = gtk_button_new_with_label("Verwendung:");
@@ -162,14 +141,6 @@ void run_first_run_setup(GtkCssProvider *provider)
     g_signal_connect(button_page4_2, "clicked", G_CALLBACK(next_page), notebook);
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new("Verwendung"));
 
-    // run css-provider
-	add_css_provider(button_page4_1, provider);
-	add_css_provider(label_page4_1, provider);
-	add_css_provider(label_page4_2, provider);
-	add_css_provider(label_page4_3, provider);
-	add_css_provider(label_page4_4, provider);
-	add_css_provider(button_page4_2, provider);
-	
 	// page 5
     page5 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     label_end_1 = gtk_label_new(" ");
@@ -184,9 +155,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     g_signal_connect(button_end_2, "clicked", G_CALLBACK(button_finish), notebook);
 	gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page5, gtk_label_new("Ende"));
 
-    // run css-provider
-    add_css_provider(button_end_1, provider);
-	add_css_provider(button_end_2, provider);
-	
     gtk_widget_show_all(window);
+    
+    gtk_main();
 }
