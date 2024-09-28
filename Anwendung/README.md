@@ -1,10 +1,8 @@
 # fastboot-assistant 
 ## Anwendungsentwicklung
 ### Status
-- ***noch in der Entwicklung***
-- ***Es ist noch nicht alles vollständig***
+- **stabil**
 ### Build
-
 1. Laden sie den Quellcode herunter:
 ```sh
 git clone https://github.com/NachtsternBuild/fastboot-assistant.git
@@ -41,15 +39,15 @@ sudo dnf install -y \
 ```sh
 bash Build/build-fastboot-assistant.sh
 ```
-**fastboot-assistant kann auch für die WSL als Zip-Datei gepackt werden.**
-- Dafür wählen sie nach dem sie den Build-Ordner angelegt haben:
-```sh
-For which operating system (OS) should the fastboot-assistant be built?
-Linux (l) / Windows via WSL (w):
-w
-```
-- Und geben nach dem erfolgreichem Build-Prozess an, dass sie die Zip-Datei bauen möchten.
-*→ Das funktioniert nur auf **Debian/Ubuntu-Systemen**, da der Build-Skript automatisch ein Debian-Packet für das Zip baut.*
+- Das Projekt kann für folgende Betriebsysteme gebaut werden:
+	- Linux
+ 	- Windows (WSL)
+*Für Linux stehen folgende Paketarten zur Verfügung:*
+- Debian-Paket
+- RPM  
+*Für Windows wird ein Zip-Datei gepackt, die das für die WSL enthaltene Debian-Paket enthält.**
+**Hinweis:**
+*→ Das WSL Paket bauen funktioniert nur auf **Debian/Ubuntu-Systemen**, da der Build-Skript automatisch ein Debian-Packet baut.*
  
 ## Programmstruktur
 - *Ein Blick auf die Programmstruktur lohnt sich.*
@@ -68,6 +66,7 @@ GUI.c ––––|
 	  |– config_projekt_GUI.c ––––––|
 	  |				|– make_dir.c
 	  |				|– remove_old.c
+	  |				|– wsl_config.c
 	  |
 	  |  --------------------------------------------------------------------------------------------------
 	  |
@@ -86,6 +85,7 @@ GUI.c ––––|
 	  |				|– erase_data.c
 	  |				|– lock_unlock_bootloader.c
 	  |				|– set_active_slot.c
+	  |				|– partitions.c
 	  |
 	  |– flash_GUI.c –––––––––––––––|
 	  |				|– flash_recovery.c 
@@ -120,6 +120,7 @@ GUI.c ––––|
 	  |– updater.c
 	  |
 	  |– about.c
+	  |– run_first_setup.c
 	  
 	  |– /header –––––––––––––––––––| 
 	  |				|– header_connected_devices.c
