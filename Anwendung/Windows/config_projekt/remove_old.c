@@ -23,7 +23,8 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-#define MAX_BUFFER_SIZE 3072
+#define MAX_BUFFER_SIZE 2048
+
 // Callback functions for each button
 // Remove the 'ROM-Install' directory
 static void remove_rom_install(GtkWidget *widget, gpointer data) 
@@ -37,9 +38,8 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
 	*/
 	
     char wsl_dir[MAX_BUFFER_SIZE];
-    char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    snprintf(command, sizeof(command), "rm -rf %s", wsl_dir);
+    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", wsl_dir);
     system(command);
 	
 	
@@ -53,6 +53,7 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
     const char *message = "Lösche alle Dateien in ROM-Install.\n";
     show_message(message);
 	
+	// add the config.txt
 	/*
     char command[MAX_BUFFER_SIZE];
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory_flash());
@@ -66,15 +67,14 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
 	*/
 	
     char wsl_dir[MAX_BUFFER_SIZE];
-    char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    snprintf(command, sizeof(command), "rm -rf %s/*", wsl_dir);
+    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", wsl_dir);
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Backup", wsl_dir);
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup", wsl_dir);
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Backup/Noroot", wsl_dir);
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", wsl_dir);
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Images", wsl_dir);
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Images", wsl_dir);
     system(command);
 		
     message = "Fertig.\n";
@@ -86,7 +86,6 @@ static void remove_backups(GtkWidget *widget, gpointer data)
 {
     const char *message = "Lösche alle Dateien im Backup-Ordner.\n";
     show_message(message);
-	
 	/*
     char command[MAX_BUFFER_SIZE];
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", get_home_directory_flash());
@@ -96,11 +95,10 @@ static void remove_backups(GtkWidget *widget, gpointer data)
 	*/
 	
     char wsl_dir[MAX_BUFFER_SIZE];
-    char command[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    snprintf(command, sizeof(command), "rm -rf %s/Backup/*", wsl_dir);
+    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", wsl_dir);
     system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Backup/Noroot", wsl_dir);
+    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", wsl_dir);
     system(command);
 	
 	
@@ -108,7 +106,7 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     show_message(message);
 }
 
-/* main function of remove_old */
+/* main function of preflash_GUI */
 void remove_old(int argc, char *argv[]) 
 {
     GtkWidget *window;
@@ -120,7 +118,6 @@ void remove_old(int argc, char *argv[])
     gtk_init(&argc, &argv);
     
     apply_theme();
-
     
     // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -158,10 +155,10 @@ void remove_old(int argc, char *argv[])
                 break;
         }
     }
-    
-    // clean the storage
+	
+	// clean the storage
     g_object_unref(provider);
-
+    
     // show window
     gtk_widget_show_all(window);
 
