@@ -10,19 +10,23 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 - Reboot from fastboot mode
 - Reboot into download mode
 - boot into recovery
-- open/wipe the bootloader 
+- lock/unlock the bootloader 
 - delete user data
 - backup your full system (root) or use the [Open Android Backup](https://github.com/mrrfv/open-android-backup) → ***thanks to @mrrfv***
 - Rename files (recovery.img, boot.img, vendor.img, system.img, payload.zip)
-- flashing recovery.img, boot.img, init_boot.img, vendor_boot.img, vendor.img, system.img, vbmeta.img, dtbo.img, preloader.img, preloader.bin, super.img and many others
+- flashing recovery.img, boot.img, init_boot.img, vendor_boot.img, vendor.img, system.img, vbmeta.img, dtbo.img, userdata.img, metadata.img, preloader.img, preloader.bin, super.img and many others
+- get device infos
+- some instructions for the program
+- set active slot
+- resize/remove/create boot/vendor/system partition
 
 ## Versions
 *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
-- ***see Changelog.md for all changes or just GitHub.***
-- ***see the SECURTIY.md***
+- ***see [Changelog.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/changelog.md) for all changes or just GitHub.***
+- ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
 
 ### Sweet Unix v.0.5.x
-- **fastboot-assistant v0.5.4.beta** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL (still experimental)
+- **fastboot-assistant v0.5.5.2** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL 
 
 ## Notes
 - Use at your own risk.
@@ -34,7 +38,7 @@ Programme to facilitate the installation of custom ROMs and GSIs on Android devi
 ### Some brownies
 - *A big thank you to:*
   - **@mrrfv → [Open Android Backup](https://github.com/mrrfv/open-android-backup)**
-  - **@Jean28518 → my [build-deb.sh](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/Anwendung/Build/build-deb.sh) is a modified version of *@Jean28518s* version.**
+  - **@Jean28518 → my [build-deb.sh](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/Anwendung/Build/build-fastboot-assistant.sh) is a modified version of *@Jean28518s* version.**
   
 ## Installation of the programme
 ### Linux
@@ -55,11 +59,11 @@ sudo apt-get install /PATH/to/fastboot-assistant.deb
 ***or via a graphical user interface.***
 - **Install the RPM:**
 ```sh
-sudo rpm -i /PATH/to/fastboot-assistant-0.5.3-1.fc40.x86_64.rpm
+sudo rpm -i /PATH/to/fastboot-assistant-0.5.5.2-1.fc40.x86_64.rpm
 ```
 ### Windows
 1. unzip the zip file
-2. Follow the steps in the README.md
+2. Follow the steps in the README.md from the Zip
 
 ##  Removing fastboot-assistant
 1. open terminal
@@ -73,6 +77,7 @@ sudo rpm -e fastboot-assistant
 
 ## Further information
 - see instructions in the applications themselves
+- or the dokumentation
 
 ## In case of errors
 - Don't be shy, just complain. 
