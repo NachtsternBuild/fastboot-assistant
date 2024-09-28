@@ -33,5 +33,5 @@ void get_wsl_directory(char* wsl_dir, size_t size)
         g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
         exit(1);
     }
-    snprintf(wsl_dir, size, "/mnt/c/Users/%s/Downloads/ROM-Install", user);
+    snprintf(wsl_dir, size, "/mnt/c/Users/%s", user);
 }
