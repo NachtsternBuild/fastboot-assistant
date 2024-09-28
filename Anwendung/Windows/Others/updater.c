@@ -43,7 +43,7 @@ static void install_wsl(GtkButton *button, GtkEntry *password_entry)
 
 static void install_rpm(GtkButton *button, GtkEntry *password_entry) 
 {
-    snprintf(install_command, sizeof(install_command), "rpm -u %s && rm -f %s", output_file, output_file);
+    snprintf(install_command, sizeof(install_command), "rpm -U %s && rm -f %s", output_file, output_file);
     g_print("Installiere: %s\n", install_command);
     install_with_root(button, password_entry, install_command);
     gtk_widget_destroy(update_window_install);
