@@ -49,6 +49,13 @@ void flash_system_inactive(const char *slot)
 // function to flash system.img
 void system_to_activ(GtkWidget *widget, GtkWindow *window)
 {
+    char function_command[3072];
+    char *device_command = fastboot_command();
+    snprintf(function_command, sizeof(function_command), "%s erase system", device_command);
+    g_print("Führe aus: %s", function_command);
+    system(function_command);
+    free(device_command);
+    
     flash_image(widget, window, "system", NULL, "system.img");
 }
 
@@ -62,7 +69,6 @@ void system_to_activ_heimdall(GtkWidget *widget, GtkWindow *window)
 // function to flash system.img to inactive (heimdall)
 void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
 {
-    system("fastboot devices");
 	char active_slot[BUFFER_SIZE] = {0};
     char inactive_slot[BUFFER_SIZE] = {0};
 
@@ -87,7 +93,13 @@ void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
         fprintf(stderr, "Unbekannter aktiver Slot: %s\n", active_slot);
         exit(EXIT_FAILURE);
     }
-
+	char function_command[3072];
+    char *device_command = fastboot_command();
+    snprintf(function_command, sizeof(function_command), "%s erase system_%s", device_command, inactive_slot);
+    g_print("Führe aus: %s", function_command);
+    system(function_command);
+    free(device_command);
+    
     // flash system.img to inactive slot
     flash_system_inactive(inactive_slot);
 }
