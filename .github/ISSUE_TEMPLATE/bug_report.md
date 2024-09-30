@@ -28,5 +28,5 @@ If applicable, add screenshots to help explain your problem.
  - **OS version:** e.g. 24.04.
  - **Browser:** e.g. chrome, firefox
  - **Browser version:** e.g. 22
- - **Program version:** e.g. v.0.5.5.2.beta
+ - **Program version:** e.g. v.0.5.5.2
  - **Operating mode:** e.g. native/WSL/VM
