@@ -1,6 +1,6 @@
 # fastboot-assistant
 ## Description
-Programme to facilitate the installation of custom ROMs and GSIs on Android devices. Based on GTK and Shell.
+Program to facilitate the installation of custom ROMs and GSIs on Android devices. Based on GTK and Shell.
 
 ## Functions
 - Check the ADB/Fastboot connection
