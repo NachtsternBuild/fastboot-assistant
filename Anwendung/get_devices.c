@@ -29,7 +29,7 @@
 // check connected adb devices
 static void get_adb(GtkWidget *widget, gpointer data) 
 {
-    const char *device_command = adb_command();
+    char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Verbundene Geräte über ADB");
@@ -39,27 +39,44 @@ static void get_adb(GtkWidget *widget, gpointer data)
 // check connected fastboot devices
 static void get_fastboot(GtkWidget *widget, gpointer data) 
 {
-    const char *device_command = fastboot_command();
+    char *device_command = fastboot_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Verbundene Geräte über Fastboot");
     free(device_command);
 }
 
+static void bootloader_status_adb()
+{
+	char *device_command = adb_command();
+    char command[MAX_BUFFER_SIZE];
+    snprintf(command, MAX_BUFFER_SIZE, "%s shell getprop ro.boot.flash.locked", device_command);
+    connected_devices(command, "Verbundene Geräte über ADB");
+    free(device_command);
+}
+
+static void bootloader_status_fastboot()
+{
+	char *device_command = fastboot_command();
+    char command[MAX_BUFFER_SIZE];
+    snprintf(command, MAX_BUFFER_SIZE, "%s getvar unlocked", device_command);
+    connected_devices(command, "Verbundene Geräte über ADB");
+    free(device_command);
+}
 /* main function of get_devices*/
 void get_devices(int argc, char *argv[]) 
 {
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
-    char button_labels[2][20] = {"ADB", "Fastboot"};
+    char button_labels[4][30] = {"Geräte in ADB", "Geräte in Fastboot", "Bootloader Status (ADB)", "Bootloader Status (fastboot)"};
 
     gtk_init(&argc, &argv);
     apply_theme();
 
     // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Geräte:");
+    gtk_window_set_title(GTK_WINDOW(window), "Gerät Info");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
@@ -75,9 +92,9 @@ void get_devices(int argc, char *argv[])
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // add and centre all button
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 4; i++) {
         button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
 
         // execute css-provider for all buttons
         add_css_provider(button, provider);
@@ -87,6 +104,12 @@ void get_devices(int argc, char *argv[])
                 break;
             case 1:
                 g_signal_connect(button, "clicked", G_CALLBACK(get_fastboot), NULL);
+                break;
+            case 2:
+                g_signal_connect(button, "clicked", G_CALLBACK(bootloader_status_adb), NULL);
+                break;
+            case 3:
+                g_signal_connect(button, "clicked", G_CALLBACK(bootloader_status_fastboot), NULL);
                 break;
         }
     }
