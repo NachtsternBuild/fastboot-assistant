@@ -95,7 +95,7 @@ void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
     }
 	char function_command[3072];
     char *device_command = fastboot_command();
-    snprintf(function_command, sizeof(function_command), "%s erase system_%s", device_command, inactive_slot);
+    snprintf(function_command, sizeof(function_command), "%s erase system_%s && %s set_active %s", device_command, inactive_slot, device_command, inactive_slot);
     g_print("Führe aus: %s", function_command);
     system(function_command);
     free(device_command);
