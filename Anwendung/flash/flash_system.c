@@ -30,18 +30,20 @@
 // start by system_to_inactive
 void flash_system_inactive(const char *slot) 
 {
+    g_print("Log: flash_system_inactive");
     char function_command[BUFFER_SIZE];
     char image_path[3072];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "system.img");
 
     // make command to flash system.img
     char *device_command = fastboot_command();
-    snprintf(function_command, sizeof(function_command), "%s flash system_%s %s && exit", device_command, slot, image_path);
+    snprintf(function_command, sizeof(function_command), "%s flash system_%s %s && %s set_active %s", device_command, slot, image_path, device_command, slot);
 	
-	g_print("Führe aus: %s\n", function_command);
+	g_print("Log: Run: %s\n", function_command);
     // run command in the terminal
     open_terminal_by_desktop(function_command);
     free(device_command);
+    g_print("Log: end flash_system_inactive");
 }
 
 
@@ -49,6 +51,7 @@ void flash_system_inactive(const char *slot)
 // function to flash system.img
 void system_to_activ(GtkWidget *widget, GtkWindow *window)
 {
+    g_print("Log: system_to_activ");
     char function_command[3072];
     char *device_command = fastboot_command();
     snprintf(function_command, sizeof(function_command), "%s erase system", device_command);
@@ -57,18 +60,22 @@ void system_to_activ(GtkWidget *widget, GtkWindow *window)
     free(device_command);
     
     flash_image(widget, window, "system", NULL, "system.img");
+    g_print("Log: end system_to_activ");
 }
 
 // flash system.img (heimdall)
 void system_to_activ_heimdall(GtkWidget *widget, GtkWindow *window)
 {
+    g_print("Log: system_to_activ_heimdall");
     flash_heimdall(widget, window, "SYSTEM", "system.img");
+    g_print("Log: end system_to_activ_heimdall");
 }
 
 
-// function to flash system.img to inactive (heimdall)
+// function to flash system.img to inactive 
 void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
 {
+	g_print("Log: system_to_inactiv");
 	char active_slot[BUFFER_SIZE] = {0};
     char inactive_slot[BUFFER_SIZE] = {0};
 
@@ -95,18 +102,20 @@ void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
     }
 	char function_command[3072];
     char *device_command = fastboot_command();
-    snprintf(function_command, sizeof(function_command), "%s erase system_%s && %s set_active %s", device_command, inactive_slot, device_command, inactive_slot);
+    snprintf(function_command, sizeof(function_command), "%s erase system_%s", device_command, inactive_slot);
     g_print("Führe aus: %s", function_command);
     system(function_command);
     free(device_command);
     
     // flash system.img to inactive slot
     flash_system_inactive(inactive_slot);
+    g_print("Log: system_to_inactiv");
 }
 
 // main function
 void flash_system(int argc, char *argv[])
 {
+	g_print("Log: flash_system");
 	GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -162,5 +171,6 @@ void flash_system(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+	
+	g_print("Log: end flash_system");
 }
-
