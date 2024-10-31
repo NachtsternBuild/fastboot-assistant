@@ -29,13 +29,13 @@
 // check connected adb devices
 static void get_adb(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: Start get_adb");
+    g_print("Log: Start get_adb\n");
     char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Verbundene Geräte über ADB");
     free(device_command);
-    g_print("Log: End of get_adb");
+    g_print("Log: End of get_adb\n");
 }
 
 // check connected fastboot devices
@@ -47,29 +47,29 @@ static void get_fastboot(GtkWidget *widget, gpointer data)
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Verbundene Geräte über Fastboot");
     free(device_command);
-    g_print("Log: End of get_fastboot");
+    g_print("Log: End of get_fastboot\n");
 }
 
 static void bootloader_status_adb()
 {
-	g_print("Log: Start bootloader_status_adb");
+	g_print("Log: Start bootloader_status_adb\n");
 	char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s shell getprop ro.boot.flash.locked", device_command);
     connected_devices(command, "Verbundene Geräte über ADB");
     free(device_command);
-    g_print("Log: End of bootloader_status_adb");
+    g_print("Log: End of bootloader_status_adb\n");
 }
 
 static void bootloader_status_fastboot()
 {
-	g_print("Log: Start bootloader_status_fastboot");
+	g_print("Log: Start bootloader_status_fastboot\n");
 	char *device_command = fastboot_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s getvar unlocked", device_command);
     connected_devices(command, "Verbundene Geräte über ADB");
     free(device_command);
-    g_print("Log: End of bootloader_status_fastboot");
+    g_print("Log: End of bootloader_status_fastboot\n");
 }
 /* main function of get_devices*/
 void get_devices(int argc, char *argv[]) 
@@ -82,7 +82,7 @@ void get_devices(int argc, char *argv[])
     gtk_init(&argc, &argv);
     apply_theme();
     
-    g_print("Log: Start get_devices");
+    g_print("Log: Start get_devices\n");
 
     // create the window
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -133,5 +133,5 @@ void get_devices(int argc, char *argv[])
     // run main gtk loop
     gtk_main();
     
-    g_print("Log: End of get_devices");
+    g_print("Log: End of get_devices\n");
 }
