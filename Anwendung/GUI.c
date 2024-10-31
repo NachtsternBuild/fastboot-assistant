@@ -105,6 +105,7 @@ static void start_about(GtkWidget *widget, gpointer data)
 // create the dir for the setup
 void config_dir_setup(const char *pfad) 
 {
+    g_print("Log: config_dir_setup\n");
     char tmp[2048];
     snprintf(tmp, sizeof(tmp), "%s", pfad);  // copy the path
     char *p = tmp;
@@ -119,6 +120,7 @@ void config_dir_setup(const char *pfad)
         }
     }
     mkdir(tmp, 0700);  // create the dir
+	g_print("Log: end config_dir_setup\n");
 }
 
 
@@ -126,17 +128,19 @@ void config_dir_setup(const char *pfad)
 // config the program
 void config_start() 
 {
+    g_print("Log: config_start\n");
     const char *message;
     message = "Konfiguration beendet!\n";
     make_dir();
     wsl_config();
     show_message(message);
-    
+    g_print("Log: end config_start\n");
 }
 
 /* the main function */
 int main(int argc, char *argv[]) 
 {
+    g_print("Log: fastboot-assistant\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -276,6 +280,7 @@ int main(int argc, char *argv[])
 
     // gtk mainloop
     gtk_main();    
-
+	
+	g_print("Log: end fastboot-assistant\n");
     return 0;
 }
