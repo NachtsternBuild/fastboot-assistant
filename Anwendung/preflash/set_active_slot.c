@@ -30,31 +30,31 @@ char slot_command[2048];
 // button 1 - set slot a
 static void set_slot_a(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: set_slot_a");
+    g_print("Log: set_slot_a\n");
     char *device_command = fastboot_command();
 	snprintf(slot_command, sizeof(slot_command), "%s set_active a && %s getvar current-slot", device_command, device_command);
-	g_print("Führe aus: %s", slot_command);
+	g_print("Log: run: %s \n", slot_command);
     command_with_spinner(slot_command);
     free(device_command);
-    g_print("Log: end set_slot_a");
+    g_print("Log: end set_slot_a\n");
 }
 
 // button 2 - set slot b
 static void set_slot_b(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: set_slot_b");
+    g_print("Log: set_slot_b\n");
     char *device_command = fastboot_command();
 	snprintf(slot_command, sizeof(slot_command), "%s set_active b && %s getvar current-slot", device_command, device_command);
-	g_print("Führe aus: %s", slot_command);
+	g_print("Log: run:%s \n", slot_command);
     command_with_spinner(slot_command);
     free(device_command);
-    g_print("Log: end set_slot_b");
+    g_print("Log: end set_slot_b\n");
 }
 
 /* start main programm */
 void set_active_slot(int argc, char *argv[])
 {
-    g_print("Log: set_active_slot");
+    g_print("Log: set_active_slot\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -106,5 +106,5 @@ void set_active_slot(int argc, char *argv[])
     // run main-gtk-loop
     gtk_main();
 	
-	g_print("Log: end set_active_slot");
+	g_print("Log: end set_active_slot\n");
 }
