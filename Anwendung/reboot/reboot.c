@@ -29,7 +29,7 @@
 // reboot system
 static void reboot_system(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: reboot_system");
+    g_print("Log: reboot_system\n");
     const char *message = "Neustart wird durchgeführt.\n";    
     show_message(message);
     
@@ -38,13 +38,13 @@ static void reboot_system(GtkWidget *widget, gpointer data)
     char command[256];
     snprintf(command, sizeof(command), "%s reboot", device_command);
     free(device_command);
-    g_print("Log: end reboot_system");
+    g_print("Log: end reboot_system\n");
 }
 
 // boot to an image
 static void boot_to_image(const gchar *i_filename) 
 {
-    g_print("Log: boot_to_image");
+    g_print("Log: boot_to_image\n");
     gchar *target_directory_image = get_home("~/Downloads/ROM-Install/");
     if (target_directory_image == NULL) 
     {
@@ -55,20 +55,20 @@ static void boot_to_image(const gchar *i_filename)
     // create fastboot command
     char *device_command = fastboot_command(); 
     gchar *target_path_image = g_strdup_printf("%s boot %s", device_command, i_filename);
-    g_print("Log: command: %s", target_path_image);
+    g_print("Log: command: %s \n", target_path_image);
     command_with_spinner(target_path_image);
 
     // free memory
     free(device_command);
     g_free(target_directory_image);
     g_free(target_path_image);
-    g_print("Log: end boot_to_image");
+    g_print("Log: end boot_to_image\n");
 }
 
 /* start main programm */
 void reboot(int argc, char *argv[])
 {
-    g_print("Log: reboot");
+    g_print("Log: reboot\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -120,5 +120,5 @@ void reboot(int argc, char *argv[])
     // run main-gtk-loop
     gtk_main();
     
-    g_print("Log: end reboot");
+    g_print("Log: end reboot\n");
 }
