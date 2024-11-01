@@ -27,6 +27,7 @@
 // check if device are connected
 int is_android_device_connected() 
 {
+    g_print("Log: is_android_device_connected\n");
     char *info_command = adb_command();
     char command[256];
     snprintf(command, sizeof(command), "%s devices | grep -w 'device'", info_command);
@@ -44,6 +45,7 @@ int is_android_device_connected()
 // create function to show info windows
 void get_android_info(char *android_version, char *kernel_version, char *device_name, char *project_treble, char *active_slot, char *get_root, char *get_soc, char *get_distro, char *get_version, char *get_desktop, char *get_language, char *get_session_type) 
 {
+    g_print("Log: get_android_info\n");
     if (!is_android_device_connected()) 
     {
         g_print("Kein Android-Gerät verbunden.\n");
@@ -81,11 +83,13 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
     snprintf(get_desktop, 2048, "%s", execute_command("echo $XDG_CURRENT_DESKTOP"));
     snprintf(get_language, 2048, "%s", execute_command("echo $LANG | cut -d'_' -f1"));
     snprintf(get_session_type, 2048, "%s", execute_command("echo $XDG_SESSION_TYPE"));
+    g_print("Log: end get_android_info\n");
 }
 
 // create function to show info windows
 void info(int argc, char *argv[], GtkWindow *parent_window) 
 {  
+	g_print("Log: info\n");
 	gtk_init(&argc, &argv);
 	apply_theme();
 
@@ -221,4 +225,5 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
 
     // GTK-mainloop start
     gtk_main();
+    g_print("Log: end info\n");
 }
