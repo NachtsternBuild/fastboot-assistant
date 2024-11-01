@@ -27,54 +27,67 @@
 // function to open the GitHub website from the fastboot-assistant
 void fastboot_assistant(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: fastboot_assistant\n");
     const char *git_url = "https://github.com/NachtsternBuild/fastboot-assistant";
     
 	open_url(git_url);
+	g_print("Log: end fastboot_assistant\n");
 }
 
 // function that open the GitHub Releases page
 void fastboot_assistant_release(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: fastboot_assistant_release\n");
     const char *release_url = "https://github.com/NachtsternBuild/fastboot-assistant/releases";
 	open_url(release_url);
+	g_print("Log: end fastboot_assistant_release\n");
 }
 
 // function to open the website that used for the feedback for the fastboot-assistant
 void feedback(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: feedback\n");
     const char *feedback_url = "https://forms.gle/dBWBawwqNgFWCLz58";
 	open_url(feedback_url);
+	g_print("Log: end feedback\n");
 }
 
 // function to open the dokumentation of the fastboot-assistant
 void dokumentation(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: dokumentation\n");
     const char *feedback_url = "https://github.com/NachtsternBuild/fastboot-assistant/wiki";
 	open_url(feedback_url);
+	g_print("Log: end dokumentation\n");
 }
 
 // function to open the website from 'Open Android Backup'
 void open_android_backup(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: open_android_backup\n");
     const char *open_android_backup_url = "https://github.com/mrrfv/open-android-backup";
 	open_url(open_android_backup_url);
+	g_print("Log: end open_android_backup\n");
 }
 
 // function to open the website from 'Open Android Backup'
 void brownie_jean(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: brownie_jean\n");
     const char *brownie_jean_url = "https://github.com/Jean28518";
 	open_url(brownie_jean_url);
+	g_print("Log: end brownie_jean\n");
 }
 // function that print so text, but no real useage
 static void about_text()
 {
-	g_print("Nix da!\n");
+	g_print("Log: Nix da!\n");
 }
 
 // the main function
 void about(int argc, char *argv[]) 
 {
+    g_print("Log: about\n");
     GtkWidget *window;
     GtkWidget *page_about1, *page_about2, *page_about3;
     GtkWidget *label_about2;
@@ -102,7 +115,7 @@ void about(int argc, char *argv[])
     // page 1
     page_about1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     button_about_1 = gtk_button_new_with_label("Fastboot Assistant");
-    button_about_2 = gtk_button_new_with_label("Version 0.5.5.2");
+    button_about_2 = gtk_button_new_with_label("Version 0.6.1.dev");
     button_about_3 = gtk_button_new_with_label("Sweet Unix System V");
     button_about_4 = gtk_button_new_with_label("Programm um das installieren von Custom-ROM \nund GSIs auf Android-Geräte zu erleichtern.");
     button_about_5 = gtk_button_new_with_label("Weiter");
@@ -189,5 +202,6 @@ void about(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end about\n");
 }
 
