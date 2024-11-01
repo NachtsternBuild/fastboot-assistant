@@ -89,6 +89,7 @@ static void start_flash_data(GtkWidget *widget, gpointer data)
 //no function
 static void start_flash_others(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: start_flash_others\n");
     const char *message;
     message = "Der Prozess kann eine Weile dauern. \nIgnorien sie alle beenden erzwingen Meldungen.\n";
     show_message(message);
@@ -102,13 +103,13 @@ static void start_flash_others(GtkWidget *widget, gpointer data)
     
     stop_loading_spinner(spinner_flash);  // Stop the spinner when the process finishesflash_other();
 	
-
+	g_print("Log: end start_flash_others\n");
 }
 
 /* main function of flash_GUI*/
-// i hope it works
 void flash_GUI(int argc, char *argv[]) 
 {
+    g_print("Log: flash_GUI\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -183,5 +184,5 @@ void flash_GUI(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end flash_GUI\n");
 }
-
