@@ -31,12 +31,13 @@
 
 static void setup_text(GtkButton *button, gpointer data) 
 {
-	g_print("Hier gibt's nichts!\n");
+	g_print("Log: Hier gibt's nichts!\n");
 }
 
 // function that run the setup
 void run_first_run_setup(GtkCssProvider *provider) 
 {
+    g_print("Log: run_first_run_setup\n");
     int argc = 0;
     char **argv = NULL;
     
@@ -158,4 +159,5 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_widget_show_all(window);
     
     gtk_main();
+    g_print("Log: end run_first_run_setup\n");
 }
