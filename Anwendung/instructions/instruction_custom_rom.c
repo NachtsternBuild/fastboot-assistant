@@ -23,11 +23,12 @@
 
 static void rom_text()
 {
-	g_print("Auch nix Neues.\n");
+	g_print("Log: Auch nix Neues.\n");
 }
 
 void instruction_custom_rom(int argc, char *argv[]) 
 {
+	g_print("Log: instruction_custom_rom\n");
 	GtkWidget *window;
     GtkWidget *page_rom1, *page_rom2;
     GtkWidget *label_rom1_1, *label_rom1_2, *label_rom2_1, *label_rom2_2, *label_rom2_3, *label_rom2_4;
@@ -102,4 +103,5 @@ void instruction_custom_rom(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_custom_rom\n");
 }
