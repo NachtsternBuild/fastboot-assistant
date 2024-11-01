@@ -23,11 +23,12 @@
 
 static void gsi_text()
 {
-	g_print("Bringt auch nichts!\n");
+	g_print("Log: Bringt auch nichts!\n");
 }
 
 void instruction_gsi(int argc, char *argv[]) 
 {	
+	g_print("Log: instruction_gsi\n");
 	GtkWidget *window;
     GtkWidget *page_gsi1, *page_gsi2, *page_gsi3, *page_gsi4;
     GtkWidget *label_gsi1_1, *label_gsi1_2, *label_gsi2_1, *label_gsi2_2, *label_gsi2_3, *label_gsi3_1, *label_gsi4_1;
@@ -134,4 +135,5 @@ void instruction_gsi(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_gsi\n");
 }
