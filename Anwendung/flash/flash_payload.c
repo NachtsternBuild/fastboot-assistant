@@ -26,6 +26,7 @@
 
 void flash_payload(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: flash_payload\n");
     // flash payload.zip via adb sideload
     const char *title, *message;
     
@@ -44,11 +45,12 @@ void flash_payload(GtkWidget *widget, gpointer data)
     char function_command[3072];
     char *device_command = adb_command();
     snprintf(function_command, 3072, "%s sideload %s && exit", device_command, image_path);
-    g_print("Führe aus: %s\n", function_command);
+    g_print("Log: Run: %s\n", function_command);
     open_terminal_by_desktop(function_command);
     free(device_command);
 
     // Show a message that the flash is completed
     const char *message2 = "Sideload beendet!\n";
     show_message(message2);
+    g_print("Log: end flash_payload\n");
 }
