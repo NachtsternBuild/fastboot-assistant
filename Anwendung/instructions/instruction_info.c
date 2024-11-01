@@ -25,11 +25,12 @@
 
 static void info_text()
 {
-	g_print("Nischt da!\n");
+	g_print("Log: Nischt da!\n");
 }
 
 void instruction_info(int argc, char *argv[]) 
 {
+	g_print("Log: instruction_info\n");
 	GtkWidget *window;
     GtkWidget *page_info1, *page_info2, *page_info3, *page_info4;
     GtkWidget *label_info1_1, *label_info1_2, *label_info2_1, *label_info2_2, *label_info3_1, *label_info3_2, *label_info4_1, *label_info4_2, *label_info4_3;
@@ -143,4 +144,5 @@ void instruction_info(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_info\n");
 }
