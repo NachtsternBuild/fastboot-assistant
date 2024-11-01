@@ -23,11 +23,12 @@
 
 static void adb_text()
 {
-	g_print("Die Lösung ist: 42");
+	g_print("Log: Die Lösung ist: 42");
 }
 
 void instruction_adb(int argc, char *argv[]) 
 {
+	g_print("Log: instruction_adb\n");
 	GtkWidget *window;
     GtkWidget *page_adb1, *page_adb2, *page_adb3, *page_adb4;
     GtkWidget *label_adb1_1, *label_adb1_2, *label_adb1_3, *label_adb2_1, *label_adb2_2, *label_adb2_3, *label_adb3_1, *label_adb3_2, *label_adb3_3, *label_adb4_1, *label_adb4_2, *label_adb4_3;
@@ -148,4 +149,5 @@ void instruction_adb(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_adb\n");
 }
