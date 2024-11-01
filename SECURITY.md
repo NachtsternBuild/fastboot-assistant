@@ -4,7 +4,7 @@
 
 | Version     | Supported          | Informations                        | status            |Release Code                  | For the operating systems (OS)                                             |
 | ----------- | ------------------ | ----------------------------------- | ----------------- | ---------------------------- | -------------------------------------------------------------------------- |
-| 0.6.x       | :crystal_ball:     | *future versions*                   |                   | *Trotziges Tails*            |                                                                            |
+| 0.6.x       | :crystal_ball:     | *future versions*                   |                   | *Rostiges Red Hat*           |                                                                            |
 | 0.5.5.2     | :white_check_mark: | ***active version***                | ***stable***      | ***Sweet Unix System V***    | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL***            |
 | 0.5.4.beta  | :x:                | *old version*                       | *beta*            | *Sweet Unix System IV*       | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL*                |
 | 0.5.3.beta  | :x:                | *old version*                       | *beta*            | *Sweet Unix System III*      | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)*                                 |
