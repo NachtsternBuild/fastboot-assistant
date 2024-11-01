@@ -28,6 +28,7 @@
 
 void flash_partition(const char *partition, const char *img_file) 
 {
+    g_print("Log: flash_partition\n");
     char command[512];
     char *device_command = fastboot_command();
     snprintf(command, sizeof(command), "%s flash %s %s", device_command, partition, img_file);
@@ -38,6 +39,7 @@ void flash_partition(const char *partition, const char *img_file)
         g_print("Fehler: Der Befehl '%s' wurde nicht erfolgreich ausgeführt.\n", command);
     }
     free(device_command);
+    g_print("Log: end flash_partition\n");
 }
 
 void process_file(const char *filepath) 
@@ -92,7 +94,7 @@ void process_file(const char *filepath)
     } 
     else 
     {
-        g_print("Unbekannte Datei: %s, wird übersprungen.\n", filepath);
+        g_print("Log: Unbekannte Datei: %s, wird übersprungen.\n", filepath);
     }
 }
 
@@ -122,6 +124,7 @@ void flash_images_in_directory(const char *directory)
 
 void flash_other() 
 {
+    g_print("Log: flash_other\n");
     char *homeDir = getenv("HOME");
 	if (homeDir == NULL) 
 	{
@@ -150,4 +153,5 @@ void flash_other()
     flash_images_in_directory(directory);
     
     free(directory);
+    g_print("Log: end flash_other\n");
 }
