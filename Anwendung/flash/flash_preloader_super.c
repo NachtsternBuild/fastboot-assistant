@@ -74,6 +74,7 @@ void super_img_heimdall(GtkWidget *widget, GtkWindow *window)
 // main function
 void flash_preloader_super(int argc, char *argv[])
 {
+	g_print("Log: flash_preloader_super\n");
 	GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -143,4 +144,5 @@ void flash_preloader_super(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end flash_preloader_super\n");
 }
