@@ -143,7 +143,7 @@ void wsl_config()
     }
     else 
     {
-        g_print("Kein WSL-System gefunden.\n");
+        g_print("Log: Kein WSL-System gefunden.\n");
 
         // Show message
         const char *message = "Kein WSL-System gefunden.\n";
