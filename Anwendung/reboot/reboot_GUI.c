@@ -57,6 +57,7 @@ static void start_reboot_heimdall(GtkWidget *widget, gpointer data)
 
 void reboot_GUI(int argc, char *argv[]) 
 {
+    g_print("Log: reboot_GUI\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -113,5 +114,5 @@ void reboot_GUI(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+	g_print("Log: end reboot_GUI\n");
 }
-
