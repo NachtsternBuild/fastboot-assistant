@@ -59,6 +59,7 @@ static void start_instruction_info(GtkWidget *widget, gpointer data)
 /* main function of flash_GUI*/
 void instruction_GUI(int argc, char *argv[]) 
 {
+    g_print("Log: instruction_GUI\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -115,5 +116,5 @@ void instruction_GUI(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end instruction_GUI\n");
 }
-
