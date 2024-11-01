@@ -24,9 +24,13 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
 - ***see [Changelog.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/changelog.md) for all changes or just GitHub.***
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
+- ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
 ### Sweet Unix v.0.5.x
-- **fastboot-assistant v0.5.5.2** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL 
+- **fastboot-assistant v.0.5.5.2** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL
+
+### Rostiges Red Hat v.0.6.x
+- **fastboot-assistant v.0.6.1.dev** → build this from source / Linux (Ubuntu)
 
 ## Notes
 - Use at your own risk.
