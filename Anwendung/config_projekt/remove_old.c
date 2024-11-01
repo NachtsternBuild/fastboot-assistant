@@ -29,6 +29,7 @@
 // Remove the 'ROM-Install' directory
 static void remove_rom_install(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: remove_rom_install\n");
     const char *message = "Lösche ~/Downloads/ROM-Install\n";
     show_message(message);
 
@@ -45,11 +46,13 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
 	
     message = "Fertig.\n";
     show_message(message);
+    g_print("Log: end remove_rom_install\n");
 }
 
 // Remove old files in 'ROM-Install'
 static void remove_old_files(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: remove_old_files\n");
     const char *message = "Lösche alle Dateien in ROM-Install.\n";
     show_message(message);
 	
@@ -79,11 +82,13 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
 	
     message = "Fertig.\n";
     show_message(message);
+    g_print("Log: end remove_old_files\n");
 }
 
 // Remove backups
 static void remove_backups(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: remove_backups\n");
     const char *message = "Lösche alle Dateien im Backup-Ordner.\n";
     show_message(message);
 
@@ -104,11 +109,13 @@ static void remove_backups(GtkWidget *widget, gpointer data)
 	
     message = "Fertig.\n";
     show_message(message);
+    g_print("Log: end remove_backups\n");
 }
 
 /* main function of preflash_GUI */
 void remove_old(int argc, char *argv[]) 
 {
+    g_print("Log: remove_old\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -164,5 +171,6 @@ void remove_old(int argc, char *argv[])
 
     // run main gtk loop
     gtk_main();
+    g_print("Log: end remove_old\n");
 }
 
