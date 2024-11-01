@@ -23,11 +23,12 @@
 
 static void recovery_text()
 {
-	g_print("Die Lösung ist: ");
+	g_print("Log: Die Lösung ist: \n");
 }
 
 void instruction_recovery(int argc, char *argv[]) 
 {
+    g_print("Log: instruction_recovery\n");
     GtkWidget *window;
     GtkWidget *page_reco1, *page_reco2;
     GtkWidget *label_reco1_1, *label_reco1_2, *label_reco1_3, *label_reco2_1, *label_reco2_2, *label_reco2_3;
@@ -103,4 +104,5 @@ void instruction_recovery(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_recovery\n");
 }
