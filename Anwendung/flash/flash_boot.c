@@ -62,6 +62,7 @@ void init_boot_heimdall(GtkWidget *widget, GtkWindow *window)
 // main function
 void flash_boot(int argc, char *argv[])
 {
+	g_print("Log: flash_boot\n");
 	GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -126,5 +127,5 @@ void flash_boot(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end flash_boot\n");
 }
-
