@@ -35,31 +35,38 @@ GtkWidget *info_button;
 
 static void install_wsl(GtkButton *button, GtkEntry *password_entry) 
 { 
+    g_print("Log: install_wsl\n");
     snprintf(install_command, sizeof(install_command), "dpkg -i %s && rm -f %s", deb_on_wsl, deb_on_wsl);
-    g_print("Installiere: %s\n", install_command);
+    g_print("Log: install: %s\n", install_command);
     install_with_root(button, password_entry, install_command);
     gtk_widget_destroy(update_window_install);
+    g_print("Log: end install_wsl\n");
 }
 
 static void install_rpm(GtkButton *button, GtkEntry *password_entry) 
 {
+    g_print("Log: install_rpm\n");
     snprintf(install_command, sizeof(install_command), "rpm -U %s && rm -f %s", output_file, output_file);
-    g_print("Installiere: %s\n", install_command);
+    g_print("Log: install: %s\n", install_command);
     install_with_root(button, password_entry, install_command);
     gtk_widget_destroy(update_window_install);
+    g_print("Log: end install_rpm\n");
 }
 
 static void install_deb(GtkButton *button, GtkEntry *password_entry) 
 {
+    g_print("Log: install_deb\n");
     snprintf(install_command, sizeof(install_command), "dpkg -i %s && rm -f %s", output_file, output_file);
-    g_print("Installiere: %s\n", install_command);
+    g_print("Log: install: %s\n", install_command);
     install_with_root(button, password_entry, install_command);
     gtk_widget_destroy(update_window_install);
+    g_print("Log: end install_deb\n");
 }
 
 static void install_window_deb(GtkButton *button)
 {
-    g_print("Start install DEB.\n");
+    g_print("Log: install_window_deb\n");
+    g_print("Log: start install DEB.\n");
     system("cd ~/Downloads/");
     
     // create window
@@ -86,11 +93,13 @@ static void install_window_deb(GtkButton *button)
     gtk_box_pack_start(GTK_BOX(vbox), install_deb_button, TRUE, TRUE, 0);
 
     gtk_widget_show_all(update_window_install);
+    g_print("Log: end install_window_deb\n");
 }
 
 static void install_window_rpm(GtkButton *button)
 {
-    g_print("Start install RPM.\n");
+    g_print("Log: install_window_rpm\n");
+    g_print("Log: start install RPM.\n");
     system("cd ~/Downloads/");
     
     // create window
@@ -117,19 +126,21 @@ static void install_window_rpm(GtkButton *button)
     gtk_box_pack_start(GTK_BOX(vbox), install_rpm_button, TRUE, TRUE, 0);
 
     gtk_widget_show_all(update_window_install);
+    g_print("Log: end install_window_rpm\n");
 }
 
 static void install_window_wsl(GtkButton *button)
 {
-    g_print("Start install Windows file.\n");
+    g_print("Log: install_window_wsl\n");
+    g_print("Log: start install Windows file.\n");
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    g_print("Verzeichnis: %s\n", wsl_dir);
+    g_print("Log: Verzeichnis: %s\n", wsl_dir);
     
     snprintf(output_file, sizeof(output_file), "%s/fastboot-assistant.zip", wsl_dir);
     snprintf(output_path, sizeof(output_path), "%s/ROM-Install", wsl_dir);
     snprintf(deb_on_wsl, sizeof(deb_on_wsl), "%s/fastboot-assistant.deb", output_path);
     
-    g_print("Paket heruntergeladen: %s\n", output_file);
+    g_print("Log: Paket heruntergeladen: %s\n", output_file);
 
     snprintf(unzip_command, sizeof(unzip_command), "unzip %s -d %s", output_file, output_path);
     system(unzip_command);       			
@@ -161,10 +172,12 @@ static void install_window_wsl(GtkButton *button)
     gtk_box_pack_start(GTK_BOX(vbox), install_wsl_button, TRUE, TRUE, 0);
 
     gtk_widget_show_all(update_window_install);
+    g_print("Log: end install_window_wsl\n");
 }
 // Function to retrieve the latest release URL from GitHub
 void get_latest_release_url(const char *repo, const char *package_type, char *url_buffer, size_t buffer_size) 
 {
+    g_print("Log: get_latest_release_url\n");
     char command[2048];
     // get the url from the github api
     snprintf(command, sizeof(command),
@@ -186,6 +199,7 @@ void get_latest_release_url(const char *repo, const char *package_type, char *ur
     
     url_buffer[strcspn(url_buffer, "\n")] = '\0';  // remove linebreak
     pclose(fp);
+    g_print("Log: end get_latest_release_url\n");
 }
 
 // function to download the file
@@ -210,6 +224,7 @@ int verify_package_type(const char *filepath, const char *expected_extension)
 // main function
 void updater(void) 
 {
+    g_print("Log: updater\n");
     int argc = 0;
     char **argv = NULL;
     GtkWidget *vbox;
@@ -230,7 +245,7 @@ void updater(void)
 
     if (strlen(download_url) > 0) 
     {
-        g_print("Neueste Version URL: %s\n", download_url);
+        g_print("Log: Neueste Version URL: %s\n", download_url);
 
         char message[2048];
         snprintf(message, sizeof(message), "Neueste Version URL: %s\nNeueste Version wird heruntergeladen.\n", download_url);
@@ -288,7 +303,7 @@ void updater(void)
             gtk_box_pack_start(GTK_BOX(vbox), message_label, TRUE, TRUE, 0);
 
             // Confirm button
-            confirm_button = gtk_button_new_with_label("Ja, installieren");
+            confirm_button = gtk_button_new_with_label("Installieren");
             gtk_box_pack_start(GTK_BOX(vbox), confirm_button, TRUE, TRUE, 0);
             if (strcmp(package_type, ".deb") == 0) 
             {
@@ -305,7 +320,7 @@ void updater(void)
     			g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_wsl), NULL);
 			}
 
-            cancel_button = gtk_button_new_with_label("Nein, später installieren");
+            cancel_button = gtk_button_new_with_label("Später installieren");
             gtk_box_pack_start(GTK_BOX(vbox), cancel_button, TRUE, TRUE, 0);
             g_signal_connect(cancel_button, "clicked", G_CALLBACK(gtk_widget_destroy), confirmation_window);
             
@@ -314,7 +329,7 @@ void updater(void)
             add_css_provider(cancel_button, provider);
 
             gtk_widget_show_all(confirmation_window);
-            g_print("Fertig!\n");
+            g_print("Log: Fertig!\n");
         } 
         
         else 
@@ -327,5 +342,6 @@ void updater(void)
         fprintf(stderr, "Fehler beim Abrufen der neuesten Version\n");
     }
     gtk_main();
+    g_print("Log: end updater\n");
 }
 
