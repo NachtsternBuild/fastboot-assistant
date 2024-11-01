@@ -70,6 +70,7 @@ static void inst_others(GtkWidget *widget, gpointer data)
 /* start main programm */
 void instruction_flash(int argc, char *argv[])
 {
+	g_print("Log: instruction_flash\n");
 	GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -133,5 +134,5 @@ void instruction_flash(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
-}
-   
+    g_print("Log: end instruction_flash\n");
+}   
