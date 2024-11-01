@@ -37,6 +37,7 @@ static void reboot_system(GtkWidget *widget, gpointer data)
     char *device_command = fastboot_command();
     char command[256];
     snprintf(command, sizeof(command), "%s reboot", device_command);
+    command_with_spinner(command);
     free(device_command);
     g_print("Log: end reboot_system\n");
 }
