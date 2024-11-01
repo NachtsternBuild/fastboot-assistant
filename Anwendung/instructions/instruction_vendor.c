@@ -23,11 +23,12 @@
 
 static void vndk_text()
 {
-	g_print("Die Lösung ist: 42–39+38+1");
+	g_print("Log: Die Lösung ist: 42–39+38+1\n");
 }
 
 void instruction_vendor(int argc, char *argv[]) 
 {
+    g_print("Log: instruction_vendor\n");
     GtkWidget *window;
     GtkWidget *page_vndk1;
     GtkWidget *label_vndk1_1, *label_vndk1_2, *label_vndk1_3;
@@ -80,4 +81,5 @@ void instruction_vendor(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_vendor\n");
 }
