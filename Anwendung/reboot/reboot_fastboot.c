@@ -29,6 +29,7 @@
 // reboot to bootloader from adb
 static void reboot_from_adb(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: reboot_from_adb\n");
     const char *title, *message;
     
     title = "Reboot from ADB";
@@ -42,11 +43,13 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
     free(device_command);
     // this is the old command
     // system("adb reboot bootloader");
+    g_print("Log: end reboot_from_adb\n");
 }
 
 // reboot to bootloader from fastboot
 static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: reboot_from_fastboot\n");
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
@@ -55,11 +58,13 @@ static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s reboot bootloader", device_command);
     open_terminal_by_desktop(command);
     free(device_command);
+    g_print("Log: end reboot_from_fastboot\n");
 }
 	
 // start help-function
 static void fastboot_help(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: fastboot_help\n");
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
@@ -68,11 +73,13 @@ static void fastboot_help(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s help", device_command);
     open_terminal_by_desktop(command);
     free(device_command);
+    g_print("Log: end fastboot_help\n");
 }
 
 // get bootloader variablen-function
 static void list_bootloader_var(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: list_bootloader_var\n");
     const char *message = "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!\n";
     show_message(message);
     
@@ -81,11 +88,13 @@ static void list_bootloader_var(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s getvar all", device_command);
     open_terminal_by_desktop(command);
     free(device_command);
+    g_print("Log: end list_bootloader_var\n");
 }
 
 /* start main programm */
 void reboot_fastboot(int argc, char *argv[])
 {
+	g_print("Log: reboot_fastboot\n");
 	GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -142,5 +151,5 @@ void reboot_fastboot(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end reboot_fastboot\n");
 }
-
