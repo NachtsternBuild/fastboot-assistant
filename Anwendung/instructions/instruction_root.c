@@ -24,26 +24,29 @@
 // function to open the GitHub website from magisk
 void magisk(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: magisk\n");
     const char *magisk_url = "https://github.com/topjohnwu/Magisk";
-    
 	open_url(magisk_url);
+	g_print("Log: end magisk\n");
 }
 
 // open the downloads from the magisk apk
 void magisk_apk(GtkWidget *widget, gpointer data)
 {
-    const char *magisk_apk_url = "https://github.com/topjohnwu/Magisk/releases/download/v27.0/Magisk-v27.0.apk";
-    
+    g_print("Log: magisk_apk\n");
+    const char *magisk_apk_url = "https://github.com/topjohnwu/Magisk/releases/download/v27.0/Magisk-v27.0.apk";    
 	open_url(magisk_apk_url);
+	g_print("Log: end magisk_apk\n");
 }
 
 static void root_text()
 {
-	g_print("Läuft irgendwie nicht, oder?\n");
+	g_print("Log: Läuft irgendwie nicht, oder?\n");
 }
 
 void instruction_root(int argc, char *argv[]) 
 {
+	g_print("Log: instruction_root\n");
 	GtkWidget *window;
     GtkWidget *page_root1, *page_root2, *page_root3;
     GtkWidget *label_root1_1, *label_root1_2, *label_root1_3, *label_root2_1, *label_root2_2, *label_root2_3, *label_root3_1, *label_root3_2, *label_root3_3, *label_root3_4;
@@ -153,5 +156,5 @@ void instruction_root(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_root\n");
 }
-
