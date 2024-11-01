@@ -23,12 +23,13 @@
 
 static void others_text()
 {
-	g_print("Nix los!\n");
+	g_print("Log: Nix los!\n");
 }
 
 // the main function
 void instruction_others(int argc, char *argv[])
 {
+	g_print("Log: instruction_others\n");
 	GtkWidget *window;
     GtkWidget *page_others1, *page_others2, *page_others3;
     GtkWidget *label_others_1, *label_others_2, *label_others_3;
@@ -109,5 +110,5 @@ void instruction_others(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_others\n");
 }
-
