@@ -29,6 +29,7 @@
 // reboot to download from adb
 static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: reboot_from_adb_heimdall\n");
     const char *title, *message;
     
     title = "Reboot from ADB";
@@ -40,27 +41,32 @@ static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s reboot download", device_command);
     system(command);
     free(device_command);
+    g_print("Log: end reboot_from_adb_heimdall\n");
 }
 
 // heimdall help
 static void heimdall_help(GtkWidget *widget, gpointer data)
 { 
+    g_print("Log: heimdall_help\n");
     open_terminal_by_desktop("heimdall help");
+    g_print("Log: end heimdall_help\n");
 }
 	
 // get pit
 static void get_pit(GtkWidget *widget, gpointer data) 
 {
-
+	g_print("Log: get_pit");
     const char *message = "Beachten sie, dass sich ihr Gerät im Download-Modus befindet!\n";
     show_message(message);
     
     open_terminal_by_desktop("heimdall print-pit");
+    g_print("Log: end get_pit\n");
 }
 
 /* start main programm */
 void reboot_heimdall(int argc, char *argv[])
 {
+	g_print("Log: reboot_heimdall\n");
 	GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -114,4 +120,5 @@ void reboot_heimdall(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end reboot_heimdall\n");
 }
