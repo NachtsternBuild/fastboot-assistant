@@ -23,11 +23,12 @@
 
 static void backup_text()
 {
-	g_print("Die Lösung ist: 42–39+38+1");
+	g_print("Log: Die Lösung ist: 42–39+38+1");
 }
 
 void instruction_backup(int argc, char *argv[]) 
 {
+    g_print("Log: instruction_backup\n");
     GtkWidget *window;
     GtkWidget *page_backup1;
     GtkWidget *label_backup1_1, *label_backup1_2, *label_backup1_3;
@@ -79,5 +80,5 @@ void instruction_backup(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_backup\n");
 }
-
