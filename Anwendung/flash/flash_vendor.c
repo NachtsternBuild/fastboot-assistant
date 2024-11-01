@@ -62,6 +62,7 @@ void vendor_boot_heimdall(GtkWidget *widget, GtkWindow *window)
 // main function
 void flash_vendor(int argc, char *argv[])
 {
+	g_print("Log: flash_vendor\n");
 	GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -126,7 +127,5 @@ void flash_vendor(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end flash_vendor\n");
 }
-
-
-
