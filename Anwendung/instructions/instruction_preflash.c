@@ -23,53 +23,65 @@
 // function to open the GitHub website from the fastboot-assistant
 void twrp(GtkWidget *widget, gpointer data)
 {
-    const char *twrp_url = "https://www.twrp.me/";
-    
+    g_print("Log: twrp\n");
+    const char *twrp_url = "https://www.twrp.me/";    
 	open_url(twrp_url);
+	g_print("Log: end twrp\n");
 }
 
 // function that open the GitHub Releases page
 void e_OS(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: e_OS\n");
     const char *e_OS_url = "https://e.foundation/e-os/";
 	open_url(e_OS_url);
+	g_print("Log: end e_OS\n");
 }
 
 // function to open the website that used for the feedback for the fastboot-assistant
 void lineage_os(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: lineage_os\n");
     const char *lineage_os_url = "https://lineageos.org/";
 	open_url(lineage_os_url);
+	g_print("Log: end lineage_os\n");
 }
 
 // function to open the website from 'Open Android Backup'
 void project_elixir(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: project_elixir\n");
     const char *project_elixir_url = "https://projectelixiros.com/home";
 	open_url(project_elixir_url);
+	g_print("Log: end project_elixir\n");
 }
 
 // function to open the website from 'Open Android Backup'
 void crdroid(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: crdroid\n");
     const char *crdroid_url = "https://crdroid.net/";
 	open_url(crdroid_url);
+	g_print("Log: end crdroid\n");
 }
 
 // function to open the website from 'Open Android Backup'
 void evolution_x(GtkWidget *widget, gpointer data)
 {
+    g_print("Log: evolution_x\n");
     const char *evolution_x_url = "https://sourceforge.net/projects/evolution-x/";
 	open_url(evolution_x_url);
+	g_print("Log: end evolution_x\n");
 }
 
 static void preflash_text()
 {
-	g_print("Die Lösung ist: ");
+	g_print("Log: Die Lösung ist: \n");
 }
 
 void instruction_preflash(int argc, char *argv[]) 
 {
+    g_print("Log: instruction_preflash\n");
     GtkWidget *window;
     GtkWidget *page_preflash1, *page_preflash2;
     GtkWidget *label_preflash1_1, *label_preflash1_2, *label_preflash1_3, *label_preflash1_4;
@@ -162,4 +174,5 @@ void instruction_preflash(int argc, char *argv[])
 	
 	// run gtk mainloop
     gtk_main();
+    g_print("Log: end instruction_preflash\n");
 }
