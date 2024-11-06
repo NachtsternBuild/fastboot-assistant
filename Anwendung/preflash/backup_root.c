@@ -26,6 +26,7 @@
 
 void backup_root() 
 {
+    g_print("Log: backup_root\n");
     char command[512];
     char *homeDir = getenv("HOME");
     char backup_predir[2048];
@@ -54,7 +55,7 @@ void backup_root()
     //snprintf(backup_predir, sizeof(backup_predir), "%s", wsl_setup_base);
     // create full path
     snprintf(backup_dir, sizeof(backup_dir), "%s/Downloads/ROM-Install/Backup", backup_predir);
-    g_print("Sicherung aller verfügbaren Partitionen nach %s.\n", backup_dir);
+    g_print("Log: Sicherung aller verfügbaren Partitionen nach %s.\n", backup_dir);
 	// create backup path
     snprintf(command, sizeof(command), "mkdir -p %s", backup_dir);
     execute_command(command);
@@ -89,7 +90,7 @@ void backup_root()
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
                 snprintf(command, sizeof(command), "%s/%s_%c.img", backup_dir, partition, slot);
-                g_print("Sichere %s (Slot %c) nach %s\n", partition, slot, command);
+                g_print("Log: Sichere %s (Slot %c) nach %s\n", partition, slot, command);
 
                 snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", 
                         adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
@@ -99,7 +100,7 @@ void backup_root()
         else // for devices without a/b slots
         {
             snprintf(command, sizeof(command), "%s/%s.img", backup_dir, partition);
-            g_print("Sichere %s nach %s\n", partition, command);
+            g_print("Log: Sichere %s nach %s\n", partition, command);
 
             snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", 
                     adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
@@ -108,6 +109,7 @@ void backup_root()
     }
 
     fclose(file);
-    g_print("Sicherung abgeschlossen. Dateien befinden sich in %s\n", backup_dir);
+    g_print("Log: Sicherung abgeschlossen. Dateien befinden sich in %s\n", backup_dir);
+    g_print("Log: end backup_root\n");
 }
 
