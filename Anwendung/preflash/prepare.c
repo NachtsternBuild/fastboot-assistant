@@ -30,6 +30,7 @@
 /* main function of prepare*/
 void prepare(int argc, char *argv[]) 
 {
+    g_print("Log: prepare\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -93,5 +94,5 @@ void prepare(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end prepare\n");
 }
-
