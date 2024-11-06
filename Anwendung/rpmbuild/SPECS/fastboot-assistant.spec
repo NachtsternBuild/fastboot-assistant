@@ -1,5 +1,5 @@
 Name:           fastboot-assistant
-Version:        0.5.5.2
+Version:        0.6.1
 Release:        1%{?dist}
 Summary:        Program to facilitate the installation of custom ROMs and GSIs on Android devices.
 License:        Apache License Version 2.0
