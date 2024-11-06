@@ -7,10 +7,10 @@
 
 #define OUTPUT_DIR_ENV "HOME" // home dir
 #define TARGET_DIR "Downloads/ROM-Install" // target dir
-// #define OUTPUT_DIR_ENV "/mnt/c/Users/USERNAME/"
 
 void unxz_files(const char *xz_filename) 
 {
+    g_print("Log: unxz_files\n");
     // get home dir
     const char *home_dir = getenv(OUTPUT_DIR_ENV);
     if (home_dir == NULL) 
@@ -37,7 +37,7 @@ void unxz_files(const char *xz_filename)
     else 
     {
         strncpy(output_xz_filename, xz_filename, sizeof(output_xz_filename));
-        g_print("Keine xz-komprimierte Datei!\n");
+        g_print("Log: Keine xz-komprimierte Datei!\n");
     }
     
     // make full path to outout file
@@ -49,7 +49,7 @@ void unxz_files(const char *xz_filename)
     snprintf(command, sizeof(command), "unxz -c %s > %s", xz_filename, output_file_xz);
 
     // output of the command
-    g_print("Führe Befehl aus: %s\n", command);
+    g_print("Log: Run: %s\n", command);
 
     // run command
     int result = system(command);
