@@ -31,19 +31,22 @@ char install_command_backup[2048];
 
 static void install_depends(GtkButton *button, GtkEntry *password_entry) 
 {
+    g_print("Log: install_depends\n");
     // for linux
     snprintf(install_command_backup, sizeof(install_command_backup), "apt-get install p7zip-full adb curl whiptail pv bc secure-delete zenity");
     // for windows
     //snprintf(install_command, sizeof(install_command), "apt-get install p7zip-full secure-delete whiptail curl dos2unix pv bc zenity '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev -y");
-    g_print("Installiere: %s", install_command_backup);
+    g_print("Log: Install: %s\n", install_command_backup);
     install_with_root(button, password_entry, install_command_backup);
     gtk_widget_destroy(backup_window);
+    g_print("Log: end install_depends\n");
 }
 
 // Callback functions for each button
 // install depends for open android backup
 static void install_depends_function(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: install_depends_function\n");
     GtkWidget *vbox;
     GtkWidget *password_entry;
     GtkWidget *info_button, *install_depends_button;
@@ -75,19 +78,22 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
    	gtk_box_pack_start(GTK_BOX(vbox), install_depends_button, TRUE, TRUE, 0);
 
     gtk_widget_show_all(backup_window);
+    g_print("Log: end install_depends_function\n");
 }
 
 // download open android backup
 static void download_backup(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: download_backup\n");
     const char *message1 = "\nDas Tool 'Open Android Backup' wird heruntergeladen und entpackt.\n";
     show_message(message1);
     
     snprintf(install_command_backup, sizeof(install_command_backup), "wget -O ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle");
     // for windows
     //snprintf("wget -O %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle", wsl_dir, wsl_dir, wsl_dir);
-    g_print("Führe aus: %s", install_command_backup);
+    g_print("Log: Run: %s\n", install_command_backup);
     command_with_spinner(install_command_backup);
+    g_print("Log: end download_backup\n");
 }
 
 // open open android backup
@@ -106,6 +112,7 @@ static void open_backup(GtkWidget *widget, gpointer data)
 /* main function of backup_noroot*/
 void backup_noroot(int argc, char *argv[]) 
 {
+    g_print("Log: backup_noroot\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -158,5 +165,5 @@ void backup_noroot(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end backup_noroot\n");
 }
-    
