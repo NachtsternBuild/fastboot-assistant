@@ -26,6 +26,7 @@ char erase_data_command[2048];
 // Function to erase user data
 void erase_data(GtkWidget *widget, gpointer data) 
 {
+    g_print("Log: erase_data\n");
     const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
 
     // show message
@@ -39,5 +40,6 @@ void erase_data(GtkWidget *widget, gpointer data)
     g_print("Führe aus: %s", erase_data_command);
     command_with_spinner(erase_data_command);
     free(device_command);
+    g_print("Log: end erase_data\n");
 }
 
