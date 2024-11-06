@@ -72,6 +72,7 @@ static void start_partitions(GtkWidget *widget, gpointer data)
 /* main function of preflash_GUI*/
 void preflash_GUI(int argc, char *argv[]) 
 {
+    g_print("Log: preflash_GUI\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -136,5 +137,5 @@ void preflash_GUI(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+	g_print("Log: end preflash_GUI\n");
 }
-
