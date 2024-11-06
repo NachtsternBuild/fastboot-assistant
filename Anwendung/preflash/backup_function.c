@@ -54,6 +54,7 @@ static void start_backup_noroot(GtkWidget *widget, gpointer data)
 /* main function of the backup_function */
 void backup_function(int argc, char *argv[]) 
 {
+    g_print("Log: backup_function\n");
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *button;
@@ -125,6 +126,5 @@ void backup_function(int argc, char *argv[])
 
     // run main-gtk-loop
     gtk_main();
+    g_print("Log: end backup_function\n");
 }
-
-
