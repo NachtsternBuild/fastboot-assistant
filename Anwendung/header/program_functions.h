@@ -34,6 +34,8 @@
 extern GtkCssProvider *provider;
 // global use of the theme 
 extern const char *current_theme;
+// and the language
+extern const char *language;
 
 void delete_files_in_dir();
 char *execute_command();
@@ -75,6 +77,8 @@ void check_dark_file_light();
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command);
 void command_with_spinner(const gchar *command);
 
+// for setup
 void config_start();
+void config_dir_setup(const char *pfad); 
 
 #endif
