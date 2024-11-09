@@ -2,19 +2,19 @@
  *-------------------------------------------*
  *                Projekt 122                *
  *-------------------------------------------*
- *  	Apache License, Version 2.0		     *
+ *      Apache License, Version 2.0          *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
- *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern  						 *
+ *  Programm um das Installieren von         *
+ *  Custom-ROM und GSIs auf Android-Geräte   *
+ *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz        *
  *-------------------------------------------*
- *											 *
- *         Headerpart - flash_image			 *
- *											 *
+ *                                           *
+ *         Headerpart - flash_image          *
+ *                                           *
  *-------------------------------------------*
  */
 
@@ -26,43 +26,39 @@
 #include <pthread.h>
 #include "program_functions.h"
 
-// global var for spinner
+// global vars
 GtkWidget *spinner_window_flash;
 GtkWidget *spinner_flash;
 
-// function that run flash command
+// run the command 
 void *run_flash_command(void *command)
 {
     char *function_command = (char *)command;
 
-    // run the command
-    g_print("Executing: %s\n", function_command);
+    // run the command 
+    g_print("Log: Run: %s\n", function_command);
     system(function_command);
 
-    // close the spinner and the window
+    // end the spinner
     gtk_spinner_stop(GTK_SPINNER(spinner_flash));
-    gtk_widget_destroy(spinner_window_flash);
-    
-    const char *message = "Fertig\n";
-    // show message
-    show_message(message);
+    gtk_window_destroy(GTK_WINDOW(spinner_window_flash));
 
     free(function_command);  // free memory
     return NULL;
 }
 
-// function to flash images with spinner
+// function to flash a image
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name)
 {
     char image_path[3072];
-    char windows_image_path[3072];
-    apply_theme();  // runing css
+    apply_theme(); 
+    apply_language();
 
-    // path for the image
+    // create the path for the image
     set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
-	
-	char *function_command = malloc(4096);
-	 
+    
+    char *function_command = malloc(4096);
+
     // check if the image exsists
     if (access(image_path, F_OK) == -1)
     {
@@ -71,42 +67,43 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
-        
+
+    // create the command
+    // for a/b-devices
     if (partition2)
     {
-         const char *device_command = fastboot_command();
-         snprintf(function_command, 4096,
-         "%s flash %s %s && fastboot flash %s %s && exit", device_command, partition1, image_path, partition2, image_path);
-         free(device_command);
+        const char *device_command = fastboot_command();
+        snprintf(function_command, 4096, "%s flash %s %s && fastboot flash %s %s && exit", device_command, partition1, image_path, partition2, image_path);
+        free(device_command);
     }
+    // for only-a-devices 
     else
     {
-          const char *device_command = fastboot_command();
-          snprintf(function_command, 4096,
-          "%s flash %s %s && exit", device_command, partition1, image_path);
-          free(device_command);
+        const char *device_command = fastboot_command();
+        snprintf(function_command, 4096, "%s flash %s %s && exit", device_command, partition1, image_path);
+        free(device_command);
     }
 
-    // new windows with the spinner
-    spinner_window_flash= gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    // create a new window
+    spinner_window_flash = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(spinner_window_flash), " ");
     gtk_window_set_default_size(GTK_WINDOW(spinner_window_flash), 200, 100);
 
-    // create spinner 
+    // create spinner
     spinner_flash = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), spinner_flash, TRUE, TRUE, 0);
-    gtk_container_add(GTK_CONTAINER(spinner_window_flash), vbox);
+    gtk_box_append(GTK_BOX(vbox), spinner_flash);
+    gtk_window_set_child(GTK_WINDOW(spinner_window_flash), vbox);
 
-    // run spinner
+    // start the spinner
     gtk_spinner_start(GTK_SPINNER(spinner_flash));
 
-    // show new window
-    gtk_widget_show_all(spinner_window_flash);
+    // show the window
+    gtk_widget_show(spinner_window_flash);
 
-    // flash the image in new thread
+    // run command in a new thread
     pthread_t thread;
     pthread_create(&thread, NULL, run_flash_command, function_command);
-    pthread_detach(thread);  // thread in the background 
+    pthread_detach(thread);  // thread in the background
 }
 
