@@ -30,7 +30,7 @@ void get_wsl_directory(char* wsl_dir, size_t size)
     const char* user = getenv("USER");
     if (!user) 
     {
-        g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+        g_print("Log: Error: Could not determine the user name.\n");
         exit(1);
     }
     snprintf(wsl_dir, size, "/mnt/c/Users/%s", user);
