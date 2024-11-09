@@ -2,19 +2,19 @@
  *-------------------------------------------*
  *                Projekt 122                *
  *-------------------------------------------*
- *  	Apache License, Version 2.0		     *
+ *      Apache License, Version 2.0          *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
- *	Custom-ROM und GSIs auf Android-Geräte 	 *
- *	zu erleichtern  						 *
+ *  Programm um das Installieren von         *
+ *  Custom-ROM und GSIs auf Android-Geräte   *
+ *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2024 Elias Mörz        *
  *-------------------------------------------*
- *											 *
- *       Headerpart - loading_spinner		 *
- *											 *
+ *                                           *
+ *       Headerpart - loading_spinner        *
+ *                                           *
  *-------------------------------------------*
  */
  
@@ -31,7 +31,7 @@
 GtkWidget *spinner = NULL;
 GtkWidget *spinner_window = NULL;
 
-// function to start the spinner
+// Funktion, um den Spinner zu starten
 void start_loading_spinner() 
 {
     if (GTK_IS_SPINNER(spinner)) 
@@ -44,57 +44,55 @@ void start_loading_spinner()
     }
 }
 
-// function to stop the spinner
+// Funktion, um den Spinner zu stoppen
 void stop_loading_spinner() 
 {
     if (GTK_IS_SPINNER(spinner)) 
     {
         gtk_spinner_stop(GTK_SPINNER(spinner));
-        g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
     }
     if (spinner_window) 
     {
-        gtk_widget_destroy(spinner_window);  // close the window
-        g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-        spinner_window = NULL;  // Set to NULL after destroying
+        gtk_window_destroy(GTK_WINDOW(spinner_window));  // Fenster schließen
+        spinner_window = NULL;  // Nach dem Schließen auf NULL setzen
     }
 }
 
-// function to create the window
+// Funktion, um das Fenster zu erstellen
 GtkWidget* create_spinner_window() 
 {    
-    // create a new window
-    spinner_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    // Neues Fenster erstellen
+    spinner_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(spinner_window), " ");
     gtk_window_set_default_size(GTK_WINDOW(spinner_window), 200, 100);
-    // the "destroy" signal to gtk_main_quit
+    
+    // "destroy"-Signal verbinden
     g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 
-    // add the spinner
+    // Spinner hinzufügen
     spinner = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_box_pack_start(GTK_BOX(vbox), spinner, TRUE, TRUE, 0);
-    gtk_container_add(GTK_CONTAINER(spinner_window), vbox);
+    gtk_box_append(GTK_BOX(vbox), spinner);
+    gtk_window_set_child(GTK_WINDOW(spinner_window), vbox);
 
-    // show the window
-    gtk_widget_show_all(spinner_window);  // Ensure all widgets are shown
+    // Fenster anzeigen
+    gtk_widget_show(spinner_window);
 
-    // start the spinner
+    // Spinner starten
     start_loading_spinner();
     
     return spinner_window;
 }
 
-// function to run spinner in another thread
+// Funktion, um den Spinner in einem anderen Thread zu starten
 void run_with_spinner(void *(*thread_function)(void *)) 
 { 
     pthread_t thread;
 
-    // create the spinner window
+    // Spinner-Fenster erstellen
     create_spinner_window();
 
-    // create a new thread
+    // Neuen Thread erstellen
     int result = pthread_create(&thread, NULL, thread_function, NULL);
     if (result != 0) 
     {
@@ -104,6 +102,7 @@ void run_with_spinner(void *(*thread_function)(void *))
 
     pthread_detach(thread);
     
-     // Run the GTK main loop
+    // GTK-Hauptschleife ausführen
     gtk_main();
 }
+
