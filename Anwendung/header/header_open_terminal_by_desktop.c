@@ -30,7 +30,7 @@ void run_command(const char *command)
 {
     if (command != NULL) 
     {
-        // use system()
+        // use system()-command
         system(command);
     }
 }
@@ -50,7 +50,7 @@ void open_terminal_by_desktop(const char *function_command)
         return;
     }
 
-    // use the linux desktop
+    // use the under linux desktop
     if (desktop != NULL) 
     {
         // GNOME
@@ -81,18 +81,18 @@ void open_terminal_by_desktop(const char *function_command)
         
         else 
         {
-            fprintf(stderr, "Unsupported desktop environment: %s\n", desktop);
+            fprintf(stderr, "Log: Unsupported desktop environment: %s\n", desktop);
             return;
         }
 
         // debugging
-        g_print("Führe aus: %s\n", command);
+        g_print("Log: Run: %s\n", command);
         // run the command
         run_command(command);
     } 
     
     else 
     {
-        fprintf(stderr, "Desktop environment not found.\n");
+        fprintf(stderr, "Log: Desktop environment not found.\n");
     }
 }
