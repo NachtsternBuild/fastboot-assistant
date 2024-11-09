@@ -29,51 +29,51 @@
 GtkWidget *spinner_install = NULL;
 GtkWidget *spinner_install_window = NULL;
 
-// Funktion, die den Installationsbefehl in einem separaten Thread ausführt
+// function to run command
 void *run_install_command(void *command)
 {
     char *full_command = (char *)command;
 
-    // Befehl ausführen
+    // run command
     system(full_command);
 
-    // Spinner stoppen und Spinner-Fenster sicher im Hauptthread schließen
+    // close the spinner 
     g_idle_add((GSourceFunc)gtk_spinner_stop, spinner_install);
     g_idle_add((GSourceFunc)gtk_window_destroy, spinner_install_window);
 
-    free(full_command);  // Speicher freigeben
+    free(full_command);  // free memory
     return NULL;
 }
 
-// Funktion, um den Befehl zu starten und den Spinner anzuzeigen
+// run the command with spinner
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command) 
 {
     const gchar *password = gtk_entry_get_text(password_entry);
     gchar *full_command = g_strdup_printf("echo %s | sudo -S %s", password, command);
     
-    // Neues Fenster für den Spinner erstellen
+    // create new window for the spinner
     spinner_install_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(spinner_install_window), "Installation");
     gtk_window_set_default_size(GTK_WINDOW(spinner_install_window), 200, 100);
     
-    // Signal für Fenster schließen, um gtk_widget_destroy aufzurufen
+    // destroy event for the window
     g_signal_connect(spinner_install_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
 
-    // Spinner erstellen und zum Fenster hinzufügen
+    // create the spinner
     spinner_install = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_box_append(GTK_BOX(vbox), spinner_install);
     gtk_window_set_child(GTK_WINDOW(spinner_install_window), vbox);
     
-    // Spinner starten
+    // start spinner
     gtk_spinner_start(GTK_SPINNER(spinner_install));
 
-    // Spinner-Fenster anzeigen
+    // show window
     gtk_widget_show(spinner_install_window);
 
-    // Installationsbefehl in einem neuen Thread ausführen
+    // run command in a new thread
     pthread_t thread;
     pthread_create(&thread, NULL, run_install_command, full_command);
-    pthread_detach(thread);  // Thread im Hintergrund ausführen 
+    pthread_detach(thread);  // thread in the background 
 }
 
