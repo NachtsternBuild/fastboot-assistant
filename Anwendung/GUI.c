@@ -154,48 +154,66 @@ int main(int argc, char *argv[])
     apply_language();
     set_button_labels(button_labels);
 
+    // function that check if the setup run the first time
+    // the crazy output came from the experiment with this
     const char *content = "Fisch";
-    char fish_path[2048];
-    char setup_dir[2048];
-    char *homeDir = getenv("HOME");
-    if (homeDir == NULL) 
-    {
-        fprintf(stderr, "Fehler: Konnte das Home-Verzeichnis nicht finden.\n");
-        exit(1);
-    }
+	char fish_path[2048];
+	char setup_dir[2048];
+	char *homeDir = getenv("HOME");
+	if (homeDir == NULL) 
+	{
+    	fprintf(stderr, "Log: Error: Could not find the home directory.\n");
+    	exit(1);  // close the program if there are errors
+	}
 
-    const char *user = getenv("USER");
-    if (user == NULL) 
-    {
-        g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
-        exit(1);
-    }
+	// WSL Logik
+	const char *user = getenv("USER");
+	if (user == NULL) 
+	{	
+    	g_print("Log: Error: Could not determine the user name.\n");
+    	exit(1);  // close the program if there are errors
+	}
 
-    snprintf(setup_dir, sizeof(setup_dir), "%s", homeDir);
-    snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config", setup_dir);
-    config_dir_setup(fish_path);
+	char wsl_setup_base[2048];
+	snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
 
-    snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config/config.txt", setup_dir);
-    FILE *file;
-    if ((file = fopen(fish_path, "r")) != NULL) 
-    {
-        fclose(file);
-        g_print("\nNo Setup\n");
-    } 
-    
-    else 
-    {
-        file = fopen(fish_path, "w");
-        if (file == NULL) 
-        {
-            fprintf(stderr, "Fehler: Konnte die Datei nicht erstellen.\n");
-            exit(1);
-        }
-        fprintf(file, "%s", content);
-        fclose(file);
-        g_print("Fisch\n");
-        run_first_run_setup();
-    }
+	// for linux
+	snprintf(setup_dir, sizeof(setup_dir), "%s", homeDir);
+	// for wsl
+	// snprintf(setup_dir, sizeof(setup_dir), "%s", wsl_setup_base);
+
+	// create the dir for the config
+	snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config", setup_dir);
+	config_dir_setup(fish_path);
+
+	// create full path for the config.txt
+	snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config/config.txt", setup_dir);
+
+	FILE *file;
+
+	// check if file exsists
+	if ((file = fopen(fish_path, "r")) != NULL) 
+	{
+    	// file exsists
+    	fclose(file);
+    	g_print("Log: No Setup\n");
+    	g_print("Log: old fish!\n");
+	} 
+	else 
+	{
+	    // file not exsists
+    	file = fopen(fish_path, "w");
+    	if (file == NULL) 
+    	{
+    	    fprintf(stderr, "Log: Error: Could not create the file.\n");
+    	    exit(1);  // close the program if there are errors
+    	}
+    	fprintf(file, "%s", content);
+    	fclose(file);
+    	g_print("Log: fish\n");
+    	// run setup
+    	run_first_run_setup(provider);
+	}
 
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant");
@@ -245,7 +263,13 @@ int main(int argc, char *argv[])
                 break;
         }
     }
-
+	
+	// free the provider
+	if (provider != NULL) 
+	{
+	    g_object_unref(provider);
+	}
+	
     gtk_widget_show(window);
     gtk_main();
 
