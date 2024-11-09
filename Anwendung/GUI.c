@@ -35,78 +35,103 @@
 #define WINDOW_WIDTH 600
 #define WINDOW_HEIGHT 400
 
+// include all functions
+extern void get_devices();
+extern void reboot_GUI();
+extern void config_projekt_GUI();
+extern void preflash_GUI();
+extern void flash_GUI();
+extern void instruction_GUI();
+extern void info();
+extern void updater();
+extern void about();
+extern void make_dir();
+
+extern void run_first_run_setup();
+
+
 // Callback functions for each button
+// start get_devices-function
 static void start_get_devices(GtkWidget *widget, gpointer data) 
 {
     get_devices();
 }
 
+// start reboot_GUI-function
 static void start_reboot_GUI(GtkWidget *widget, gpointer data) 
 {
     reboot_GUI();
 }
 
+// start projekt-122-tools-function
 static void start_config_projekt(GtkWidget *widget, gpointer data) 
 {
     config_projekt_GUI();
 }
 
+// start preflash_GUI-function
 static void start_preflash(GtkWidget *widget, gpointer data) 
 {
     preflash_GUI();
 }
 
+// start flash_GUI-function
 static void start_flash_GUI(GtkWidget *widget, gpointer data) 
 {
     flash_GUI();
 }
 
+// start instructions_GUI-function
 static void start_instruction_GUI(GtkWidget *widget, gpointer data) 
 {
     instruction_GUI();
 }
 
+// start info-function
 static void start_info(GtkWidget *widget, gpointer data) 
 {
     info();
 }
 
+// start updater-function
 static void start_updater(GtkWidget *widget, gpointer data) 
 {
     updater();
 }
 
+// start about-function
 static void start_about(GtkWidget *widget, gpointer data) 
 {
     about();
 }
 
-// Function to set up directory structure for the config
-void config_dir_setup(const char *path) 
+// create the dir for the setup
+void config_dir_setup(const char *pfad) 
 {
     g_print("Log: config_dir_setup\n");
     char tmp[2048];
-    snprintf(tmp, sizeof(tmp), "%s", path);  
+    snprintf(tmp, sizeof(tmp), "%s", pfad);  // copy the path
     char *p = tmp;
 
     for (; *p; p++) 
     {
-        if (*p == '/') 
-        {
-            *p = '\0';
-            mkdir(tmp, 0700);
-            *p = '/';
+        if (*p == '/')
+         {
+            *p = '\0';  // set temp end
+            mkdir(tmp, 0700);  // create the dir
+            *p = '/';  // reset the option
         }
     }
-    mkdir(tmp, 0700);
-    g_print("Log: end config_dir_setup\n");
+    mkdir(tmp, 0700);  // create the dir
+	g_print("Log: end config_dir_setup\n");
 }
 
-// Config function to start the application setup
+// config the program
 void config_start() 
 {
     g_print("Log: config_start\n");
-    const char *message = "Konfiguration beendet!\n";
+    const char *message;
+    message = "Konfiguration beendet!\n";
     make_dir();
     wsl_config();
     show_message(message);
@@ -218,8 +243,8 @@ int main(int argc, char *argv[])
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
+    g_signal_connect(spinner_install_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
