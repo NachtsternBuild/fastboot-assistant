@@ -41,7 +41,7 @@ int get_slot_of_device()
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        fprintf(stderr, "Failed to run command\n" );
+        fprintf(stderr, "Log: Failed to run command\n" );
         exit(1);
     }
 
