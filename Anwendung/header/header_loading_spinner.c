@@ -67,7 +67,7 @@ GtkWidget* create_spinner_window()
     gtk_window_set_default_size(GTK_WINDOW(spinner_window), 200, 100);
     
     // connect destroy event
-    g_signal_connect(spinner_install_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
 
     // add spinner
     spinner = gtk_spinner_new();
