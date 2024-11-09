@@ -29,7 +29,7 @@ const char* get_home_directory_flash()
     const char* home_dir = getenv("HOME");
     if (!home_dir) 
     {
-        g_print("Fehler: Konnte das Home-Verzeichnis nicht ermitteln.\n");
+        g_print("Log: Error: Could not determine the home directory.\n");
         exit(1);
     }
     return home_dir;
