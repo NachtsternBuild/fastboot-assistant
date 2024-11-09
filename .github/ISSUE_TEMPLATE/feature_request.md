@@ -20,5 +20,5 @@ A clear and concise description of any alternative solutions or features you've 
 Add any other context or screenshots about the feature request here.
 
 **Informations:**
-- **for program version:** e.g. v.0.6
+- **for program version:** e.g. v.0.7
 - **for OS:** e.g. Ubuntu
