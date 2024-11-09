@@ -27,7 +27,7 @@
 
 void next_page(GtkButton *button, gpointer data) 
 {
-    // Prüfen, ob 'data' gültig ist
+    // check data are okay
     if (!GTK_IS_NOTEBOOK(data)) 
     {
         g_warning("Log: next_page: data is not a valid GtkNotebook pointer.");
