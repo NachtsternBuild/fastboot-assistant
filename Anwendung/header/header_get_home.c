@@ -28,10 +28,10 @@ gchar* get_home(const gchar *path)
     const gchar *home = getenv("HOME");
     if (home == NULL) 
     {
-        g_print("Fehler: HOME-Umgebungsvariable nicht gefunden.\n");
+        g_print("Log: Error: HOME environment variable not found.\n");
         return NULL;
     }
-    
+    // for '~/'
     if (g_str_has_prefix(path, "~/")) 
     {
         gchar *short_path = g_strconcat(home, path + 1, NULL);
