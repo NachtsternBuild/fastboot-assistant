@@ -33,7 +33,7 @@ char *execute_command(const char *command)
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        perror("Fehler beim Ausführen des Befehls.\n");
+        perror("Log: Error when executing the command.\n");
         exit(EXIT_FAILURE);
     }
 
