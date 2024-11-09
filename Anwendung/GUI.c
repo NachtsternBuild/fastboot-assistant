@@ -243,7 +243,7 @@ int main(int argc, char *argv[])
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(spinner_install_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
     
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
