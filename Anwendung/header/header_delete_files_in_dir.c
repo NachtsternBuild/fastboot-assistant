@@ -35,7 +35,7 @@ void delete_files_in_dir(const char *path)
     dir = opendir(path);
     if (dir == NULL) 
     {
-        perror("Fehler beim Öffnen des Verzeichnisses");
+        perror("Log: Error opening the directory.\n");
         exit(EXIT_FAILURE);
     }
 
@@ -54,12 +54,12 @@ void delete_files_in_dir(const char *path)
         // delet files
         if (remove(fullpath) != 0) 
         {
-            perror("Fehler beim Löschen der Datei");
+            perror("Log: Error deleting the file.\n");
         } 
         
         else 
         {
-            g_print("Datei gelöscht: %s\n", fullpath);
+            g_print("Log: File deleted: %s\n", fullpath);
         }
     }
 
