@@ -34,7 +34,7 @@ void set_main_dir(char *buffer, size_t buffer_size, const char *filename)
     
     else 
     {
-        g_print("Fehler: Konnte das Home-Verzeichnis nicht ermitteln.\n");
+        g_print("Log: Error: Could not determine the home directory.\n");
     }
 }
 
