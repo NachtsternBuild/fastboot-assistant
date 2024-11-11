@@ -24,16 +24,15 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
-// function to display a message dialog
-void show_message(const char *message)
+void show_message(const char *message) 
 {
-    GtkWidget *dialog = gtk_message_dialog_new(NULL,
-                                              GTK_DIALOG_MODAL,
-                                              GTK_MESSAGE_INFO,
-                                              GTK_BUTTONS_OK,
-                                              "%s", message);
+    GtkDialog *dialog = GTK_DIALOG(gtk_message_dialog_new(NULL,
+                                                          GTK_DIALOG_MODAL,
+                                                          GTK_MESSAGE_INFO,
+                                                          GTK_BUTTONS_OK,
+                                                          "%s", message));
 
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    gtk_widget_destroy(dialog);
+    gtk_dialog_run(dialog);
+    gtk_window_destroy(GTK_WINDOW(dialog));
 }
 

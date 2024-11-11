@@ -5,7 +5,7 @@
  *          Apache License, Version 2.0      *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von         *
+ *  Programm um das Installieren von         *
  *  Custom-ROM und GSIs auf Android-Geräte   *
  *  zu erleichtern - GUI                     *
  *                                           *
@@ -15,7 +15,7 @@
  *
  */
 
-/* headers that used in the programm */
+/* headers that are used in the program */
 #include <glib.h>
 #include <stdio.h>
 #include <fcntl.h>
@@ -29,8 +29,11 @@
 #include "program_functions.h"
 #include "instruction_header.h"
 #include "flash_function_header.h"
+#include "language_check.h"
 
 #define MAX_BUFFER_SIZE 256
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 400
 
 // include all functions
 extern void get_devices();
@@ -123,8 +126,6 @@ void config_dir_setup(const char *pfad)
 	g_print("Log: end config_dir_setup\n");
 }
 
-
-
 // config the program
 void config_start() 
 {
@@ -137,19 +138,46 @@ void config_start()
     g_print("Log: end config_start\n");
 }
 
-/* the main function */
+// Function to set up button labels based on the language
+void set_button_labels(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Devices");
+        strcpy(labels[1], "Reboot Device");
+        strcpy(labels[2], "Settings");
+        strcpy(labels[3], "Prepare Flashing");
+        strcpy(labels[4], "Flash");
+        strcpy(labels[5], "Instructions");
+        strcpy(labels[6], "Info");
+        strcpy(labels[7], "Updater");
+        strcpy(labels[8], "About");
+    } 
+    
+    else 
+    {
+        strcpy(labels[0], "Geräte");
+        strcpy(labels[1], "Gerät neustarten");
+        strcpy(labels[2], "Einstellungen");
+        strcpy(labels[3], "Flash vorbereiten");
+        strcpy(labels[4], "Flashen");
+        strcpy(labels[5], "Anleitungen");
+        strcpy(labels[6], "Info");
+        strcpy(labels[7], "Updater");
+        strcpy(labels[8], "Über das Programm");
+    }
+}
+
 int main(int argc, char *argv[]) 
 {
     g_print("Log: fastboot-assistant\n");
-    GtkWidget *window;
-    GtkWidget *grid;
-    GtkWidget *button;
-    char button_labels[9][30] = {"Geräte", "Gerät neustarten", "Einstellungen", 
-                                 "Flash vorbereiten", "Flashen", "Anleitungen", 
-                                 "Info", "Updater", "Über das Programm"};
-
-    gtk_init(&argc, &argv);
+    GtkWidget *window, *grid, *button;
+    char button_labels[9][30];
+    
+    gtk_init();
     apply_theme();
+    apply_language();
+    set_button_labels(button_labels);
 
     // function that check if the setup run the first time
     // the crazy output came from the experiment with this
@@ -159,7 +187,7 @@ int main(int argc, char *argv[])
 	char *homeDir = getenv("HOME");
 	if (homeDir == NULL) 
 	{
-    	fprintf(stderr, "Fehler: Konnte das Home-Verzeichnis nicht finden.\n");
+    	fprintf(stderr, "Log: Error: Could not find the home directory.\n");
     	exit(1);  // close the program if there are errors
 	}
 
@@ -167,7 +195,7 @@ int main(int argc, char *argv[])
 	const char *user = getenv("USER");
 	if (user == NULL) 
 	{	
-    	g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+    	g_print("Log: Error: Could not determine the user name.\n");
     	exit(1);  // close the program if there are errors
 	}
 
@@ -193,8 +221,8 @@ int main(int argc, char *argv[])
 	{
     	// file exsists
     	fclose(file);
-    	g_print("\nNo Setup\n");
-    	g_print("Alter Fisch!\n");
+    	g_print("Log: No Setup\n");
+    	g_print("Log: old fish!\n");
 	} 
 	else 
 	{
@@ -202,42 +230,35 @@ int main(int argc, char *argv[])
     	file = fopen(fish_path, "w");
     	if (file == NULL) 
     	{
-    	    fprintf(stderr, "Fehler: Konnte die Datei nicht erstellen.\n");
+    	    fprintf(stderr, "Log: Error: Could not create the file.\n");
     	    exit(1);  // close the program if there are errors
     	}
     	fprintf(file, "%s", content);
     	fclose(file);
-    	g_print("Fisch\n");
+    	g_print("Log: fish\n");
     	// run setup
     	run_first_run_setup(provider);
 	}
-		
-    // create the window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+    window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	
-    // create the grid and centre it
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_window_set_child(GTK_WINDOW(window), grid);
 
-    // add the grid to the window
-    gtk_container_add(GTK_CONTAINER(window), grid);
-
-    // add and centre all button
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; i++) 
+    {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
 
-        // execute css-provider for all buttons
-        add_css_provider(button, provider);
-
-        switch (i) {
+        switch (i) 
+        {
             case 0:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_get_devices), NULL);
                 break;
@@ -273,14 +294,10 @@ int main(int argc, char *argv[])
 	{
 	    g_object_unref(provider);
 	}
-
-    
-    // show all button
-    gtk_widget_show_all(window);
-
-    // gtk mainloop
-    gtk_main();    
 	
-	g_print("Log: end fastboot-assistant\n");
+    gtk_widget_show(window);
+    gtk_main();
+
+    g_print("Log: end fastboot-assistant\n");
     return 0;
 }

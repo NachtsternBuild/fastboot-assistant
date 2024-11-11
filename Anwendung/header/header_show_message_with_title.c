@@ -24,16 +24,15 @@
 #include <string.h>
 #include <gtk/gtk.h>
 
-void show_message_with_title(const char *title, const char *message)
+void show_message_with_title(const char *title, const char *message) 
 {
-	GtkWidget *dialog;
-    
-	dialog = gtk_message_dialog_new(NULL,
-                                     GTK_DIALOG_MODAL,
-                                     GTK_MESSAGE_INFO,
-                                     GTK_BUTTONS_OK,
-                                     "%s\n\n%s", title, message);
+    GtkDialog *dialog = GTK_DIALOG(gtk_message_dialog_new(NULL,
+                                                          GTK_DIALOG_MODAL,
+                                                          GTK_MESSAGE_INFO,
+                                                          GTK_BUTTONS_OK,
+                                                          "%s\n\n%s", title, message));
 
-    	gtk_dialog_run(GTK_DIALOG(dialog));
-    	gtk_widget_destroy(dialog);
+    gtk_dialog_run(dialog);
+    gtk_window_destroy(GTK_WINDOW(dialog));
 }
+

@@ -30,8 +30,9 @@ void connected_devices(const char *command, const char *label)
 
     // Execute the command and capture the output
     fp = popen(command, "r");
-    if (fp == NULL) {
-        perror("Fehler beim Öffnen des Prozesses!");
+    if (fp == NULL) 
+    {
+        perror("Log: Error when opening the process!\n");
         exit(EXIT_FAILURE);
     }
 

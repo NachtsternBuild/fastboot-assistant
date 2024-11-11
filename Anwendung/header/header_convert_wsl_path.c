@@ -37,14 +37,14 @@ void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path)
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        g_print("Fehler: Konnte den Pfad nicht konvertieren.\n");
+        g_print("Log: Error: Could not convert the path.\n");
         exit(1);
     }
 
     // Read the output of wslpath and store it in windows_path
     if (fgets(windows_path, size, fp) == NULL) 
     {
-        g_print("Fehler: Konnte den konvertierten Pfad nicht lesen.\n");
+        g_print("Log: Error: Could not read the converted path.\n");
         pclose(fp);
         exit(1);
     }

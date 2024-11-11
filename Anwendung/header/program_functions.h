@@ -34,6 +34,8 @@
 extern GtkCssProvider *provider;
 // global use of the theme 
 extern const char *current_theme;
+// and the language
+extern const char *language;
 
 void delete_files_in_dir();
 char *execute_command();
@@ -63,9 +65,7 @@ char* adb_command();
 char* fastboot_command();
 // everything for the css provider
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
-void add_css_provider_blue(GtkWidget *widget, GtkCssProvider *darkblue_provider);
 void load_css(const char *theme);
-void load_css_blue(const char *theme);
 void toggle_theme(GtkWidget *button, gpointer user_data);
 void apply_theme();
 void write_dark_file();
@@ -75,6 +75,8 @@ void check_dark_file_light();
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command);
 void command_with_spinner(const gchar *command);
 
+// for setup
 void config_start();
+void config_dir_setup(const char *pfad); 
 
 #endif

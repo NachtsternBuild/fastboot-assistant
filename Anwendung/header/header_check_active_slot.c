@@ -42,7 +42,7 @@ void check_active_slot()
     pipe = popen(command, "r");
     if (!pipe) 
     {
-        fprintf(stderr, "Konnte das Pipe nicht öffnen.\n");
+        fprintf(stderr, "Log: Could not open the pipe.\n");
         exit(EXIT_FAILURE);
     }
   
@@ -60,6 +60,6 @@ void check_active_slot()
     // close pipe
     pclose(pipe);
 	free(device_command);
-    // Ausgabe des Slots
-    g_print("Aktueller Slot: %s\n", slot);
+    // the slot
+    g_print("Log: current-slot: %s\n", slot);
 }
