@@ -175,8 +175,10 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Ende" : "End"));
     
     // show all widgets
-    gtk_widget_show_all(window);
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    gtk_main();
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
     g_print("Log: end run_first_run_setup\n");
 }
