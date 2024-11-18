@@ -24,17 +24,24 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-// show error message
-void show_error_message(GtkWidget *parent_window, const char *message)
+void show_error_message(GtkWindow *parent_window, const char *message)
 {
-    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(parent_window),
-                                               GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                                               GTK_MESSAGE_ERROR,
-                                               GTK_BUTTONS_CLOSE,
-                                               "%s", message);
-    
-    // show dialog 
+    // Create the error dialog
+    GtkWidget *dialog = gtk_message_dialog_new(
+        parent_window,
+        GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+        GTK_MESSAGE_ERROR,
+        GTK_BUTTONS_CLOSE,
+        "%s",  // Message format
+        message
+    );
+
+    gtk_window_set_title(GTK_WINDOW(dialog), "Error");
+
+    // Connect the response signal to destroy the dialog on user interaction
+    g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), dialog);
+
+    // Display the dialog
     gtk_window_present(GTK_WINDOW(dialog));
-    g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), NULL);
 }
 
