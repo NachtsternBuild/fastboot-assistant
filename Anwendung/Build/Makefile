@@ -5,14 +5,15 @@
 CC = gcc
 
 # compiler flags
-CFLAGS = -Wall `pkg-config --cflags gtk+-3.0 libsecret-1`
+CFLAGS = -Wall `pkg-config --cflags gtk4 libsecret-1`
 
 # linker flags
-LIBS = `pkg-config --libs gtk+-3.0 libsecret-1`
+LIBS = `pkg-config --libs gtk4 libsecret-1`
 
 # header files
 HEADERS = \
 	flash_function_header.h \
+	language_check.h \
 	file_chooser_header.h \
 	instruction_header.h \
 	loading_spinner.h \
@@ -42,13 +43,13 @@ SRCS = \
 	header_css_provider.c \
 	header_dark_theme.c \
 	header_next_page.c \
-	header_button_finish.c \
 	header_convert_wsl_path.c \
 	header_install_with_root.c \
 	header_loading_spinner.c \
 	header_command_with_spinner.c \
 	header_directory_exists.c \
 	header_command_adb_fastboot.c \
+	header_language_check.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
