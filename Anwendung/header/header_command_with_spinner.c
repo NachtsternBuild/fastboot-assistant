@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <pthread.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 GtkWidget *spinner_command = NULL;
@@ -41,20 +42,14 @@ void *run_command_spinner(void *command)
     gtk_spinner_stop(GTK_SPINNER(spinner_command));
     gtk_window_destroy(GTK_WINDOW(spinner_command_window));
 
-    const char *message = "Fertig\n";
-    show_message(message);
-
     free(full_command);  // free memory
     return NULL;
 }
 
-// function to start the spinner an the command
+// function to start the spinner and the command
 void command_with_spinner(const gchar *command) 
 {
-    int argc = 0;
-    char **argv = NULL;
-    
-    gtk_init(&argc, &argv);
+    gtk_init();  // Initialize GTK without command-line arguments
     apply_theme();
 
     gchar *full_command = g_strdup_printf("%s", command);
@@ -73,13 +68,14 @@ void command_with_spinner(const gchar *command)
     // start the spinner
     gtk_spinner_start(GTK_SPINNER(spinner_command));
 
-    // show the window
-    gtk_widget_show(spinner_command_window);
-	
+    // make the window visible using gtk_window_present
+    gtk_window_present(GTK_WINDOW(spinner_command_window));
+
     // run command in a new thread
     pthread_t thread;
     pthread_create(&thread, NULL, run_command_spinner, full_command);
     pthread_detach(thread);  // run thread in the background
 
-    gtk_main();
+    gtk_main();  // Start the GTK main loop
 }
+
