@@ -169,7 +169,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page5), button_end_2);
     
     // connect everything
-    g_signal_connect(button_end_2, "clicked", G_CALLBACK(button_finish), notebook);
+    g_signal_connect(button_end_2, "clicked", G_CALLBACK(gtk_window_destroy), notebook);
     
     // add page to the notebook
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Ende" : "End"));
