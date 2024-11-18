@@ -76,9 +76,6 @@ void command_with_spinner(const gchar *command)
     pthread_create(&thread, NULL, run_command_spinner, full_command);
     pthread_detach(thread);  // run thread in the background
 
-    // Start the GTK main loop
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
      // run GTK main loop
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
     g_main_loop_run(loop); 
