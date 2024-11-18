@@ -28,5 +28,6 @@ If applicable, add screenshots to help explain your problem.
  - **OS version:** e.g. 24.04.
  - **Browser:** e.g. chrome, firefox
  - **Browser version:** e.g. 22
- - **Program version:** e.g. v.0.6.1.dev
- - **Operating mode:** e.g. native/WSL/VM
+ - **Program version:** e.g. v.0.6.2.dev
+ - **Operating mode:** e.g. native / WSL / VM
+ - **Location of error:** e.g. build (compiler) / build (linker) / on run
