@@ -104,6 +104,7 @@ void run_with_spinner(void *(*thread_function)(void *))
     pthread_detach(thread);
     
     // run GTK main loop
-    gtk_main();
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop);
 }
 
