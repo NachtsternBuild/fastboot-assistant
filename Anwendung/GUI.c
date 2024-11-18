@@ -295,8 +295,11 @@ int main(int argc, char *argv[])
 	    g_object_unref(provider);
 	}
 	
-    gtk_widget_show(window);
-    gtk_main();
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
 
     g_print("Log: end fastboot-assistant\n");
     return 0;
