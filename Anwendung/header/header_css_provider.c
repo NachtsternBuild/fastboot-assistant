@@ -158,48 +158,58 @@ void load_css(const char *theme)
         "    color: white;"
         "}";
 
-    // load css for the theme
-    gtk_css_provider_load_from_data(provider, theme && strcmp(theme, "dark") == 0 ? dark_css : light_css, -1, NULL);
+    // CSS für das gewählte Theme laden
+    if (strcmp(theme, "dark") == 0) 
+    {
+        gtk_css_provider_load_from_string(provider, dark_css);
+    } 
+    else 
+    {
+        gtk_css_provider_load_from_string(provider, light_css);
+    }
 
-    // run the css 
-    GtkStyleContext *context = gtk_style_context_new();
+    // CSS auf das GTK4-Display anwenden
     gtk_style_context_add_provider_for_display(
         gdk_display_get_default(),
         GTK_STYLE_PROVIDER(provider),
         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
     );
-
-    g_object_unref(context);
 }
 
-// Callback zum Umschalten des Themes
+
+// Callback to switch the theme
 void toggle_theme(GtkWidget *button, gpointer user_data) 
 {
+    // Switch the theme
     if (strcmp(current_theme, "light") == 0) 
     {
         current_theme = "dark";
-        write_dark_file(); 
+        write_dark_file(); // Assuming this saves the theme state
     } 
     else 
     {
         current_theme = "light";
-        check_dark_file_light(); 
+        check_dark_file_light(); // Assuming this resets the theme state
     }
-	// reload the theme
+
+    // Reload the theme
     load_css(current_theme);
 }
 
-// run the css 
+// Apply the current theme when called
 void apply_theme() 
 {
-    check_dark_file();
+    check_dark_file();  // Assuming this checks the current theme state
     load_css(current_theme);
 }
 
 // add css to widget
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider) 
 {
-    GtkStyleContext *context = gtk_widget_get_style_context(widget);
-    gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_style_context_add_provider_for_display(
+        gdk_display_get_default(),
+        GTK_STYLE_PROVIDER(provider),
+        GTK_STYLE_PROVIDER_PRIORITY_USER
+    );
 }
 
