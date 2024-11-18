@@ -40,7 +40,7 @@ void start_loading_spinner()
     } 
     else 
     {
-        g_print("Spinner is not initialized.\n");
+        g_print("Log: Spinner is not initialized.\n");
     }
 }
 
@@ -75,8 +75,8 @@ GtkWidget* create_spinner_window()
     gtk_box_append(GTK_BOX(vbox), spinner);
     gtk_window_set_child(GTK_WINDOW(spinner_window), vbox);
 
-    // show window
-    gtk_widget_show(spinner_window);
+    // make the window visible using gtk_widget_set_visible
+    gtk_widget_set_visible(spinner_window, TRUE);
 
     // start spinner
     start_loading_spinner();
@@ -88,7 +88,8 @@ GtkWidget* create_spinner_window()
 void run_with_spinner(void *(*thread_function)(void *)) 
 { 
     pthread_t thread;
-
+	
+	gtk_init();
     // create the spinner window
     create_spinner_window();
 
@@ -96,12 +97,13 @@ void run_with_spinner(void *(*thread_function)(void *))
     int result = pthread_create(&thread, NULL, thread_function, NULL);
     if (result != 0) 
     {
-        g_print("Failed to create thread: %d\n", result);
+        g_print("Log: Failed to create thread: %d\n", result);
         return;
     }
 
     pthread_detach(thread);
     
-    // run GTK-mainloop
+    // run GTK main loop
     gtk_main();
 }
+
