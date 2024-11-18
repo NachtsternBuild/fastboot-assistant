@@ -48,7 +48,7 @@ void *run_install_command(void *command)
 // run the command with spinner
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command) 
 {
-    const gchar *password = gtk_entry_get_text(password_entry);
+    const gchar *password = gtk_entry_get_text(GTK_ENTRY(password_entry));
     gchar *full_command = g_strdup_printf("echo %s | sudo -S %s", password, command);
     
     // create new window for the spinner
@@ -68,8 +68,8 @@ void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar 
     // start spinner
     gtk_spinner_start(GTK_SPINNER(spinner_install));
 
-    // show window
-    gtk_widget_show(spinner_install_window);
+    // show window with GTK4 alternative
+    gtk_widget_set_visible(spinner_install_window, TRUE);
 
     // run command in a new thread
     pthread_t thread;
