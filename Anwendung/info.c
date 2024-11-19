@@ -5,7 +5,7 @@
  *  	Apache License, Version 2.0		     *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
+ *  Programm um das Installieren von 		 *
  *	Custom-ROM und GSIs auf Android-Geräte 	 *
  *	zu erleichtern  						 *
  *                                           *
@@ -22,12 +22,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 // check if device are connected
 int is_android_device_connected() 
 {
-    g_print("Log: is_android_device_connected\n");
     char *info_command = adb_command();
     char command[256];
     snprintf(command, sizeof(command), "%s devices | grep -w 'device'", info_command);
@@ -45,10 +45,9 @@ int is_android_device_connected()
 // create function to show info windows
 void get_android_info(char *android_version, char *kernel_version, char *device_name, char *project_treble, char *active_slot, char *get_root, char *get_soc, char *get_distro, char *get_version, char *get_desktop, char *get_language, char *get_session_type) 
 {
-    g_print("Log: get_android_info\n");
     if (!is_android_device_connected()) 
     {
-        g_print("Kein Android-Gerät verbunden.\n");
+        g_print("Log: No Android device connected.\n");
         return;
     }
 
@@ -83,34 +82,37 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
     snprintf(get_desktop, 2048, "%s", execute_command("echo $XDG_CURRENT_DESKTOP"));
     snprintf(get_language, 2048, "%s", execute_command("echo $LANG | cut -d'_' -f1"));
     snprintf(get_session_type, 2048, "%s", execute_command("echo $XDG_SESSION_TYPE"));
-    g_print("Log: end get_android_info\n");
 }
 
-// create function to show info windows
+/* the main function from info */
 void info(int argc, char *argv[], GtkWindow *parent_window) 
 {  
 	g_print("Log: info\n");
 	gtk_init(&argc, &argv);
 	apply_theme();
 
-    // Strings for system-info
-    char android_version[2048] = "Unbekannt";
-    char kernel_version[2048] = "Unbekannt";
-    char device_name[2048] = "Unbekannt";
-    char project_treble[2048] = "Unbekannt";
-    char active_slot[2048] = "Unbekannt";
-    char get_root[2048] = "Unbekannt";
-    char get_soc[2048] = "Unbekannt";
-    char get_distro[2048] = "Unbekannt";
-    char get_version[2048] = "Unbekannt";
-    char get_desktop[2048] = "Unbekannt";
-    char get_language[2048] = "Unbekannt";
-    char get_session_type[2048] = "Unbekannt";
+    apply_language();
 
-    if (!is_android_device_connected()) 
+    // Define labels based on the selected language
+    const char *android_info_title = strcmp(language, "de") == 0 ? "<b><u>Android-Info:</u></b>" : "<b><u>Android Info:</u></b>";
+    const char *android_version_label = strcmp(language, "de") == 0 ? "<b>Android-Version:</b> " : "<b>Android Version:</b> ";
+    const char *kernel_version_label = strcmp(language, "de") == 0 ? "<b>Kernel-Version:</b> " : "<b>Kernel Version:</b> ";
+    const char *device_name_label = strcmp(language, "de") == 0 ? "<b>Gerätename:</b> " : "<b>Device Name:</b> ";
+    const char *project_treble_label = strcmp(language, "de") == 0 ? "<b>Project Treble:</b> " : "<b>Project Treble:</b> ";
+    const char *active_slot_label = strcmp(language, "de") == 0 ? "<b>Aktiver Slot:</b> " : "<b>Active Slot:</b> ";
+    const char *root_access_label = strcmp(language, "de") == 0 ? "<b>Root-Rechte verfügbar:</b> " : "<b>Root Access:</b> ";
+    const char *soc_label = strcmp(language, "de") == 0 ? "<b>System-on-Chip:</b> " : "<b>System-on-Chip:</b> ";
+    const char *computer_info_title = strcmp(language, "de") == 0 ? "<b><u>Computer-Info:</u></b>" : "<b><u>Computer Info:</u></b>";
+    const char *distro_label = strcmp(language, "de") == 0 ? "<b>Distribution:</b> " : "<b>Distribution:</b> ";
+    const char *version_label = strcmp(language, "de") == 0 ? "<b>Version:</b> " : "<b>Version:</b> ";
+    const char *desktop_label = strcmp(language, "de") == 0 ? "<b>Desktop:</b> " : "<b>Desktop:</b> ";
+    const char *language_label = strcmp(language, "de") == 0 ? "<b>Sprache:</b> " : "<b>Language:</b> ";
+    const char *session_type_label = strcmp(language, "de") == 0 ? "<b>Session Typ:</b> " : "<b>Session Type:</b> ";
+    
+     if (!is_android_device_connected()) 
     {      
         char error_message[1024];
-        snprintf(error_message, sizeof(error_message), "Kein Android-Gerät verbunden. \nSchließen sie, bitte, das Fenster!");
+        snprintf(error_message, sizeof(error_message), "No device!");
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
@@ -118,112 +120,80 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     // Get all infos
     get_android_info(android_version, kernel_version, device_name, project_treble, active_slot, get_root, get_soc, get_distro, get_version, get_desktop, get_language, get_session_type);
 
-    // Create GTK main window
-    GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+    // create a window
+    GtkWidget *window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Info");
-    gtk_widget_set_size_request(window, 700, 600);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-    add_css_provider(window, provider); // Apply CSS to the window
+    gtk_window_set_default_size(GTK_WINDOW(window), 700, 600);
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    add_css_provider(GTK_WIDGET(window), provider); // Apply CSS
 
-    // Create frame and vbox
-    GtkWidget *frame = gtk_frame_new(NULL);
-    add_css_provider(frame, provider); // Apply CSS to the frame
-    gtk_container_add(GTK_CONTAINER(window), frame);
+    GtkWidget *scrolled_window = gtk_scrolled_window_new();
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+    gtk_window_set_child(GTK_WINDOW(window), scrolled_window);
 
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_container_add(GTK_CONTAINER(frame), vbox);
+    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_window), box);
 
-    GtkWidget *info1_button = gtk_button_new(); // button with nothing
-    GtkWidget *info1_label = gtk_label_new(NULL); // label for the text
-    gtk_label_set_markup(GTK_LABEL(info1_label), "<b><u> Android-Info: </u></b>"); 
-    gtk_container_add(GTK_CONTAINER(info1_button), info1_label); // add the label to the button
-    add_css_provider(info1_button, provider); 
-    gtk_container_add(GTK_CONTAINER(vbox), info1_button);
+    // labels and add them to the window
+    GtkWidget *info1_label = gtk_label_new(android_info_title);
+    gtk_box_append(GTK_BOX(box), info1_label);
 	
-	// android-label
-    GtkWidget *android_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(android_label), g_strdup_printf("<b>Android-Version:</b> %s", android_version));
-    add_css_provider(android_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), android_label);
-
-    // kernel-label
-    GtkWidget *kernel_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(kernel_label), g_strdup_printf("<b>Kernel-Version:</b> %s", kernel_version));
-    add_css_provider(kernel_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), kernel_label);
-    
-    // devicename-label 
-    GtkWidget *devicename_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(devicename_label), g_strdup_printf("<b>Gerätname:</b> %s", device_name));
-    add_css_provider(devicename_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), devicename_label);
-
-    // project-treble-support-label
-    GtkWidget *treble_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(treble_label), g_strdup_printf("<b>Project Treble:</b> %s", project_treble));
-    add_css_provider(treble_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), treble_label);
-
-    // activ-slot-label
-    GtkWidget *slot_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(slot_label), g_strdup_printf("<b>Aktiver Slot:</b> %s", active_slot));
-    add_css_provider(slot_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), slot_label);
-    
-    // check for superuser
-    GtkWidget *get_root_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(get_root_label), g_strdup_printf("<b>Root-Rechte verfügbar:</b> %s", get_root));
-    add_css_provider(get_root_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), get_root_label);
-    
-    // SoC-label
-    GtkWidget *soc_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(soc_label), g_strdup_printf("<b>System-on-Chip:</b> %s", get_soc));
-    add_css_provider(soc_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), soc_label);
-
-    GtkWidget *info2_button = gtk_button_new(); // button with nothing
-    GtkWidget *info2_label = gtk_label_new(NULL); // label for the text
-    gtk_label_set_markup(GTK_LABEL(info2_label), "<b><u> Computer-Info: </u></b>"); 
-    gtk_container_add(GTK_CONTAINER(info2_button), info2_label); // add the label to the button
-    add_css_provider(info2_button, provider); 
-    gtk_container_add(GTK_CONTAINER(vbox), info2_button);
+	// android-version	
+    GtkWidget *android_label = gtk_label_new(g_strdup_printf("%s%s", android_version_label, android_version));
+    gtk_box_append(GTK_BOX(box), android_label);
 	
-    
-    // Distro-label
-    GtkWidget *distro_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(distro_label), g_strdup_printf("<b>Distribution:</b> %s", get_distro));
-    add_css_provider(distro_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), distro_label);
-    
-    // Version-label
-    GtkWidget *version_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(version_label), g_strdup_printf("<b>Version:</b> %s", get_version));
-    add_css_provider(version_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), version_label);
-    
-    // Desktop-label
-    GtkWidget *desktop_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(desktop_label), g_strdup_printf("<b>Desktop:</b> %s", get_desktop));
-    add_css_provider(desktop_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), desktop_label);
-    
-    // Language-label
-    GtkWidget *language_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(language_label), g_strdup_printf("<b>Sprache:</b> %s", get_language));
-    add_css_provider(language_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), language_label);
-    
-    // Session-type-label
-    GtkWidget *session_type_label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(session_type_label), g_strdup_printf("<b>Session Typ:</b> %s", get_session_type));
-    add_css_provider(session_type_label, provider);
-    gtk_container_add(GTK_CONTAINER(vbox), session_type_label);
+	// kernel-version
+    GtkWidget *kernel_label = gtk_label_new(g_strdup_printf("%s%s", kernel_version_label, kernel_version));
+    gtk_box_append(GTK_BOX(box), kernel_label);
+	
+	// device-name 
+    GtkWidget *device_label = gtk_label_new(g_strdup_printf("%s%s", device_name_label, device_name));
+    gtk_box_append(GTK_BOX(box), device_label);
+	
+	// project treble support
+    GtkWidget *treble_label = gtk_label_new(g_strdup_printf("%s%s", project_treble_label, project_treble));
+    gtk_box_append(GTK_BOX(box), treble_label);
+	
+	// get the active slot
+    GtkWidget *slot_label = gtk_label_new(g_strdup_printf("%s%s", active_slot_label, active_slot));
+    gtk_box_append(GTK_BOX(box), slot_label);
+	
+	// get info for root
+    GtkWidget *root_label = gtk_label_new(g_strdup_printf("%s%s", root_access_label, get_root));
+    gtk_box_append(GTK_BOX(box), root_label);
+	
+	// get the SoC info
+    GtkWidget *soc_info_label = gtk_label_new(g_strdup_printf("%s%s", soc_label, get_soc));
+    gtk_box_append(GTK_BOX(box), soc_info_label);
 
-	 // show all elements
-    gtk_widget_show_all(window);
+    GtkWidget *info2_label = gtk_label_new(computer_info_title);
+    gtk_box_append(GTK_BOX(box), info2_label);
+	
+	// get the distro
+    GtkWidget *distro_info_label = gtk_label_new(g_strdup_printf("%s%s", distro_label, get_distro));
+    gtk_box_append(GTK_BOX(box), distro_info_label);
+	
+	// get the distro version
+    GtkWidget *version_info_label = gtk_label_new(g_strdup_printf("%s%s", version_label, get_version));
+    gtk_box_append(GTK_BOX(box), version_info_label);
+	
+	// get desktop
+    GtkWidget *desktop_info_label = gtk_label_new(g_strdup_printf("%s%s", desktop_label, get_desktop));
+    gtk_box_append(GTK_BOX(box), desktop_info_label);
+	
+	// get the language
+    GtkWidget *language_info_label = gtk_label_new(g_strdup_printf("%s%s", language_label, get_language));
+    gtk_box_append(GTK_BOX(box), language_info_label);
+	
+	// get the session type of the desktop
+    GtkWidget *session_type_info_label = gtk_label_new(g_strdup_printf("%s%s", session_type_label, get_session_type));
+    gtk_box_append(GTK_BOX(box), session_type_info_label);
 
-    // GTK-mainloop start
-    gtk_main();
+    gtk_widget_show(window);
+
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
     g_print("Log: end info\n");
 }
