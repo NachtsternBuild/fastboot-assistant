@@ -54,7 +54,7 @@ void set_main_dir();
 const char* get_home_directory_flash();
 void get_wsl_directory(char* wsl_dir, size_t size);
 void set_main_dir_with_wsl(char *path, size_t size, const char *filename);
-void show_error_message(GtkWidget *parent_window, const char *message);
+void show_error_message();
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
 void next_page(GtkButton *button, gpointer data);
@@ -74,6 +74,9 @@ void check_dark_file_light();
 // functions with spinner
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command);
 void command_with_spinner(const gchar *command);
+
+// function with pkexec
+void install_with_pkexec(const gchar *command);
 
 // for setup
 void config_start();
