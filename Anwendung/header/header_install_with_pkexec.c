@@ -28,6 +28,7 @@
 void install_with_pkexec(const gchar *command)
 {
     gchar *full_command = g_strdup_printf("pkexec %s", command);
+    g_print("Log: %s\n", full_command);
     system(full_command);
     g_free(full_command);
 }
