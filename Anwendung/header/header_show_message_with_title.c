@@ -26,18 +26,30 @@
 
 void show_message_with_title(const char *title, const char *message) 
 {
-    // Create a new GtkMessageDialog with the title and message
-    GtkWidget *dialog = gtk_message_dialog_new_with_markup(
-        NULL,  // Parent window (NULL if no parent)
-        GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-        GTK_MESSAGE_INFO,  // Message type
-        GTK_BUTTONS_OK,    // Buttons
-        "<b>%s</b>\n%s", title, message);  // Format string for title and message
-    
-    // Connect the dialog's response signal to destroy it after user interaction
-    g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), dialog);
+    GtkWidget *dialog;
+    GtkWidget *content_area;
+    GtkWidget *label;
+    GtkWidget *ok_button;
 
-    // Display the dialog
-    gtk_window_present(GTK_WINDOW(dialog));
+    // Create the dialog window without using deprecated functions
+    dialog = gtk_window_new();
+    gtk_window_set_title(GTK_WINDOW(dialog), title);
+    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+
+    // Create a vertical box for the dialog content and add it to the dialog
+    content_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_window_set_child(GTK_WINDOW(dialog), content_area);
+
+    // Create the label with the message and add it to the content area
+    label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(label), message);
+    gtk_box_append(GTK_BOX(content_area), label);
+
+    // Create an OK button and connect it to close the dialog
+    ok_button = gtk_button_new_with_label("OK");
+    g_signal_connect(ok_button, "clicked", G_CALLBACK(gtk_window_destroy), dialog);
+    gtk_box_append(GTK_BOX(content_area), ok_button);
+
+    // Display the dialog and all its components
+    gtk_widget_set_visible(dialog, TRUE);
 }
-
