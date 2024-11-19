@@ -48,7 +48,8 @@ void *run_install_command(void *command)
 // run the command with spinner
 void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command) 
 {
-    const gchar *password = gtk_entry_get_text(GTK_ENTRY(password_entry));
+    // Ensure GTK function definitions and use correct casting
+    const gchar *password = gtk_entry_get_text(password_entry);
     gchar *full_command = g_strdup_printf("echo %s | sudo -S %s", password, command);
     
     // create new window for the spinner
