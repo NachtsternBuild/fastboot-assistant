@@ -50,6 +50,7 @@ SRCS = \
 	header_directory_exists.c \
 	header_command_adb_fastboot.c \
 	header_language_check.c \
+	header_install_with_pkexec.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
