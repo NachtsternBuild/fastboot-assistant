@@ -25,33 +25,30 @@
 #include "function_header.h"
 #include "language_check.h"
 
-// Callback function to handle the dialog response in GTK4
-void file_chooser_response(GtkNativeDialog *dialog, int response, gpointer user_data)
+// Callback function to handle the dialog response
+static void file_chooser_open_callback(GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
-    if (response == GTK_RESPONSE_ACCEPT) 
+    GtkFileDialog *dialog = GTK_FILE_DIALOG(source_object);
+    GFile *file = gtk_file_dialog_open_finish(dialog, res, NULL);
+    
+    if (file) 
     {
-        GListModel *files = gtk_file_dialog_get_files(GTK_FILE_DIALOG(dialog));
-        if (files && g_list_model_get_n_items(files) > 0) 
+        char *filename = g_file_get_path(file);
+
+        if (filename) 
         {
-            GFile *file = G_FILE(g_list_model_get_item(files, 0));
-            char *filename = g_file_get_path(file);
-
-            if (filename) 
-            {
-                FileProcessorFunc process_func = (FileProcessorFunc)user_data;
-                process_func(filename);  // Passes the file to the passed function for processing
-                g_free(filename);
-            }
-
-            g_object_unref(file);
+            FileProcessorFunc process_func = (FileProcessorFunc)user_data;
+            process_func(filename);  // Passes the file to the passed function for processing
+            g_free(filename);
         }
-        g_object_unref(files);
+
+        g_object_unref(file);
     }
 
     g_object_unref(dialog);  // Free dialog resources
 }
 
-// Function that displays the file selection dialog and delegates processing to a passed function
+// Function that displays the file selection dialog
 void show_file_chooser(GtkWidget *widget, gpointer data) 
 {
     GtkWindow *parent_window = GTK_WINDOW(gtk_widget_get_root(widget));
@@ -62,7 +59,7 @@ void show_file_chooser(GtkWidget *widget, gpointer data)
         parent_window = NULL;
     }
 
-    // Apply language settings
+    // Apply language
     apply_language(); 
     
     // Set dialog text based on the current language
@@ -71,13 +68,13 @@ void show_file_chooser(GtkWidget *widget, gpointer data)
     // Processing function
     FileProcessorFunc process_func = (FileProcessorFunc)data;
 
-    // Create a new file dialog using GTK4's GtkFileDialog
+    // Create a new file dialog
     GtkFileDialog *dialog = gtk_file_dialog_new();
 
-    // Open the file dialog asynchronously
-    gtk_file_dialog_open(dialog, parent_window, NULL, (GAsyncReadyCallback)file_chooser_response, process_func);
-
-    // Set the title of the dialog (optional, for display purposes)
+    // Set the title of the dialog 
     gtk_native_dialog_set_title(GTK_NATIVE_DIALOG(dialog), dialog_title);
+
+    // Open the file dialog asynchronously
+    gtk_file_dialog_open(dialog, parent_window, NULL, file_chooser_open_callback, process_func);
 }
 
