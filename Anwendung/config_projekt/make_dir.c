@@ -36,12 +36,12 @@ void create_directory(const char *base_dir, const char *sub_dir)
     
     if (system(command) == -1) 
     {
-        g_print("Fehler beim Erstellen des Verzeichnisses: %s\n", path);
+        g_print("Log: Error when creating the directory: %s\n", path);
     } 
     
     else 
     {
-        g_print("Verzeichnis erstellt: %s\n", path);
+        g_print("Log: Directory created: %s\n", path);
     }
 }
 
@@ -51,7 +51,7 @@ void make_dir()
     const char *home_dir = getenv("HOME");
     if (home_dir == NULL) 
     {
-        g_print("Fehler: Konnte das Home-Verzeichnis nicht ermitteln.\n");
+        g_print("Log: Error: Could not determine the home directory.\n");
         return;
     }
 
@@ -66,7 +66,7 @@ void make_dir()
     const char *user = getenv("USER");
     if (user == NULL) 
     {
-        g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+        g_print("Log: Error: Could not determine the user name.\n");
         return;
     }
 
@@ -79,6 +79,6 @@ void make_dir()
     create_directory(wsl_base_dir, "config");
 	*/
 	
-    g_print("Alle Verzeichnisse erfolgreich erstellt.\n");
+    g_print("Log: All directories successfully created.\n");
 }
 
