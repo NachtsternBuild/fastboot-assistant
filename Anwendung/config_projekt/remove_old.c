@@ -22,6 +22,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
+#include "language_check.h"
 
 #define MAX_BUFFER_SIZE 2048
 
@@ -29,10 +30,6 @@
 // Remove the 'ROM-Install' directory
 static void remove_rom_install(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: remove_rom_install\n");
-    const char *message = "Lösche ~/Downloads/ROM-Install\n";
-    show_message(message);
-
     char command[MAX_BUFFER_SIZE];
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", get_home_directory_flash());
     system(command);
@@ -44,18 +41,13 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
     system(command);
 	*/
 	
-    message = "Fertig.\n";
+    message = "Ready.\n";
     show_message(message);
-    g_print("Log: end remove_rom_install\n");
 }
 
 // Remove old files in 'ROM-Install'
 static void remove_old_files(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: remove_old_files\n");
-    const char *message = "Lösche alle Dateien in ROM-Install.\n";
-    show_message(message);
-	
 	// add the config.txt
     char command[MAX_BUFFER_SIZE];
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory_flash());
@@ -80,18 +72,13 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
     system(command);
 	*/
 	
-    message = "Fertig.\n";
+    message = "Ready.\n";
     show_message(message);
-    g_print("Log: end remove_old_files\n");
 }
 
 // Remove backups
 static void remove_backups(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: remove_backups\n");
-    const char *message = "Lösche alle Dateien im Backup-Ordner.\n";
-    show_message(message);
-
     char command[MAX_BUFFER_SIZE];
     snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", get_home_directory_flash());
     system(command);
@@ -107,49 +94,54 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     system(command);
 	*/
 	
-    message = "Fertig.\n";
+    message = "Ready.\n";
     show_message(message);
-    g_print("Log: end remove_backups\n");
 }
 
+// Function to set up button labels based on the language
+void set_button_labels_remove(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "ROM-Install");
+        strcpy(labels[1], "old files");
+        strcpy(labels[2], "Backups");
+    } 
+    
+    else 
+    {
+        strcpy(labels[0], "ROM-Install");
+        strcpy(labels[1], "alte Dateien");
+        strcpy(labels[2], "Backups");
+    }
+}
 /* main function of preflash_GUI */
 void remove_old(int argc, char *argv[]) 
 {
-    g_print("Log: remove_old\n");
-    GtkWidget *window;
-    GtkWidget *grid;
-    GtkWidget *button;
+	GtkWidget *window, *grid, *button;
+    char button_labels[3][30];
     
-    char button_labels[3][30] = {"ROM-Install", "alte Dateien", "Backups"};
-
-    gtk_init(&argc, &argv);
-    
+    gtk_init();
     apply_theme();
+    apply_language();
+    set_button_labels_remove(button_labels);
     
-    // create the window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Löschen von:");
+    window = gtk_window_new();
+    gtk_window_set_title(GTK_WINDOW(window), "Geräte / devices");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // create the grid and centre it
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_window_set_child(GTK_WINDOW(window), grid);
 
-    // add the grid to the window
-    gtk_container_add(GTK_CONTAINER(window), grid);
-
-    // add and centre all button
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 3; i++) 
+    {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-
-        // execute css-provider for all buttons
-        add_css_provider(button, provider);
         switch (i) {
             case 0:
                 g_signal_connect(button, "clicked", G_CALLBACK(remove_rom_install), NULL);
@@ -162,15 +154,17 @@ void remove_old(int argc, char *argv[])
                 break;
         }
     }
-	
-	// clean the storage
-    g_object_unref(provider);
     
-    // show window
-    gtk_widget_show_all(window);
+    // free the provider
+	if (provider != NULL) 
+	{
+	    g_object_unref(provider);
+	}
+	
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    // run main gtk loop
-    gtk_main();
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
     g_print("Log: end remove_old\n");
 }
-
