@@ -26,22 +26,30 @@
 
 void show_error_message(GtkWindow *parent_window, const char *message)
 {
-    // Create the error dialog
-    GtkWidget *dialog = gtk_message_dialog_new(
-        parent_window,
-        GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-        GTK_MESSAGE_ERROR,
-        GTK_BUTTONS_CLOSE,
-        "%s",  // Message format
-        message
-    );
-
+    // Create a new dialog window
+    GtkWidget *dialog = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(dialog), "Error");
+    gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+    if (parent_window) {
+        gtk_window_set_transient_for(GTK_WINDOW(dialog), parent_window);
+        gtk_window_set_destroy_with_parent(GTK_WINDOW(dialog), TRUE);
+    }
 
-    // Connect the response signal to destroy the dialog on user interaction
-    g_signal_connect(dialog, "response", G_CALLBACK(gtk_window_destroy), dialog);
+    // Create a vertical box container for dialog content
+    GtkWidget *content_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    gtk_window_set_child(GTK_WINDOW(dialog), content_area);
+
+    // Create a label for the error message and add it to the content area
+    GtkWidget *label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(label), message);
+    gtk_box_append(GTK_BOX(content_area), label);
+
+    // Create a "Close" button and connect it to destroy the dialog
+    GtkWidget *close_button = gtk_button_new_with_label("Close");
+    g_signal_connect(close_button, "clicked", G_CALLBACK(gtk_window_destroy), dialog);
+    gtk_box_append(GTK_BOX(content_area), close_button);
 
     // Display the dialog
-    gtk_window_present(GTK_WINDOW(dialog));
+    gtk_widget_set_visible(dialog, TRUE);
 }
 
