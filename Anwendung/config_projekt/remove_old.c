@@ -127,7 +127,8 @@ void remove_old(int argc, char *argv[])
     set_button_labels_remove(button_labels);
     
     window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Geräte / devices");
+    const char *remove_old_window = strcmp(language, "de") == 0 ? "Löschen von:" : "Remove:";
+    gtk_window_set_title(GTK_WINDOW(window), remove_old_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
     
