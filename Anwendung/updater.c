@@ -111,13 +111,13 @@ void get_latest_release_url(const char *repo, const char *package_type, char *ur
     FILE *fp = popen(command, "r");
     if (fp == NULL) 
     {
-        perror("Log: Fehler beim Ausführen des Befehls.\n");
+        perror("Log: Error when executing the command.\n");
         exit(EXIT_FAILURE);
     }
 
     if (fgets(url_buffer, buffer_size, fp) == NULL) 
     {
-        fprintf(stderr, "Log: Fehler beim Abrufen der URL.\n");
+        fprintf(stderr, "Log: Error when retrieving the URL.\n");
         pclose(fp);
         exit(EXIT_FAILURE);
     }
@@ -164,7 +164,7 @@ void updater(void)
 
     if (strlen(download_url) > 0) 
     {
-        g_print("Log: Neueste Version URL: %s\n", download_url);
+        g_print("Log: Latest version URL: %s\n", download_url);
         const char *output_directory = getenv("HOME");
         if (!output_directory) 
         {
@@ -195,10 +195,10 @@ void updater(void)
 
         if (download_file(download_url, output_file) == 0) 
         {
-            g_print("Log: Paket heruntergeladen: %s\n", output_file);
+            g_print("Log: Package downloaded: %s\n", output_file);
             if (!verify_package_type(output_file, package_type)) 
             {
-                fprintf(stderr, "Log: Fehler: Das heruntergeladene Paket ist kein %s-Paket.\n", package_type);
+                fprintf(stderr, "Log: Error: The downloaded package is not a %s package.\n", package_type);
                 exit(EXIT_FAILURE);
             }
 
@@ -235,12 +235,12 @@ void updater(void)
         } 
         else 
         {
-            fprintf(stderr, "Log: Fehler beim Herunterladen der Datei.\n");
+            fprintf(stderr, "Log: Error downloading the file.\n");
         }
     } 
     else 
     {
-        fprintf(stderr, "Log: Keine Release-URL gefunden.\n");
+        fprintf(stderr, "Log: No release URL found.\n");
     }
 	
 	// run GTK main loop
