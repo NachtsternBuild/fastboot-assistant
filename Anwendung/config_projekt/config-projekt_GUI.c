@@ -55,6 +55,26 @@ static void start_toggle_language(GtkWidget *widget, gpointer data)
 	toggle_language();
 }
 
+// Function to set up button labels based on the language
+void set_button_labels_remove(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Create folder");
+        strcpy(labels[1], "Clean up");
+        strcpy(labels[2], "Configure");
+        strcpy(labels[3], "Change language");
+    } 
+    
+    else 
+    {
+        strcpy(labels[0], "Anlegen Ordner");
+        strcpy(labels[1], "Aufräumen");
+        strcpy(labels[2], "Konfigurieren");
+        strcpy(labels[3], "Sprache wechseln");
+    }
+}
+
 /* main function of config-projekt_GUI*/
 void config_projekt_GUI(int argc, char *argv[]) 
 {
