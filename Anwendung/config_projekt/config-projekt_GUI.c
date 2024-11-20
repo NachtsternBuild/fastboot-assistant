@@ -56,7 +56,7 @@ static void start_toggle_language(GtkWidget *widget, gpointer data)
 }
 
 // Function to set up button labels based on the language
-void set_button_labels_remove(char labels[][30]) 
+void set_button_labels_config_projekt(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
