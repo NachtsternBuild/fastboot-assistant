@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 char path[3072];
@@ -35,34 +36,32 @@ char command_fastboot[3072];
 const char *base_paths[] = {"/mnt/c/platform-tools", "/mnt/c/ADB"};
 const char *files[] = {"adb.exe", "fastboot.exe"};
 
-static void config_adb(GtkButton *button, GtkEntry *password_entry) 
+static void config_adb(GtkButton *button, gpointer user_data) 
 {
-    // Define i and j as static variables for accessing the right path/file
     for (int i = 0; i < 2; ++i) 
     {
-    	for (int j = 0; j < 2; ++j) 
-    	{
-    		snprintf(path, sizeof(path), "%s/%s", base_paths[j], files[i]);
-    
-    		// Paths to the possible locations of adb.exe and fastboot.exe
-    		snprintf(mv_adb, sizeof(mv_adb), "sudo mv /usr/bin/adb /usr/bin/adb_bk");
-    		snprintf(mv_fastboot, sizeof(mv_fastboot), "sudo mv /usr/bin/fastboot /usr/bin/fastboot_bk");
-   
-    		snprintf(command_adb, sizeof(command_adb), "sudo ln -s %s /usr/bin/adb", path);
-    		snprintf(command_fastboot, sizeof(command_fastboot), "sudo ln -s %s /usr/bin/fastboot", path);
-							
-    		// Create the full command
-    		snprintf(config, sizeof(config), "%s && %s && %s && %s && exit", mv_adb, mv_fastboot, command_adb, command_fastboot);
-    
-    		g_print("Führe aus: %s\n", config);
-    
-    		// Run the command with root privileges
-    		install_with_root(button, password_entry, config);
-    	}
+        for (int j = 0; j < 2; ++j) 
+        {
+            snprintf(path, sizeof(path), "%s/%s", base_paths[j], files[i]);
+            
+            // command to move and link adb/fastboot
+            snprintf(mv_adb, sizeof(mv_adb), "mv /usr/bin/adb /usr/bin/adb_bk");
+            snprintf(mv_fastboot, sizeof(mv_fastboot), "mv /usr/bin/fastboot /usr/bin/fastboot_bk");
+            snprintf(command_adb, sizeof(command_adb), "ln -s %s /usr/bin/adb", path);
+            snprintf(command_fastboot, sizeof(command_fastboot), "ln -s %s /usr/bin/fastboot", path);
+
+            // create the command
+            snprintf(config, sizeof(config), "%s && %s && %s && %s", mv_adb, mv_fastboot, command_adb, command_fastboot);
+
+            g_print("Log: Run: %s\n", config);
+
+            // run command with pkexec
+            install_with_pkexec(config);
+        }
     }
 }
 
-// Check if file exists
+// check if file exsists
 int file_exists(const char *path) 
 {
     char command[2048];
@@ -70,7 +69,7 @@ int file_exists(const char *path)
     return system(command) == 0;
 }
 /*
-// Check if directory exists
+// check if dir exsists
 int directory_exists(const char *path) 
 {
     char command[2048];
@@ -78,22 +77,20 @@ int directory_exists(const char *path)
     return system(command) == 0;
 }
 */
-// Main function
+
+/* main function wsl_config*/
 void wsl_config() 
 {
-    int argc = 0;
-    char **argv = NULL;
     GtkWidget *window;
     GtkWidget *vbox;
-    GtkWidget *password_entry;
     GtkWidget *config_adb_button;
 
-    gtk_init(&argc, &argv);
+    gtk_init();
     apply_theme();
     
     int found = 0;
 
-    // Check for the presence of adb.exe and fastboot.exe in known directories
+    // check for adb/fastboot
     for (int i = 0; i < 2; ++i) 
     {
         for (int j = 0; j < 2; ++j) 
@@ -110,48 +107,44 @@ void wsl_config()
         if (found)
             break;
     }
-
+	
+	// for the WSL system
     if (found == 1) 
     {
-        // Create GTK window after a valid path is found
-        window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-        gtk_window_set_title(GTK_WINDOW(window), "Konfigurieren");
+        // create the window
+        window = gtk_window_new();
+        const char *config_window = strcmp(language, "de") == 0 ? "Konfigurieren" : "Configure";
+        gtk_window_set_title(GTK_WINDOW(window), config_window);
         gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
+        g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
 
-        // the "destroy" signal to gtk_main_quit
-        g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
+        // create the box layout
         vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-        gtk_container_add(GTK_CONTAINER(window), vbox);
+        gtk_window_set_child(GTK_WINDOW(window), vbox);
 
-        // Password input field
-        password_entry = gtk_entry_new();
-        gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // Hide password input
-        gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+        // install button
+        config_adb_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
+        g_signal_connect(config_adb_button, "clicked", G_CALLBACK(config_adb), NULL);
+        gtk_box_append(GTK_BOX(vbox), config_adb_button);
 
-        // Install button
-        config_adb_button = gtk_button_new_with_label("Installieren");
-        g_signal_connect(config_adb_button, "clicked", G_CALLBACK(config_adb), password_entry);
-        gtk_box_pack_start(GTK_BOX(vbox), config_adb_button, TRUE, TRUE, 0);
+        // show window
+    	gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-        gtk_widget_show_all(window);
-        g_print("Fertig.\n");
-        
-        // Show message
-        const char *message = "Fertig!\n";
+        const char *message = strcmp(language, "de") == 0 ? "Fertig!" : "Ready!";
         show_message(message);
     }
+    
+    // no WSL system
     else 
     {
-        g_print("Log: Kein WSL-System gefunden.\n");
+        g_print("Log: No WSL system");
 
-        // Show message
-        const char *message = "Kein WSL-System gefunden.\n";
+        const char *message = strcmp(language, "de") == 0 ? "Kein WSL-System gefunden." : "No WSL-System.";
         show_message(message);
-        gtk_main_quit();
     }
 
-    // Start the GTK main loop
-    gtk_main();
+    // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
 }
 
