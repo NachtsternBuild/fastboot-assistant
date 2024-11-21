@@ -41,7 +41,7 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
     system(command);
 	*/
 	
-    message = "Ready.\n";
+    const char *message = "Ready.\n";
     show_message(message);
 }
 
@@ -72,7 +72,7 @@ static void remove_old_files(GtkWidget *widget, gpointer data)
     system(command);
 	*/
 	
-    message = "Ready.\n";
+    const char *message = "Ready.\n";
     show_message(message);
 }
 
@@ -94,7 +94,7 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     system(command);
 	*/
 	
-    message = "Ready.\n";
+    const char *message = "Ready.\n";
     show_message(message);
 }
 
