@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
