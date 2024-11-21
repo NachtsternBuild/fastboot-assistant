@@ -48,13 +48,13 @@ static void start_wsl_config(GtkWidget *widget, gpointer data)
 {
     wsl_config();
 }
-
+/*
 // function that start toggle_language
 static void start_toggle_language(GtkWidget *widget, gpointer data)
 {
 	toggle_language();
 }
-
+*/
 // Function to set up button labels based on the language
 void set_button_labels_config_projekt(char labels[][30]) 
 {
@@ -115,8 +115,8 @@ void config_projekt_GUI(int argc, char *argv[])
             case 2:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_wsl_config), NULL);
                 break;
-            case 3;
-            	g_signal_connect(button, "clicked", G_CALLBACK(start_toggle_language); NULL);
+            case 3:
+            	g_signal_connect(button, "clicked", G_CALLBACK(toggle_language), NULL);
             	break;
         }
     }
