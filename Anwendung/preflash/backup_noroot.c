@@ -97,6 +97,24 @@ static void open_backup(GtkWidget *widget, gpointer data)
     */
 }
 
+// Function to set up button labels based on the language
+void set_button_labels_backup_noroot(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Prepare");
+        strcpy(labels[1], "Download");
+        strcpy(labels[1], "Start");
+    }
+    
+    else
+    {
+    	strcpy(labels[0], "Vorbereiten");
+    	strcpy(labels[1], "Download");
+    	strcpy(labels[1], "Starten");
+    }
+} 
+
 /* main function - backup_noroot */
 void backup_noroot(int argc, char *argv[]) 
 {
@@ -107,7 +125,7 @@ void backup_noroot(int argc, char *argv[])
     gtk_init();
     apply_theme();
     apply_language();
-    set_button_labels_remove(button_labels);
+    set_button_labels_backup_noroot(button_labels);
     
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Open Android Backup");

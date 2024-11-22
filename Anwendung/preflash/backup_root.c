@@ -37,13 +37,13 @@ void backup_root()
     const char *user = getenv("USER");
     if (user == NULL) 
     {	
-        g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+        g_print("Log: Error: Could not determine the user name.\n");
         exit(1);
     }
 	// linux logic
     if (homeDir == NULL) 
     {
-        fprintf(stderr, "Fehler: Konnte das Home-Verzeichnis nicht finden.\n");
+        fprintf(stderr, "Log: Error: Could not find the home directory.\n");
         exit(1);
     }
     char wsl_setup_base[2048];
@@ -72,7 +72,7 @@ void backup_root()
     FILE *file = fopen(file_partition, "r");
     if (!file) 
     {
-        g_print("Fehler beim Öffnen der partitions.txt\n");
+        g_print("Log: Error when opening the partitions.txt.\n");
         exit(1); 
     }
 
@@ -90,7 +90,7 @@ void backup_root()
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
                 snprintf(command, sizeof(command), "%s/%s_%c.img", backup_dir, partition, slot);
-                g_print("Log: Sichere %s (Slot %c) nach %s\n", partition, slot, command);
+                g_print("Log: Safe %s (slot %c) to %s\n", partition, slot, command);
 
                 snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", 
                         adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
@@ -100,7 +100,7 @@ void backup_root()
         else // for devices without a/b slots
         {
             snprintf(command, sizeof(command), "%s/%s.img", backup_dir, partition);
-            g_print("Log: Sichere %s nach %s\n", partition, command);
+            g_print("Log: Safe %s to %s\n", partition, command);
 
             snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", 
                     adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
@@ -109,7 +109,7 @@ void backup_root()
     }
 
     fclose(file);
-    g_print("Log: Sicherung abgeschlossen. Dateien befinden sich in %s\n", backup_dir);
+    g_print("Log: Backup completed. Files are located in %s.\n", backup_dir);
     g_print("Log: end backup_root\n");
 }
 
