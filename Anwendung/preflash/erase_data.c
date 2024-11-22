@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 char erase_data_command[2048];
@@ -27,7 +28,8 @@ char erase_data_command[2048];
 void erase_data(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: erase_data\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    apply_language();
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
 
     // show message
     show_message(message);
@@ -37,7 +39,7 @@ void erase_data(GtkWidget *widget, gpointer data)
     snprintf(erase_data_command, sizeof(erase_data_command), "%s erase userdata", device_command);
     // I don't now if you need this command
     // system("fastboot erase metadata");
-    g_print("Führe aus: %s", erase_data_command);
+    g_print("Log: Run: %s", erase_data_command);
     command_with_spinner(erase_data_command);
     free(device_command);
     g_print("Log: end erase_data\n");
