@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 #include "function_header.h"
 #include "loading_spinner.h"
@@ -51,60 +52,52 @@ static void start_backup_noroot(GtkWidget *widget, gpointer data)
     backup_noroot();
 }
 
+// Function to set up button labels based on the language
+void set_button_labels_backup(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Backup with root");
+        strcpy(labels[1], "Backup without root");
+    }
+    
+    else
+    {
+    	strcpy(labels[0], "Backup mit Root");
+    	strcpy(labels[1], "Backup ohne Root");
+    }
+} 
+
 /* main function of the backup_function */
 void backup_function(int argc, char *argv[]) 
 {
     g_print("Log: backup_function\n");
-    GtkWidget *window;
-    GtkWidget *grid;
-    GtkWidget *button;
-    char button_labels[2][30] = {"Backup mit Root", "Backup ohne Root"};
-
-    gtk_init(&argc, &argv);
+    GtkWidget *window, *grid, *button;
+    char button_labels[2][30];
+    
+    gtk_init();
     apply_theme();
-
-    // create the window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    apply_language();
+    set_button_labels_backup(button_labels);
+    
+    window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Backup");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // Create the grid and center it
-    grid = gtk_grid_new();
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
     
-    // Set the grid to homogeneous mode (same width/height for all cells)
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-
-    // Set alignment of the grid within the window
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-
-    // Add the grid to the window
-    gtk_container_add(GTK_CONTAINER(window), grid);
-
-    // Initialize the spinner and add it to the grid
-    spinner_backup = gtk_spinner_new();  // Initialize the spinner
-    gtk_grid_attach(GTK_GRID(grid), spinner_backup, 0, 1, 2, 1);  // Attach spinner to grid (span 2 columns)
-    gtk_widget_set_halign(spinner_backup, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(spinner_backup, GTK_ALIGN_CENTER);
-
-    // Add and center all buttons
+    gtk_window_set_child(GTK_WINDOW(window), grid);
+    
     for (int i = 0; i < 2; i++) 
     {
         button = gtk_button_new_with_label(button_labels[i]);
-
-        // Attach each button to grid, one in each column
-        gtk_grid_attach(GTK_GRID(grid), button, i, 0, 1, 1);
-
-        // Set horizontal and vertical alignment for the button
-        gtk_widget_set_halign(button, GTK_ALIGN_CENTER);
-        gtk_widget_set_valign(button, GTK_ALIGN_CENTER);
-
-        // Apply CSS providerw
-        add_css_provider(button, provider);
-
-        // Connect buttons to corresponding functions
+        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
+        
+         // Connect buttons to corresponding functions
         switch (i) {
             case 0:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_backup_root), spinner_backup);
@@ -114,17 +107,18 @@ void backup_function(int argc, char *argv[])
                 break;
         }
     }
-
-    // clean the storage 
-    if (provider != NULL) 
-    {
-        g_object_unref(provider);
-    }
     
-    // show window
-    gtk_widget_show_all(window);
+     // free the provider
+	if (provider != NULL) 
+	{
+	    g_object_unref(provider);
+	}
+	
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    // run main-gtk-loop
-    gtk_main();
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
+    
     g_print("Log: end backup_function\n");
 }
