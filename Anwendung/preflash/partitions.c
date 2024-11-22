@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 #include "function_header.h"
 
@@ -31,7 +32,7 @@ char partition_command[2048];
 static void remove_boot(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: remove_boot\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
 
@@ -47,7 +48,7 @@ static void remove_boot(GtkWidget *widget, gpointer data)
 static void remove_vendor(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: remove_vendor\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
 
@@ -64,7 +65,7 @@ static void remove_vendor(GtkWidget *widget, gpointer data)
 static void remove_system(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: remove_system\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ?  "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
 
@@ -81,7 +82,7 @@ static void remove_system(GtkWidget *widget, gpointer data)
 static void resize_boot(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: resize_boot\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
  
@@ -98,7 +99,7 @@ static void resize_boot(GtkWidget *widget, gpointer data)
 static void resize_vendor(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: resize_vendor\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
 
@@ -115,7 +116,7 @@ static void resize_vendor(GtkWidget *widget, gpointer data)
 static void resize_system(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: resize_system\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
 
@@ -132,7 +133,7 @@ static void resize_system(GtkWidget *widget, gpointer data)
 static void create_boot(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: create_boot \n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
 
@@ -149,7 +150,7 @@ static void create_boot(GtkWidget *widget, gpointer data)
 static void create_vendor(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: create_vendor\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
 
@@ -166,7 +167,7 @@ static void create_vendor(GtkWidget *widget, gpointer data)
 static void create_system(GtkWidget *widget, gpointer data) 
 {
     g_print("Log: create_system\n");
-    const char *message = "Achtung:\nManche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n";
+    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
     
@@ -179,46 +180,66 @@ static void create_system(GtkWidget *widget, gpointer data)
     g_print("Log: end create_system\n");
 }
 
+// Function to set up button labels based on the language
+void set_button_labels(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Delete Boot");
+        strcpy(labels[1], "Delete Vendor");
+        strcpy(labels[2], "Delete System");
+        strcpy(labels[3], "Resize Boot");
+        strcpy(labels[4], "Resize Vendor");
+        strcpy(labels[5], "Resize System");
+        strcpy(labels[6], "Create Boot");
+        strcpy(labels[7], "Create Vendor");
+        strcpy(labels[8], "Create System");
+    } 
+    
+    else 
+    {
+        strcpy(labels[0], "Lösche Boot");
+        strcpy(labels[1], "Lösche Vendor");
+        strcpy(labels[2], "Lösche System");
+        strcpy(labels[3], "Resize Boot");
+        strcpy(labels[4], "Resize Vendor");
+        strcpy(labels[5], "Resize System");
+        strcpy(labels[6], "Erstelle Boot");
+        strcpy(labels[7], "Erstelle Vendor");
+        strcpy(labels[8], "Erstelle System");
+    }
+}
 
-/* main function of preflash_GUI*/
+/* main function of partitions*/
 void partitions(int argc, char *argv[]) 
 {
     g_print("Log: partitions\n");
-    GtkWidget *window;
-    GtkWidget *grid;
-    GtkWidget *button;
-    char button_labels[9][30] = {"Lösche Boot", "Lösche Vendor", "Lösche System", 
-                                 "Resize Boot", "Resize Vendor", "Resize System",
-                                 "Erstelle Boot", "Erstelle Vendor", "Erstelle System"};
-
-    gtk_init(&argc, &argv);
+    GtkWidget *window, *grid, *button;
+    char button_labels[9][30];
+    
+    gtk_init();
     apply_theme();
-
-     // create the window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Partitionen");
+    apply_language();
+    set_button_labels_reboot(button_labels);
+    
+    window = gtk_window_new();
+    const char *reboot_window = strcmp(language, "de") == 0 ? "Partitionen" : "Partitions";
+    gtk_window_set_title(GTK_WINDOW(window), reboot_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	
-    // create the grid and centre it
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-
-    // add the grid to the window
-    gtk_container_add(GTK_CONTAINER(window), grid);
-
-    // add and centre all button
-    for (int i = 0; i < 9; i++) {
+    gtk_window_set_child(GTK_WINDOW(window), grid);
+    
+    for (int i = 0; i < 2; i++) 
+    {
         button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-
-        // execute css-provider for all buttons
-        add_css_provider(button, provider);
-
+        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
+        
         switch (i) {
             case 0:
                 g_signal_connect(button, "clicked", G_CALLBACK(remove_boot), NULL);
@@ -250,13 +271,18 @@ void partitions(int argc, char *argv[])
         }
     }
     
-    // clean the storage
-    g_object_unref(provider);
-    
-    // show window
-    gtk_widget_show_all(window);
+    // free the provider
+	if (provider != NULL) 
+	{
+	    g_object_unref(provider);
+	}
+	
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    // run main-gtk-loop
-    gtk_main();
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); // GTK-Hauptschleife starten
+    
     g_print("Log: end partitions\n");
 }
+
