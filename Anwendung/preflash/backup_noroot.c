@@ -97,6 +97,24 @@ static void open_backup(GtkWidget *widget, gpointer data)
     */
 }
 
+// Function to set up button labels based on the language
+void set_button_labels_reboot(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Prepare");
+        strcpy(labels[1], "Download");
+        strcpy(labels[1], "Start");
+    }
+    
+    else
+    {
+    	strcpy(labels[0], "Vorbereiten");
+    	strcpy(labels[1], "Download");
+    	strcpy(labels[1], "Starten");
+    }
+} 
+
 /* main function - backup_noroot */
 void backup_noroot(int argc, char *argv[]) 
 {
