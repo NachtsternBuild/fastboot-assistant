@@ -181,7 +181,7 @@ static void create_system(GtkWidget *widget, gpointer data)
 }
 
 // Function to set up button labels based on the language
-void set_button_labels(char labels[][30]) 
+void set_button_labels_partitions(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
@@ -220,11 +220,11 @@ void partitions(int argc, char *argv[])
     gtk_init();
     apply_theme();
     apply_language();
-    set_button_labels_reboot(button_labels);
+    set_button_labels_partitions(button_labels);
     
     window = gtk_window_new();
-    const char *reboot_window = strcmp(language, "de") == 0 ? "Partitionen" : "Partitions";
-    gtk_window_set_title(GTK_WINDOW(window), reboot_window);
+    const char *preflash_window = strcmp(language, "de") == 0 ? "Partitionen" : "Partitions";
+    gtk_window_set_title(GTK_WINDOW(window), preflash_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
     
@@ -235,10 +235,10 @@ void partitions(int argc, char *argv[])
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
     gtk_window_set_child(GTK_WINDOW(window), grid);
     
-    for (int i = 0; i < 2; i++) 
+    for (int i = 0; i < 3; i++) 
     {
         button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
         
         switch (i) {
             case 0:
