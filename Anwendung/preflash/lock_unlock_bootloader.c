@@ -75,7 +75,7 @@ static void bootloader_lock(GtkWidget *widget, gpointer data)
 }
 
 // Function to set up button labels based on the language
-void set_button_labels_reboot_fast(char labels[][30]) 
+void set_button_labels_bootloader(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
