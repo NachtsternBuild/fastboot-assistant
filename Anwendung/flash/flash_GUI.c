@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 #include "function_header.h"
 #include "flash_function_header.h"
@@ -86,7 +87,9 @@ static void start_flash_data(GtkWidget *widget, gpointer data)
 	flash_data();
 }
 
-//no function
+// this are the old function
+// I'll create a new function for flash_other that use an UI
+// start flash other with spinner
 static void start_flash_others(GtkWidget *widget, gpointer data)
 {
     g_print("Log: start_flash_others\n");
@@ -106,45 +109,66 @@ static void start_flash_others(GtkWidget *widget, gpointer data)
 	g_print("Log: end start_flash_others\n");
 }
 
-/* main function of flash_GUI*/
+// Function to set up button labels based on the language
+void set_button_labels_partitions(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Flash Recovery");
+        strcpy(labels[1], "Flash Boot");
+        strcpy(labels[2], "Flash Vendor");
+        strcpy(labels[3], "Flash payload.zip");
+        strcpy(labels[4], "Flash System");
+        strcpy(labels[5], "Flash vbmeta/dtbo");
+        strcpy(labels[6], "Flash Preloader");
+        strcpy(labels[7], "Flash Nutzerdaten");
+        strcpy(labels[8], "Flash Other Images");
+    } 
+    
+    else 
+    {
+        strcpy(labels[0], "Flash Recovery");
+        strcpy(labels[1], "Flash Boot");
+        strcpy(labels[2], "Flash Vendor");
+        strcpy(labels[3], "Flash payload.zip");
+        strcpy(labels[4], "Flash System");
+        strcpy(labels[5], "Flash vbmeta/dtbo");
+        strcpy(labels[6], "Flash Preloader");
+        strcpy(labels[7], "Flash Nutzerdaten");
+        strcpy(labels[8], "Flash Andere Images");
+    }
+}
+
+
+/* main function - flash_GUI*/
 void flash_GUI(int argc, char *argv[]) 
 {
     g_print("Log: flash_GUI\n");
-    GtkWidget *window;
-    GtkWidget *grid;
-    GtkWidget *button;
-    char button_labels[9][30] = {"Flash Recovery", "Flash Boot", "Flash Vendor", 
-                                 "Flash payload.zip", "Flash System", "Flash vbmeta/dtbo",
-                                 "Flash Preloader", "Flash Nutzerdaten", "Flash Andere Images"};
-
-    gtk_init(&argc, &argv);
+    GtkWidget *window, *grid, *button;
+    char button_labels[9][30];
+    
+    gtk_init();
     apply_theme();
-
-    // create the window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    apply_language();
+    set_button_labels_partitions(button_labels);
+    
+    window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Flashen");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	
-    // create the grid and centre it
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-
-    // add the grid to the window
-    gtk_container_add(GTK_CONTAINER(window), grid);
-
-    // add and centre all button
-    for (int i = 0; i < 9; i++) {
+    gtk_window_set_child(GTK_WINDOW(window), grid);
+    
+    for (int i = 0; i < 3; i++) 
+    {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-
-        // execute css-provider for all buttons
-        add_css_provider(button, provider);
-
+        
         switch (i) {
             case 0:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_recovery_flash), NULL);
@@ -176,13 +200,18 @@ void flash_GUI(int argc, char *argv[])
             
         }
     }
-    // cleaning the provider
-    g_object_unref(provider);
+    
+    // free the provider
+	if (provider != NULL) 
+	{
+	    g_object_unref(provider);
+	}
+	
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    // show window
-    gtk_widget_show_all(window);
-
-    // run main-gtk-loop
-    gtk_main();
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
+    
     g_print("Log: end flash_GUI\n");
 }
