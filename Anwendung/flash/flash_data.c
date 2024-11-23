@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
 
@@ -48,42 +49,54 @@ void userdata_img_heimdall(GtkWidget *widget, GtkWindow *window)
     flash_heimdall(widget, window, "userdata", "userdata.img");
 }
 
-// main function
+// Function to set up button labels based on the language
+void set_button_labels_flash_data(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Metadata");
+        strcpy(labels[1], "Metadata (heimdall)");
+        strcpy(labels[2], "Userdata");
+        strcpy(labels[3], "Userdata (heimdall)");
+    } 
+    
+    else 
+    {
+        strcpy(labels[0], "Metadata");
+        strcpy(labels[1], "Metadata (heimdall");
+        strcpy(labels[2], "Userdata");
+        strcpy(labels[3], "Userdata (heimdall)");
+    }
+}
+
+/* main function - flash_data */
 void flash_data(int argc, char *argv[])
 {
 	g_print("Log: flash_data\n");
-	GtkWidget *window;
-    GtkWidget *grid;
-    GtkWidget *button;
-    char button_labels[4][30] = {"Metadata", "Metadata (heimdall)", "Userdata", "Userdata (heimdall)"};
-
-    gtk_init(&argc, &argv);
+	GtkWidget *window, *grid, *button;
+    char button_labels[4][30];
+    
+    gtk_init();
     apply_theme();
-
-     // create the window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Flash:");
+    apply_language();
+    set_button_labels_flash_data(button_labels);
+    
+    window = gtk_window_new();
+    gtk_window_set_title(GTK_WINDOW(window), "Flashen:");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	
-    // create the grid and centre it
+    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_window_set_child(GTK_WINDOW(window), grid);
 
-    // add the grid to the window
-    gtk_container_add(GTK_CONTAINER(window), grid);
-
-    // add and centre all button
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) 
+    {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-
-        // execute css-provider for all buttons
-        add_css_provider(button, provider);
         
         switch (i) {
             case 0:
@@ -100,13 +113,18 @@ void flash_data(int argc, char *argv[])
                 break;          
         }
     }
-	// cleaning the provider
-    g_object_unref(provider);
+    
+    // free the provider
+	if (provider != NULL) 
+	{
+	    g_object_unref(provider);
+	}
+	
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    // show window
-    gtk_widget_show_all(window);
-
-    // run main-gtk-loop
-    gtk_main();
-    g_print("Log: end flash_data\n");
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
+    
+    g_print("Log: end of flash_data\n");
 }
