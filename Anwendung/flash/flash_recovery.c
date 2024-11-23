@@ -37,7 +37,7 @@ void recovery_heimdall(GtkWidget *widget, GtkWindow *window)
 }
 
 // Function to set up button labels based on the language
-void set_button_labels_remove(char labels[][30]) 
+void set_button_labels_flash_recovery(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
@@ -62,7 +62,7 @@ void flash_recovery(int argc, char *argv[])
     gtk_init();
     apply_theme();
     apply_language();
-    set_button_labels_remove(button_labels);
+    set_button_labels_flash_recovery(button_labels);
     
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Flashen:");
