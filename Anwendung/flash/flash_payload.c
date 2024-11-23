@@ -22,21 +22,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 void flash_payload(GtkWidget *widget, gpointer data)
 {
     g_print("Log: flash_payload\n");
+    apply_language();
     // flash payload.zip via adb sideload
-    const char *title, *message;
-    
-    // first dialog called 'Hinweis'
-    title = "Hinweis";
-    message = "Der Prozess zum flashen des payload.zip geht davon aus, dass sie sich im Recovery befinden und 'Updates über ADB erlauben' aktiviert haben.\n";
-    show_message_with_title(title, message);
+    // first dialog
+    const char *message = strcmp(language, "de") == 0 ? "Der Prozess zum flashen des payload.zip geht davon aus, \ndass sie sich im Recovery befinden und 'Updates über ADB erlauben' aktiviert haben." : "The process for flashing the payload.zip assumes that \nyou are in Recovery and have activated 'Allow updates via ADB'.";
+    show_message(message);
     
     // Show a message that the flash is starting
-    const char *message1 = "Sideload payload.zip.\n";
+    const char *message1 = "Sideloading payload.zip.";
     show_message(message1);
     
     char image_path[2048];
@@ -44,13 +43,13 @@ void flash_payload(GtkWidget *widget, gpointer data)
 
     char function_command[3072];
     char *device_command = adb_command();
-    snprintf(function_command, 3072, "%s sideload %s && exit", device_command, image_path);
+    snprintf(function_command, 3072, "%s sideload %s", device_command, image_path);
     g_print("Log: Run: %s\n", function_command);
-    open_terminal_by_desktop(function_command);
+    command_with_spinner(function_command);
     free(device_command);
 
     // Show a message that the flash is completed
-    const char *message2 = "Sideload beendet!\n";
+    const char *message2 =  strcmp(language, "de") == 0 ? "Sideload beendet!" : "Sideload finished!";
     show_message(message2);
     g_print("Log: end flash_payload\n");
 }
