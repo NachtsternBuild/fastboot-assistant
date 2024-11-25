@@ -27,39 +27,40 @@
 
 #define BUFFER_SIZE 2048
 
-void check_active_slot() 
+// function that get the active slot
+void check_active_slot(char *active_slot, size_t size) 
 {
     char buffer[BUFFER_SIZE];
-    char slot[BUFFER_SIZE]; 
     FILE *pipe;
 
-    // fastboot-command for get boot-slots
+    // fastboot-command for the boot-slot
     char *device_command = fastboot_command();
     char command[BUFFER_SIZE];
     snprintf(command, BUFFER_SIZE, "%s getvar current-slot 2>&1", device_command);
 
-    // open pipe to run command
+    // open pipe and run command
     pipe = popen(command, "r");
     if (!pipe) 
     {
         fprintf(stderr, "Log: Could not open the pipe.\n");
+        free(device_command);
         exit(EXIT_FAILURE);
     }
-  
-    // read output
+
+    // reading output
     while (fgets(buffer, BUFFER_SIZE, pipe) != NULL) 
     {
         char *pos = strstr(buffer, "current-slot:");
         if (pos) 
         {
-            sscanf(pos, "current-slot: %s", slot);
+            sscanf(pos, "current-slot: %s", active_slot);
             break;
         }
     }
 
     // close pipe
     pclose(pipe);
-	free(device_command);
+    free(device_command);
     // the slot
-    g_print("Log: current-slot: %s\n", slot);
+    g_print("Log: current-slot: %s\n", active_slot);
 }
