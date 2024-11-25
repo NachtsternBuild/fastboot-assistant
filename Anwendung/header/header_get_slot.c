@@ -27,35 +27,39 @@
 
 #define BUFFER_SIZE 2048
 
+// function that check if the device are a/b-device
 int get_slot_of_device() 
 {
     FILE *fp;
     char result[2048];
-	
-	// fastboot-command for get boot-slots
+
+    // fastboot-command for the boot slot
     char *device_command = fastboot_command();
     char command[BUFFER_SIZE];
-    snprintf(command, BUFFER_SIZE, "%s getvar current-slot 2>&1", device_command);
-    
-    // Execute the command to check for A/B partition scheme
+    snprintf(command, BUFFER_SIZE, "%s getvar slot-count 2>&1", device_command);
+
+    // run command that check for a/b device
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        fprintf(stderr, "Log: Failed to run command\n" );
-        exit(1);
+        fprintf(stderr, "Log: Failed to run command.\n");
+        free(device_command);
+        exit(EXIT_FAILURE);
     }
 
-    // Read the output
+    // read the output
+    int ab_device = 0;
     while (fgets(result, sizeof(result)-1, fp) != NULL) 
     {
         if (strstr(result, "slot-count") && strstr(result, "2")) 
         {
-            pclose(fp);
-            return 1;
+            ab_device = 1;
+            break;
         }
     }
-
+	
+	// close the pipe
     pclose(fp);
     free(device_command);
-    return 0;
+    return ab_device;
 }
