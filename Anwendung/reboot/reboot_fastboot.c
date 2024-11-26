@@ -94,7 +94,7 @@ void set_button_labels_reboot_fast(char labels[][30])
 {
     if (strcmp(language, "en") == 0) 
     {
-        strcpy(labels[0], "Restart ADB");
+        strcpy(labels[0], "Restart from ADB");
         strcpy(labels[1], "Restarting Fastboot");
         strcpy(labels[2], "Fastboot help");
         strcpy(labels[3], "Bootloader variables");
@@ -112,8 +112,8 @@ void set_button_labels_reboot_fast(char labels[][30])
 /* start main programm */
 void reboot_fastboot(int argc, char *argv[])
 {
-	g_print("Log: reboot_fastboot\n");
-	GtkWidget *window, *grid, *button;
+    g_print("Log: reboot_fastboot\n");
+    GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
     gtk_init();
