@@ -44,7 +44,6 @@ SRCS = \
 	header_dark_theme.c \
 	header_next_page.c \
 	header_convert_wsl_path.c \
-	header_install_with_root.c \
 	header_loading_spinner.c \
 	header_command_with_spinner.c \
 	header_directory_exists.c \
@@ -84,7 +83,9 @@ SRCS = \
 	flash_vbmeta_dtbo.c \
 	flash_preloader_super.c \
 	flash_data.c \
-	flash_other.c \
+	flash_list_images.c \
+	flash_images.c \
+	flash_others.c \
 	flash_GUI.c \
 	instruction_adb.c \
 	instruction_recovery.c \
