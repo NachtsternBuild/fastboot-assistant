@@ -35,6 +35,8 @@ void flash_system();
 void flash_vbmeta_dtbo();
 void flash_preloader_super();
 void flash_data();
-void flash_other();
+void flash_others();
+void flash_images();
+void flash_list_images();
 
 #endif
