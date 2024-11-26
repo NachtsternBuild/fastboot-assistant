@@ -87,26 +87,10 @@ static void start_flash_data(GtkWidget *widget, gpointer data)
 	flash_data();
 }
 
-// this are the old function
-// I'll create a new function for flash_other that use an UI
-// start flash other with spinner
+// start flash_others
 static void start_flash_others(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: start_flash_others\n");
-    const char *message;
-    message = "Der Prozess kann eine Weile dauern. \nIgnorien sie alle beenden erzwingen Meldungen.\n";
-    show_message(message);
-    
-    GtkSpinner *spinner_flash = GTK_SPINNER(data);  // Get the spinner_backup from the callback data
-
-    start_loading_spinner(spinner_flash);  // Start the spinner
-    
-	 // Run the backup process with a spinner in a separate thread
-    run_with_spinner((void *)flash_other);
-    
-    stop_loading_spinner(spinner_flash);  // Stop the spinner when the process finishesflash_other();
-	
-	g_print("Log: end start_flash_others\n");
+	flash_others();
 }
 
 // Function to set up button labels based on the language
