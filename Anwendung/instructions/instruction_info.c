@@ -19,130 +19,123 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
 
-static void info_text()
-{
-	g_print("Log: Nischt da!\n");
-}
-
 void instruction_info(int argc, char *argv[]) 
 {
 	g_print("Log: instruction_info\n");
-	GtkWidget *window;
+	
+	// GTK init
+    gtk_init();
+
+    apply_theme();
+    apply_language();
+    
+	GtkWidget *window, *notebook;
     GtkWidget *page_info1, *page_info2, *page_info3, *page_info4;
     GtkWidget *label_info1_1, *label_info1_2, *label_info2_1, *label_info2_2, *label_info3_1, *label_info3_2, *label_info4_1, *label_info4_2, *label_info4_3;
     GtkWidget *button_info1, *button_info2, *button_info3, *button_info4, *button_info5, *button_info6, *button_info7;
-
-    gtk_init(&argc, &argv);
-    apply_theme();
     
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Weitere Infos");
+    // create the main window
+    window = gtk_window_new();
+    const char *instruction_info_window = strcmp(language, "de") == 0 ? "Weitere Infos" : "More info";
+    gtk_window_set_title(GTK_WINDOW(window), instruction_info_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    
-     // Connect close function to 'destroy' signal
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	
-	GtkWidget *notebook = gtk_notebook_new();
-    gtk_container_add(GTK_CONTAINER(window), notebook);
-    
-    if (!GTK_IS_NOTEBOOK(notebook)) 
-    {
-    	g_warning("Notebook is not initialized properly.");
-    	return;
-	}
+	g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+
+    // create the notebook
+    notebook = gtk_notebook_new();
+    gtk_window_set_child(GTK_WINDOW(window), notebook);
 
     // page 1
-    page_info1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+
+    // button and label
     button_info1 = gtk_button_new_with_label("Project Treble");
-    label_info1_1 = gtk_label_new("Project Treble ist eine Android-Initiative von Google, \ndie Betriebssystem- und Hardwarekomponenten trennt.");
-    label_info1_2 = gtk_label_new("Dadurch können Hersteller leichter Updates bereitstellen, \nda das OS unabhängig von chipsatzspezifischen Treibern ist.");
-    button_info2 = gtk_button_new_with_label("Weiter");
-    gtk_box_pack_start(GTK_BOX(page_info1), button_info1, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info1), label_info1_1, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info1), label_info1_2, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info1), button_info2, FALSE, FALSE, 0);
-    g_signal_connect(button_info1, "clicked", G_CALLBACK(info_text), notebook);
-    g_signal_connect(button_info2, "clicked", G_CALLBACK(next_page), notebook);
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info1, gtk_label_new("Project Treble"));
-
-    // run css-provider
-    add_css_provider(button_info1, provider);
-    add_css_provider(label_info1_1, provider);
-    add_css_provider(label_info1_2, provider);
-    add_css_provider(button_info2, provider);
+    label_info1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Project Treble ist eine Android-Initiative von Google, \ndie Betriebssystem- und Hardwarekomponenten trennt." : "Project Treble is an Android initiative from \nGoogle that separates the operating system and hardware components.");
+    label_info1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dadurch können Hersteller leichter Updates bereitstellen, \nda das OS unabhängig von chipsatzspezifischen Treibern ist." : "This makes it easier for manufacturers to provide updates \nwhile the OS is independent of chipset-specific drivers.");
+    button_info2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
     
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page1), button_info1);
+    gtk_box_append(GTK_BOX(page1), label_info1_1);
+    gtk_box_append(GTK_BOX(page1), label_info1_2);
+    gtk_box_append(GTK_BOX(page1), button_info2);
 
+    // connect everything
+    g_signal_connect(button_info2, "clicked", G_CALLBACK(next_page), notebook);
+
+    // add page to the notebook
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Project Treble");
+    
     // page 2
-    page_info2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    button_info3 = gtk_button_new_with_label("a/b Partitionierung");
-    label_info2_1 = gtk_label_new("Das A/B-Partitionsschema nutzt zwei Systempartitionen \nfür nahtlose Updates durch Wechsel, \nbietet höhere Sicherheit und kontinuierlichen Betrieb.");
-    label_info2_2 = gtk_label_new("Das Only-A-Schema hat nur eine Partition, \nermöglicht einfachere Verwaltung, \naber ist anfälliger für Fehler während des Updates.");
-    button_info4 = gtk_button_new_with_label("Weiter");
-    gtk_box_pack_start(GTK_BOX(page_info2), button_info3, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info2), label_info2_1, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info2), label_info2_2, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info2), button_info4, FALSE, FALSE, 0);
-    g_signal_connect(button_info3, "clicked", G_CALLBACK(info_text), notebook);
-    g_signal_connect(button_info4, "clicked", G_CALLBACK(next_page), notebook);
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info2, gtk_label_new("a/b Partitionierung"));
+    page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    
+    // button and label
+    button_info3 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "a/b Partitionierung" : "a/b Partitioning");
+    label_info2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Das A/B-Partitionsschema nutzt zwei Systempartitionen \nfür nahtlose Updates durch Wechsel, \nbietet höhere Sicherheit und kontinuierlichen Betrieb." : "The A/B partitioning scheme uses two system partitions \nfor seamless updates by switching, \nprovides higher security and continuous operation.");
+    label_info2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Das Only-A-Schema hat nur eine Partition, \nermöglicht einfachere Verwaltung, \naber ist anfälliger für Fehler während des Updates." : "The Only-A scheme has only one partition, \nallows easier management, \nbut is more prone to errors during the update.");
+    button_info4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page2), button_info3);
+    gtk_box_append(GTK_BOX(page2), label_info2_1);
+    gtk_box_append(GTK_BOX(page2), label_info2_2);
+    gtk_box_append(GTK_BOX(page2), button_info4);
 
-    // run css-provider
-    add_css_provider(button_info3, provider);
-    add_css_provider(label_info2_1, provider);
-    add_css_provider(label_info2_2, provider);
-    add_css_provider(button_info4, provider);
+    // connect everything
+    g_signal_connect(button_info4, "clicked", G_CALLBACK(next_page), notebook);
+
+    // add page to the notebook
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new(g_strcmp0(language, "de") == 0 ? "a/b Partitionierung" : "a/b Partitioning"));
     
     // page 3
-    page_info3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    
+    // button and label
     button_info5 = gtk_button_new_with_label("System-as-root");
-	label_info3_1 = gtk_label_new("System-as-root ist ein Android-Mechanismus, \nbei dem das System-Image als Root-Dateisystem gemountet wird.");
-	label_info3_2 = gtk_label_new("Dies verbessert die Trennung von System- und Vendor-Partitionen, \nerhöht die Sicherheit und erleichtert System-Updates \nsowie die Verwaltung von Berechtigungen.");
-	button_info6 = gtk_button_new_with_label("Weiter");
-    gtk_box_pack_start(GTK_BOX(page_info3), button_info5, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info3), label_info3_1, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info3), label_info3_2, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info3), button_info6, FALSE, FALSE, 0);
-    g_signal_connect(button_info5, "clicked", G_CALLBACK(info_text), notebook);
+	label_info3_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "System-as-root ist ein Android-Mechanismus, \nbei dem das System-Image als Root-Dateisystem gemountet wird." : "System-as-root is an Android mechanism in which the \nsystem image is mounted as the root file system.");
+	label_info3_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dies verbessert die Trennung von System- und Vendor-Partitionen, \nerhöht die Sicherheit und erleichtert System-Updates \nsowie die Verwaltung von Berechtigungen." : "This improves the separation of system and vendor partitions, \nincreases security and facilitates system updates and \nthe management of authorizations.");
+	button_info6 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page3), button_info5);
+    gtk_box_append(GTK_BOX(page3), label_info3_1);
+    gtk_box_append(GTK_BOX(page3), label_info3_2);
+    gtk_box_append(GTK_BOX(page3), button_info6);
+
+    // connect everything
     g_signal_connect(button_info6, "clicked", G_CALLBACK(next_page), notebook);
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info3, gtk_label_new("System-as-root"));
-    
-    // run css-provider
-    add_css_provider(button_info5, provider);
-    add_css_provider(label_info3_1, provider);
-    add_css_provider(label_info3_2, provider);
-    add_css_provider(button_info6, provider);
 
+    // add page to the notebook
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("System-as-root");
+    
     // page 4
-    page_info4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    
+    // button and label
     button_info7 = gtk_button_new_with_label("Kernel");
-	label_info4_1 = gtk_label_new("Der Kernel ist der Kern eines Betriebssystems, \nder direkt mit der Hardware kommuniziert und Ressourcen wie CPU, \nSpeicher und Geräte verwaltet.");
-	label_info4_2 = gtk_label_new("Der Kernel bildet die Schnittstelle zwischen Hardware, \nAnwendungen und dem Rest des Systems und sorgt für eine \nsichere und effiziente Ausführung.");
-	label_info4_3 = gtk_label_new("Android-Versionen sind nur mit bestimmten \nKernel-Versionen kompatibel; bei Inkompatibilität startet Android nicht.");
-    gtk_box_pack_start(GTK_BOX(page_info4), button_info7, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info4), label_info4_1, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info4), label_info4_2, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page_info4), label_info4_3, TRUE, TRUE, 0);
-    g_signal_connect(button_info7, "clicked", G_CALLBACK(info_text), notebook);
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page_info4, gtk_label_new("Kernel"));
+	label_info4_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Kernel ist der Kern eines Betriebssystems, \nder direkt mit der Hardware kommuniziert und Ressourcen wie CPU, \nSpeicher und Geräte verwaltet." : "The kernel is the core of an operating system, \nwhich communicates directly with the hardware and manages resources such as CPU, \nmemory and devices.");
+	label_info4_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Kernel bildet die Schnittstelle zwischen Hardware, \nAnwendungen und dem Rest des Systems und sorgt für eine \nsichere und effiziente Ausführung." : "The kernel forms the interface between hardware, \napplications and the rest of the system and ensures \nsecure and efficient execution.");
+	label_info4_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Android-Versionen sind nur mit bestimmten \nKernel-Versionen kompatibel; bei Inkompatibilität startet Android nicht." : "Android versions are only compatible with certain \nKernel versions; if incompatible, Android will not start.");
     
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page4), button_info7);
+    gtk_box_append(GTK_BOX(page4), label_info4_1);
+    gtk_box_append(GTK_BOX(page4), label_info4_2);
+    gtk_box_append(GTK_BOX(page4), label_info4_3);
 
-    // run css-provider
-    add_css_provider(button_info7, provider);
-    add_css_provider(label_info4_1, provider);
-    add_css_provider(label_info4_2, provider);
-    add_css_provider(label_info4_3, provider);
+    // add page to the notebook
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new(g_strcmp0("Kernel");
     
-    // clean the storage
-    g_object_unref(provider);
-	
-	// show all widgets
-    gtk_widget_show_all(window);
-	
-	// run gtk mainloop
-    gtk_main();
+    // show all widgets
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+
+     // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
     g_print("Log: end instruction_info\n");
 }
