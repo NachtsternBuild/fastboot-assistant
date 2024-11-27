@@ -96,6 +96,7 @@ void set_button_labels_get_devices(char labels[][30])
 /* main function of get_devices*/
 void get_devices(int argc, char *argv[]) 
 {
+	g_print("Log: get_devices\n");
 	GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
