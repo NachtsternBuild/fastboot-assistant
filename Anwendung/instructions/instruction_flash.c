@@ -22,6 +22,7 @@
 #include "language_check.h"
 #include "program_functions.h"
 #include "function_header.h"
+#include "instruction_header.h"
 
 #define MAX_BUFFER_SIZE 256
 
