@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Please complete the following information:**
  - **OS:** e.g. Ubuntu
- - **OS version:** e.g. 24.04.
+ - **OS version:** e.g. 24.10.
  - **Browser:** e.g. chrome, firefox
  - **Browser version:** e.g. 22
  - **Program version:** e.g. v.0.6.2.dev
