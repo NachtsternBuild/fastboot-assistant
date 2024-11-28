@@ -33,7 +33,7 @@ void instruction_custom_rom(int argc, char *argv[])
     apply_language();
     
 	GtkWidget *window, *notebook;
-    GtkWidget *page_rom1, *page_rom2;
+    GtkWidget *page1, *page2;
     GtkWidget *label_rom1_1, *label_rom1_2, *label_rom2_1, *label_rom2_2, *label_rom2_3, *label_rom2_4;
     GtkWidget *button_rom1, *button_rom2, *button_rom3;
     
@@ -74,7 +74,7 @@ void instruction_custom_rom(int argc, char *argv[])
     // button and label
     button_rom3 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Custom ROM Flashen" : "Custom ROM flashing");
     label_rom2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Laden sie ein Custom-ROM für ihr Gerät herunter. \n2. Booten sie ihr Gerät in den Fastboot-Modus. \n3. Öffnen sie den Bootloader." : "1. Download a custom ROM for your device. \n2. Boot your device into fastboot mode. \n3. Unlock the bootloader.");
-    label_rom2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Flashen sie den Custom-Recovery, das Boot-Image (boot.img/init_boot.img), \nfalls nötig das dtbo.img. \n5. Führen sie einen Neustart in den Recovery aus." : "4. Flash the custom recovery, the boot image (boot.img/init_boot.img), \if necessary the dtbo.img. \n5. Perform a reboot in the recovery.");
+    label_rom2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Flashen sie den Custom-Recovery, das Boot-Image (boot.img/init_boot.img), \nfalls nötig das dtbo.img. \n5. Führen sie einen Neustart in den Recovery aus." : "4. Flash the custom recovery, the boot image (boot.img/init_boot.img), \nif necessary the dtbo.img. \n5. Perform a reboot in the recovery.");
     label_rom2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "6. Kopieren sie das Zip des Custom-ROMs auf ihr Gerät. \n7. Tippen sie installieren und flashen sie das Zip." : "6. Copy the zip of the custom ROM to your device. \n7. Tap install and flash the zip.");
     label_rom2_4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "8. Optional können sie jetzt Magisk (als Zip) oder Google Dienste \n(nur falls ihr Custom-ROM keine enthält) flashen. \n9. Starten sie ihr Gerät neu." : "8. Optionally you can now flash Magisk (as a zip) or Google services \n(only if your custom ROM does not contain any). \n9. Restart your device.");
     
@@ -86,7 +86,7 @@ void instruction_custom_rom(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page2), label_rom2_4);
     
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Flashen" : "Flashing"));7
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Flashen" : "Flashing"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
