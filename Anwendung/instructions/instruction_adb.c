@@ -28,7 +28,7 @@ void instruction_adb(int argc, char *argv[])
 	g_print("Log: instruction_adb\n");
 	// GTK init
     gtk_init();
-
+	main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
     
@@ -41,7 +41,7 @@ void instruction_adb(int argc, char *argv[])
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "ADB/Fastboot");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-	g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+	g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
     // create the notebook
     notebook = gtk_notebook_new();
@@ -138,7 +138,6 @@ void instruction_adb(int argc, char *argv[])
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
+    g_main_loop_run(main_loop); 
     g_print("Log: end instruction_adb\n");
 }
