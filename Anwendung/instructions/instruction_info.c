@@ -35,7 +35,7 @@ void instruction_info(int argc, char *argv[])
     apply_language();
     
 	GtkWidget *window, *notebook;
-    GtkWidget *page_info1, *page_info2, *page_info3, *page_info4;
+    GtkWidget *page1, *page2, *page3, *page4;
     GtkWidget *label_info1_1, *label_info1_2, *label_info2_1, *label_info2_2, *label_info3_1, *label_info3_2, *label_info4_1, *label_info4_2, *label_info4_3;
     GtkWidget *button_info1, *button_info2, *button_info3, *button_info4, *button_info5, *button_info6, *button_info7;
     
@@ -69,7 +69,7 @@ void instruction_info(int argc, char *argv[])
     g_signal_connect(button_info2, "clicked", G_CALLBACK(next_page), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Project Treble");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Project Treble"));
     
     // page 2
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -111,7 +111,7 @@ void instruction_info(int argc, char *argv[])
     g_signal_connect(button_info6, "clicked", G_CALLBACK(next_page), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("System-as-root");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("System-as-root"));
     
     // page 4
     page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -129,7 +129,7 @@ void instruction_info(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page4), label_info4_3);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new(g_strcmp0("Kernel");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new("Kernel"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
