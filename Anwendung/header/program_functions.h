@@ -37,32 +37,56 @@ extern const char *current_theme;
 // and the language
 extern const char *language;
 
+// other headers
 void delete_files_in_dir();
+
+// execute command
 char *execute_command();
+
+// messages
 void show_message();
+void show_message_with_title();
 void open_terminal_by_desktop();
-void connected_devices();
+void show_error_message();
+
+// check and get the slot
 int get_slot_of_device();
 void check_active_slot();
-void show_message_with_title();
-int get_slot_of_device();
+
+// get devices
 void get_info();
+int is_android_device_connected();
+void connected_devices();
+void get_android_info();
+// show file chooser
 void show_file_chooser(GtkWidget *widget, gpointer data);
+
+// get home
 gchar* get_home(const gchar *path);
-void open_url();
-void set_main_dir();
 const char* get_home_directory_flash();
+
+// open url in browser
+void open_url();
+
+// for work with dirs or WSL
+void set_main_dir();
 void get_wsl_directory(char* wsl_dir, size_t size);
 void set_main_dir_with_wsl(char *path, size_t size, const char *filename);
-void show_error_message();
-void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
-void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
-void next_page(GtkButton *button, gpointer data);
-void button_finish(GtkButton *button, gpointer data);
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 int directory_exists(const char *path);
+
+// flash functions
+void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
+void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
+
+// button connection for UI
+void next_page(GtkButton *button, gpointer data);
+// void button_finish(GtkButton *button, gpointer data);
+
+// adb/fastboot command
 char* adb_command();
 char* fastboot_command();
+
 // everything for the css provider
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
 void load_css(const char *theme);
@@ -71,8 +95,9 @@ void apply_theme();
 void write_dark_file();
 void check_dark_file();
 void check_dark_file_light();
+
 // functions with spinner
-void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command);
+//void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command);
 void command_with_spinner(const gchar *command);
 
 // function with pkexec
