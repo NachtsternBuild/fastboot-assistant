@@ -47,7 +47,7 @@ void show_message_with_title(const char *title, const char *message)
 
     // Create an OK button and connect it to close the dialog
     ok_button = gtk_button_new_with_label("OK");
-    g_signal_connect(ok_button, "clicked", G_CALLBACK(gtk_window_destroy), dialog);
+    g_signal_connect(ok_button, "clicked", G_CALLBACK(on_window_destroy), dialog);
     gtk_box_append(GTK_BOX(content_area), ok_button);
 
     // Display the dialog and all its components
