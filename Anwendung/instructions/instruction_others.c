@@ -34,14 +34,14 @@ void instruction_others(int argc, char *argv[])
     apply_language();
     
 	GtkWidget *window, *notebook;
-    GtkWidget *page_others1, *page_others2, *page_others3;
+    GtkWidget *page1, *page2, *page3;
     GtkWidget *label_others_1, *label_others_2, *label_others_3;
     GtkWidget *button_others_1, *button_others_2, *button_others_3, *button_others_4, *button_others_5;
     
     // create the main window
     window = gtk_window_new();
     const char *instruction_others_window = strcmp(language, "de") == 0 ? "Anderes" : "Others";
-    gtk_window_set_title(GTK_WINDOW(window), "Fastboot Assistant Setup");
+    gtk_window_set_title(GTK_WINDOW(window), instruction_others_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
 	g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
 
@@ -66,7 +66,7 @@ void instruction_others(int argc, char *argv[])
     g_signal_connect(button_others_2, "clicked", G_CALLBACK(next_page), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("dtbo");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("dtbo"));
     
     // page 2
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -85,10 +85,10 @@ void instruction_others(int argc, char *argv[])
     g_signal_connect(button_others_4, "clicked", G_CALLBACK(next_page), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("super");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("super"));
     
     // page 3
-    page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
     button_others_5 = gtk_button_new_with_label("vbmeta");
@@ -99,7 +99,7 @@ void instruction_others(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page3), label_others_3);
 	
 	// add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("vbmeta");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("vbmeta"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
