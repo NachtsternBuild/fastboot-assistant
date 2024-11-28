@@ -33,7 +33,7 @@ void instruction_gsi(int argc, char *argv[])
     apply_language();
     
 	GtkWidget *window, *notebook;
-    GtkWidget *page_gsi1, *page_gsi2, *page_gsi3, *page_gsi4;
+    GtkWidget *page1, *page2, *page3, *page4;
     GtkWidget *label_gsi1_1, *label_gsi1_2, *label_gsi2_1, *label_gsi2_2, *label_gsi2_3, *label_gsi3_1, *label_gsi4_1;
     GtkWidget *button_gsi1, *button_gsi2, *button_gsi3, *button_gsi4, *button_gsi5, *button_gsi6, *button_gsi7;
     
@@ -60,7 +60,7 @@ void instruction_gsi(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page1), button_gsi1);
     gtk_box_append(GTK_BOX(page1), label_gsi1_1);
     gtk_box_append(GTK_BOX(page1), label_gsi1_2);
-    gtk_box_append(GTK_BOX(page1), button_gsi1);
+    gtk_box_append(GTK_BOX(page1), button_gsi2);
 
     // connect everything
     g_signal_connect(button_gsi1, "clicked", G_CALLBACK(next_page), notebook);
@@ -83,7 +83,7 @@ void instruction_gsi(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page2), label_gsi2_1);
     gtk_box_append(GTK_BOX(page2), label_gsi2_2);
     gtk_box_append(GTK_BOX(page2), label_gsi2_3);
-    gtk_box_append(GTK_BOX(page2), button_gsi3);
+    gtk_box_append(GTK_BOX(page2), button_gsi4);
 
     // connect everything
     g_signal_connect(button_gsi3, "clicked", G_CALLBACK(next_page), notebook);
@@ -108,7 +108,7 @@ void instruction_gsi(int argc, char *argv[])
     g_signal_connect(button_gsi6, "clicked", G_CALLBACK(next_page), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("Clean Flash");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new("Clean Flash"));
     
     // page 4
     page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -122,7 +122,7 @@ void instruction_gsi(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page4), label_gsi4_1);  
     
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new("Dirty Flash");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new("Dirty Flash"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
