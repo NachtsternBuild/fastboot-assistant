@@ -67,7 +67,7 @@ GtkWidget* create_spinner_window()
     gtk_window_set_default_size(GTK_WINDOW(spinner_window), 200, 100);
     
     // connect destroy event
-    g_signal_connect(spinner_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(spinner_window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
     // add spinner
     spinner = gtk_spinner_new();
@@ -90,6 +90,7 @@ void run_with_spinner(void *(*thread_function)(void *))
     pthread_t thread;
 	
 	gtk_init();
+	main_loop = g_main_loop_new(NULL, FALSE);
     // create the spinner window
     create_spinner_window();
 
@@ -104,7 +105,6 @@ void run_with_spinner(void *(*thread_function)(void *))
     pthread_detach(thread);
     
     // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop);
+    g_main_loop_run(main_loop);
 }
 
