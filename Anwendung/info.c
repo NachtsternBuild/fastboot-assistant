@@ -89,6 +89,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
 {  
 	g_print("Log: info\n");
 	gtk_init();
+	main_loop = g_main_loop_new(NULL, FALSE);
 	apply_theme();
 
     apply_language();
@@ -112,7 +113,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
      if (!is_android_device_connected()) 
     {      
         char error_message[1024];
-        snprintf(error_message, sizeof(error_message), "No device!");
+        snprintf(error_message, sizeof(error_message), "\n No device! \n");
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
@@ -140,7 +141,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     GtkWidget *window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Info");
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 600);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
     add_css_provider(GTK_WIDGET(window), provider); // Apply CSS
 
     GtkWidget *scrolled_window = gtk_scrolled_window_new();
@@ -209,7 +210,6 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
+    g_main_loop_run(main_loop); 
     g_print("Log: end info\n");
 }
