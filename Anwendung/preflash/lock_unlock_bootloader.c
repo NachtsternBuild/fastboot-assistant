@@ -100,7 +100,7 @@ void lock_unlock_bootloader(int argc, char *argv[])
     char button_labels[3][30];
     
     gtk_init();
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
     set_button_labels_bootloader(button_labels);
