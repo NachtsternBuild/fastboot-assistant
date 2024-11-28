@@ -113,7 +113,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
      if (!is_android_device_connected()) 
     {      
         char error_message[1024];
-        snprintf(error_message, sizeof(error_message), "\n No device! \n");
+        snprintf(error_message, sizeof(error_message), "No device!");
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
