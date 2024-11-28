@@ -88,7 +88,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
 void info(int argc, char *argv[], GtkWindow *parent_window) 
 {  
 	g_print("Log: info\n");
-	gtk_init(&argc, &argv);
+	gtk_init();
 	apply_theme();
 
     apply_language();
@@ -116,7 +116,22 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
-
+	
+	// safe memory for the infos
+	// declare them as char
+    char android_version[2048] = {0};
+    char kernel_version[2048] = {0};
+    char device_name[2048] = {0};
+    char project_treble[2048] = {0};
+    char active_slot[2048] = {0};
+    char get_root[2048] = {0};
+    char get_soc[2048] = {0};
+    char get_distro[2048] = {0};
+    char get_version[2048] = {0};
+    char get_desktop[2048] = {0};
+    char get_language[2048] = {0};
+    char get_session_type[2048] = {0};
+    
     // Get all infos
     get_android_info(android_version, kernel_version, device_name, project_treble, active_slot, get_root, get_soc, get_distro, get_version, get_desktop, get_language, get_session_type);
 
@@ -190,7 +205,8 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     GtkWidget *session_type_info_label = gtk_label_new(g_strdup_printf("%s%s", session_type_label, get_session_type));
     gtk_box_append(GTK_BOX(box), session_type_info_label);
 
-    gtk_widget_show(window);
+    // show all widgets
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
     GMainLoop *loop = g_main_loop_new(NULL, FALSE);
