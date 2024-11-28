@@ -25,12 +25,21 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
+static void close_dialog(GtkButton *button, GtkWidget *dialog) 
+{
+    gtk_window_destroy(GTK_WINDOW(dialog));
+}
+
+// function to show message
 void show_message(const char *message) 
 {
     GtkWidget *dialog;
     GtkWidget *content_area;
     GtkWidget *label;
     GtkWidget *ok_button;
+    
+    // Format the message
+    const char *formatted_message = g_strdup_printf("\n\n%s\n\n", message);
 
     // Create the dialog window without using deprecated functions
     dialog = gtk_window_new();
@@ -43,12 +52,12 @@ void show_message(const char *message)
 
     // Create the label with the message and add it to the content area
     label = gtk_label_new(NULL);
-    gtk_label_set_markup(GTK_LABEL(label), message);
+    gtk_label_set_markup(GTK_LABEL(label), formatted_message);
     gtk_box_append(GTK_BOX(content_area), label);
 
     // Create an OK button and connect it to close the dialog
     ok_button = gtk_button_new_with_label("OK");
-    g_signal_connect(ok_button, "clicked", G_CALLBACK(on_window_destroy), dialog);
+    g_signal_connect(ok_button, "clicked", G_CALLBACK(close_dialog), dialog);
     gtk_box_append(GTK_BOX(content_area), ok_button);
 
     // Display the dialog and all its components
