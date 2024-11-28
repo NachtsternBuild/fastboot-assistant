@@ -48,7 +48,8 @@ void *run_heimdall_command(void *command)
 }
 
 // Function to flash with heimdall
-void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name) {
+void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name) 
+{
     char image_path[4096];  // Erhöhen des Puffers für große Dateipfade
     set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
     apply_theme();
