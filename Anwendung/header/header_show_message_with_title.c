@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
 void show_message_with_title(const char *title, const char *message) 
 {
