@@ -87,7 +87,7 @@ void instruction_preflash(int argc, char *argv[])
     apply_language();
     
     GtkWidget *window, *notebook;
-    GtkWidget *page_preflash1, *page_preflash2;
+    GtkWidget *page1, *page2;
     GtkWidget *label_preflash1_1, *label_preflash1_2, *label_preflash1_3, *label_preflash1_4;
     GtkWidget *button_preflash1, *button_preflash2, *button_preflash3, *button_preflash2_1, *button_preflash2_2, *button_preflash2_3, *button_preflash2_4, *button_preflash2_5, *button_preflash2_6;
     
@@ -109,7 +109,7 @@ void instruction_preflash(int argc, char *argv[])
     button_preflash1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Vorbereitung Flash" : "Preparation Flash");
     label_preflash1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Informieren sie genauer über ihr Gerät und den Chipsatz des Gerätes. \n2. Suchen sie nach entsprechenden Custom-ROMs, Custom-Recoverys \noder GSIs." : "1. Provide more detailed information about your device and the chipset of the device. \n2. Search for corresponding custom ROMs, custom recoverys \nor GSIs.");
     label_preflash1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. Prüfen sie die Verfügbarkeit von Project Treble für ihr Gerät. \n4. Prüfen sie welches Partitionierungsschema auf ihrem Gerät vorliegt \n(a/b-devices oder only-a-devices)." : "3. Check the availability of Project Treble for your device. \n4. Check which partitioning scheme is available on your device \n(a/b-devices or only-a-devices).");
-    label_preflash1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "5. Sichern sie ihre Daten lokal und wenn sie wollen in einer Cloud. \n6. Laden sie alle Dateien herunter die sie für den flash brauchen." : "5. Back up your data locally and, if you wish, in a cloud. \n6. Download all the files you need for the flash.);
+    label_preflash1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "5. Sichern sie ihre Daten lokal und wenn sie wollen in einer Cloud. \n6. Laden sie alle Dateien herunter die sie für den flash brauchen." : "5. Back up your data locally and, if you wish, in a cloud. \n6. Download all the files you need for the flash.");
     label_preflash1_4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "7. Lesen sie die Anleitungen der Entwickler vor dem Flash. \n8. Kopieren sie alle Dateien die geflasht werden, nach: '~/Downloads/ROM-Install/'" : "7. Read the developer's instructions before using Flash. \n8. Copy all files that are flashed to: '~/Downloads/ROM-Install/'");
     button_preflash2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
     
@@ -157,7 +157,7 @@ void instruction_preflash(int argc, char *argv[])
     g_signal_connect(button_preflash2_6, "clicked", G_CALLBACK(evolution_x), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("Custom ROMs");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("Custom ROMs"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
