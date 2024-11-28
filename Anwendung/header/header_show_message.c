@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
 void show_message(const char *message) 
 {
