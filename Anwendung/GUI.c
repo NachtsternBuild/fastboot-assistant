@@ -32,8 +32,6 @@
 #include "language_check.h"
 
 #define MAX_BUFFER_SIZE 256
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT 400
 
 // include all functions
 extern void get_devices();
@@ -48,7 +46,6 @@ extern void about();
 extern void make_dir();
 
 extern void run_first_run_setup();
-
 
 // Callback functions for each button
 // start get_devices-function
@@ -168,6 +165,8 @@ void set_button_labels(char labels[][30])
     }
 }
 
+
+/* main function - GUI */
 int main(int argc, char *argv[]) 
 {
     g_print("Log: fastboot-assistant\n");
@@ -175,6 +174,7 @@ int main(int argc, char *argv[])
     char button_labels[9][30];
     
     gtk_init();
+    main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
     set_button_labels(button_labels);
@@ -243,7 +243,8 @@ int main(int argc, char *argv[])
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+
     
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
@@ -293,13 +294,15 @@ int main(int argc, char *argv[])
 	if (provider != NULL) 
 	{
 	    g_object_unref(provider);
+	    provider = NULL;
 	}
 	
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
+    g_main_loop_run(main_loop); 
+	
+	 g_main_loop_unref(main_loop);
 
     g_print("Log: end fastboot-assistant\n");
     return 0;
