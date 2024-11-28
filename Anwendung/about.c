@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
@@ -78,14 +79,15 @@ void about(int argc, char *argv[])
     apply_theme();
     apply_language();
     
-    GtkWidget *window;
-    GtkWidget *page_about1, *page_about2, *page_about3;
+    GtkWidget *window, *notebook;
+    GtkWidget *page1, *page2, *page3;
     GtkWidget *label_about2;
     GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6;
     
     // create the main window
     window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Über das Programm");
+    const char *about_window = strcmp(language, "de") == 0 ? "Über das Programm" : "About the program";
+    gtk_window_set_title(GTK_WINDOW(window), about_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
 	g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
 
