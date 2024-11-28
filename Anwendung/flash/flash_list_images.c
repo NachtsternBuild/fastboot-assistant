@@ -26,7 +26,7 @@
 #include <dirent.h>
 #include <unistd.h>
 
-void flash_partition(const char *partition, const char *img_file) 
+void flash_partition_list(const char *partition, const char *img_file) 
 {
     g_print("Log: flash_partition\n");
     char command[512];
@@ -46,51 +46,51 @@ void process_file(const char *filepath)
 {
     if (strstr(filepath, "gz.img")) 
     {
-        flash_partition("gz_a", filepath);
-        flash_partition("gz_b", filepath);
+        flash_partition_list("gz_a", filepath);
+        flash_partition_list("gz_b", filepath);
     } 
     else if (strstr(filepath, "lk.img")) 
     {
-        flash_partition("lk_a", filepath);
-        flash_partition("lk_b", filepath);
+        flash_partition_list("lk_a", filepath);
+        flash_partition_list("lk_b", filepath);
     } 
     else if (strstr(filepath, "logo.img")) 
     {
-        flash_partition("logo", filepath);
+        flash_partition_list("logo", filepath);
     } 
     else if (strstr(filepath, "md1img.img")) 
     {
-        flash_partition("md1img_a", filepath);
-        flash_partition("md1img_b", filepath);
+        flash_partition_list("md1img_a", filepath);
+        flash_partition_list("md1img_b", filepath);
     } 
     else if (strstr(filepath, "metadata.img")) 
     {
-        flash_partition("metadata", filepath);
+        flash_partition_list("metadata", filepath);
     }
     else if (strstr(filepath, "protect.img")) 
     {
-        flash_partition("protect_a", filepath);
-        flash_partition("protect_b", filepath);
+        flash_partition_list("protect_a", filepath);
+        flash_partition_list("protect_b", filepath);
     } 
     else if (strstr(filepath, "scp.img")) 
     {
-        flash_partition("scp_a", filepath);
-        flash_partition("scp_b", filepath);
+        flash_partition_list("scp_a", filepath);
+        flash_partition_list("scp_b", filepath);
     } 
     else if (strstr(filepath, "spmfw.img")) 
     {
-        flash_partition("spmfw_a", filepath);
-        flash_partition("spmfw_b", filepath);
+        flash_partition_list("spmfw_a", filepath);
+        flash_partition_list("spmfw_b", filepath);
     } 
     else if (strstr(filepath, "sspm.img")) 
     {
-        flash_partition("sspm_a", filepath);
-        flash_partition("sspm_b", filepath);
+        flash_partition_list("sspm_a", filepath);
+        flash_partition_list("sspm_b", filepath);
     } 
     else if (strstr(filepath, "tee.img")) 
     {
-        flash_partition("tee_a", filepath);
-        flash_partition("tee_b", filepath);
+        flash_partition_list("tee_a", filepath);
+        flash_partition_list("tee_b", filepath);
     } 
     else 
     {
