@@ -51,7 +51,7 @@ void instruction_root(int argc, char *argv[])
     apply_language();
     
 	GtkWidget *window, *notebook;
-    GtkWidget *page_root1, *page_root2, *page_root3;
+    GtkWidget *page1, *page2, *page3;
     GtkWidget *label_root1_1, *label_root1_2, *label_root1_3, *label_root2_1, *label_root2_2, *label_root2_3, *label_root3_1, *label_root3_2, *label_root3_3, *label_root3_4;
     GtkWidget *button_root1, *button_root2, *button_root3, *button_root4, *button_root5, *button_root6, *button_root7;
     
@@ -95,7 +95,7 @@ void instruction_root(int argc, char *argv[])
     // button and label
     button_root3 = gtk_button_new_with_label("Magisk");
     label_root2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Magisk ist ein Paket von Open-Source-Software für die Anpassung von Android. \nMit folgenden Bestandteilen:" : "Magisk is a package of open source software for Android customization. \nWith the following components:");
-    label_root2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. MagiskSU: Bereitstellung von Root-Zugriff für Anwendungen. \n2. Magisk Modules: Ändern von schreibgeschützten Partitionen durch Installation von Modulen." : "1. MagiskSU: Provision of root access for applications. \n2. Magisk Modules: Change read-only partitions by installing modules.);
+    label_root2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. MagiskSU: Bereitstellung von Root-Zugriff für Anwendungen. \n2. Magisk Modules: Ändern von schreibgeschützten Partitionen durch Installation von Modulen." : "1. MagiskSU: Provision of root access for applications. \n2. Magisk Modules: Change read-only partitions by installing modules.");
     label_root2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. MagiskBoot: Das umfassendste Tool zum Entpacken und Neuverpacken von Android-Boot-Images. \n4. Zygisk: Code in allen Prozessen von Android-Anwendungen ausführen." : "3. MagiskBoot: The most comprehensive tool for unpacking and repacking Android boot images. \n4. Zygisk: Execute code in all processes of Android applications.");
     button_root4 = gtk_button_new_with_label("Magisk");
     button_root5 = gtk_button_new_with_label("Magisk-APK");
@@ -116,7 +116,7 @@ void instruction_root(int argc, char *argv[])
     g_signal_connect(button_root6, "clicked", G_CALLBACK(next_page), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("Magisk");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new("Magisk"));
     
     // page 3
     page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
