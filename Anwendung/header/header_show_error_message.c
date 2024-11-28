@@ -30,7 +30,8 @@ void show_error_message(GtkWindow *parent_window, const char *message)
     GtkWidget *dialog = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(dialog), "Error");
     gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-    if (parent_window) {
+    if (parent_window) 
+    {
         gtk_window_set_transient_for(GTK_WINDOW(dialog), parent_window);
         gtk_window_set_destroy_with_parent(GTK_WINDOW(dialog), TRUE);
     }
@@ -46,7 +47,7 @@ void show_error_message(GtkWindow *parent_window, const char *message)
 
     // Create a "Close" button and connect it to destroy the dialog
     GtkWidget *close_button = gtk_button_new_with_label("Close");
-    g_signal_connect(close_button, "clicked", G_CALLBACK(gtk_window_destroy), dialog);
+    g_signal_connect_swapped(close_button, "clicked", G_CALLBACK(main_loop), dialog);
     gtk_box_append(GTK_BOX(content_area), close_button);
 
     // Display the dialog
