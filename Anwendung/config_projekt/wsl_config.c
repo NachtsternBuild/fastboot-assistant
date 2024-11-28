@@ -86,6 +86,7 @@ void wsl_config()
     GtkWidget *config_adb_button;
 
     gtk_init();
+    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     
     int found = 0;
@@ -116,7 +117,7 @@ void wsl_config()
         const char *config_window = strcmp(language, "de") == 0 ? "Konfigurieren" : "Configure";
         gtk_window_set_title(GTK_WINDOW(window), config_window);
         gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
-        g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+        g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
         // create the box layout
         vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
@@ -144,7 +145,6 @@ void wsl_config()
     }
 
     // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
+    g_main_loop_run(main_loop); 
 }
 
