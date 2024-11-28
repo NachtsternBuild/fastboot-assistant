@@ -26,12 +26,32 @@ char output_file[2048];
 char deb_on_wsl[2048];
 char install_command[2048];
 char output_path[2048];
+char unzip_command[2048];
+char cd_command[2048];
+char output_path[2048];
+char wsl_dir[2048];
 GtkWidget *update_window_install;
 GtkWidget *info_button;
 
 static void install_wsl(GtkButton *button) 
 { 
     g_print("Log: install_wsl\n");
+    get_wsl_directory(wsl_dir, sizeof(wsl_dir));
+    g_print("Log: Directory: %s\n", wsl_dir);
+    
+    snprintf(output_file, sizeof(output_file), "%s/fastboot-assistant.zip", wsl_dir);
+    snprintf(output_path, sizeof(output_path), "%s/ROM-Install", wsl_dir);
+    snprintf(deb_on_wsl, sizeof(deb_on_wsl), "%s/fastboot-assistant.deb", output_path);
+    
+    g_print("Log: Package downloaded: %s\n", output_file);
+
+    snprintf(unzip_command, sizeof(unzip_command), "unzip %s -d %s", output_file, output_path);
+    g_print("Log: Run: %s\n", unzip_command);
+    system(unzip_command);       			
+    
+    snprintf(cd_command, sizeof(cd_command), "cd %s", output_path);
+    g_print("Log: Run: %s\n", cd_command);
+    system(cd_command);
     snprintf(install_command, sizeof(install_command), "dpkg -i %s && rm -f %s", deb_on_wsl, deb_on_wsl);
     install_with_pkexec(install_command);
     gtk_window_destroy(GTK_WINDOW(update_window_install));
@@ -74,8 +94,9 @@ static void create_install_window(GtkWidget **install_button, void (*install_cal
     *install_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
     g_signal_connect(*install_button, "clicked", G_CALLBACK(install_callback), NULL);
     gtk_box_append(GTK_BOX(vbox), *install_button);
-
-    gtk_widget_show(update_window_install);
+	
+    // show all widgets
+    gtk_window_present(GTK_WINDOW(update_window_install));
 }
 
 static void install_window_deb(GtkButton *button)
@@ -146,10 +167,8 @@ int verify_package_type(const char *filepath, const char *expected_extension)
 void updater(void) 
 {
     g_print("Log: updater\n");
-    int argc = 0;
-    char **argv = NULL;
 
-    gtk_init(&argc, &argv);
+    gtk_init();
     apply_theme();
     apply_language();
 
@@ -222,16 +241,23 @@ void updater(void)
             {
                 g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_deb), NULL);
             } 
+            
             else if (strcmp(package_type, ".rpm") == 0) 
             {
                 g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_rpm), NULL);
             }
-
+			
+			else if (strcmp(package_type, ".zip") == 0)
+			{
+				g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_wsl), NULL);
+			}
+			
             GtkWidget *cancel_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Später Installieren" : "Install later");
             gtk_box_append(GTK_BOX(vbox), cancel_button);
             g_signal_connect(cancel_button, "clicked", G_CALLBACK(gtk_window_destroy), confirmation_window);
 
-            gtk_widget_show(confirmation_window);
+            // show all widgets
+    		gtk_window_present(GTK_WINDOW(confirmation_window)); // gtk_window_present instead of gtk_widget_show
         } 
         else 
         {
