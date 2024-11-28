@@ -83,7 +83,7 @@ static void create_install_window(GtkWidget **install_button, void (*install_cal
     update_window_install = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(update_window_install), update_install);
     gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
-    g_signal_connect(update_window_install, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(update_window_install, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_window_set_child(GTK_WINDOW(update_window_install), vbox);
@@ -169,6 +169,7 @@ void updater(void)
     g_print("Log: updater\n");
 
     gtk_init();
+    main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
 
@@ -254,7 +255,7 @@ void updater(void)
 			
             GtkWidget *cancel_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Später Installieren" : "Install later");
             gtk_box_append(GTK_BOX(vbox), cancel_button);
-            g_signal_connect(cancel_button, "clicked", G_CALLBACK(gtk_window_destroy), confirmation_window);
+            g_signal_connect(cancel_button, "clicked", G_CALLBACK(on_window_destroy), confirmation_window);
 
             // show all widgets
     		gtk_window_present(GTK_WINDOW(confirmation_window)); // gtk_window_present instead of gtk_widget_show
@@ -270,8 +271,7 @@ void updater(void)
     }
 	
 	// run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
+    g_main_loop_run(main_loop); 
     g_print("Log: end updater\n");
 }
 
