@@ -32,7 +32,7 @@ void instruction_backup(int argc, char *argv[])
     apply_language();
     
     GtkWidget *window, *notebook;
-    GtkWidget *page_backup1;
+    GtkWidget *page1;
     GtkWidget *label_backup1_1, *label_backup1_2, *label_backup1_3;
     GtkWidget *button_backup1;
     
@@ -62,7 +62,7 @@ void instruction_backup(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page1), label_backup1_3);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Backup");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Backup"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
