@@ -24,9 +24,7 @@
 #include "program_functions.h"
 #include "language_check.h"
 
-#define WINDOW_WIDTH 400
-#define WINDOW_HEIGHT 300
-
+// the setup wizard
 void run_first_run_setup(GtkCssProvider *provider) 
 {
     g_print("Log: run_first_run_setup\n");
@@ -110,7 +108,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     button_page3_1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Hinweise" : "Notes");
 	label_page3_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Die Verwendung erfolgt auf eigene Gefahr." : "1. Use at your own risk.");
 	label_page3_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "2. Das Gerät kann beschädigt werden." : "2. The device may be damaged.");
-	label_page3_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. Nicht jedes Gerät unterstützt alle Funktionen" : "3. Not every device supports all functions”);
+	label_page3_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. Nicht jedes Gerät unterstützt alle Funktionen" : "3. Not every device supports all functions");
 	label_page3_4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Nicht alle Betriebssystemvarianten haben den gleichen Funktionsumfang." : "4. Not all operating system variants have the same range of functions.");
     button_page3_2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
     
