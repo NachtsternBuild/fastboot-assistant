@@ -29,16 +29,24 @@
 #define PROGRAM_FUNCTIONS_H
 
 #define WINDOW_WIDTH 750
-#define WINDOW_HEIGHT 400
+#define WINDOW_HEIGHT 600
 
+/* global variables that are used in each file */
+// for the css-provider
 extern GtkCssProvider *provider;
+
 // global use of the theme 
 extern const char *current_theme;
+
 // and the language
 extern const char *language;
 
-// other headers
-void delete_files_in_dir();
+// for GTK main loop
+extern GMainLoop *main_loop;
+
+/* function from the header */
+// end  GTK main loop
+void on_window_destroy(GtkWidget *widget, gpointer data);
 
 // execute command
 char *execute_command();
@@ -58,6 +66,7 @@ void get_info();
 int is_android_device_connected();
 void connected_devices();
 void get_android_info();
+
 // show file chooser
 void show_file_chooser(GtkWidget *widget, gpointer data);
 
@@ -74,6 +83,7 @@ void get_wsl_directory(char* wsl_dir, size_t size);
 void set_main_dir_with_wsl(char *path, size_t size, const char *filename);
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 int directory_exists(const char *path);
+void delete_files_in_dir();
 
 // flash functions
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
