@@ -132,7 +132,7 @@ void flash_GUI(int argc, char *argv[])
     char button_labels[9][30];
     
     gtk_init();
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
     set_button_labels_flash_GUI(button_labels);
@@ -140,7 +140,7 @@ void flash_GUI(int argc, char *argv[])
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Flashen");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect_swapped(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
     
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
