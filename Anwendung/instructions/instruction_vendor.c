@@ -33,7 +33,7 @@ void instruction_vendor(int argc, char *argv[])
     apply_language();
     
     GtkWidget *window, *notebook;
-    GtkWidget *page_vndk1;
+    GtkWidget *page1;
     GtkWidget *label_vndk1_1, *label_vndk1_2, *label_vndk1_3;
     GtkWidget *button_vndk1;
 	
@@ -57,15 +57,13 @@ void instruction_vendor(int argc, char *argv[])
     label_vndk1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dadurch lassen sich Updates und Wartung erleichtern, weil herstellerspezifische \nAnpassungen nicht die Kompatibilität und Stabilität \ndes Android-Systems beeinträchtigen." : "This makes updates and maintenance easier because manufacturer-specific \nadjustments do not affect the compatibility and stability \nof the Android system.");
     
     // add everything to the page
-    gtk_box_append(GTK_BOX(page1), button_welcome_1);
-    gtk_box_append(GTK_BOX(page1), label_welcome_1);
-    gtk_box_append(GTK_BOX(page1), button_toggle_language);
-    gtk_box_append(GTK_BOX(page1), button_toggle_theme);
-    gtk_box_append(GTK_BOX(page1), label_welcome_2);
-    gtk_box_append(GTK_BOX(page1), button_welcome_2);
+    gtk_box_append(GTK_BOX(page1), button_vndk1);
+    gtk_box_append(GTK_BOX(page1), label_vndk1_1);
+    gtk_box_append(GTK_BOX(page1), label_vndk1_2);
+    gtk_box_append(GTK_BOX(page1), label_vndk1_3);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("VNDK");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("VNDK"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
