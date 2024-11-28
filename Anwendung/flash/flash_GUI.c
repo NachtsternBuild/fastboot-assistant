@@ -94,7 +94,7 @@ static void start_flash_others(GtkWidget *widget, gpointer data)
 }
 
 // Function to set up button labels based on the language
-void set_button_labels_partitions(char labels[][30]) 
+void set_button_labels_flash_GUI(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
@@ -134,7 +134,7 @@ void flash_GUI(int argc, char *argv[])
     gtk_init();
     apply_theme();
     apply_language();
-    set_button_labels_partitions(button_labels);
+    set_button_labels_flash_GUI(button_labels);
     
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Flashen");
