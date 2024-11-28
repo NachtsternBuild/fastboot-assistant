@@ -34,7 +34,7 @@ void instruction_recovery(int argc, char *argv[])
     apply_language();
 
     GtkWidget *window, *notebook;
-    GtkWidget *page_reco1, *page_reco2;
+    GtkWidget *page1, *page2;
     GtkWidget *label_reco1_1, *label_reco1_2, *label_reco1_3, *label_reco2_1, *label_reco2_2, *label_reco2_3;
     GtkWidget *button_reco1, *button_reco2, *button_reco3;
     
@@ -69,7 +69,7 @@ void instruction_recovery(int argc, char *argv[])
     g_signal_connect(button_reco2, "clicked", G_CALLBACK(next_page), notebook);
 
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Recovery");
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Recovery"));
     
     // page 2
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -77,7 +77,7 @@ void instruction_recovery(int argc, char *argv[])
     // button and label
     button_reco3 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashen des Recoverys" :"Flashing the recovery");
     label_reco2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Prüfen Sie, ob es für Ihr Gerät einen Custom-Recovery gibt. \n2. Laden Sie einen entsprechenden Recovery herunter. \n3. Bereiten Sie die Images für den Flash vor." : "1. Check whether there is a custom recovery for your device. \n2. Download a corresponding recovery. \n3. Prepare the images for the flash.");
-    label_reco2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Booten Sie Ihr Gerät in den Fastboot-Modus. \n5. Öffnen Sie den Bootloader. \nManche Geräte unterstützen nicht die Methode über Fastboot." : "4. Boot your device into fastboot mode. \n5. Open the bootloader. \nSome devices do not support the fastboot method.);
+    label_reco2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Booten Sie Ihr Gerät in den Fastboot-Modus. \n5. Öffnen Sie den Bootloader. \nManche Geräte unterstützen nicht die Methode über Fastboot." : "4. Boot your device into fastboot mode. \n5. Open the bootloader. \nSome devices do not support the fastboot method.");
     label_reco2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Informieren Sie sich genauer über Ihren Chipsatz und das Gerät. \n6. Flashen Sie das Recovery-Image mit dieser Anwendung. \n7. Lassen Sie Ihr Gerät in den Recovery booten." : "Find out more about your chipset and the device. \n6. Flash the recovery image with this application. \n7. Boot your device into the recovery.");
     
     // add everything to the page
