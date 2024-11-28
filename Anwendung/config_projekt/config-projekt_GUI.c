@@ -48,13 +48,13 @@ static void start_wsl_config(GtkWidget *widget, gpointer data)
 {
     wsl_config();
 }
-/*
+
 // function that start toggle_language
 static void start_toggle_language(GtkWidget *widget, gpointer data)
 {
-	toggle_language();
+	toggle_language(NULL, NULL);
 }
-*/
+
 // Function to set up button labels based on the language
 void set_button_labels_config_projekt(char labels[][30]) 
 {
@@ -83,6 +83,7 @@ void config_projekt_GUI(int argc, char *argv[])
     char button_labels[4][30];
     
     gtk_init();
+    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
     set_button_labels_config_projekt(button_labels);
@@ -91,7 +92,7 @@ void config_projekt_GUI(int argc, char *argv[])
     const char *config_projekt_window = strcmp(language, "de") == 0 ? "Zusätze" : "Additions";
     gtk_window_set_title(GTK_WINDOW(window), config_projekt_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
     
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
@@ -130,8 +131,7 @@ void config_projekt_GUI(int argc, char *argv[])
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
+    g_main_loop_run(main_loop); 
     
     g_print("Log: end config_projekt_GUI\n");
 }
