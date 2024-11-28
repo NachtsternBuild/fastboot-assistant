@@ -32,8 +32,8 @@ void instruction_adb(int argc, char *argv[])
     apply_theme();
     apply_language();
     
-    GtkWidget *window;
-    GtkWidget *page_adb1, *page_adb2, *page_adb3, *page_adb4;
+    GtkWidget *window, *notebook;
+    GtkWidget *page1, *page2, *page3, *page4;
     GtkWidget *label_adb1_1, *label_adb1_2, *label_adb1_3, *label_adb2_1, *label_adb2_2, *label_adb2_3, *label_adb3_1, *label_adb3_2, *label_adb3_3, *label_adb4_1, *label_adb4_2, *label_adb4_3;
     GtkWidget *button_adb1, *button_adb2, *button_adb3, *button_adb4, *button_adb5, *button_adb6, *button_adb7;
     
@@ -52,7 +52,7 @@ void instruction_adb(int argc, char *argv[])
 
     // button and label
     button_adb1 = gtk_button_new_with_label("ADB/Fastboot");
-    label_adb1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "ADB (Android Debug Bridge) dient als \nKommunikationsschnittstelle zwischen Computer und einem Android-Gerät. \nSie wird zum Debugging und Dateiübertragung verwendet." : "ADB (Android Debug Bridge) serves as a \ncommunication interface between a computer and an Android device. \It is used for debugging and file transfer.");
+    label_adb1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "ADB (Android Debug Bridge) dient als \nKommunikationsschnittstelle zwischen Computer und einem Android-Gerät. \nSie wird zum Debugging und Dateiübertragung verwendet." : "ADB (Android Debug Bridge) serves as a \ncommunication interface between a computer and an Android device. \nIt is used for debugging and file transfer.");
     label_adb1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Fastboot ist ein Befehlszeilenwerkzeug \nfür den Bootloader von Android-Geräten, mit dem benutzerdefinierte Firmware \nund andere Systemabbilder geflasht werden können." : "Fastboot is a command line tool \nfor the bootloader of Android devices, with which user-defined firmware \nand other system images can be flashed.");
     label_adb1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Beide Tools sind für Entwickler und fortgeschrittene Nutzer \nvon großem Nutzen, wenn es darum geht, Android-Geräte zu modifizieren \nund zu diagnostizieren." : "Both tools are very useful for developers and \nadvanced users when it comes to modifying and diagnosing Android devices.");
     button_adb2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
