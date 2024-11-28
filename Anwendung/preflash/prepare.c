@@ -78,10 +78,10 @@ void prepare(int argc, char *argv[])
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
     gtk_window_set_child(GTK_WINDOW(window), grid);
     
-    for (int i = 0; i < 2; i++) 
+    for (int i = 0; i < 6; i++) 
     {
         button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
+        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
         
         switch (i) {
             case 0:
