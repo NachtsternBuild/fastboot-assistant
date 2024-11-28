@@ -57,7 +57,7 @@ static void start_reboot_heimdall(GtkWidget *widget, gpointer data)
 }
 
 // Function to set up button labels based on the language
-void set_button_labels_reboot(char labels[][30]) 
+void set_button_labels_reboot_GUI(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
@@ -85,7 +85,7 @@ void reboot_GUI(int argc, char *argv[])
     gtk_init();
     apply_theme();
     apply_language();
-    set_button_labels_reboot(button_labels);
+    set_button_labels_reboot_GUI(button_labels);
     
     window = gtk_window_new();
     const char *reboot_window = strcmp(language, "de") == 0 ? "Neustart" : "Reboot";
