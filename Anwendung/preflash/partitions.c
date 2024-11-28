@@ -218,6 +218,7 @@ void partitions(int argc, char *argv[])
     char button_labels[9][30];
     
     gtk_init();
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
     set_button_labels_partitions(button_labels);
@@ -226,7 +227,7 @@ void partitions(int argc, char *argv[])
     const char *preflash_window = strcmp(language, "de") == 0 ? "Partitionen" : "Partitions";
     gtk_window_set_title(GTK_WINDOW(window), preflash_window);
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
     
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
@@ -280,8 +281,7 @@ void partitions(int argc, char *argv[])
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); // GTK-Hauptschleife starten
+    g_main_loop_run(main_loop); // GTK-Hauptschleife starten
     
     g_print("Log: end partitions\n");
 }
