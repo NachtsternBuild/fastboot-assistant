@@ -109,6 +109,7 @@ void prepare(int argc, char *argv[])
 	if (provider != NULL) 
 	{
 	    g_object_unref(provider);
+	    provider = NULL;
 	}
 	
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
