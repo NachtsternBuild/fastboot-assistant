@@ -22,15 +22,16 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 
 ## Versions
 *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
-- ***see [Changelog.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/changelog.md) for all changes or just GitHub.***
+- ***see [CHANGELOG](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/CHANGELOG) for all changes.***
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
 ### Sweet Unix v.0.5.x
-- **fastboot-assistant v.0.5.5.2** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL
+- **[fastboot-assistant v.0.5.5.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.5.5.2)** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL
 
 ### Rostiges Red Hat v.0.6.x
-- **fastboot-assistant v.0.6.1.dev** → build this from source / Linux (Ubuntu)
+- *fastboot-assistant v.0.6.1.dev* → build this from source / Linux (Ubuntu)
+- **fastboot-assistant v.0.6.2.dev** → build this from source / Linux (Ubuntu)
 
 ## Notes
 - Use at your own risk.
@@ -42,16 +43,18 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 ### Some brownies
 - *A big thank you to:*
   - **@mrrfv → [Open Android Backup](https://github.com/mrrfv/open-android-backup)**
-  - **@Jean28518 → my [build-deb.sh](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/Anwendung/Build/build-fastboot-assistant.sh) is a modified version of *@Jean28518s* version.**
+  - **@Jean28518 → my [build-fastboot-assistant.sh](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/Anwendung/Build/build-fastboot-assistant.sh) is a modified version of *@Jean28518s* version.**
   
 ## Installation of the programme
 ### Linux
 The following tools are required to run the programme.
-- *Android Debug Bridge (adb)* 
+- *Android Debug Bridge (adb) and fastboot* 
 - *Fastboot*
 - *xz-utils*
 - *unzip*
 - *wget*
+- *curl*
+- *pkexec*
 - *heimdall → heimdall must be installed manually on all distributions that use RPMs*
 
 These are installed automatically with the Debian package.
