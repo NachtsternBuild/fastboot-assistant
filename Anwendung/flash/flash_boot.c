@@ -109,7 +109,7 @@ void flash_boot(int argc, char *argv[])
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
     gtk_window_set_child(GTK_WINDOW(window), grid);
     
-    for (int i = 0; i < 3; i++) 
+    for (int i = 0; i < 6; i++) 
     {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
@@ -140,6 +140,7 @@ void flash_boot(int argc, char *argv[])
 	if (provider != NULL) 
 	{
 	    g_object_unref(provider);
+	    provider = NULL;
 	}
 	
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
