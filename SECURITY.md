@@ -1,10 +1,27 @@
 # Security Policy
+## Types of versions (status)
+- **dev** *→ These versions are still under development and there are still a lot of bugs, but most things are working.*
+- **beta** *→ These versions are still under development. There are still some minor problems. All functions should work with some exceptions.*
+- **stable** *→ These are versions of the programme that run stably on the specified systems and fulfil their purpose.*
+- **instable** *→ In this version, the programme does not always run stably on all specified systems.*
+- **v.VERSION.x** *→ These are version groups that run under the same objective.*
+
+## Error messages 
+1. Go to the [Issues page](https://github.com/NachtsternBuild/fastboot-assistant/issues) on GitHub and open a new bug. Please describe the error as precisely as possible. 
+2. When you are done, give the bug the label **bug**. 
+3. Source code can be sent to my e-mail address. **→ I will publish the source code under the name with the name of the sender under a separate [pull request](https://github.com/NachtsternBuild/fastboot-assistant/pulls).**
+
+## Contribution to the source code
+***→ siehe [CONTRIBUTING.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/CONTRIBUTING.md)*** 
 
 ## Supported Versions
+- **for all changes, see [CHANGELOG](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/CHANGELOG)**
 
 | Version     | Supported          | Informations                        | status            |Release Code                  | For the operating systems (OS)                                             |
 | ----------- | ------------------ | ----------------------------------- | ----------------- | ---------------------------- | -------------------------------------------------------------------------- |
-| 0.6.2       | :white_check_mark: | **on work**                         | :x:               | **Rostiges Red Hat 9**       | **Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL**              |      
+| 0.7.1       | :x:                | *future version*                    | :x:               | :x:                          | :x:                                                                        |
+| 0.7.x       | :x:                | *future versions*                   | :x:               | :x:                          | :x:                                                                        |  
+| 0.6.2       | :white_check_mark: | **on work**                         | *dev*             | **Rostiges Red Hat 9**       | **Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL**              |      
 | 0.6.2.dev   | :white_check_mark: | *build this from source*            | *dev*             | *Rostiges Red Hat 8*         | *Linux (Debian/Ubuntu)*                                                    |
 | 0.6.1       | :x:                | *build this from source*            | *dev*             | *Rostiges Red Hat 7*         | *Linux (Debian/Ubuntu)*                                                    |
 | 0.6.x       | :white_check_mark: | **active version**                  | **dev**           | **Rostiges Red Hat**         | **Linux (Debian/Ubuntu)**                                                  |
@@ -16,19 +33,3 @@
 | 0.5.x       | :x:                | *all Sweet Unix versions*           | *stable*          | *Sweet Unix*                 | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)*                                 |
 | 0.4.x       | :x:                | *old version*                       | *dev/beta*        | *Effervescent PC cooling*    | *Linux (Debian/Ubuntu)*                                                    |    
 | < 0.4       | :x:                | *very old versions*                 | *dev/beta*        | *Sparkling data crystals*    | *Linux (Debian/Ubuntu)*                                                    |
-
-***→ for all changes see Changlog.md***
-## Types of versions (status)
-- ***dev*** *→These versions are still under development and there are still a lot of bugs, but most things are working.*
-- ***beta*** *→These versions are still under development. There are still some minor problems. All functions should work with some exceptions.*
-- ***stable*** *→These are versions of the programme that run stably on the specified systems and fulfil their purpose.*
-- ***instable*** *→In this version, the programme does not always run stably on all specified systems.*
-- ***version_x*** *→These are version groups that run under the same objective.*
-
-## Error messages 
-1. Go to the [Issues page](https://github.com/NachtsternBuild/fastboot-assistant/issues) on GitHub and open a new bug. Please describe the error as precisely as possible. 
-2. When you are done, give the bug the label **bug**. 
-3. Source code can be sent to my e-mail address. **→ I will publish the source code under the name with the name of the sender under a separate *pull request*.**
-
-## Contribution to the source code
-***→ siehe [CONTRIBUTING.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/CONTRIBUTING.md)*** 
