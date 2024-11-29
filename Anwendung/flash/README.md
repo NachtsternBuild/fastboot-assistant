@@ -1,6 +1,6 @@
-# Teil der Anwendung
-## Aufgaben
-- flashen von Image Dateien
+# Part of the application
+## Tasks
+- Flashing images
   - boot.img
   - init_boot.img
   - vendor_boot.img
@@ -11,5 +11,5 @@
   - dtbo.img
   - userdata.img/data.img
   - u.a.
-- flashen des Preloaders
-- flashen des Payload.zip
+- flashing the preloader
+- flashing the Payload.zip
