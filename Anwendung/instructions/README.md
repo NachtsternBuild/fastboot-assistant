@@ -1,8 +1,8 @@
-# Teil der Anwendung
-## Aufgaben
-- Anleitung im Umgang mit der Anwendung
-  - flashen von Dateien
-  - andere Arbeit mit Fastboot
-  - u.a.
-- Anleitungen im Umgang mit Fastboot/ADB
-- Informationen über Fastboot/ADB, Android-Geräte und Partitionen 
+# Part of the application
+## Tasks
+- Instructions on how to use the application
+  - flashing files
+  - other work with Fastboot
+  - etc.
+- Instructions for working with Fastboot/ADB
+- Information about Fastboot/ADB, Android devices and partitions 
