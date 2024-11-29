@@ -1,2 +1,2 @@
-# Teil der Anwendung
-→ hier befinden sich alle für Windows modifizierten Header
+# Part of the application
+- all headers modified for Windows WSL are located here
