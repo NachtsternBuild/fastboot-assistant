@@ -89,7 +89,9 @@ GUI.c ––––|
 	  |				|– flash_vbmeta_dtbo.c 
 	  |				|– flash_preloader_super.c
 	  |				|– flash_data.c
-	  |				|– flash_others.c
+	  |				|– flash_others.c ----------------------|
+	  |				 					|– flash_list_images.c
+	  |				 					|– flash_images.c			
 	  |
 	  |– instructions_GUI.c ––––––––|
 	  |				|– instruction_adb.c
@@ -122,7 +124,6 @@ GUI.c ––––|
 	  |				|– header_open_terminal_by_desktop.c
 	  |				|– header_show_message.c
 	  |				|– header_show_message_with_title.c
-	  |				|– header_get_info.c
 	  |				|– header_check_active_slot.c
 	  |				|– header_get_slot.c
 	  |				|– header_get_home.c
@@ -146,10 +147,13 @@ GUI.c ––––|
 	  |				|– header_directory_exists.c
 	  |				|– header_get_home_dir_flash.c
 	  |				|– header_show_error_message.c
-	  |				|– header_install_with_root.c
+	  |				|– header_on_window_destroy.c
 	  |				|– header_loading_spinner.c
 	  |				|– header_next_page.c
 	  |				|– header_show_file_chooser.c
+	  |				|– header_install_with_pkexec.c
+	  |				|– header_language_check.c
+	  |				|– header_command_adb_fastboot.c
 	  |				|
 	  |				|– function_header.h
 	  |				|– flash_function_header.h
@@ -157,6 +161,7 @@ GUI.c ––––|
 	  |				|– instruction_header.h
 	  |				|– file_chooser_header.h
 	  |				|– loading_spinner.h
+	  |				|– language_check.h
 	  |
 	  |  
 	  + Build/Makefile
