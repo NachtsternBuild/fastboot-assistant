@@ -30,8 +30,6 @@
 
 GtkCssProvider *provider = NULL;
 
-const char *current_theme = "light";
-
 GtkCssProvider* create_css_provider() 
 {
     GtkCssProvider *new_provider = gtk_css_provider_new();
