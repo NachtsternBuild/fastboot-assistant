@@ -1,2 +1,2 @@
-# Teil der Anwendung
-- hier befinden sich alle Programmteile, die von mehreren Funktionen immer wieder genutzt werden.
+# Part of the application
+- All program parts that are used repeatedly by several functions are located here.
