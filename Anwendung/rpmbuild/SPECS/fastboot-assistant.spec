@@ -1,13 +1,13 @@
 Name:           fastboot-assistant
-Version:        0.6.1
+Version:        0.6.2
 Release:        1%{?dist}
 Summary:        Program to facilitate the installation of custom ROMs and GSIs on Android devices.
 License:        Apache License Version 2.0
 Source0:        %{name}-%{version}.tar.gz
 %if 0%{?suse_version}
-Requires:       adb fastboot glibc >= 2.15 gtk3 >= 3.0.0 xz wget unzip coreutils
+Requires:       adb fastboot glibc >= 2.15 curl, pkexec, gtk4 >= 4.0.0 xz wget unzip coreutils curl
 %else
-Requires:       adb fastboot glibc >= 2.15 gtk3 >= 3.0.0 xz wget unzip coreutils
+Requires:       adb fastboot glibc >= 2.15 curl, pkexec, gtk4 >= 4.0.0 xz wget unzip coreutils curl
 %endif
 
 %description
@@ -36,5 +36,5 @@ rm -rf %{buildroot}
 %{_datadir}/icons/hicolor/256x256/apps/sweet_unix.png
 
 %changelog
-* Tue Aug 13 2024 Elias Mörz<elias.moerz@mail.de> - 0.5.4
+* Fri Nov 29 2024 Elias Mörz<elias.moerz@mail.de> - 0.6.2
 - Initial package
