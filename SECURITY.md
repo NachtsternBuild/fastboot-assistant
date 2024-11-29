@@ -4,8 +4,10 @@
 
 | Version     | Supported          | Informations                        | status            |Release Code                  | For the operating systems (OS)                                             |
 | ----------- | ------------------ | ----------------------------------- | ----------------- | ---------------------------- | -------------------------------------------------------------------------- |
-| 0.6.1       | :white_check_mark: | **build this from source**          | ***dev***         | ***Rostiges Red Hat 7***     | ***Linux (Debian/Ubuntu)***                                                |
-| 0.6.x       | :white_check_mark: | **future versions**                 | **dev**           | **Rostiges Red Hat**         | **Linux (Debian/Ubuntu)**                                                  |
+| 0.6.2       | :white_check_mark: | **on work**                         | :x:               | **Rostiges Red Hat 9**       | **Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL**              |      
+| 0.6.2.dev   | :white_check_mark: | *build this from source*            | *dev*             | *Rostiges Red Hat 8*         | *Linux (Debian/Ubuntu)*                                                    |
+| 0.6.1       | :x:                | *build this from source*            | *dev*             | *Rostiges Red Hat 7*         | *Linux (Debian/Ubuntu)*                                                    |
+| 0.6.x       | :white_check_mark: | **active version**                  | **dev**           | **Rostiges Red Hat**         | **Linux (Debian/Ubuntu)**                                                  |
 | 0.5.5.2     | :white_check_mark: | ***active version***                | ***stable***      | ***Sweet Unix System V***    | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL***            |
 | 0.5.4.beta  | :x:                | *old version*                       | *beta*            | *Sweet Unix System IV*       | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL*                |
 | 0.5.3.beta  | :x:                | *old version*                       | *beta*            | *Sweet Unix System III*      | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)*                                 |
@@ -24,8 +26,8 @@
 - ***version_x*** *→These are version groups that run under the same objective.*
 
 ## Error messages 
-1. Go to the Issues page on GitHub and open a new bug. Please describe the error as precisely as possible. 
-2. When you are done, give the bug the label *bug*. 
+1. Go to the [Issues page](https://github.com/NachtsternBuild/fastboot-assistant/issues) on GitHub and open a new bug. Please describe the error as precisely as possible. 
+2. When you are done, give the bug the label **bug**. 
 3. Source code can be sent to my e-mail address. **→ I will publish the source code under the name with the name of the sender under a separate *pull request*.**
 
 ## Contribution to the source code
