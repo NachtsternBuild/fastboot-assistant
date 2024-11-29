@@ -1,10 +1,10 @@
 # Build
-- ***hier befinden sich alle Dateien die für den Build benötigt werden***
-  - makefile
-  - build.sh
-  - build_deb.sh
-  - icon.png
+- ***Here are all the files required for the build.***
+  - Makefile
+  - build-fastboot-assistant.sh
+  - sweet_unix.png
   - fastboot-assistant.desktop
   - controll
   - INSTALL
+  - version.txt
   
