@@ -1,2 +1,2 @@
-# Teil der Anwendung
-- hier befinden sich alle Dateien die für die WSL gebraucht werden
+# Part of the application
+- All files needed for the WSL are located here
