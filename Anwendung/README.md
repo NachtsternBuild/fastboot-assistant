@@ -1,56 +1,49 @@
 # fastboot-assistant 
-## Anwendungsentwicklung
-### Status
-- **stabil**
+## Application development
+---
+### Status:
+- **v.0.5.5.2:** *stable*
+- **v.0.6.2.dev:** *dev*
+---
+  
 ### Build
-1. Laden sie den Quellcode herunter:
+1. Download the source code:
 ```sh
 git clone https://github.com/NachtsternBuild/fastboot-assistant.git
 ```
-2. Installieren sie *GCC, GTK, ADB/Fastboot, desktop-file-utils, make, dpkg-dev, debhelper, fakeroot, linitian, pbuilder, devscripts*:
+2. Install *GCC, GTK, ADB/Fastboot, desktop-file-utils, make, dpkg-dev, debhelper*:
 
 ```sh
 # Debian / Ubuntu:
-sudo apt update
-sudo apt upgrade
-sudo apt-get install build-essential gcc libgtk-3-dev adb fastboot desktop-file-utils make dpkg-dev debhelper fakeroot lintian pbuilder devscripts libsecret-1-dev
+sudo apt update && sudo apt install -y gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper
 
 # Feodra / RHEL / CentOS
-sudo dnf install -y \
-    @development-tools \
-    gcc \
-    gtk3-devel \
-    adb \
-    fastboot \
-    desktop-file-utils \
-    rpm-build \
-    rpmdevtools \
-    make \
-    libsecret-devel
+sudo dnf install -y gcc gtk4-devel android-tools desktop-file-utils make rpm-build
+
 
 ```
-3. bearbeiten sie den Quellcode mit einem Editor ihrer Wahl nach ihren Vorstellungen. *Beachten sie, dass das Makefile auch bei Namensänderungen geändert werden muss*
-4. wechseln sie in das Verzeichnis *Anwendungen*:
+3. Edit the source code with an editor of your choice according to your requirements. *Note that the Makefile must also be changed if you change the name.
+4. Change to the directory *Applications*:
    ```sh
    cd ~/fastboot-assistant/Anwendungen
    ```
 
-5. Kompilieren sie den Code und bauen sie das Debian-Paket oder RPM ausführen:
+5. Compile the code and build the Debian package or run the RPM:
 ```sh
 bash Build/build-fastboot-assistant.sh
 ```
-- Das Projekt kann für folgende Betriebsysteme gebaut werden:
+- The project can be built for the following operating systems:
 	- Linux
  	- Windows (WSL)
-*Für Linux stehen folgende Paketarten zur Verfügung:*
-- Debian-Paket
+*The following package types are available for Linux:*
+- Debian package
 - RPM  
-*Für Windows wird ein Zip-Datei gepackt, die das für die WSL enthaltene Debian-Paket enthält.**
-**Hinweis:**
-*→ Das WSL Paket bauen funktioniert nur auf **Debian/Ubuntu-Systemen**, da der Build-Skript automatisch ein Debian-Packet baut.*
+*For Windows, a zip file is packed which contains the Debian package included for the WSL.
+**Note:**
+*→ Building the WSL package only works on **Debian/Ubuntu systems**, as the build script automatically builds a Debian package.
  
-## Programmstruktur
-- *Ein Blick auf die Programmstruktur lohnt sich.*
+## Program structure
+- It is worth taking a look at the program structure.
 ```
 GUI.c ––––|
 	  |
