@@ -1,2 +1,2 @@
-# Teil der Anwendungen
-**Hier befinden sich alle Konfiguratioen, die für den flash unter Widnows gebraucht werden.**
+# Part of the applications
+- All configurations needed for flash under Widnows can be found here.
