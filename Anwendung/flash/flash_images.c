@@ -173,7 +173,7 @@ void flash_images()
     // for Linux 
     snprintf(directory, sizeof(directory), "%s/Downloads/ROM-Install", home);
     // for WSL
-    snprintf(directory, sizeof(directory), "%s/Downloads/ROM-Install", wsl_setup_base);
+    // snprintf(directory, sizeof(directory), "%s/Downloads/ROM-Install", wsl_setup_base);
 
     g_print("Log: Images from the %s directory are flashed.\n", directory);
     // start flash from directory
