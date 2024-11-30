@@ -56,7 +56,7 @@ void create_directory_if_not_exists(const char *path)
     {
         if (mkdir(expanded_path, 0700) == -1) 
         {
-            perror("Fehler beim Erstellen des Verzeichnisses");
+            perror("Log: Error when creating the directory.\n");
             exit(EXIT_FAILURE);
         }
     }
@@ -70,7 +70,7 @@ void write_dark_file()
     char *home = getenv("HOME");
     if (home == NULL) 
     {
-        perror("Fehler beim Abrufen des Home-Verzeichnisses");
+        perror("Log: Error when retrieving the home directory\n");
         exit(EXIT_FAILURE);
     }
     
@@ -78,16 +78,17 @@ void write_dark_file()
 	const char *user = getenv("USER");
 	if (user == NULL) 
 	{	
-    	g_print("Fehler: Konnte den Benutzernamen nicht ermitteln.\n");
+    	g_print("Log: Error: Could not determine the user name.\n");
     	exit(1);  // close the program if there are errors
 	}
 
 
     char dir_path[512];
-    char wsl_dir[512];
+    //char wsl_dir[512];
     // for windows
 	snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
 	snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
+    // for linux
     //snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
     
     // create the dir 
@@ -99,12 +100,12 @@ void write_dark_file()
     FILE *file = fopen(path, "w");
     if (file == NULL) 
     {
-        perror("Fehler beim Öffnen der Datei zum Schreiben");
+        perror("Log: Error when opening the file for writing.\n");
         exit(EXIT_FAILURE);
     }
     fprintf(file, "dunkel");
     fclose(file);
-    g_print("In die Datei '%s' geschrieben.\n", path);
+    g_print("Log: Written to the file '%s'.\n", path);
 }
 
 // thanks to my book for programming for linux
@@ -115,16 +116,25 @@ void delete_dark_file()
     char *home = getenv("HOME");
     if (home == NULL) 
     {
-        perror("Fehler beim Abrufen des Home-Verzeichnisses");
+        perror("Log: Error when retrieving the home directory.\n");
         exit(EXIT_FAILURE);
     }
+    
+    // WSL logic
+	const char *user = getenv("USER");
+	if (user == NULL) 
+	{	
+    	g_print("Log: Error: Could not determine the user name.\n");
+    	exit(1);  // close the program if there are errors
+	}
 
     char dir_path[512];
-    char wsl_dir[512];
+    //char wsl_dir[512];
     // for windows
 	snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
 	snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
-    // snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
+	// for linux
+    //snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
 
     char path[512];
     snprintf(path, sizeof(path), "%s/%s", dir_path, CONFIG_FILE);
@@ -132,11 +142,11 @@ void delete_dark_file()
     // try to remove the file
     if (remove(path) == 0) 
     {
-        g_print("Datei '%s' erfolgreich gelöscht.\n", path);
+        g_print("Log: File '%s' successfully deleted.\n", path);
     } 
     else 
     {
-        perror("Fehler beim Löschen der Datei");
+        perror("Log: Error deleting the file.\n");
     }
 }
 
@@ -147,12 +157,12 @@ void check_dark_file()
     char *home = getenv("HOME");
     if (home == NULL) 
     {
-        perror("Fehler beim Abrufen des Home-Verzeichnisses");
+        perror("Log: Error when retrieving the home directory.\n");
         exit(EXIT_FAILURE);
     }
 
     char dir_path[512];
-    char wsl_dir[512];
+    //char wsl_dir[512];
     // for windows
 	snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
 	snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
@@ -164,14 +174,14 @@ void check_dark_file()
     FILE *file = fopen(path, "r");
     if (file != NULL) 
     {
-        g_print("Dunkelheit\n");
+        g_print("Log: Dunkelheit\n");
         current_theme = "dark";
         fclose(file);
     }
      
     else 
     {
-        g_print("Tag\n");
+        g_print("Log: Tag\n");
     }
 }
 
@@ -181,15 +191,16 @@ void check_dark_file_light()
     char *home = getenv("HOME");
     if (home == NULL) 
     {
-        perror("Fehler beim Abrufen des Home-Verzeichnisses");
+        perror("Log: Error when retrieving the home directory.\n");
         exit(EXIT_FAILURE);
     }
 
     char dir_path[512];
-    char wsl_dir[512];
+    //char wsl_dir[512];
     // for windows
 	snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
 	snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
+    // for linux
     //snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
 
     char path[512];
@@ -198,7 +209,7 @@ void check_dark_file_light()
     FILE *file = fopen(path, "r");
     if (file != NULL) 
     {
-        g_print("Tag\n");
+        g_print("Log: Tag\n");
         current_theme = "light";
         delete_dark_file();
         fclose(file);
@@ -206,6 +217,6 @@ void check_dark_file_light()
      
     else 
     {
-        g_print("Dunkelheit\n");
+        g_print("Log: Dunkelheit\n");
     }
 }
