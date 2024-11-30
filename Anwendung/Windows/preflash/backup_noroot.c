@@ -5,23 +5,22 @@
  *  	Apache License, Version 2.0		     *
  *-------------------------------------------*
  *                                           *
- *  Programm um das installieren von 		 *
+ *  Programm um das Installieren von 		 *
  *	Custom-ROM und GSIs auf Android-Geräte 	 *
  *	zu erleichtern - backup_noroot		 	 *
  *                                           *
  *-------------------------------------------*
  *      (C) Copyright 2024 Elias Mörz 		 *
  *-------------------------------------------*
- *
  */
 
-/* headers that used in the programm */
+/* headers used in the program */
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "program_functions.h"
-#include "function_header.h"
 #include "loading_spinner.h"
+#include "language_check.h"
 
 #define MAX_BUFFER_SIZE 3072
 
@@ -29,115 +28,125 @@ GtkWidget *backup_window;
 
 char install_command_backup[2048];
 
-static void install_depends(GtkButton *button, GtkEntry *password_entry) 
+// Function that Install dependencies with root rights 
+static void install_depends(GtkButton *button) 
 {
-    // for Liunx
+    // for linux
     //snprintf(install_command_backup, sizeof(install_command_backup), "apt-get install p7zip-full adb curl whiptail pv bc secure-delete zenity");
     // for windows
     snprintf(install_command, sizeof(install_command), "apt-get install p7zip-full secure-delete whiptail curl dos2unix pv bc zenity '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev -y");
-    g_print("Installiere: %s", install_command_backup);
-    install_with_root(button, password_entry, install_command_backup);
-    gtk_widget_destroy(backup_window);
+    
+    g_print("Log: Run: %s\n", install_command_backup);
+
+    // run command with pkexec
+    install_with_pkexec(install_command_backup);
+    gtk_window_destroy(GTK_WINDOW(backup_window));
 }
 
-// Callback functions for each button
-// install depends for open android backup
+// Callback function to install dependencies 
 static void install_depends_function(GtkWidget *widget, gpointer data) 
 {
-    GtkWidget *vbox;
-    GtkWidget *password_entry;
-    GtkWidget *info_button, *install_depends_button;
-    
-    const char *message = "\nDie Installation der benötigen Abhängigkeiten kann nur mit Root-Rechten ausgeführt werden.\n";
-    // show message
+    GtkWidget *vbox, *install_depends_button;
+
+    const char *message = strcmp(language, "de") == 0 ? "Die Installation der benötigten \nAbhängigkeiten erfordert Root-Rechte." : "The installation of the required \ndependencies requires root rights.";
     show_message(message);
+
     // create window
-    backup_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(backup_window), " ");
+    backup_window = gtk_window_new();
+    const char * backup_noroot_window = strcmp(language, "de") == 0 ? "Abhängigkeiten installieren" : "Install dependencies";
+    gtk_window_set_title(GTK_WINDOW(backup_window), backup_noroot_window);
     gtk_window_set_default_size(GTK_WINDOW(backup_window), 500, 200);
-    g_signal_connect(backup_window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+    g_signal_connect(backup_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
 
-	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-	gtk_container_add(GTK_CONTAINER(backup_window), vbox);
-	
-	// info button
-    info_button = gtk_button_new_with_label("Legitimation:");
-   	gtk_box_pack_start(GTK_BOX(vbox), info_button, TRUE, TRUE, 0);
-
-	// password input 
-    password_entry = gtk_entry_new();
-    gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);  // hide the password
-    gtk_box_pack_start(GTK_BOX(vbox), password_entry, TRUE, TRUE, 0);
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_window_set_child(GTK_WINDOW(backup_window), vbox);
 
     // install button
-    install_depends_button = gtk_button_new_with_label("Installieren");
-    g_signal_connect(install_depends_button, "clicked", G_CALLBACK(install_depends), password_entry);
-   	gtk_box_pack_start(GTK_BOX(vbox), install_depends_button, TRUE, TRUE, 0);
+    install_depends_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
+    g_signal_connect(install_depends_button, "clicked", G_CALLBACK(install_depends), NULL);
+    gtk_box_append(GTK_BOX(vbox), install_depends_button);
 
-    gtk_widget_show_all(backup_window);
+    gtk_window_present(GTK_WINDOW(backup_window));
 }
 
-// download open android backup
+// download the backup
 static void download_backup(GtkWidget *widget, gpointer data) 
 {
-    const char *message1 = "\nDas Tool 'Open Android Backup' wird heruntergeladen und entpackt.\n";
+    const char *message1 = strcmp(language, "de") == 0 ? "Das Tool 'Open Android Backup' wird heruntergeladen und entpackt." : "The 'Open Android Backup' tool is downloaded and unpacked.";
     show_message(message1);
-    
+	
+	// for linux
     //snprintf(install_command_backup, sizeof(install_command_backup), "wget -O ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle");
     // for windows
     snprintf("wget -O %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip -d %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle", wsl_dir, wsl_dir, wsl_dir);
-    g_print("Führe aus: %s", install_command_backup);
+    g_print("Log: Run: %s", install_command_backup);
     command_with_spinner(install_command_backup);
 }
 
-// open open android backup
+// start backup
 static void open_backup(GtkWidget *widget, gpointer data) 
 {
-	//open_terminal_by_desktop("bash ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh");
-	// for Windows
-	
+    // for linux
+    //open_terminal_by_desktop("bash ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh");
+    // for Windows
 	char wsl_dir[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "%s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh", wsl_dir);
     open_terminal_by_desktop(command);
 }
 
-/* main function of backup_noroot*/
+// Function to set up button labels based on the language
+void set_button_labels_backup_noroot(char labels[][30]) 
+{
+    if (strcmp(language, "en") == 0) 
+    {
+        strcpy(labels[0], "Prepare");
+        strcpy(labels[1], "Download");
+        strcpy(labels[1], "Start");
+    }
+    
+    else
+    {
+    	strcpy(labels[0], "Vorbereiten");
+    	strcpy(labels[1], "Download");
+    	strcpy(labels[1], "Starten");
+    }
+} 
+
+/* main function - backup_noroot */
 void backup_noroot(int argc, char *argv[]) 
 {
-    GtkWidget *window;
-    GtkWidget *grid;
-    GtkWidget *button;
-    char button_labels[3][30] = {"Vorbereiten", "Download", "Starten"};
-
-    gtk_init(&argc, &argv);
-    apply_theme();
+    g_print("Log: backup_noroot\n");
+    GtkWidget *window, *grid, *button;
+    char button_labels[3][30];
     
-    // create the window
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_init();
+    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
+    apply_theme();
+    apply_language();
+    set_button_labels_backup_noroot(button_labels);
+    
+    window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Open Android Backup");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-
-    // create the grid and centre it
+    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_window_set_child(GTK_WINDOW(window), grid);
 
-    // add the grid to the window
-    gtk_container_add(GTK_CONTAINER(window), grid);
-
-    // add and centre all button
-    for (int i = 0; i < 3; i++) {
+    // add button
+    for (int i = 0; i < 3; i++) 
+    {
         button = gtk_button_new_with_label(button_labels[i]);
         gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
 
-        // execute css-provider for all buttons
-        add_css_provider(button, provider);
-        switch (i) {
+        // callback
+        switch (i) 
+        {
             case 0:
                 g_signal_connect(button, "clicked", G_CALLBACK(install_depends_function), NULL);
                 break;
@@ -149,13 +158,25 @@ void backup_noroot(int argc, char *argv[])
                 break;
         }
     }
-	// clean the provider
-    g_object_unref(provider);
 
-    // show window
-    gtk_widget_show_all(window);
+    // free the provider
+	if (provider != NULL) 
+	{
+	    g_object_unref(provider);
+	    provider = NULL;
+	}
+	
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    // run main-gtk-loop
-    gtk_main();
-}
+     // run GTK main loop
+    g_main_loop_run(main_loop);
     
+    if (main_loop != NULL) 
+	{
+    	g_main_loop_unref(main_loop);
+    	main_loop = NULL;
+	}
+    
+    g_print("Log: end backup_noroot\n");
+}
+
