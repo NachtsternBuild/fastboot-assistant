@@ -17,19 +17,21 @@
 ## Supported Versions
 - **for all changes, see [CHANGELOG](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/CHANGELOG)**
 
-| Version     | Supported          | Informations                        | status            |Release Code                  | For the operating systems (OS)                                             |
-| ----------- | ------------------ | ----------------------------------- | ----------------- | ---------------------------- | -------------------------------------------------------------------------- |
-| 0.7.1       | :x:                | *future version*                    | :x:               | :x:                          | :x:                                                                        |
-| 0.7.x       | :x:                | *future versions*                   | :x:               | :x:                          | :x:                                                                        |  
-| 0.6.2       | :white_check_mark: | **on work**                         | *dev*             | **Rostiges Red Hat 9**       | **Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL**              |      
-| 0.6.2.dev   | :white_check_mark: | *build this from source*            | *dev*             | *Rostiges Red Hat 8*         | *Linux (Debian/Ubuntu)*                                                    |
-| 0.6.1       | :x:                | *build this from source*            | *dev*             | *Rostiges Red Hat 7*         | *Linux (Debian/Ubuntu)*                                                    |
-| 0.6.x       | :white_check_mark: | **active version**                  | **dev**           | **Rostiges Red Hat**         | **Linux (Debian/Ubuntu)**                                                  |
-| 0.5.5.2     | :white_check_mark: | ***active version***                | ***stable***      | ***Sweet Unix System V***    | ***Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL***            |
-| 0.5.4.beta  | :x:                | *old version*                       | *beta*            | *Sweet Unix System IV*       | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS), Windows via WSL*                |
-| 0.5.3.beta  | :x:                | *old version*                       | *beta*            | *Sweet Unix System III*      | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)*                                 |
-| 0.5.2.dev   | :x:                | *old version*                       | *dev*             | *Sweet Unix System II*       | *Linux (Debian/Ubuntu)*                                                    |
-| 0.5.1.dev   | :x:                | *old version*                       | *dev*             | *Sweet Unix System I*        | *Linux (Debian/Ubuntu)*                                                    |
-| 0.5.x       | :x:                | *all Sweet Unix versions*           | *stable*          | *Sweet Unix*                 | *Linux (Debian/Ubuntu/Fedora/RHEL/CentOS)*                                 |
-| 0.4.x       | :x:                | *old version*                       | *dev/beta*        | *Effervescent PC cooling*    | *Linux (Debian/Ubuntu)*                                                    |    
-| < 0.4       | :x:                | *very old versions*                 | *dev/beta*        | *Sparkling data crystals*    | *Linux (Debian/Ubuntu)*                                                    |
+| Version     | Supported          | Informations                 | status            | Release Code                 | For the operating systems (OS)                             | Packages               |
+| ----------- | ------------------ | ---------------------------- | ----------------- | ---------------------------- | ---------------------------------------------------------- | ---------------------- |
+| 0.7.3       | :x:                | *future version*             | :x:               | *Mutiges Mint 22*            | :x:                                                        | :x:                    |
+| 0.7.2       | :x:                | *future version*             | :x:               | *Mutiges Mint 21.3*          | :x:                                                        | :x:                    |
+| 0.7.1.dev   | :x:                | *future version*             | :x:               | *Mutiges Mint 20.3*          | :x:                                                        | :x:                    |
+| 0.7.x       | :x:                | *future versions*            | :x:               | *Mutiges Mint*               | :x:                                                        | :x:                    | 
+| 0.6.2       | :white_check_mark: | **on work**                  | ***stable***      | **Rostiges Red Hat 9**       | **Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL**     | **DEB, RPM, Zip**      |    
+| 0.6.2.dev   | :x:                | *build this from source*     | *dev*             | *Rostiges Red Hat 8*         | *Linux (Debian/Ubuntu)*                                    | :x:                    |  
+| 0.6.1       | :x:                | *build this from source*     | *dev*             | *Rostiges Red Hat 7*         | *Linux (Debian/Ubuntu)*                                    | :x:                    |
+| 0.6.x       | :white_check_mark: | **active version**           | ***stable***      | **Rostiges Red Hat**         | **Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL)**    | **DEB, RPM, Zip**      |
+| 0.5.5.2     | :white_check_mark: | ***active version***         | ***stable***      | ***Sweet Unix System V***    | ***Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL***   | ***DEB, RPM, Zip***    |
+| 0.5.4.beta  | :x:                | *old version*                | *beta*            | *Sweet Unix System IV*       | *Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL*       | *DEB, RPM, Zip*        |
+| 0.5.3.beta  | :x:                | *old version*                | *beta*            | *Sweet Unix System III*      | *Linux (Debian/Ubuntu/Fedora/RHEL)*                        | *DEB, RPM*             |
+| 0.5.2.dev   | :x:                | *old version*                | *dev*             | *Sweet Unix System II*       | *Linux (Debian/Ubuntu)*                                    | *DEB*                  |
+| 0.5.1.dev   | :x:                | *old version*                | *dev*             | *Sweet Unix System I*        | *Linux (Debian/Ubuntu)*                                    | *DEB*                  |
+| 0.5.x       | :x:                | *all Sweet Unix versions*    | *stable*          | *Sweet Unix*                 | *Linux (Debian/Ubuntu/Fedora/RHEL)*                        | *DEB, RPM*             |
+| 0.4.x       | :x:                | *old version*                | *dev/beta*        | *Effervescent PC cooling*    | *Linux (Debian/Ubuntu)*                                    | *Zip*                  |   
+| < 0.4       | :x:                | *very old versions*          | *dev/beta*        | *Sparkling data crystals*    | *Linux (Debian/Ubuntu)*                                    | *Zip*                  |
