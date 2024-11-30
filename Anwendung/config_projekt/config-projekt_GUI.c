@@ -48,13 +48,13 @@ static void start_wsl_config(GtkWidget *widget, gpointer data)
 {
     wsl_config();
 }
-
+/*
 // function that start toggle_language
 static void start_toggle_language(GtkWidget *widget, gpointer data)
 {
 	toggle_language(NULL, NULL);
 }
-
+*/
 // Function to set up button labels based on the language
 void set_button_labels_config_projekt(char labels[][30]) 
 {
@@ -133,6 +133,12 @@ void config_projekt_GUI(int argc, char *argv[])
 
      // run GTK main loop
     g_main_loop_run(main_loop); 
+    
+    if (main_loop != NULL) 
+	{
+    	g_main_loop_unref(main_loop);
+    	main_loop = NULL;
+	}
     
     g_print("Log: end config_projekt_GUI\n");
 }
