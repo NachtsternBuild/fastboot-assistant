@@ -47,7 +47,7 @@ void unxz_files(const char *xz_filename)
     // make full path
     char output_dir_xz[512];
     // for linux
-    snprintf(output_dir_xz, sizeof(output_dir_xz), "%s/%s", home_dir, TARGET_DIR);
+    snprintf(output_dir_xz, sizeof(output_dir_xz), "%s/%s", homeDir, TARGET_DIR);
     // for wsl
     //snprintf(output_dir_xz, sizeof(output_dir_xz), "%s/%s", wsl_setup_base, TARGET_DIR);
 
