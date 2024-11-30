@@ -23,7 +23,7 @@ VERSION="$(cat Build/version.txt)"
 # Directory paths
 home_dir="$HOME"
 source_dir="$home_dir/fastboot-assistant/Anwendung"
-#source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_5_5"
+#source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_6_3"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -72,7 +72,7 @@ error_msg() {
 create_target_dir() {
     prompt_user "Muss der Ordner 'build-project' erstellt werden? (j/n) (y/n): "
     while true; do
-        read -p "" answer
+        read -n1 -s answer
         case "$answer" in 
             j|J|y|Y)
                 echo "Erstelle Verzeichnis..."
@@ -122,7 +122,7 @@ building() {
 clean_build() {
 	while true; do
         prompt_user "Möchten Sie alte Dateien bereinigen? (j/n) (y/n): "
-        read -p "" answer
+        read -n1 -s answer
         case "$answer" in
             j|J|y|Y )
                 echo "Starte make clean..."
@@ -247,7 +247,8 @@ build_program_linux() {
     # loop for package build
     while true; do
     prompt_user "Welches Paket soll gebaut werden?"
-    read -p "Debian (d) / RPM (r) / Keines (n): " answer
+    start_info "Debian (d) / RPM (r) / Keines (n)"
+    read -n1 -s answer
     case "$answer" in 
         d|D)
             debian_package_build
@@ -310,7 +311,7 @@ build_program_windows() {
     fi
  	
  	prompt_user "Soll eine Datei für die WSL gebaut werden? (j/n): "
- 	read -p " " answer
+ 	read -n1 -s answer
  	if [ "$answer" == "j" ] || [ "$answer" == "J" ] || [ "$answer" == "y" ] || [ "$answer" == "Y" ]; 
  	then
   		debian_package_build
@@ -344,7 +345,7 @@ while true; do
     prompt_user "************************"
     echo -e "$RED    Beenden (b) $NC"
     prompt_user "************************"
-    read -p " " answer
+    read -n1 -s answer
     case "$answer" in 
         l|L)
             build_program_linux
