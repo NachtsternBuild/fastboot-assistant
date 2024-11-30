@@ -1,3 +1,19 @@
+/*
+ *-------------------------------------------*
+ *                Projekt 122 - GUI          *
+ *-------------------------------------------*
+ *  	Apache License, Version 2.0		     *
+ *-------------------------------------------*
+ *                                           *
+ *  Programm um das installieren von 		 *
+ *	Custom-ROM und GSIs auf Android-Geräte 	 *
+ *	zu erleichtern - unxz_files				 *
+ *                                           *
+ *-------------------------------------------*
+ *      (C) Copyright 2024 Elias Mörz 		 *
+ *-------------------------------------------*
+ *
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,24 +21,35 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-// #define OUTPUT_DIR_ENV "HOME" // home dir
-#define OUTPUT_DIR_ENV "/mnt/c/Users/USERNAME/"
 #define TARGET_DIR "Downloads/ROM-Install" // target dir
 
 void unxz_files(const char *xz_filename) 
 {
     // get home dir
-    const char *home_dir = getenv(OUTPUT_DIR_ENV);
-    if (home_dir == NULL) 
-    {
-        fprintf(stderr, "Fehler: Home-Verzeichnis nicht gefunden.\n");
-        exit(EXIT_FAILURE);
-    }
+    char *homeDir = getenv("HOME");
+	if (homeDir == NULL) 
+	{
+    	fprintf(stderr, "Log: Error: Could not find the home directory.\n");
+    	exit(1);  // close the program if there are errors
+	}
+    
+    // WSL Logic
+	const char *user = getenv("USER");
+	if (user == NULL) 
+	{	
+    	g_print("Log: Error: Could not determine the user name.\n");
+    	exit(1);  // close the program if there are errors
+	}
+
+	char wsl_setup_base[2048];
+	snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
 
     // make full path
     char output_dir_xz[512];
-    snprintf(output_dir_xz, sizeof(output_dir_xz), "%s/%s", home_dir, TARGET_DIR);
-    
+    // for linux
+    //snprintf(output_dir_xz, sizeof(output_dir_xz), "%s/%s", homeDir, TARGET_DIR);
+    // for wsl
+    snprintf(output_dir_xz, sizeof(output_dir_xz), "%s/%s", wsl_setup_base, TARGET_DIR);
 
     // remove .xz from the output
     char output_xz_filename[512];
@@ -37,7 +64,7 @@ void unxz_files(const char *xz_filename)
     else 
     {
         strncpy(output_xz_filename, xz_filename, sizeof(output_xz_filename));
-        g_print("Keine xz-komprimierte Datei!\n");
+        g_print("Log: No xz-compressed file!\n");
     }
     
     // make full path to outout file
@@ -49,13 +76,13 @@ void unxz_files(const char *xz_filename)
     snprintf(command, sizeof(command), "unxz -c %s > %s", xz_filename, output_file_xz);
 
     // output of the command
-    g_print("Führe Befehl aus: %s\n", command);
+    g_print("Log: Run: %s\n", command);
 
     // run command
     int result = system(command);
     if (result != 0) 
     {
-        g_print("Fehler beim Ausführen des Befehls\n");
+        g_print("Log: Error when executing the command.\n");
         exit(EXIT_FAILURE);
     }
 }
