@@ -105,7 +105,14 @@ void instruction_others(int argc, char *argv[])
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
-    g_main_loop_run(main_loop); 
+    g_main_loop_run(main_loop);
+    
+    if (main_loop != NULL) 
+	{
+    	g_main_loop_unref(main_loop);
+    	main_loop = NULL;
+	}
+    
     g_print("Log: end instruction_others\n");
 }
 	
