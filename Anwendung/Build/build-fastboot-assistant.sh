@@ -41,7 +41,7 @@ other_dir_win="${windows_dir}/Others"
 
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
-unused_files=("mkdir.c" "remove_old.c" "flash_other.c" "backup_root.c" "backup_noroot.c" "unxz_files.c" "header_set_main_dir_with_wsl.c" "header_dark_theme.c" "GUI.c" "updater.c")
+unused_files=("make_dir.c" "remove_old.c" "flash_images.c" "flash_list_images.c" "backup_root.c" "backup_noroot.c" "unxz_files.c" "header_set_main_dir_with_wsl.c" "header_dark_theme.c" "header_language_check.c" "GUI.c" "updater.c")
 zip_files=("WSL_install.bat" "Enable_WSL.bat" "README.md" "fastboot-assistant.deb")
 
 # function that have output with color
