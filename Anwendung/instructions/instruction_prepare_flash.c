@@ -103,12 +103,19 @@ void instruction_prepare_flash(int argc, char *argv[])
 	if (provider != NULL) 
 	{
 	    g_object_unref(provider);
+	    provider = NULL;
 	}
 	
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
     g_main_loop_run(main_loop); 
+    
+    if (main_loop != NULL) 
+	{
+    	g_main_loop_unref(main_loop);
+    	main_loop = NULL;
+	}
     
     g_print("Log: End of instruction_prepare_flash\n");
 }
