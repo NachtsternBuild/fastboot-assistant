@@ -160,6 +160,12 @@ void preflash_GUI(int argc, char *argv[])
      // run GTK main loop
     g_main_loop_run(main_loop);
     
+    if (main_loop != NULL) 
+	{
+    	g_main_loop_unref(main_loop);
+    	main_loop = NULL;
+	}
+    
     g_print("Log: end preflash_GUI\n");
 }
 
