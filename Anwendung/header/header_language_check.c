@@ -218,6 +218,12 @@ void check_language_file_light()
     }
 }
 
+// Apply the current language when called
+void apply_language() 
+{
+    check_language_file();  // Assuming this checks the current language state
+}
+
 // Callback to switch the language
 void toggle_language(GtkWidget *button, gpointer user_data) 
 {
@@ -233,10 +239,4 @@ void toggle_language(GtkWidget *button, gpointer user_data)
         check_language_file_light(); // Assuming this resets the theme state
     }
     apply_language();
-}
-
-// Apply the current language when called
-void apply_language() 
-{
-    check_language_file();  // Assuming this checks the current language state
 }
