@@ -31,7 +31,6 @@ void run_first_run_setup(GtkCssProvider *provider)
     
     // GTK init
     gtk_init();
-    main_loop = g_main_loop_new(NULL, FALSE);
 
     apply_theme();
     apply_language();
@@ -139,12 +138,12 @@ void run_first_run_setup(GtkCssProvider *provider)
     button_page4_2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
     
     // add everything to the page
-    gtk_box_append(GTK_BOX(page3), button_page4_1);
-    gtk_box_append(GTK_BOX(page3), label_page4_1);
-    gtk_box_append(GTK_BOX(page3), label_page4_2);
-    gtk_box_append(GTK_BOX(page3), label_page4_3);
-    gtk_box_append(GTK_BOX(page3), label_page4_4);
-    gtk_box_append(GTK_BOX(page3), button_page4_2);
+    gtk_box_append(GTK_BOX(page4), button_page4_1);
+    gtk_box_append(GTK_BOX(page4), label_page4_1);
+    gtk_box_append(GTK_BOX(page4), label_page4_2);
+    gtk_box_append(GTK_BOX(page4), label_page4_3);
+    gtk_box_append(GTK_BOX(page4), label_page4_4);
+    gtk_box_append(GTK_BOX(page4), button_page4_2);
     
     // connect everything
     g_signal_connect(button_page4_2, "clicked", G_CALLBACK(next_page), notebook);
@@ -168,21 +167,13 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page5), button_end_2);
     
     // connect everything
-    g_signal_connect(button_end_2, "clicked", G_CALLBACK(gtk_window_destroy), notebook);
+    g_signal_connect(button_end_2, "clicked", G_CALLBACK(close_window), window);
     
     // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Ende" : "End"));
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page5, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Ende" : "End"));
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
     g_print("Log: end run_first_run_setup\n");
 }
