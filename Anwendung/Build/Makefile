@@ -51,6 +51,7 @@ SRCS = \
 	header_language_check.c \
 	header_install_with_pkexec.c \
 	header_on_window_destroy.c \
+	header_close_window.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
