@@ -188,7 +188,7 @@ void updater(void)
         const char *output_directory = getenv("HOME");
         if (!output_directory) 
         {
-            fprintf(stderr, "Log: Fehler: HOME-Verzeichnis nicht gefunden.\n");
+            fprintf(stderr, "Log: Error: HOME directory not found.\n");
             exit(EXIT_FAILURE);
         }
 
@@ -210,8 +210,6 @@ void updater(void)
 		// snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant%s", wsl_setup_base, package_type);
 
         snprintf(output_file, sizeof(output_file), "%s/Downloads/fastboot-assistant%s", output_directory, package_type);
-        const char *message = strcmp(language, "de") == 0 ? "Heruntergeladen" : "Package downloaded.";
-        show_message(message);
 
         if (download_file(download_url, output_file) == 0) 
         {
@@ -227,7 +225,7 @@ void updater(void)
             gtk_window_set_title(GTK_WINDOW(confirmation_window), confirmation);
 
             gtk_window_set_default_size(GTK_WINDOW(confirmation_window), 400, 350);
-            g_signal_connect(confirmation_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
+            g_signal_connect(confirmation_window, "destroy", G_CALLBACK(on_window_destroy), NULL);
 
             GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
             gtk_window_set_child(GTK_WINDOW(confirmation_window), vbox);
