@@ -95,20 +95,20 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     apply_language();
 
     // Define labels based on the selected language
-    const char *android_info_title = strcmp(language, "de") == 0 ? "<b><u>Android-Info:</u></b>" : "<b><u>Android Info:</u></b>";
-    const char *android_version_label = strcmp(language, "de") == 0 ? "<b>Android-Version:</b> " : "<b>Android Version:</b> ";
-    const char *kernel_version_label = strcmp(language, "de") == 0 ? "<b>Kernel-Version:</b> " : "<b>Kernel Version:</b> ";
-    const char *device_name_label = strcmp(language, "de") == 0 ? "<b>Gerätename:</b> " : "<b>Device Name:</b> ";
-    const char *project_treble_label = strcmp(language, "de") == 0 ? "<b>Project Treble:</b> " : "<b>Project Treble:</b> ";
-    const char *active_slot_label = strcmp(language, "de") == 0 ? "<b>Aktiver Slot:</b> " : "<b>Active Slot:</b> ";
-    const char *root_access_label = strcmp(language, "de") == 0 ? "<b>Root-Rechte verfügbar:</b> " : "<b>Root Access:</b> ";
-    const char *soc_label = strcmp(language, "de") == 0 ? "<b>System-on-Chip:</b> " : "<b>System-on-Chip:</b> ";
-    const char *computer_info_title = strcmp(language, "de") == 0 ? "<b><u>Computer-Info:</u></b>" : "<b><u>Computer Info:</u></b>";
-    const char *distro_label = strcmp(language, "de") == 0 ? "<b>Distribution:</b> " : "<b>Distribution:</b> ";
-    const char *version_label = strcmp(language, "de") == 0 ? "<b>Version:</b> " : "<b>Version:</b> ";
-    const char *desktop_label = strcmp(language, "de") == 0 ? "<b>Desktop:</b> " : "<b>Desktop:</b> ";
-    const char *language_label = strcmp(language, "de") == 0 ? "<b>Sprache:</b> " : "<b>Language:</b> ";
-    const char *session_type_label = strcmp(language, "de") == 0 ? "<b>Session Typ:</b> " : "<b>Session Type:</b> ";
+    const char *android_info_title = strcmp(language, "de") == 0 ? "Android-Info:" : "Android Info:";
+    const char *android_version_label = strcmp(language, "de") == 0 ? "Android-Version: " : "Android Version: ";
+    const char *kernel_version_label = strcmp(language, "de") == 0 ? "Kernel-Version: " : "Kernel Version: ";
+    const char *device_name_label = strcmp(language, "de") == 0 ? "Gerätename: " : "Device Name: ";
+    const char *project_treble_label = strcmp(language, "de") == 0 ? "Project Treble: " : "Project Treble: ";
+    const char *active_slot_label = strcmp(language, "de") == 0 ? "Aktiver Slot: " : "Active Slot: ";
+    const char *root_access_label = strcmp(language, "de") == 0 ? "Root-Rechte verfügbar: " : "Root Access: ";
+    const char *soc_label = strcmp(language, "de") == 0 ? "System-on-Chip: " : "<b>System-on-Chip: ";
+    const char *computer_info_title = strcmp(language, "de") == 0 ? "Computer-Info:" : "Computer Info:";
+    const char *distro_label = strcmp(language, "de") == 0 ? "Distribution: " : "Distribution: ";
+    const char *version_label = strcmp(language, "de") == 0 ? "Version: " : "Version: ";
+    const char *desktop_label = strcmp(language, "de") == 0 ? "Desktop: " : "Desktop: ";
+    const char *language_label = strcmp(language, "de") == 0 ? "Sprache: " : "Language: ";
+    const char *session_type_label = strcmp(language, "de") == 0 ? "Session Typ: " : "Session Type: ";
     
      if (!is_android_device_connected()) 
     {      
@@ -152,7 +152,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_window), box);
 
     // labels and add them to the window
-    GtkWidget *info1_label = gtk_label_new(android_info_title);
+    GtkWidget *info1_label = gtk_button_new_with_label(android_info_title);
     gtk_box_append(GTK_BOX(box), info1_label);
 	
 	// android-version	
@@ -183,7 +183,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     GtkWidget *soc_info_label = gtk_label_new(g_strdup_printf("%s%s", soc_label, get_soc));
     gtk_box_append(GTK_BOX(box), soc_info_label);
 
-    GtkWidget *info2_label = gtk_label_new(computer_info_title);
+    GtkWidget *info2_label = gtk_button_new_with_label(computer_info_title);
     gtk_box_append(GTK_BOX(box), info2_label);
 	
 	// get the distro
