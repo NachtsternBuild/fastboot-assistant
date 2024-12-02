@@ -231,12 +231,17 @@ void toggle_language(GtkWidget *button, gpointer user_data)
     if (strcmp(language, "de") == 0) 
     {
         language = "en";
-        write_language_file(); // Assuming this saves the theme state
+        write_language_file(); 
+        const char *message = "Please restart the Fastboot Assistant.";
+    	show_message(message);
     } 
+    
     else 
     {
         language = "de";
-        check_language_file_light(); // Assuming this resets the theme state
+        check_language_file_light(); 
+        const char *message = "Bitte starten sie den Fastboot-Assistant erneut.";
+    	show_message(message);
     }
     apply_language();
 }
