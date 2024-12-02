@@ -100,7 +100,7 @@ void about(int argc, char *argv[])
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     button_about_1 = gtk_button_new_with_label("Fastboot Assistant");
-    button_about_2 = gtk_button_new_with_label("Version 0.6.2.dev");
+    button_about_2 = gtk_button_new_with_label("Version 0.6.2");
     button_about_3 = gtk_button_new_with_label("Rostiges Red Hat");
     button_about_4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Programm um das installieren von Custom-ROM \nund GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM \nand GSIs on Android devices.");
     button_about_5 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
