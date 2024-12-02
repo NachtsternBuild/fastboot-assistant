@@ -25,11 +25,6 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-static void close_dialog(GtkButton *button, GtkWidget *dialog) 
-{
-    gtk_window_destroy(GTK_WINDOW(dialog));
-}
-
 void show_message_with_title(const char *title, const char *message) 
 {
     GtkWidget *dialog;
@@ -61,4 +56,6 @@ void show_message_with_title(const char *title, const char *message)
 
     // Display the dialog and all its components
     gtk_widget_set_visible(dialog, TRUE);
+    
+    g_free((char *)formatted_message);
 }
