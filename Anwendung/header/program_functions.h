@@ -45,8 +45,15 @@ extern const char *language;
 extern GMainLoop *main_loop;
 
 /* function from the header */
+// destroy window/dialog/loops
 // end  GTK main loop
 void on_window_destroy(GtkWidget *widget, gpointer data);
+
+// close window
+void close_window(GtkButton *button, GtkWidget *window);
+
+// close dialog
+void close_dialog(GtkButton *button, GtkWidget *dialog);
 
 // execute command
 char *execute_command();
