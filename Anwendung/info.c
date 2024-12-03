@@ -212,7 +212,14 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
      // run GTK main loop
     g_main_loop_run(main_loop); 
     
-    if (main_loop != NULL) 
+    // free the provider
+    if (provider != NULL) 
+    {
+    	g_object_unref(provider);
+    	provider = NULL;
+	}
+
+	if (main_loop != NULL) 
 	{
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
