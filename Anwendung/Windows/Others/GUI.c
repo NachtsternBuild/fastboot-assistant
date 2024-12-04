@@ -290,18 +290,18 @@ int main(int argc, char *argv[])
         }
     }
 	
-	// free the provider
-	if (provider != NULL) 
-	{
-	    g_object_unref(provider);
-	    provider = NULL;
-	}
-	
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
     // run GTK main loop
     g_main_loop_run(main_loop); 
 	
+	// free the provider
+    if (provider != NULL) 
+    {
+    	g_object_unref(provider);
+    	provider = NULL;
+	}
+
 	if (main_loop != NULL) 
 	{
     	g_main_loop_unref(main_loop);
