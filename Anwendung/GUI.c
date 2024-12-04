@@ -288,16 +288,9 @@ int main(int argc, char *argv[])
                 g_signal_connect(button, "clicked", G_CALLBACK(start_about), NULL);
                 break;
         }
-    }
-	
-	// free the provider
-	if (provider != NULL) 
-	{
-	    g_object_unref(provider);
-	    provider = NULL;
-	}
-	
-     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+    }	
+    
+    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
      // run GTK main loop
     g_main_loop_run(main_loop); 
