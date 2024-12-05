@@ -47,6 +47,7 @@ extern void make_dir();
 
 extern void run_first_run_setup();
 
+
 // Callback functions for each button
 // start get_devices-function
 static void start_get_devices(GtkWidget *widget, gpointer data) 
@@ -165,12 +166,10 @@ void set_button_labels(char labels[][30])
     }
 }
 
-
-/* main function - GUI */
-int main(int argc, char *argv[]) 
+static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 {
-    g_print("Log: fastboot-assistant\n");
-    GtkWidget *window, *grid, *button;
+	g_print("Log: activate_fastboot_assistant\n");
+	GtkWidget *window, *grid, *button;
     char button_labels[9][30];
     
     gtk_init();
@@ -238,6 +237,7 @@ int main(int argc, char *argv[])
     	g_print("Log: fish\n");
     	// run setup
     	run_first_run_setup(provider);
+    	g_print("Log: Setup completed.\n");
 	}
 
     window = gtk_window_new();
@@ -307,7 +307,21 @@ int main(int argc, char *argv[])
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
 	}
+	g_print("Log: end activate_fastboot_assistant\n");
+}
+
+/* main function - GUI */
+int main(int argc, char *argv[]) 
+{
+    g_print("Log: fastboot-assistant\n");
+	GtkApplication *app;
+    int status;
+
+    app = gtk_application_new("org.nachtsternbuild.FastbootAssistant", G_APPLICATION_DEFAULT_FLAGS);
+    g_signal_connect(app, "activate", G_CALLBACK (activate_fastboot_assistant), NULL);
+    status = g_application_run (G_APPLICATION (app), argc, argv);
+    g_object_unref(app);
 
     g_print("Log: end fastboot-assistant\n");
-    return 0;
+    return status;
 }
