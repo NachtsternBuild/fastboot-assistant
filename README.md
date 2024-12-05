@@ -2,6 +2,8 @@
 ## Description
 Program to facilitate the installation of custom ROMs and GSIs on Android devices. Based on GTK and Shell.
 
+![sweet_unix](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/sweet_unix.png)
+
 ## Functions
 - Check the ADB/Fastboot connection
 - Create a working directory
@@ -26,12 +28,17 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
-### Sweet Unix v.0.5.x
-- **[fastboot-assistant v.0.5.5.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.5.5.2)** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL
+## Important Notes
+- **With *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
 
 ### Rostiges Red Hat v.0.6.x
 - *fastboot-assistant v.0.6.1.dev* → build this from source / Linux (Ubuntu)
-- **fastboot-assistant v.0.6.2.dev** → build this from source / Linux (Ubuntu)
+- **fastboot-assistant v.0.6.2** → Linux (Ubuntu/Debian) / Windows via WSL
+
+**→ It is not recommended to use the RPM.**       
+
+### Sweet Unix v.0.5.x
+- **[fastboot-assistant v.0.5.5.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.5.5.2)** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL          
 
 ## Notes
 - Use at your own risk.
@@ -39,7 +46,7 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - Not every device supports all of the functions
 - Not all operating system variants have the same range of functions.
 - The programme is currently in the **test phase**. *Errors may occur in the programme.*
-
+- 
 ### Some brownies
 - *A big thank you to:*
   - **@mrrfv → [Open Android Backup](https://github.com/mrrfv/open-android-backup)**
@@ -55,7 +62,7 @@ The following tools are required to run the programme.
 - *wget*
 - *curl*
 - *pkexec*
-- *heimdall → heimdall must be installed manually on all distributions that use RPMs*
+- *heimdall*
 
 These are installed automatically with the Debian package.
 *Root rights are required for installation.*
@@ -64,10 +71,7 @@ These are installed automatically with the Debian package.
 sudo apt-get install /PATH/to/fastboot-assistant.deb 
 ```
 ***or via a graphical user interface.***
-- **Install the RPM:**
-```sh
-sudo rpm -i /PATH/to/fastboot-assistant-0.5.5.2-1.fc40.x86_64.rpm
-```
+
 ### Windows
 1. unzip the zip file
 2. Follow the steps in the README.md from the Zip
@@ -78,8 +82,6 @@ sudo rpm -i /PATH/to/fastboot-assistant-0.5.5.2-1.fc40.x86_64.rpm
 ```sh
 # Debian/Ubuntu
 sudo dpkg -r --force-all fastboot-assistant
-# Fedora/RHEL/CentOS
-sudo rpm -e fastboot-assistant
 ```
 
 ## Further information
