@@ -24,6 +24,42 @@
 #include "program_functions.h"
 #include "language_check.h"
 
+GtkWidget *window;
+
+// Function to quit the application
+gboolean quit_application(gpointer data)
+{
+    exit(1);
+    return FALSE;  // Return FALSE to ensure the timeout callback is called only once
+}
+
+// Callback to switch the language in the setup
+void toggle_language_setup(GtkWidget *button, gpointer user_data) 
+{
+
+    if (strcmp(language, "de") == 0) 
+    {
+        language = "en";
+        write_language_file();
+        delete_config_file();
+        apply_language();
+        const char *message = "Please restart the Fastboot Assistant.";
+        show_message(message);
+    } 
+    else 
+    {
+        language = "de";
+        check_language_file_light();
+        delete_config_file();
+        apply_language();
+        const char *message = "Bitte starten Sie den Fastboot-Assistant erneut.";
+        show_message(message);
+    }
+
+    // set a timeout and quit the application
+    g_timeout_add(2000, (GSourceFunc)quit_application, NULL); // After 5 seconds
+}
+
 // the setup wizard
 void run_first_run_setup(GtkCssProvider *provider) 
 {
@@ -35,7 +71,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     apply_theme();
     apply_language();
 
-    GtkWidget *window, *notebook;
+    GtkWidget *notebook;
     GtkWidget *page1, *page2, *page3, *page4, *page5;
     GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label_page3_1, *label_page3_2, *label_page3_3, *label_page3_4, *label_page4_1, *label_page4_2, *label_page4_3, *label_page4_4, *label_end_1, *label_end_2;
     GtkWidget *button_welcome_1, *button_toggle_language, *button_toggle_theme, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button_page3_1, *button_page3_2, *button_page4_1, *button_page4_2, *button_end_1, *button_end_2;
@@ -56,7 +92,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     // button and label
     button_welcome_1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Willkommen zum Fastboot Assistant!" : "Welcome to the Fastboot Assistant!");
     label_welcome_1 = gtk_label_new(" ");
-    button_toggle_language = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Sprache wechseln (Deutsch/Englisch)" : "Switch Language (English/German)");
+    button_toggle_language = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Sprache wechseln/Switch Language (Deutsch/Englisch)" : "Switch Language/Sprache wechseln (English/German)");
     button_toggle_theme = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Thema wechseln (hell/dunkel)" : "Toggle Theme (Light/Dark)");
     label_welcome_2 = gtk_label_new(" ");
     button_welcome_2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
@@ -70,7 +106,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page1), button_welcome_2);
 
     // connect everything
-    g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(toggle_language), notebook);
+    g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(toggle_language_setup), notebook);
     g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme), notebook);
     g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(next_page), notebook);
 
