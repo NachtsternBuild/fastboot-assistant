@@ -36,5 +36,5 @@ rm -rf %{buildroot}
 %{_datadir}/icons/hicolor/256x256/apps/sweet_unix.png
 
 %changelog
-* Fri Nov 29 2024 Elias Mörz<elias.moerz@mail.de> - 0.6.2
+* Tue Aug 13 2024 Elias Mörz<elias.moerz@mail.de> - 0.5.4
 - Initial package
