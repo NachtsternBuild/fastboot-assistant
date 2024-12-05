@@ -12,11 +12,13 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - Reboot from fastboot mode
 - Reboot into download mode
 - boot into recovery
+- boot to an image
 - lock/unlock the bootloader 
 - delete user data
-- backup your full system (root) or use the [Open Android Backup](https://github.com/mrrfv/open-android-backup) → ***thanks to @mrrfv***
+- backup your full system with root or use the [Open Android Backup](https://github.com/mrrfv/open-android-backup) → ***thanks to @mrrfv***
 - Rename files (recovery.img, boot.img, vendor.img, system.img, payload.zip)
 - flashing recovery.img, boot.img, init_boot.img, vendor_boot.img, vendor.img, system.img, vbmeta.img, dtbo.img, userdata.img, metadata.img, preloader.img, preloader.bin, super.img and many others
+- flashing all images in a directory
 - get device infos
 - some instructions for the program
 - set active slot
@@ -28,17 +30,17 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
-## Important Notes
-- **With *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
-
 ### Rostiges Red Hat v.0.6.x
+- **[fastboot-assistant v.0.6.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2)** → Linux (Ubuntu/Debian) / Windows via WSL
 - *fastboot-assistant v.0.6.1.dev* → build this from source / Linux (Ubuntu)
-- **fastboot-assistant v.0.6.2** → Linux (Ubuntu/Debian) / Windows via WSL
 
 **→ It is not recommended to use the RPM.**       
 
 ### Sweet Unix v.0.5.x
 - **[fastboot-assistant v.0.5.5.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.5.5.2)** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL          
+
+### Important Notes
+- **With *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
 
 ## Notes
 - Use at your own risk.
