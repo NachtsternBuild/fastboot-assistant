@@ -23,7 +23,8 @@
 | 0.7.2       | :x:                | *future version*             | :x:               | *Mutiges Mint 21.3*          | :x:                                                        | *DEB, Snap*                |
 | 0.7.1.dev   | :x:                | *future version*             | :x:               | *Mutiges Mint 20.3*          | :x:                                                        | *DEB*                      |
 | 0.7.x       | :x:                | *on work*                    | :x:               | *Mutiges Mint*               | :x:                                                        | :x:                        |
-| 0.6.2       | :white_check_mark: | ***active version***         | ***stable***      | ***Rostiges Red Hat 9***     | ***Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL***   | *DEB, RPM, Zip*            |
+| 0.6.2       | :white_check_mark: | ***active version***         | ***stable***      | ***Rostiges Red Hat 9***     | ***Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL***   | *DEB, Zip*                 |
+| 0.6.2       | :x:, no longer     | *active version*             | *beta*            | *Rostiges Red Hat 9*         | *Linux (Fedora/RHEL)*                                      | *RPM*                      |
 | 0.6.2.dev   | :x:                | *build this from source*     | *dev*             | *Rostiges Red Hat 8*         | *Linux (Debian/Ubuntu)*                                    | :x:                        |
 | 0.6.1       | :x:                | *build this from source*     | *dev*             | *Rostiges Red Hat 7*         | *Linux (Debian/Ubuntu)*                                    | :x:                        |
 | 0.6.x       | :white_check_mark: | **active version**           | ***stable***      | **Rostiges Red Hat**         | **Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL)**    | *DEB, RPM, Zip*            |
