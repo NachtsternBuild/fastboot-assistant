@@ -30,6 +30,8 @@ cp %{_builddir}/fastboot-assistant-%{version}/fastboot-assistant.desktop %{build
 %clean
 rm -rf %{buildroot}
 
+%define debug_package %{nil}
+
 %files
 %{_bindir}/fastboot-assistant/fastboot-assistant
 %{_datadir}/applications/fastboot-assistant.desktop
