@@ -35,9 +35,9 @@ void write_language_file();
 void delete_language_file();
 void check_language_file();
 void check_language_file_light();
-void toggle_language(GtkWidget *button, gpointer user_data);
 void apply_language();
-
+void toggle_language(GtkWidget *button, gpointer user_data);
+void toggle_language_setup(GtkWidget *button, gpointer user_data);
 
 #endif // LANGUAGE_CHECK_H
 
