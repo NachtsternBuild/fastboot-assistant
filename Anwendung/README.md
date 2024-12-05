@@ -2,8 +2,8 @@
 ## Application development
 ---
 ### Status:
+- **v.0.6.2:** *stable*
 - **v.0.5.5.2:** *stable*
-- **v.0.6.2.dev:** *dev*
 ---
   
 ### Build
@@ -15,11 +15,7 @@ git clone https://github.com/NachtsternBuild/fastboot-assistant.git
 
 ```sh
 # Debian / Ubuntu:
-sudo apt update && sudo apt install -y gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper
-
-# Feodra / RHEL / CentOS
-sudo dnf install -y gcc gtk4-devel android-tools desktop-file-utils make rpm-build
-
+sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper
 
 ```
 3. Edit the source code with an editor of your choice according to your requirements. *Note that the Makefile must also be changed if you change the name.
@@ -37,7 +33,6 @@ bash Build/build-fastboot-assistant.sh
  	- Windows (WSL)
 *The following package types are available for Linux:*
 - Debian package
-- RPM  
 *For Windows, a zip file is packed which contains the Debian package included for the WSL.
 **Note:**
 *→ Building the WSL package only works on **Debian/Ubuntu systems**, as the build script automatically builds a Debian package.
