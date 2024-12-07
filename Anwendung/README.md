@@ -24,7 +24,7 @@ sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-u
    cd ~/fastboot-assistant/Anwendungen
    ```
 
-5. Compile the code and build the Debian package or run the RPM:
+5. Compile the code:
 ```sh
 bash Build/build-fastboot-assistant.sh
 ```
