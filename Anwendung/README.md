@@ -38,7 +38,7 @@ bash Build/build-fastboot-assistant.sh
 *For Windows, a zip file is packed which contains the Debian package included for the WSL.*
 
 **Note:**
-*→ Building the WSL package only works on **Debian/Ubuntu systems**, as the build script automatically builds a Debian package.
+*→ Building the WSL package only works on **Debian/Ubuntu systems**, as the build script automatically builds a Debian package.*
  
 ## Program structure
 - It is worth taking a look at the program structure.
