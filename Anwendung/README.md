@@ -31,9 +31,12 @@ bash Build/build-fastboot-assistant.sh
 - The project can be built for the following operating systems:
 	- Linux
  	- Windows (WSL)
+  
 *The following package types are available for Linux:*
 - Debian package
+
 *For Windows, a zip file is packed which contains the Debian package included for the WSL.*
+
 **Note:**
 *→ Building the WSL package only works on **Debian/Ubuntu systems**, as the build script automatically builds a Debian package.
  
