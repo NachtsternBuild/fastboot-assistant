@@ -35,8 +35,16 @@ void flash_system_inactive(const char *slot)
     char function_command[BUFFER_SIZE];
     char image_path[3072];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "system.img");
-
-    // make command to flash system.img
+	
+	// function to erase the system partition
+	char function_command_erase[3072];
+    char *device_command_erase = fastboot_command();
+    snprintf(function_command_erase, sizeof(function_command_erase), "%s erase system", device_command_erase);
+    g_print("Log: Run: %s", function_command_erase);
+    system(function_command_erase);
+    free(device_command_erase);
+    
+    // create command to flash system.img
     char *device_command = fastboot_command();
     snprintf(function_command, sizeof(function_command), "%s flash system_%s %s && %s set_active %s", device_command, slot, image_path, device_command, slot);
 	
