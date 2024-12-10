@@ -21,5 +21,5 @@ Add any other context or screenshots about the feature request here.
 
 **Informations:**
 - **for program version:** e.g. v.0.7.x
-- **for OS:** e.g. Ubuntu / Fedora
-- **section:** e.g. UI / code security / program settings / feature / updater / info
+- **for OS:** e.g. Ubuntu
+- **section:** e.g. UI / code security / program settings / feature / updater / info / package
