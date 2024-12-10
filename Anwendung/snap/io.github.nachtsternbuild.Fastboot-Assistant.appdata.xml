@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.nachtsternbuild.Fastboot-Assistant</id>
+
+  <name>Fastboot-Assistant</name>
+  <summary>Program to facilitate the installation of custom ROMs and GSIs on Android devices</summary>
+
+  <metadata_license>MIT</metadata_license>
+  <project_license>Apache-License-Version-2.0</project_license>
+
+  <recommends>
+	<control>pointing</control>
+	<control>keyboard</control>
+  </recommends>
+
+  <categories>
+	<category>Productivity</category>
+  </categories>
+
+  <description>
+	<p>
+	
+	</p>
+	
+	<p>
+	   The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
+       on Android devices. It offers a user-friendly GTK4 interface
+       and integrates tools such as adb, fastboot and heimdall.
+    </p>
+    
+    <p>
+       Check the ADB/fastboot connection and whether the bootloader of the device is unlocked. Retrieve device information.
+    </p>
+    
+    <p>
+       Boot into fastboot mode, reboot out of fastboot mode, reboot into download mode, reboot into recovery mode.
+    </p>
+    
+    <p>
+       Lock/unlock the bootloader, delete user data, set active slot (a/b devices only).
+       Change/remove/create the size of the boot/vendor/system partition.
+	</p>
+	
+	<p>
+	   Back up the complete system (only for users with root access to the system) or use Open Android Backup (thanks to @mrrfv who developed this tool). 
+	</p>
+	
+	<p>
+	   Flash many different images, everything from system images to preloader images.
+	</p>
+	
+	<p>
+	   Currently the following distributions are officially supported:
+	</p>
+	
+	<ul>
+        <li>Ubuntu</li>
+        <li>Debian</li>
+        <li>Linux Mint</li>
+    </ul>
+    
+  </description>
+
+  <launchable type="desktop-id">fastboot-assistant.desktop</launchable>
+  
+  <url type="bugtracker">
+	https://github.com/NachtsternBuild/fastboot-assistant/issues
+  </url>
+</component>	
