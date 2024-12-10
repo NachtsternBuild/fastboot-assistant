@@ -34,20 +34,20 @@ void set_button_labels_prepare(char labels[][30])
     {
         strcpy(labels[0], "Boot.img");
         strcpy(labels[1], "Recovery.img");
-        strcpy(labels[0], "Vendor.img");
-        strcpy(labels[1], "System.img");
-        strcpy(labels[0], "payload.zip");
-        strcpy(labels[1], "Decompress (xz)");
+        strcpy(labels[2], "Vendor.img");
+        strcpy(labels[3], "System.img");
+        strcpy(labels[4], "payload.zip");
+        strcpy(labels[5], "Decompress (xz)");
     } 
     
     else 
     {
         strcpy(labels[0], "Boot.img");
         strcpy(labels[1], "Recovery.img");
-        strcpy(labels[0], "Vendor.img");
-        strcpy(labels[1], "System.img");
-        strcpy(labels[0], "payload.zip");
-        strcpy(labels[1], "Dekomprimieren (xz)");
+        strcpy(labels[2], "Vendor.img");
+        strcpy(labels[3], "System.img");
+        strcpy(labels[4], "payload.zip");
+        strcpy(labels[5], "Dekomprimieren (xz)");
     }
 }
 
@@ -60,7 +60,7 @@ void prepare(int argc, char *argv[])
     char button_labels[6][30];
     
     gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
+    main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
     set_button_labels_prepare(button_labels);
