@@ -25,56 +25,35 @@
 #include "function_header.h"
 #include "language_check.h"
 
-// Callback function to handle the dialog response
-static void file_chooser_open_callback(GObject *source_object, GAsyncResult *res, gpointer user_data)
+// Callback-Funktion für die Verarbeitung der Datei
+static void file_dialog_response_callback(GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
-    GtkFileDialog *dialog = GTK_FILE_DIALOG(source_object);
-    GFile *file = gtk_file_dialog_open_finish(dialog, res, NULL);
-    
+    g_autoptr(GFile) file = gtk_file_dialog_open_finish(GTK_FILE_DIALOG(source_object), res, NULL);
     if (file) 
     {
-        char *filename = g_file_get_path(file);
-
+        g_autofree char *filename = g_file_get_path(file);
         if (filename) 
         {
             FileProcessorFunc process_func = (FileProcessorFunc)user_data;
-            process_func(filename);  // Passes the file to the passed function for processing
-            g_free(filename);
+            process_func(filename);
         }
-
-        g_object_unref(file);
     }
-
-    g_object_unref(dialog);  // Free dialog resources
 }
 
-// Function that displays the file selection dialog
+// Funktion zum Anzeigen des Datei-Auswahl-Dialogs
 void show_file_chooser(GtkWidget *widget, gpointer data) 
 {
     GtkWindow *parent_window = GTK_WINDOW(gtk_widget_get_root(widget));
-
-    // Check that the parent widget is a window
     if (!GTK_IS_WINDOW(parent_window)) 
     {
         parent_window = NULL;
     }
 
-    // Apply language
+    // Sprache anwenden
     apply_language(); 
-    
-    // Set dialog text based on the current language
-    const char *dialog_title = (strcmp(language, "de") == 0) ? "Datei auswählen" : "Open File";
 
-    // Processing function
-    FileProcessorFunc process_func = (FileProcessorFunc)data;
-
-    // Create a new file dialog
+    // Dialog für Datei-Auswahl
     GtkFileDialog *dialog = gtk_file_dialog_new();
 
-    // Set the title of the dialog 
-    gtk_native_dialog_set_title(GTK_NATIVE_DIALOG(dialog), dialog_title);
-
-    // Open the file dialog asynchronously
-    gtk_file_dialog_open(dialog, parent_window, NULL, file_chooser_open_callback, process_func);
+    gtk_file_dialog_open(dialog, parent_window, NULL, (GAsyncReadyCallback)file_dialog_response_callback, data);
 }
-
