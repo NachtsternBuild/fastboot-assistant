@@ -1,0 +1,63 @@
+name: fastboot-assistant
+base: core22
+version: '0.7.1' 
+summary: "Program to facilitate the installation of custom ROMs and GSIs on Android devices"
+description: |
+  The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
+  on Android devices. It offers a user-friendly GTK4 interface
+  and integrates tools such as adb, fastboot and heimdall.
+
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+    run-on: amd64
+
+apps:
+  fastboot-assistant:
+    command: usr/bin/fastboot-assistant
+    plugs:
+      - home
+      - removable-media
+      - network
+      - hardware-observe
+      - usb-access
+      - desktop
+  	  - desktop-legacy
+  	  - x11
+      - wayland
+      - gtk-theme
+    desktop: usr/share/applications/fastboot-assistant.desktop
+
+parts:
+  fastboot-assistant: 
+    source: .
+    plugin: dump
+    organize:
+      meta/gui/io.github.nachtsternbuild.Fastboot-Assistant.appdata.xml: meta/gui/io.github.nachtsternbuild.Fastboot-Assistant.appdata.xml
+      fastboot-assistant: usr/bin/fastboot-assistant
+      fastboot-assistant.desktop: usr/share/applications/fastboot-assistant.desktop
+      sweet_unix.png: usr/share/icons/hicolor/256x256/apps/sweet_unix.png
+    stage-packages:
+      - adb
+      - fastboot
+      - xz-utils
+      - unzip
+      - wget
+      - curl
+      - pkexec
+      - heimdall-flash
+      - heimdall-flash-frontend
+      - coreutils
+      - libc6
+      - libgtk-4-1
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
+      - xdg-utils
+      
+slots:
+  fastboot-assistant:
+    interface: dbus
+    bus: session
+    name: io.github.nachtsternbuild.fastboot-assistant
