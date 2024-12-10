@@ -56,6 +56,12 @@ int flash_partition(const char *partition, const char *image_path, int ab_device
     // flash system on all devices
     else if (strcmp(partition, "system") == 0 && ab_device) 
     {
+        char function_command[3072];
+    	char *device_command = fastboot_command();
+    	snprintf(function_command, sizeof(function_command), "%s erase system", device_command);
+    	g_print("Log: Run: %s", function_command);
+    	system(function_command);
+    	free(device_command);
         system_images(NULL, NULL);  // Passing NULL for widget and window
     }
     // flash userdata on all devices
