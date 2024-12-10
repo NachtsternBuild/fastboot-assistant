@@ -31,6 +31,7 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
 ### Rostiges Red Hat v.0.6.x
+- **[fastboot-assistant v.0.6.2.1](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2.1)** → Linux (Ubuntu/Debian) / Windows via WSL
 - **[fastboot-assistant v.0.6.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2)** → Linux (Ubuntu/Debian) / Windows via WSL
 - *fastboot-assistant v.0.6.1.dev* → build this from source / Linux (Ubuntu)
 
@@ -40,7 +41,7 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - **[fastboot-assistant v.0.5.5.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.5.5.2)** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL          
 
 ### Important Notes
-- **With *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
+- **With *v.0.6.2.1* and *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
 
 ## Notes
 - Use at your own risk.
