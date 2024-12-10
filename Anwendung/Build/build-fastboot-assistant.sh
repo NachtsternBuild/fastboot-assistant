@@ -1,6 +1,11 @@
 #!/bin/bash
 # build-fastboot-assistant.sh
-# this is a modified version of the bash script, for Debian package and the RPM building from linux-assistant
+# build skript for:
+# - object file of the fastboot-assistant
+# - Debian package
+# - Snap
+# - Flatpak
+# this is a modified version of the bash script, for Debian package and the RPM building from the linux-assistant
 
 # color for the output
 BLUE='\033[0;34m'
@@ -23,7 +28,7 @@ VERSION="$(cat Build/version.txt)"
 # Directory paths
 home_dir="$HOME"
 source_dir="$home_dir/fastboot-assistant/Anwendung"
-#source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_6_3"
+#source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_7_1"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -38,6 +43,18 @@ config_dir_win="${windows_dir}/config_projekt"
 preflash_dir_win="${windows_dir}/preflash"
 header_dir_win="${windows_dir}/header"
 other_dir_win="${windows_dir}/Others"
+
+# Snap build info
+snapcraft_dir="${source_dir}/snap"
+build_dir_snap="${source_dir}/build_snap"
+snap_name="fastboot-assistant"
+snapcraft_file="${snapcraft_dir}/snapcraft.yaml"
+
+# Flatpak build info
+flatpak_dir="${source_dir}/flatpak"
+build_dir_flatpak="${source_dir}/build_flatpak"
+flatpak_name="fastboot-assistant"
+flatpak_manifest="${flatpak_dir}/io.github.nachtsternbuild.Fastboot-Assistant.yml"
 
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
@@ -177,42 +194,67 @@ debian_package_build() {
 	echo "Package ready."
 }
 
-rpm_build() {
-	# Prepare rpm files for packaging
-	echo "Changing to build directory."
-	cd "$source_dir" || { echo "Error with changing to $source_dir"; exit 1; }
-	echo "Remove old build files..."
-	rm -rf rpmbuild/SOURCES
+# Function for building the Snap package
+build_snap() {
+    start_info "Building Snap package..."
+    echo "Remove old builds..."
+	rm -r "$build_dir_snap"
 	
 	echo "Create required directories..."
-	mkdir -p rpmbuild/SOURCES/fastboot-assistant-$VERSION
-	echo "Copy files..."
-	cp -r "$output_dir/fastboot-assistant" rpmbuild/SOURCES/fastboot-assistant-$VERSION/fastboot-assistant
-	chmod a+x rpmbuild/SOURCES/fastboot-assistant-$VERSION/fastboot-assistant
+	mkdir -p "$build_dir_snap"
+	echo "Copy all files to $build_dir_snap..."
+	for dir in "$snapcraft_dir" "$output_dir" "$build_dir"; do
+        	find "$dir" -maxdepth 1 -type f -exec cp {} "$build_dir_snap" \;
+    	done
+		echo "Alle Dateien wurden nach $build_dir_snap kopiert."
+	chmod a+x "$build_dir_snap"
+	
+    if [ ! -f "$snapcraft_file" ]; then
+        error_msg "Snapcraft file not found: $snapcraft_file"
+        exit 1
+    fi
 
-	# Check if files exist before copying
-	if [ -f "$build_dir/fastboot-assistant.desktop" ]; then
-    	cp "$build_dir/fastboot-assistant.desktop" rpmbuild/SOURCES/fastboot-assistant-$VERSION/
-	fi
+    # Create the snap package using snapcraft
+    echo "Starting snap build..."
+    cd "$build_dir_snap" || { error_msg "Failed to change to $build_dir_snap"; exit 1; }
+    snapcraft --use-lxd
 
-	if [ -f "$build_dir/sweet_unix.png" ]; then
-	    cp "$build_dir/sweet_unix.png" rpmbuild/SOURCES/fastboot-assistant-$VERSION/
-	fi
-
-	echo "Build RPM..."
-	echo "Changing directory..."
-	cd rpmbuild/SOURCES/
-	echo "Create Tar..."
-	tar -czvf fastboot-assistant-$VERSION.tar.gz fastboot-assistant-$VERSION
-	cd ../../
-	echo "Copy everything to $HOME"
-	cp -r rpmbuild "$HOME/"
-	echo "Set version..."
-	sed -i "2s/.*/Version:        $VERSION/" ./rpmbuild/SPECS/fastboot-assistant.spec
-	echo "Build package..."
-	rpmbuild -ba ./rpmbuild/SPECS/fastboot-assistant.spec --without debuginfo
+    if [ -f "$build_dir_snap/$snap_name_${VERSION}_amd64.snap" ]; then
+        echo "Snap package built successfully: $build_dir_snap/$snap_name_${VERSION}_amd64.snap"
+    else
+        error_msg "Snap build failed."
+        exit 1
+    fi
 }
 
+# Function for building the Flatpak package
+build_flatpak() {
+    start_info "Building Flatpak package..."
+	
+	for dir in "$flatpak_dir" "$output_dir" "$build_dir"; do
+        	find "$dir" -maxdepth 1 -type f -exec cp {} "$build_dir_flatpak" \;
+    	done
+		echo "Alle Dateien wurden nach $build_dir_flatpak kopiert."
+	
+    if [ ! -f "$flatpak_manifest" ]; then
+        error_msg "Flatpak manifest file not found: $flatpak_manifest"
+        exit 1
+    fi
+    chmod a+x "$build_dir_flatpak"
+	cd "$build_dir_flatpak" || { error_msg "Error with changing to $build_dir_snap"; exit 1; }
+    # Build the flatpak package using flatpak-builder
+    echo "Starting flatpak build..."
+    flatpak-builder --user --install --force-clean "$build_dir_flatpak/fastboot-assistant" "$flatpak_manifest"
+
+    if [ -d "$build_dir_flatpak/fastboot-assistant" ]; then
+        echo "Flatpak package built successfully."
+    else
+        error_msg "Flatpak build failed."
+        exit 1
+    fi
+}
+
+# build windows zip
 windows_zip_build() {
 	echo "Start building zip-file..."
 	echo "Changing to $windows_dir"
@@ -246,26 +288,37 @@ build_program_linux() {
     
     # loop for package build
     while true; do
-    prompt_user "Welches Paket soll gebaut werden?"
-    start_info "Debian (d) / RPM (r) / Keines (n)"
+    prompt_user "Für welches Betriebssystem soll der Fastboot-Assistant gebaut werden?"
+    prompt_user "************************"
+    echo -e "$RED    Debian (d) $NC"
+    prompt_user "************************"
+    echo -e "$CYAN   Snap (s) $NC"
+    prompt_user "************************"
+    echo -e "$GREEN  Flatpak (f) $NC"
+    prompt_user "************************"
+    echo -e "$RED    Beenden (b) $NC"
+    prompt_user "************************"
     read -n1 -s answer
     case "$answer" in 
         d|D)
             debian_package_build
             prompt_user "Paketbau beendet."
             ;;
-        r|R)
-            rpm_build
-            prompt_user "Paketbau beendet."
+        s|S)
+            build_snap
+            echo "Build des Snaps abgeschlossen."
             ;;
-        n|N|k|K)
-            prompt_user "Kein Paketbau"
+        f|F)
+            build_flatpak
+            echo "Build des Flatpaks abgeschlossen."
+            ;;
+        b|B)
+            echo "Build-Skript beendet."
             break
             ;;
         * )
-            build_info "Bitte 'd', 'r' oder 'n' verwenden."
+            build_info "Bitte 'l', 'w' oder 'b' verwenden."
             ;;
-        	
     esac
 done
 }
