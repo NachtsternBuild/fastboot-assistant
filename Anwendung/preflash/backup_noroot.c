@@ -104,14 +104,14 @@ void set_button_labels_backup_noroot(char labels[][30])
     {
         strcpy(labels[0], "Prepare");
         strcpy(labels[1], "Download");
-        strcpy(labels[1], "Start");
+        strcpy(labels[2], "Start");
     }
     
     else
     {
     	strcpy(labels[0], "Vorbereiten");
     	strcpy(labels[1], "Download");
-    	strcpy(labels[1], "Starten");
+    	strcpy(labels[2], "Starten");
     }
 } 
 
