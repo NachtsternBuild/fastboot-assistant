@@ -94,6 +94,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     spinner_flash = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_box_append(GTK_BOX(vbox), spinner_flash);
+    gtk_widget_set_size_request(spinner_flash, 100, 100);
     gtk_window_set_child(GTK_WINDOW(spinner_window_flash), vbox);
 
     // start the spinner
