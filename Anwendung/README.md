@@ -2,7 +2,8 @@
 ## Application development
 ---
 ### Status:
-- **v.0.6.2:** *stable*
+- **v.0.7.1:** *dev* → on work
+- **v.0.6.2.1:** *stable*
 - **v.0.5.5.2:** *stable*
 ---
   
