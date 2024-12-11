@@ -76,48 +76,27 @@ static void install_deb(GtkButton *button)
     g_print("Log: end install_deb\n");
 }
 
-// create window for install
-static void create_install_window(GtkWidget **install_button, void (*install_callback)(GtkButton*)) 
+// function to extract the version from the url
+const char* extract_version_from_url(const char* url) 
 {
-    const char *update_install = strcmp(language, "de") == 0 ? "Installieren" : "Install";
-    update_window_install = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(update_window_install), update_install);
-    gtk_window_set_default_size(GTK_WINDOW(update_window_install), 500, 200);
-    g_signal_connect(update_window_install, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_window_set_child(GTK_WINDOW(update_window_install), vbox);
-
-    info_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Autorisierung erforderlich" : "Authorization Required");
-    gtk_box_append(GTK_BOX(vbox), info_button);
-
-    *install_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
-    g_signal_connect(*install_button, "clicked", G_CALLBACK(install_callback), NULL);
-    gtk_box_append(GTK_BOX(vbox), *install_button);
-	
-    // show all widgets
-    gtk_window_present(GTK_WINDOW(update_window_install));
-}
-
-static void install_window_deb(GtkButton *button)
-{
-    g_print("Log: install_window_deb\n");
-    GtkWidget *install_button;
-    create_install_window(&install_button, install_deb);
-}
-
-static void install_window_rpm(GtkButton *button)
-{
-    g_print("Log: install_window_rpm\n");
-    GtkWidget *install_button;
-    create_install_window(&install_button, install_rpm);
-}
-
-static void install_window_wsl(GtkButton *button)
-{
-    g_print("Log: install_window_wsl\n");
-    GtkWidget *install_button;
-    create_install_window(&install_button, install_wsl);
+    const char* version_start = strstr(url, "/releases/download/");
+    if (version_start) 
+    {
+        version_start += strlen("/releases/download/");
+        const char* version_end = strchr(version_start, '/');
+        if (version_end) 
+        {
+            static char version[64];
+            size_t version_length = version_end - version_start;
+            if (version_length < sizeof(version)) 
+            {
+                strncpy(version, version_start, version_length);
+                version[version_length] = '\0';
+                return version;
+            }
+        }
+    }
+    return NULL;
 }
 
 // Function to retrieve the latest release URL from GitHub
@@ -185,6 +164,22 @@ void updater(void)
     if (strlen(download_url) > 0) 
     {
         g_print("Log: Latest version URL: %s\n", download_url);
+                
+        const char* version = extract_version_from_url(download_url);
+        if (version) 
+        {
+            g_print("Log: Extracted version: %s\n", version);
+
+            char version_message[256];
+            snprintf(version_message, sizeof(version_message), g_strcmp0(language, "de") == 0 ? "Gefundene Version: %s" : "Found version: %s", version);
+            show_message(version_message);
+        }
+        
+        else 
+        {
+            g_print("Log: Could not extract version from URL.\n");
+        }
+        
         const char *output_directory = getenv("HOME");
         if (!output_directory) 
         {
@@ -238,22 +233,22 @@ void updater(void)
 
             if (strcmp(package_type, ".deb") == 0) 
             {
-                g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_deb), NULL);
+                g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_deb), NULL);
             } 
             
             else if (strcmp(package_type, ".rpm") == 0) 
             {
-                g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_rpm), NULL);
+                g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_rpm), NULL);
             }
 			
 			else if (strcmp(package_type, ".zip") == 0)
 			{
-				g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_window_wsl), NULL);
+				g_signal_connect(confirm_button, "clicked", G_CALLBACK(install_wsl), NULL);
 			}
 			
             GtkWidget *cancel_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Später Installieren" : "Install later");
             gtk_box_append(GTK_BOX(vbox), cancel_button);
-            g_signal_connect(cancel_button, "clicked", G_CALLBACK(on_window_destroy), confirmation_window);
+            g_signal_connect(cancel_button, "clicked", G_CALLBACK(close_window_mainloop), confirmation_window);
 
             // show all widgets
     		gtk_window_present(GTK_WINDOW(confirmation_window)); // gtk_window_present instead of gtk_widget_show
