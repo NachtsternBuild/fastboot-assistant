@@ -22,14 +22,61 @@
 #include <glib.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <pthread.h>
 #include "program_functions.h"
 
-// function to run a command via root use pkexec
-void install_with_pkexec(const gchar *command)
+GtkWidget *spinner_install = NULL;
+GtkWidget *spinner_install_window = NULL;
+
+// function to run command in the background
+void *run_install_with_pkexec(void *command)
 {
-    gchar *full_command = g_strdup_printf("pkexec %s", command);
-    g_print("Log: %s\n", full_command);
+    char *full_command = (char *)command;
+
+    // run command
+    g_print("Log: Run: %s\n", full_command);
     system(full_command);
-    g_free(full_command);
+
+    // stop the spinner and close the window
+    gtk_spinner_stop(GTK_SPINNER(spinner_install));
+    gtk_window_destroy(GTK_WINDOW(spinner_install_window));
+
+    free(full_command);  // free memory
+    return NULL;
 }
 
+// function to run a command via root use pkexec
+void install_with_pkexec(const gchar *command) 
+{
+    gtk_init();
+    apply_theme();
+
+    gchar *full_command = g_strdup_printf("pkexec %s", command);
+	
+    // create a new window
+    spinner_install_window = gtk_window_new();
+    gtk_window_set_title(GTK_WINDOW(spinner_install_window), " ");
+    gtk_window_set_default_size(GTK_WINDOW(spinner_install_window), 200, 200);
+
+    // create a spinner
+    spinner_install = gtk_spinner_new();
+    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_box_append(GTK_BOX(vbox), spinner_install);
+    gtk_widget_set_size_request(spinner_install, 100, 100);
+    gtk_window_set_child(GTK_WINDOW(spinner_install_window), vbox);
+	
+    // start the spinner
+    gtk_spinner_start(GTK_SPINNER(spinner_install));
+
+    // make the window visible using gtk_window_present
+    gtk_window_present(GTK_WINDOW(spinner_install_window));
+
+    // run command in a new thread
+    pthread_t thread;
+    pthread_create(&thread, NULL, run_install_with_pkexec, full_command);
+    pthread_detach(thread);  // run thread in the background
+
+    // run GTK main loop
+    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
+    g_main_loop_run(loop); 
+}
