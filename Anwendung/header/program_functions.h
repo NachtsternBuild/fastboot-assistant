@@ -55,6 +55,9 @@ void close_window(GtkButton *button, GtkWidget *window);
 // close dialog
 void close_dialog(GtkButton *button, GtkWidget *dialog);
 
+// close window and mainloop
+void close_window_mainloop(GtkWidget *widget, gpointer data);
+
 // execute command
 char *execute_command();
 
