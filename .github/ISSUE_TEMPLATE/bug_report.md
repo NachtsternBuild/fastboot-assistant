@@ -31,6 +31,6 @@ If applicable, add screenshots to help explain your problem.
  - **Program version:** e.g. v.0.6.2.1
  - **Comes with version:** e.g. v.0.7.1
  - **Operating mode:** e.g. native / WSL / VM
- - **package type:** e.g. DEB / Snap / Flatpak / Zip
+ - **package type:** e.g. object file / DEB / Snap / Flatpak / Zip 
  - **Location of error:** e.g. build (compiler) / build (linker) / on run
  - **Section of error:** e.g. flash / prepare files / reboot / instructions / info / updater / config / backup / partitions / about / get devices / userdata / bootloader
