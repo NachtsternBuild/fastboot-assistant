@@ -51,7 +51,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
     const char *message = strcmp(language, "de") == 0 ? "Die Installation der benötigten \nAbhängigkeiten erfordert Root-Rechte." : "The installation of the required \ndependencies requires root rights.";
     show_message(message);
 
-    // create window
+    // Fenster erstellen
     backup_window = gtk_window_new();
     const char * backup_noroot_window = strcmp(language, "de") == 0 ? "Abhängigkeiten installieren" : "Install dependencies";
     gtk_window_set_title(GTK_WINDOW(backup_window), backup_noroot_window);
@@ -89,10 +89,12 @@ static void open_backup(GtkWidget *widget, gpointer data)
     // for linux
     //open_terminal_by_desktop("bash ~/Downloads/ROM-Install/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh");
     // for Windows
+	
 	char wsl_dir[MAX_BUFFER_SIZE];
     get_wsl_directory(wsl_dir, sizeof(wsl_dir));
     snprintf(command, sizeof(command), "%s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh", wsl_dir);
     open_terminal_by_desktop(command);
+    
 }
 
 // Function to set up button labels based on the language
@@ -102,14 +104,14 @@ void set_button_labels_backup_noroot(char labels[][30])
     {
         strcpy(labels[0], "Prepare");
         strcpy(labels[1], "Download");
-        strcpy(labels[1], "Start");
+        strcpy(labels[2], "Start");
     }
     
     else
     {
     	strcpy(labels[0], "Vorbereiten");
     	strcpy(labels[1], "Download");
-    	strcpy(labels[1], "Starten");
+    	strcpy(labels[2], "Starten");
     }
 } 
 
