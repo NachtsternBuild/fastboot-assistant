@@ -296,7 +296,7 @@ build_program_linux() {
     prompt_user "************************"
     echo -e "$GREEN  Flatpak (f) $NC"
     prompt_user "************************"
-    echo -e "$RED    Beenden (b) $NC"
+    echo -e "$RED    Beenden (b/n) $NC"
     prompt_user "************************"
     read -n1 -s answer
     case "$answer" in 
@@ -312,7 +312,7 @@ build_program_linux() {
             build_flatpak
             echo "Build des Flatpaks abgeschlossen."
             ;;
-        b|B)
+        b|B|n|N)
             echo "Build-Skript beendet."
             break
             ;;
