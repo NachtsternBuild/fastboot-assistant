@@ -49,7 +49,7 @@ void show_file_chooser(GtkWidget *widget, gpointer data)
         parent_window = NULL;
     }
 
-    // Sprache anwenden
+    // get language
     apply_language(); 
 
     // Dialog for file selection
