@@ -4,7 +4,5 @@
   - build-fastboot-assistant.sh
   - sweet_unix.png
   - fastboot-assistant.desktop
-  - controll
-  - INSTALL
-  - version.txt
+    - version.txt
   
