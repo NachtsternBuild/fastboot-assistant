@@ -31,8 +31,9 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
 ### Rostiges Red Hat v.0.6.x
+- **[fastboot-assistant v.0.6.2.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2.2)** → Linux (Ubuntu/Debian) / Windows via WSL
 - **[fastboot-assistant v.0.6.2.1](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2.1)** → Linux (Ubuntu/Debian) / Windows via WSL
-- **[fastboot-assistant v.0.6.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2)** → Linux (Ubuntu/Debian) / Windows via WSL
+- **[fastboot-assistant v.0.6.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2)** → Linux (Ubuntu/Debian/Fedora/RHEL) / Windows via WSL
 - *fastboot-assistant v.0.6.1.dev* → build this from source / Linux (Ubuntu)
 
 **→ It is not recommended to use the RPM.**       
@@ -42,6 +43,7 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 
 ### Important Notes
 - **With *v.0.6.2.1* and *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
+- **It is recommended to run the Fastboot-Assistant natively under Linux, because the WSL does not provide the same amount of tools as the real Ubuntu. *This version should only be used if there is no other option.***
 
 ## Notes
 - Use at your own risk.
@@ -49,7 +51,7 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - Not every device supports all of the functions
 - Not all operating system variants have the same range of functions.
 - The programme is currently in the **test phase**. *Errors may occur in the programme.*
-- 
+  
 ### Some brownies
 - *A big thank you to:*
   - **@mrrfv → [Open Android Backup](https://github.com/mrrfv/open-android-backup)**
@@ -60,18 +62,26 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 The following tools are required to run the programme.
 - *Android Debug Bridge (adb) and fastboot* 
 - *Fastboot*
-- *xz-utils*
+- *XZ-utils*
 - *unzip*
 - *wget*
 - *curl*
 - *pkexec*
 - *heimdall*
+- *GTK4*
+- *coreutils*
+- *libc6*
+- *xdg-desktop-portal*
+- *xdg-desktop-portal-gtk*
+- *xdg-utils*
 
 These are installed automatically with the Debian package.
 *Root rights are required for installation.*
 - **Install the Debian package in the terminal with:** 
 ```sh
-sudo apt-get install /PATH/to/fastboot-assistant.deb 
+sudo apt-get install /PATH/to/fastboot-assistant.deb
+# oder
+sudo dpkg -i /PATH/to/fastboot-assistant.deb 
 ```
 ***or via a graphical user interface.***
 
