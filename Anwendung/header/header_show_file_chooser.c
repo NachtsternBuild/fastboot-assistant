@@ -25,7 +25,7 @@
 #include "function_header.h"
 #include "language_check.h"
 
-// Callback-Funktion für die Verarbeitung der Datei
+// Callback function for processing the file
 static void file_dialog_response_callback(GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
     g_autoptr(GFile) file = gtk_file_dialog_open_finish(GTK_FILE_DIALOG(source_object), res, NULL);
@@ -40,7 +40,7 @@ static void file_dialog_response_callback(GObject *source_object, GAsyncResult *
     }
 }
 
-// Funktion zum Anzeigen des Datei-Auswahl-Dialogs
+// Function for the file selection dialog
 void show_file_chooser(GtkWidget *widget, gpointer data) 
 {
     GtkWindow *parent_window = GTK_WINDOW(gtk_widget_get_root(widget));
@@ -52,7 +52,7 @@ void show_file_chooser(GtkWidget *widget, gpointer data)
     // Sprache anwenden
     apply_language(); 
 
-    // Dialog für Datei-Auswahl
+    // Dialog for file selection
     GtkFileDialog *dialog = gtk_file_dialog_new();
 
     gtk_file_dialog_open(dialog, parent_window, NULL, (GAsyncReadyCallback)file_dialog_response_callback, data);
