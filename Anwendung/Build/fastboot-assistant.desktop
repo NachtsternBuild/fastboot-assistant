@@ -7,7 +7,6 @@ Exec=/usr/bin/fastboot-assistant/fastboot-assistant
 Icon=/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
 MimeType=image/svg+xml;
 Terminal=false
-Type=Application
 StartupNotify=true
 Categories=System;Utility
 X-Desktop-File-Install-Version=0.26
