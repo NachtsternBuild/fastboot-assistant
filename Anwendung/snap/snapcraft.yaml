@@ -1,5 +1,5 @@
 name: fastboot-assistant
-base: core22
+base: core24
 version: '0.7.1'
 summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
 description: |
@@ -10,9 +10,13 @@ description: |
 grade: stable
 confinement: strict
 
-architectures:
-   - amd64
+# architectures:
+#   - amd64
 
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
 apps:
   fastboot-assistant:
     command: usr/bin/fastboot-assistant
@@ -21,13 +25,29 @@ apps:
       - removable-media
       - network
       - hardware-observe
-      - usb-access
       - desktop
       - desktop-legacy
       - x11
       - wayland
-      - gtk-theme
+      - raw-usb
+      - mount-observe
+      - opengl
+      - adb-support
     desktop: usr/share/applications/fastboot-assistant.desktop
+
+plugs:
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  gtk-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
 
 parts:
   fastboot-assistant:
@@ -35,8 +55,8 @@ parts:
     plugin: dump
     organize:
       meta/gui/io.github.nachtsternbuild.Fastboot-Assistant.appdata.xml: meta/gui/io.github.nachtsternbuild.Fastboot-Assistant.appdata.xml
-      fastboot-assistant: usr/bin/fastboot-assistant
       fastboot-assistant.desktop: usr/share/applications/fastboot-assistant.desktop
+      fastboot-assistant: usr/bin/fastboot-assistant
       sweet_unix.png: usr/share/icons/hicolor/256x256/apps/sweet_unix.png
     stage-packages:
       - adb
@@ -47,17 +67,26 @@ parts:
       - curl
       - pkexec
       - heimdall-flash
-      - heimdall-flash-frontend
       - coreutils
       - libc6
       - libgtk-4-1
+      - libgtk-3-0
+      - libglib2.0-0
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-utils
+      - libgl1-mesa-dri
+      - mesa-vulkan-drivers
+      - libvulkan1
 
 slots:
   fastboot-assistant:
     interface: dbus
     bus: session
     name: io.github.nachtsternbuild.fastboot-assistant
+
+environment:
+  LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+  LIBGL_DEBUG: verbose
+  MESA_LOADER_DRIVER_OVERRIDE: swrast
 
