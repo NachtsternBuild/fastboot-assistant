@@ -32,15 +32,12 @@ void write_log()
     char log_dir[4096];
     char log_file[4096];
     
-    const char *home = getenv("HOME");
-    const char* user = getenv("USER");
-    // linux
-    snprintf(log_dir, sizeof(log_dir), "%s/.config/fastboot-assistant", home);
-    // wsl
-    //snprintf(log_dir, sizeof(log_dir), "/mnt/c/Users/%s/.config/fastboot-assistant", user);
+    // get config dir
+    get_config_dir(log_dir, sizeof(log_dir));
     
     // log file with path
-    snprintf(log_file, sizeof(log_file), "%s/log.txt", log_dir);
+    snprintf(log_file, sizeof(log_file), "%s/log/log.txt", log_dir);
+    LOG_INFO("Log-file: %s", log_file);
 
     // create log_dir
     // only if it not exsists
@@ -64,21 +61,21 @@ void write_log()
     // close the log file
     close(log_fd);
 }
-// example
 /*
+* Usage:
 int main(int argc, char *argv[]) 
 {
     // redirect the log
     write_log();
 
     // example output
-    printf("Das ist eine printf-Ausgabe.\n");
+    printf("5x Bananen,\n");
 
     // with g_print
-    g_print("Das ist eine g_print-Ausgabe.\n");
+    g_print("500g Kirsche,\n");
 
     // with system()
-    system("echo 'Das ist eine system-Ausgabe.'");
+    system("echo 'Und bitte 4 Melonen.'");
 
     return 0;
 }
