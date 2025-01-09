@@ -2,7 +2,7 @@
 ## Description
 Program to facilitate the installation of custom ROMs and GSIs on Android devices. Based on GTK and Shell.
 
-![sweet_unix](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/sweet_unix.png)
+![sweet_unix](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/sweet_unix.png)
 
 ## Functions
 - Check the ADB/Fastboot connection
@@ -73,11 +73,12 @@ The following tools are required to run the programme.
 - *Fastboot*
 - *XZ-utils*
 - *unzip*
+- *zip*
 - *wget*
 - *curl*
 - *pkexec*
 - *heimdall*
-- *GTK4*
+- *> GTK 4.10*
 - *coreutils*
 - *libc6*
 - *xdg-desktop-portal*
