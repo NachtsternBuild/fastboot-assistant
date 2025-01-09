@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 // function to create dirs
@@ -91,13 +92,9 @@ void on_folder_selected(GtkFileChooser *chooser, gpointer user_data)
     create_directory(full_path);
 
     // get config file path
-    const char *home = getenv("HOME");
-    const char* user = getenv("USER");
     char config_dir[2048];
-    // for linux
-    snprintf(config_dir, sizeof(config_dir), "%s/.config/fastboot-assistant", home);
-    // for wsl
-    //snprintf(config_dir, sizeof(config_dir), "/mnt/c/Users/%s/.config/fastboot-assistant", user);
+    get_config_dir(config_dir, sizeof(config_dir));
+    // mkdir
     create_directory(config_dir);
 
     char config_file[2048];
@@ -117,14 +114,18 @@ void program_dir(int argc, char *argv[])
     // get language and theme
     apply_theme();
     apply_language();
-
+	
+	const char *folder_text = strcmp(language, "de") == 0 ? "Ordner auswählen" : "Select folder";
+	const char *cancel_text = strcmp(language, "de") == 0 ? "_Abbrechen" : "_Cancel";
+    const char *select_text = strcmp(language, "de") == 0 ? "_Auswählen" : "_Select";
+	
     // create dialog for dirs
     GtkWidget *dialog = gtk_file_chooser_dialog_new(
-        "Ordner auswählen",
+        folder_text,
         NULL,
         GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-        "_Abbrechen", GTK_RESPONSE_CANCEL,
-        "_Auswählen", GTK_RESPONSE_ACCEPT,
+        cancel_text, GTK_RESPONSE_CANCEL,
+        select_text, GTK_RESPONSE_ACCEPT,
         NULL
     );
 	
@@ -137,26 +138,20 @@ void program_dir(int argc, char *argv[])
 	// destroy dialog
     gtk_widget_destroy(dialog);
 
-    // get home
-    const char *home_dir = getenv("HOME");
-    if (!home_dir) 
-    {
-        LOG_ERROR("HOME environment variable not found.");
-        return EXIT_FAILURE;
-    }
-	
 	// example way to use and get the path
 	// use this in a modified way in the program
-    char config_file[2048];
-    snprintf(config_file, sizeof(config_file), "%s/.config/fastboot-assistant/path_config.txt", home_dir);
-    char *loaded_path = load_path_from_file(config_file);
+    const char config_file[2048];
+    get_config_file_path(config_file, sizeof(config_file));
+    // load the path
+    const char *loaded_path = load_path_from_file(config_file);
 
     if (loaded_path) 
     {
         LOG_INFO("Loaded path: %s", loaded_path);
         g_free(loaded_path); // free the info (because g_file_get_contents was used)
     }
-
-    return EXIT_SUCCESS;
+	
+	// Let's see, if I'll use this as int or void
+    // return EXIT_SUCCESS;
 }
 
