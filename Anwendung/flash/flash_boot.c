@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_boot				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,25 +27,26 @@
 // function to flash boot.img on only-a-devices
 void boot_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "boot", NULL, "boot.img");
+    flash_image(widget, window, "boot", NULL, "boot.img", NULL);
 }
 
 // function to flash boot.img (a/b-devices)
 void boot_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "boot_a", "boot_b", "boot.img");
+    flash_image(widget, window, "boot_a", "boot_b", "boot.img", NULL);
 }
 
 // function to flash init_boot.img (only-a-devices)
 void init_boot_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "init_boot", NULL, "init_boot.img");
+    flash_image(widget, window, "init_boot", NULL, "init_boot.img", NULL);
 }
 
 // function to flash init_boot.img (a/b-devices)
 void init_boot_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "init_boot_a", "init_boot_b", "init_boot.img");
+    flash_image(widget, window, "init_boot_a", "init_boot_b", "init_boot.img", NULL);
+    
 }
 
 // function to flash boot.img (heimdall)
