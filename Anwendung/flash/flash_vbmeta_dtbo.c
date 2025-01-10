@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_vbmeta_dtbo		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,45 +27,25 @@
 // function to flash vbmeta.img on only-a-devices
 void vbmeta_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    g_print("Log: vbmeta_on_a\n");
-    char image_path[3072];
-    set_main_dir_with_wsl(image_path, sizeof(image_path), "vbmeta.img");
-
-    char function_command[3072];
-    char *device_command = fastboot_command();
-    snprintf(function_command, sizeof(function_command), "%s flash --disable-verity --disable-verification vbmeta %s && exit", device_command, image_path);
-    g_print("Log: Run: %s", function_command);
-    open_terminal_by_desktop(function_command);
-    free(device_command);
-    g_print("Log: end vbmeta_on_a\n");
+    flash_image(widget, window, "vbmeta_a", NULL, "vbmeta.img", "--disable-verity --disable-verification");
 }
 
 // function to flash vbmeta.img (a/b-devices)
 void vbmeta_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    g_print("Log: vbmeta_on_ab\n");
-    char image_path[3072];
-    set_main_dir_with_wsl(image_path, sizeof(image_path), "vbmeta.img");
-
-    char function_command[3072];
-    char *device_command = fastboot_command();
-    snprintf(function_command, sizeof(function_command), "%s flash --disable-verity --disable-verification vbmeta_a %s && fastboot flash --disable-verity --disable-verification vbmeta_b %s && exit", device_command, image_path, image_path);
-    g_print("Log: Run: %s", function_command);
-    open_terminal_by_desktop(function_command);
-    free(device_command);
-    g_print("Log: end vbmeta_on_ab\n");
+    flash_image(widget, window, "vbmeta_a", "vbmeta_b", "vbmeta.img", "--disable-verity --disable-verification");
 }
 
 // function to flash dtbo.img (only-a-devices)
 void dtbo_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "dtbo", NULL, "dtbo.img");
+    flash_image(widget, window, "dtbo", NULL, "dtbo.img", NULL);
 }
 
 // function to flash dtbo.img (a/b-devices)
 void dtbo_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "dtbo_a", "dtbo_b", "dtbo.img");
+    flash_image(widget, window, "dtbo_a", "dtbo_b", "dtbo.img", NULL);
 }
 
 // function to flash vbmeta.img (heimdall)
@@ -107,7 +87,7 @@ void set_button_labels_flash_vbmeta_dtbo(char labels[][30])
 /* main function - flash_vbmeta_dtbo */
 void flash_vbmeta_dtbo(int argc, char *argv[])
 {
-	g_print("Log: flash_vbmeta_dtbo\n");
+	LOG_INFO("flash_vbmeta_dtbo");
 	GtkWidget *window, *grid, *button;
     char button_labels[6][30];
     
@@ -174,5 +154,5 @@ void flash_vbmeta_dtbo(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_vbmeta_dtbo\n");
+    LOG_INFO("end flash_vbmeta_dtbo");
 }
