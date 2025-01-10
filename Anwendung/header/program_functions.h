@@ -21,6 +21,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <glib.h>
+#include <stdarg.h>
+#include <time.h>
 #include <unistd.h>
 #include <string.h>
 #include <gtk/gtk.h>
@@ -28,8 +30,35 @@
 #ifndef PROGRAM_FUNCTIONS_H
 #define PROGRAM_FUNCTIONS_H
 
+/* some makros */
+
 #define WINDOW_WIDTH 750
 #define WINDOW_HEIGHT 600
+
+/* 
+* makros for logging *
+* log output: 
+* [yy-mm-dd HH:MM:SS] [INFO]: This are a message for the program. *
+* [yy-mm-dd HH:MM:SS] [ERROR]: This shows a error from the program. *
+*/
+// only for infos
+#define LOG_INFO(msg, ...) { \
+    time_t now = time(NULL); \
+    struct tm *tm_info = localtime(&now); \
+    char time_buf[20]; \
+    strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S", tm_info); \
+    g_print("[%s] [INFO]: " msg "\n", time_buf, ##__VA_ARGS__); \
+}
+
+// for errors
+#define LOG_ERROR(msg, ...) { \
+    time_t now = time(NULL); \
+    struct tm *tm_info = localtime(&now); \
+    char time_buf[20]; \
+    strftime(time_buf, sizeof(time_buf), "%Y-%m-%d %H:%M:%S", tm_info); \
+    g_print("[%s] [ERROR]: " msg "\n", time_buf, ##__VA_ARGS__); \
+}
+
 
 /* global variables that are used in each file */
 // for the css-provider
@@ -61,6 +90,18 @@ void close_window_mainloop(GtkWidget *widget, gpointer data);
 // execute command
 char *execute_command();
 
+// function that write the log to a file
+void write_log() 
+
+// function to create dirs, use g_mkdir
+void create_directory(const char *path) 
+
+// functions for standard path of the program
+void save_path_to_file(const char *path, const char *file_path);
+char *load_path_from_file(const char *file_path);
+void on_folder_selected(GtkFileChooser *chooser, gpointer user_data);
+void program_dir();
+
 // messages
 void show_message();
 void show_message_with_title();
@@ -88,16 +129,20 @@ const char* get_home_directory_flash();
 void open_url();
 
 // for work with dirs or WSL
-void set_main_dir();
-void get_wsl_directory(char* wsl_dir, size_t size);
-void set_main_dir_with_wsl(char *path, size_t size, const char *filename);
+// there are new function, that replace some of these functions
+void get_config_dir(char *config_folder, size_t size); // new
+void get_config_file_path(char *config_file, size_t size); // new
+/*
+void set_main_dir(); // this
+void get_wsl_directory(char* wsl_dir, size_t size); // this
+void set_main_dir_with_wsl(char *path, size_t size, const char *filename); // this
+*/
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 int directory_exists(const char *path);
 void delete_files_in_dir();
 
 // delete config file
 void delete_config_file();
-
 
 // flash functions
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
