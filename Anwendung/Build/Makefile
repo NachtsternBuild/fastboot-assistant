@@ -53,6 +53,10 @@ SRCS = \
 	header_on_window_destroy.c \
 	header_close_window.c \
 	header_delete_config_file.c \
+	header_get_config_dir.c \
+	header_get_config_file_path.c \
+	header_program_dir.c \
+	header_write_log.c \
 	get_devices.c \
 	wsl_config.c \
 	reboot_fastboot.c \
