@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_preloader_super	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,49 +27,49 @@
 // function to flash preloader.bin on only-a-devices
 void preloader_bin_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "preloader", NULL, "preloader.bin");
+    flash_image(widget, window, "preloader", NULL, "preloader.bin", NULL);
 }
 
 // function to flash preloader.bin (a/b-devices)
 void preloader_bin_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "preloader_a", "preloader_b", "preloader.bin");
+    flash_image(widget, window, "preloader_a", "preloader_b", "preloader.bin", NULL);
 }
 
 // function to flash preloader.img (only-a-devices)
 void preloader_img_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "preloader", NULL, "preloader.img");
+    flash_image(widget, window, "preloader", NULL, "preloader.img", NULL);
 }
 
 // function to flash preloader.img (a/b-devices)
 void preloader_img_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "preloader_a", "preloader_b", "preloader.img");
+    flash_image(widget, window, "preloader_a", "preloader_b", "preloader.img", NULL);
 }
 
 // function to flash super.img
 void super_img(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "super", NULL, "super.img");
+    flash_image(widget, window, "super", NULL, "super.img", NULL);
 }
 
 // function to flash preloader.bin (heimdall)
 void preloader_bin_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "PRELOADER", "preloader.bin");
+    flash_heimdall(widget, window, "PRELOADER", "preloader.bin", NULL);
 }
 
 // function to flash preloader.img (heimdall)
 void preloader_img_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "PRELOADER", "preloader.img");
+    flash_heimdall(widget, window, "PRELOADER", "preloader.img", NULL);
 }
 
 // function to flash super.img (heimdall)
 void super_img_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "SUPER", "super.img");
+    flash_heimdall(widget, window, "SUPER", "super.img", NULL);
 }
 
 // Function to set up button labels based on the language
@@ -103,7 +103,7 @@ void set_button_labels_flash_preloader_super(char labels[][30])
 /* main function - flash_preloader_super */
 void flash_preloader_super(int argc, char *argv[])
 {
-	g_print("Log: flash_preloader_super\n");
+	LOG_INFO("flash_preloader_super");
 	GtkWidget *window, *grid, *button;
     char button_labels[8][30];
     
@@ -175,5 +175,5 @@ void flash_preloader_super(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_preloader_super\n");
+    LOG_INFO("end flash_preloader_super");
 }
