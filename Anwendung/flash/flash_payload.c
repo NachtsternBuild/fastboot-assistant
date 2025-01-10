@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              flash_payload				 *
@@ -27,7 +27,7 @@
 
 void flash_payload(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: flash_payload\n");
+    LOG_INFO("flash_payload");
     apply_language();
     // flash payload.zip via adb sideload
     // first dialog
@@ -44,12 +44,12 @@ void flash_payload(GtkWidget *widget, gpointer data)
     char function_command[3072];
     char *device_command = adb_command();
     snprintf(function_command, 3072, "%s sideload %s", device_command, image_path);
-    g_print("Log: Run: %s\n", function_command);
+    LOG_INFO("Run: %s", function_command);
     command_with_spinner(function_command);
     free(device_command);
 
     // Show a message that the flash is completed
     const char *message2 =  strcmp(language, "de") == 0 ? "Sideload beendet!" : "Sideload finished!";
     show_message(message2);
-    g_print("Log: end flash_payload\n");
+    LOG_INFO("end flash_payload");
 }
