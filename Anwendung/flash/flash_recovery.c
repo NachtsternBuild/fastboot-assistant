@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_recovery			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,13 +27,13 @@
 // function to flash recovery.img on only-a-devices
 void recovery_img(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "recovery", NULL, "recovery.img");
+    flash_image(widget, window, "recovery", NULL, "recovery.img", NULL);
 }
 
 // function to flash recovery.img (heimdall)
 void recovery_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "RECOVERY", "recovery.img");
+    flash_heimdall(widget, window, "RECOVERY", "recovery.img", NULL);
 }
 
 // Function to set up button labels based on the language
@@ -55,7 +55,7 @@ void set_button_labels_flash_recovery(char labels[][30])
 /* main function - flash_recovery */
 void flash_recovery(int argc, char *argv[])
 {
-    g_print("Log: flash_recovery\n");
+    LOG_INFO("flash_recovery");
     GtkWidget *window, *grid, *button;
     char button_labels[2][30];
     
@@ -109,5 +109,5 @@ void flash_recovery(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_recovery\n");
+    LOG_INFO("end flash_recovery");
 }
