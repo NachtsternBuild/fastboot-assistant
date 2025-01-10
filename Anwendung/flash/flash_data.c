@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_data				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -28,7 +28,7 @@
 // function to flash metadata.img
 void metadata_img(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "metadata", NULL, "metadata.img");
+    flash_image(widget, window, "metadata", NULL, "metadata.img", NULL);
 }
 
 // function to flash metadata.img (heimdall)
@@ -40,7 +40,7 @@ void metadata_img_heimdall(GtkWidget *widget, GtkWindow *window)
 // function to flash userdata.img
 void userdata_img(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "userdata", NULL, "userdata.img");
+    flash_image(widget, window, "userdata", NULL, "userdata.img", NULL);
 }
 
 // function to flash userdata.img (heimdall)
