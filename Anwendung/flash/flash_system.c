@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_system			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -31,7 +31,7 @@
 // start by system_to_inactive
 void flash_system_inactive(const char *slot) 
 {
-    g_print("Log: flash_system_inactive");
+    LOG_INFO("flash_system_inactive");
     char function_command[BUFFER_SIZE];
     char image_path[3072];
     set_main_dir_with_wsl(image_path, sizeof(image_path), "system.img");
@@ -40,7 +40,7 @@ void flash_system_inactive(const char *slot)
 	char function_command_erase[3072];
     char *device_command_erase = fastboot_command();
     snprintf(function_command_erase, sizeof(function_command_erase), "%s erase system", device_command_erase);
-    g_print("Log: Run: %s", function_command_erase);
+    LOG_INFO("Run: %s", function_command_erase);
     system(function_command_erase);
     free(device_command_erase);
     
@@ -48,11 +48,11 @@ void flash_system_inactive(const char *slot)
     char *device_command = fastboot_command();
     snprintf(function_command, sizeof(function_command), "%s flash system_%s %s && %s set_active %s", device_command, slot, image_path, device_command, slot);
 	
-	g_print("Log: Run: %s\n", function_command);
+	LOG_INFO("Run: %s", function_command);
     // run command in the terminal
     command_with_spinner(function_command);
     free(device_command);
-    g_print("Log: end flash_system_inactive");
+    LOG_INFO("end flash_system_inactive");
 }
 
 
@@ -60,38 +60,38 @@ void flash_system_inactive(const char *slot)
 // function to flash system.img
 void system_to_activ(GtkWidget *widget, GtkWindow *window)
 {
-    g_print("Log: system_to_activ");
+    LOG_INFO("system_to_activ");
     char function_command[3072];
     char *device_command = fastboot_command();
     snprintf(function_command, sizeof(function_command), "%s erase system", device_command);
-    g_print("Log: Run: %s", function_command);
+    LOG_INFO("Run: %s", function_command);
     system(function_command);
     free(device_command);
     
-    flash_image(widget, window, "system", NULL, "system.img");
-    g_print("Log: end system_to_activ");
+    flash_image(widget, window, "system", NULL, "system.img", NULL);
+    LOG_INFO("end system_to_activ");
 }
 
 // flash system.img (heimdall)
 void system_to_activ_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    g_print("Log: system_to_activ_heimdall");
+    LOG_INFO("system_to_activ_heimdall");
     flash_heimdall(widget, window, "SYSTEM", "system.img");
-    g_print("Log: end system_to_activ_heimdall");
+    LOG_INFO("end system_to_activ_heimdall");
 }
 
 
 // function to flash system.img to inactive 
 void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
 {
-	g_print("Log: system_to_inactiv");
+	LOG_INFO("system_to_inactiv");
 	char active_slot[BUFFER_SIZE] = {0};
     char inactive_slot[BUFFER_SIZE] = {0};
 
     
     // get active slot
     check_active_slot(active_slot, sizeof(active_slot));
-    g_print("Log: active slot: %s\n", active_slot);
+    LOG_INFO("active slot: %s", active_slot);
 
     // get inactive slot
     if (strcmp(active_slot, "a") == 0) 
@@ -106,19 +106,19 @@ void system_to_inactiv(GtkWidget *widget, GtkWindow *window)
     
     else 
     {
-        fprintf(stderr, "Unknown active slot: %s\n", active_slot);
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Unknown active slot: %s", active_slot);
+        exit(1);
     }
 	char function_command[3072];
     char *device_command = fastboot_command();
     snprintf(function_command, sizeof(function_command), "%s erase system_%s", device_command, inactive_slot);
-    g_print("Log: Run: %s", function_command);
+    LOG_INFO("Run: %s", function_command);
     system(function_command);
     free(device_command);
     
     // flash system.img to inactive slot
     flash_system_inactive(inactive_slot);
-    g_print("Log: system_to_inactiv");
+    LOG_INFO("system_to_inactiv");
 }
 
 
@@ -143,7 +143,7 @@ void set_button_labels_flash_system(char labels[][30])
 /* main function - flash_system */
 void flash_system(int argc, char *argv[])
 {
-	g_print("Log: flash_system");
+	LOG_INFO("flash_system");
 	GtkWidget *window, *grid, *button;
     char button_labels[3][30];
     
@@ -201,5 +201,5 @@ void flash_system(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_system\n");
+    LOG_INFO("end flash_system");
 }
