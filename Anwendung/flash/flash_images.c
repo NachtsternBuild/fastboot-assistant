@@ -122,7 +122,7 @@ void flash_dir(const char *directory)
     if (dir == NULL) 
     {
         LOG_ERROR("irectory cannot be opened.");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
     
     // read directory
@@ -143,7 +143,7 @@ void flash_dir(const char *directory)
             if (flash_partition(partition, image_path, ab_device) != 0) 
             {
                 LOG_ERROR("Error when flashing the partition %s", partition);
-                exit(EXIT_FAILURE);
+                exit(1);
             }
         }
     }
