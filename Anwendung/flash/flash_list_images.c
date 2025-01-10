@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_list_images  	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -28,18 +28,18 @@
 
 void flash_partition_list(const char *partition, const char *img_file) 
 {
-    g_print("Log: flash_partition\n");
+    LOG_INFO("flash_partition");
     char command[512];
     char *device_command = fastboot_command();
     snprintf(command, sizeof(command), "%s flash %s %s", device_command, partition, img_file);
-    g_print("Executing: %s\n", command);
+    LOG_INFO("Executing: %s", command);
     int ret = system(command);
     if (ret != 0)
     {
-        g_print("Log: Error: The command '%s' was not executed successfully.\n", command);
+        LOG_ERROR("The command '%s' was not executed successfully.", command);
     }
     free(device_command);
-    g_print("Log: end flash_partition\n");
+    LOG_INFO("end flash_partition");
 }
 
 void process_file(const char *filepath) 
@@ -49,34 +49,41 @@ void process_file(const char *filepath)
         flash_partition_list("gz_a", filepath);
         flash_partition_list("gz_b", filepath);
     } 
+    
     else if (strstr(filepath, "lk.img")) 
     {
         flash_partition_list("lk_a", filepath);
         flash_partition_list("lk_b", filepath);
     } 
+    
     else if (strstr(filepath, "logo.img")) 
     {
         flash_partition_list("logo", filepath);
     } 
+    
     else if (strstr(filepath, "md1img.img")) 
     {
         flash_partition_list("md1img_a", filepath);
         flash_partition_list("md1img_b", filepath);
     } 
+    
     else if (strstr(filepath, "metadata.img")) 
     {
         flash_partition_list("metadata", filepath);
     }
+    
     else if (strstr(filepath, "protect.img")) 
     {
         flash_partition_list("protect_a", filepath);
         flash_partition_list("protect_b", filepath);
     } 
+    
     else if (strstr(filepath, "scp.img")) 
     {
         flash_partition_list("scp_a", filepath);
         flash_partition_list("scp_b", filepath);
     } 
+    
     else if (strstr(filepath, "spmfw.img")) 
     {
         flash_partition_list("spmfw_a", filepath);
@@ -87,14 +94,16 @@ void process_file(const char *filepath)
         flash_partition_list("sspm_a", filepath);
         flash_partition_list("sspm_b", filepath);
     } 
+    
     else if (strstr(filepath, "tee.img")) 
     {
         flash_partition_list("tee_a", filepath);
         flash_partition_list("tee_b", filepath);
     } 
+    
     else 
     {
-        g_print("Log: Unknown file: %s, will be skipped.\n", filepath);
+        LOG_INFO("Unknown file: %s, will be skipped.", filepath);
     }
 }
 
@@ -118,40 +127,31 @@ void flash_images_in_directory(const char *directory)
     } 
     else 
     {
-        g_print("Log: Error: Could not open directory '%s'.\n", directory);
+        LOG_ERROR("Could not open directory '%s'.", directory);
     }
 }
 
 void flash_list_images() 
 {
-    g_print("Log: flash_other\n");
-    char *homeDir = getenv("HOME");
-	if (homeDir == NULL) 
-	{
-    	fprintf(stderr, "Log: Error: Could not find the home directory.\n");
-    	exit(1);  // close the program if there are errors
-	}
-
-	// WSL Logik
-	const char *user = getenv("USER");
-	if (user == NULL) 
-	{	
-    	g_print("Log: Error: Could not determine the user name.\n");
-    	exit(1);  // close the program if there are errors
-	}
+    LOG_INFO("flash_other");
 	
-    char wsl_setup_base[2048];
     char other_dir[2048];
     char directory[2048];
-	snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
 
-	// for linux
-	snprintf(other_dir, sizeof(other_dir), "%s", homeDir);
-	// for wsl
 	// snprintf(other_dir, sizeof(other_dir), "%s", wsl_setup_base);
-    snprintf(directory, sizeof(directory), "%s/Downloads/ROM-Install/Images", other_dir);
+	const char config_file[2048];
+    get_config_file_path(config_file, sizeof(config_file));
+    // load the path
+    const char *other_dir = load_path_from_file(config_file);
+
+    if (other_dir) 
+    {
+        LOG_INFO("Loaded path: %s", other_dir);
+    }
+    snprintf(directory, sizeof(directory), "%s/Images", other_dir);
     flash_images_in_directory(directory);
     
+    g_free(other_dir); // free the info (because g_file_get_contents was used)
     free(directory);
-    g_print("Log: end flash_other\n");
+    LOG_INFO("end flash_other");
 }
