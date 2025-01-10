@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_GUI				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -127,7 +127,7 @@ void set_button_labels_flash_GUI(char labels[][30])
 /* main function - flash_GUI*/
 void flash_GUI(int argc, char *argv[]) 
 {
-    g_print("Log: flash_GUI\n");
+    LOG_INFO("flash_GUI");
     GtkWidget *window, *grid, *button;
     char button_labels[9][30];
     
@@ -204,5 +204,5 @@ void flash_GUI(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_GUI\n");
+    LOG_INFO("end flash_GUI");
 }
