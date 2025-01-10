@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_vendor			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,25 +27,25 @@
 // function to flash vendor.img on only-a-devices
 void vendor_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "vendor", NULL, "vendor.img");
+    flash_image(widget, window, "vendor", NULL, "vendor.img", NULL);
 }
 
 // function to flash vendor.img (a/b-devices)
 void vendor_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "vendor_a", "vendor_b", "vendor.img");
+    flash_image(widget, window, "vendor_a", "vendor_b", "vendor.img", NULL);
 }
 
 // function to flash vendor_boot.img (only-a-devices)
 void vendor_boot_on_a(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "vendor_boot", NULL, "vendor_boot.img");
+    flash_image(widget, window, "vendor_boot", NULL, "vendor_boot.img", NULL);
 }
 
 // function to flash vendor_boot.img (a/b-devices)
 void vendor_boot_on_ab(GtkWidget *widget, GtkWindow *window)
 {
-    flash_image(widget, window, "vendor_boot_a", "vendor_boot_b", "vendor_boot.img");
+    flash_image(widget, window, "vendor_boot_a", "vendor_boot_b", "vendor_boot.img", NULL);
 }
 
 // function to flash boot.img (heimdall)
@@ -87,7 +87,7 @@ void set_button_labels_flash_vendor(char labels[][30])
 // main function
 void flash_vendor(int argc, char *argv[])
 {
-	g_print("Log: flash_vendor\n");
+	LOG_INFO("flash_vendor");
 	GtkWidget *window, *grid, *button;
     char button_labels[6][30];
     
@@ -154,5 +154,5 @@ void flash_vendor(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_vendor\n");
+    LOG_INFO("end flash_vendor");
 }
