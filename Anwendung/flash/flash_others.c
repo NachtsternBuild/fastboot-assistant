@@ -10,7 +10,7 @@
  *	zu erleichtern - flash_others			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -30,7 +30,7 @@ extern void flash_images();
 // start flash_list_images with spinner
 static void start_flash_list(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: start_flash_list\n");
+    LOG_INFO("start_flash_list");
 	const char *message = strcmp(language, "de") == 0 ? "Der Prozess kann eine Weile dauern. \nIgnorieren sie alle beenden erzwingen Meldungen." : "“The process may take a while. \nIgnore them all end forcing messages.";
     show_message(message);
     
@@ -43,13 +43,13 @@ static void start_flash_list(GtkWidget *widget, gpointer data)
     
     stop_loading_spinner(spinner_flash);  // Stop the spinner when the process finishesflash_other();
 	
-	g_print("Log: end start_flash_list\n");
+	LOG_INFO("end start_flash_list");
 }
 
 // start flash_images with spinner
 static void start_flash_images_dir(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: start_flash_images_dir\n");
+    LOG_INFO("start_flash_images_dir");
 	const char *message = strcmp(language, "de") == 0 ? "Der Prozess kann eine Weile dauern. \nIgnorieren sie alle beenden erzwingen Meldungen." : "“The process may take a while. \nIgnore them all end forcing messages.";
     show_message(message);
     
@@ -62,7 +62,7 @@ static void start_flash_images_dir(GtkWidget *widget, gpointer data)
     
     stop_loading_spinner(spinner_flash);  // Stop the spinner when the process finishesflash_other();
 	
-	g_print("Log: end start_flash_images_dir\n");
+	LOG_INFO("end start_flash_images_dir");
 }
 
 // Function to set up button labels based on the language
@@ -84,7 +84,7 @@ void set_button_labels_flash_others(char labels[][30])
 /* start main programm */
 void flash_others(int argc, char *argv[])
 {
-    g_print("Log: flash_others\n");
+    LOG_INFO("flash_others");
     GtkWidget *window, *grid, *button;
     char button_labels[2][30];
     
@@ -140,5 +140,5 @@ void flash_others(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_others\n");
+    LOG_INFO("end flash_others");
 }
