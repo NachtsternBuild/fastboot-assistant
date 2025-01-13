@@ -10,7 +10,7 @@
  *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *                                           *
  *       Headerpart - command_with_spinner   *
@@ -35,7 +35,7 @@ void *run_command_spinner(void *command)
     char *full_command = (char *)command;
 
     // run command
-    g_print("Log: Run: %s\n", full_command);
+    LOG_INFO("Run: %s", full_command);
     system(full_command);
 
     // stop the spinner
