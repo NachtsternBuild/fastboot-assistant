@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - set_main_dir		 *
@@ -34,7 +34,7 @@ void set_main_dir(char *buffer, size_t buffer_size, const char *filename)
     
     else 
     {
-        g_print("Log: Error: Could not determine the home directory.\n");
+        LOG_ERROR("Could not determine the home directory.");
     }
 }
 
