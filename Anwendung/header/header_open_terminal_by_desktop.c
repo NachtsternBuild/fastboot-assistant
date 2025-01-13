@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              Headerpart - start_terminal	 *
@@ -86,13 +86,13 @@ void open_terminal_by_desktop(const char *function_command)
         }
 
         // debugging
-        g_print("Log: Run: %s\n", command);
+        LOG_INFO("Run: %s", command);
         // run the command
         run_command(command);
     } 
     
     else 
     {
-        fprintf(stderr, "Log: Desktop environment not found.\n");
+        LOG_ERROR("Desktop environment not found.");
     }
 }
