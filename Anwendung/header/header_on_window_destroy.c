@@ -10,7 +10,7 @@
  *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *                                           *
  *         Headerpart - on_window_destroy    *
@@ -29,6 +29,6 @@ GMainLoop *main_loop = NULL;
 // function to end the gtk mainloop
 void on_window_destroy(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: Close window, end main loop.\n");
+    LOG_INFO("Close window, end main loop.");
     g_main_loop_quit((GMainLoop *)data); // end mainloop
 }
