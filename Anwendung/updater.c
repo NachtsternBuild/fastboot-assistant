@@ -10,7 +10,7 @@
  *  zu erleichtern - updater                 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *
  */
@@ -38,39 +38,21 @@ gboolean quit_application_updater(gpointer data)
 // Function to create and execute the Bash script
 void create_and_run_bash_script(const char *package_url, const char *package_type)
 {
-    const char *home_dir = getenv("HOME");
-    if (!home_dir)
-    {
-        fprintf(stderr, "Log: HOME directory not found.\n");
-        exit(EXIT_FAILURE);
-    }
-    
-     // get the user
-     const char *user = getenv("USER");
-	 if (user == NULL) 
-	{	
-    	g_print("Log: Error: Could not determine the user name.\n");
-    	exit(1);  // close the program if there are errors
-	}
-
-	char wsl_setup_base[2048];
+    char updater_dir[2048];
 	char updater_path[2048];
 	char mkdir_command[2048];
-	snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
+
+	get_config_file_path(updater_dir, sizeof(updater_dir));
 	
 	// Create directory for updater
-	// for linux
-    snprintf(updater_path, sizeof(updater_path), "%s/Downloads/ROM-Install/Updater", home_dir);
-        
-    // for wsl
-	//snprintf(updater_path, sizeof(updater_path), "%s/Downloads/ROM-Install/Updater", wsl_setup_base);
+    snprintf(updater_path, sizeof(updater_path), "%s/Updater", updater_dir);
     
-    // create ~/ROM-Install/Updater
+    // create ~/.config/fasboot-assistant/Updater
     snprintf(mkdir_command, sizeof(mkdir_command), "mkdir -p %s", updater_path);
     if (system(mkdir_command) != 0)
     {
-        fprintf(stderr, "Log: Failed to create directory.\n");
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Failed to create directory.");
+        exit(1);
     }
 
     // Path to the Bash script
@@ -80,14 +62,15 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
     FILE *script_file = fopen(bash_script_path, "w");
     if (!script_file)
     {
-        fprintf(stderr, "Log: Failed to create the Bash script.\n");
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Failed to create the Bash script.\n");
+        exit(1);
     }
+    
 	const char *package = ".deb";
 	//const char *package = ".zip";
-	g_print("Log: %s\n", package);
-	g_print("Log: %s\n", package_url);
-	g_print("Log: %s\n", package_type);
+	LOG_INFO("%s", package);
+	LOG_INFO("%s", package_url);
+	LOG_INFO("%s", package_type);
 	
     fprintf(script_file,
         "#!/bin/bash\n"
@@ -96,9 +79,11 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
         "PACKAGE_TYPE=\"%s\"\n"
         "kill -9 $UPDATER_PID\n"
         "echo \"Starting update process...\"\n"
-        "curl -L \"$PACKAGE_URL\" -o ~/Downloads/ROM-Install/Updater/fastboot-assistant$PACKAGE_TYPE\n"
+        "echo \"Download package...\"\n"
+        "curl -L \"$PACKAGE_URL\" -o ~/.config/fastboot-assistant/Updater/fastboot-assistant$PACKAGE_TYPE\n"
+        "echo \"Installing package...\"\n"
         "if [[ \"$PACKAGE_TYPE\" == \".deb\" ]]; then\n"
-        "  sudo dpkg -i ~/Downloads/ROM-Install/Updater/fastboot-assistant$PACKAGE_TYPE\n"
+        "  sudo apt install ~/.config/fastboot-assistant/Updater/fastboot-assistant$PACKAGE_TYPE\n"
         "else\n"
         "  echo \"Unsupported package type: $PACKAGE_TYPE\"\n"
         "  exit 1\n"
@@ -115,7 +100,7 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
         "PACKAGE_TYPE=\"%s\"\n"
 	    "USER_NAME=$(whoami)\n"
 	    "WSL_DIR=\"/mnt/c/Users/$USER_NAME\"\n"
-	    "OUTPUT_PATH=\"$WSL_DIR/ROM-Install/Updater\"\n"
+	    "OUTPUT_PATH=\"$WSL_DIR/.config/fastboot-assistant/Updater\"\n"
 	    "OUTPUT_FILE=\"$OUTPUT_PATH/fastboot-assistant.zip\"\n"
 	    "DEB_ON_WSL=\"$OUTPUT_PATH/fastboot-assistant.deb\"\n\n"
 	    "UNZIP_COMMAND=\"unzip \\\"$OUTPUT_FILE\\\" -d \\\"$OUTPUT_PATH\\\"\"\n"
@@ -143,13 +128,13 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
     snprintf(chmod_command, sizeof(chmod_command), "chmod a+x %s", bash_script_path);
     if (system(chmod_command) != 0)
     {
-        fprintf(stderr, "Log: Failed to set executable permissions.\n");
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Failed to set executable permissions.");
+        exit(1);
     }
     
     char cat_command[2048];
     snprintf(cat_command, sizeof(cat_command), "cat %s", bash_script_path);
-    g_print("Log: Run: %s\n", cat_command);
+    LOG_INFO("Run: %s", cat_command);
     system(cat_command);
 
     // Run the script in a new terminal
@@ -182,7 +167,7 @@ const char* extract_version_from_url(const char* url)
 // Function to retrieve the latest release URL from GitHub
 void get_latest_release_url(const char *repo, const char *package_type, char *url_buffer, size_t buffer_size) 
 {
-    g_print("Log: get_latest_release_url\n");
+    LOG_INFO("get_latest_release_url");
     char command[2048];
     // get the url from the github api
     snprintf(command, sizeof(command),
@@ -191,20 +176,20 @@ void get_latest_release_url(const char *repo, const char *package_type, char *ur
     FILE *fp = popen(command, "r");
     if (fp == NULL) 
     {
-        perror("Log: Error when executing the command.\n");
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Error when executing the command.");
+        exit(1);
     }
 
     if (fgets(url_buffer, buffer_size, fp) == NULL) 
     {
-        fprintf(stderr, "Log: Error when retrieving the URL.\n");
+        LOG_ERROR("Error when retrieving the URL.");
         pclose(fp);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     url_buffer[strcspn(url_buffer, "\n")] = '\0';  // remove linebreak
     pclose(fp);
-    g_print("Log: end get_latest_release_url\n");
+    LOG_INFO("end get_latest_release_url");
 }
 
 // function to download the file
@@ -225,7 +210,7 @@ int verify_package_type(const char *filepath, const char *expected_extension)
 /* main function of the updater */
 void updater(void)
 {
-    g_print("Log: updater\n");
+    LOG_INFO("updater");
 
     gtk_init();
     main_loop = g_main_loop_new(NULL, FALSE);
@@ -241,50 +226,30 @@ void updater(void)
 
     if (strlen(package_url) > 0)
     {
- 		g_print("Log: Latest version URL: %s\n", package_url);
+ 		LOG_INFO("Latest version URL: %s", package_url);
                 
         const char* version = extract_version_from_url(package_url);
         if (version) 
         {
-            g_print("Log: Extracted version: %s\n", version);
+            LOG_INFO("Extracted version: %s", version);
         }
         
         else 
         {
-            g_print("Log: Could not extract version from URL.\n");
-        }
-        
-        const char *output_directory = getenv("HOME");
-        if (!output_directory) 
-        {
-            fprintf(stderr, "Log: Error: HOME directory not found.\n");
-            exit(EXIT_FAILURE);
+            LOG_INFO("Could not extract version from URL.");
         }
 
-         // get the user
-        const char *user = getenv("USER");
-		if (user == NULL) 
-		{	
-    		g_print("Log: Error: Could not determine the user name.\n");
-    		exit(1);  // close the program if there are errors
-		}
-
-		char wsl_setup_base[2048];
-		snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
+		char output_directory[2048];
 		
-		// for linux
-        snprintf(output_file, sizeof(output_file), "%s/Downloads/ROM-Install/Updater/fastboot-assistant%s", output_directory, package_type);
-        
-        // for wsl
-		// snprintf(output_file, sizeof(output_file), "%s/Downloads/ROM-Install/Updater/fastboot-assistant%s", wsl_setup_base, package_type);
+		get_config_file_path(output_directory, sizeof(output_directory));
 
-        snprintf(output_file, sizeof(output_file), "%s/Downloads/ROM-Install/Updater/fastboot-assistant%s", output_directory, package_type);
+        snprintf(output_file, sizeof(output_file), "%s/Updater/fastboot-assistant%s", output_directory, package_type);
         
-        g_print("Log: Package downloaded: %s\n", output_file);
+        LOG_INFO("Package downloading: %s", output_file);
         if (!verify_package_type(output_file, package_type)) 
         {
-            fprintf(stderr, "Log: Error: The downloaded package is not a %s package.\n", package_type);
-            exit(EXIT_FAILURE);
+            LOG_ERROR("The downloaded package is not a %s package.", package_type);
+            exit(1);
         }
 
         const char *confirmation = strcmp(language, "de") == 0 ? "Bestätigung" : "Confirmation";
@@ -322,7 +287,7 @@ void updater(void)
      
     else 
     {
-        fprintf(stderr, "Log: No release URL found.\n");
+        LOG_ERROR("No release URL found.");
     }
 
     // run GTK main loop
@@ -341,5 +306,5 @@ void updater(void)
     	main_loop = NULL;
 	}
 	
-    g_print("Log: end updater\n");
+    LOG_INFO("end updater");
 }
