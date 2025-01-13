@@ -10,7 +10,7 @@
  *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *                                           *
  *       Headerpart - loading_spinner        *
@@ -40,7 +40,7 @@ void start_loading_spinner()
     } 
     else 
     {
-        g_print("Log: Spinner is not initialized.\n");
+        LOG_INFO("Spinner is not initialized.");
     }
 }
 
@@ -98,7 +98,7 @@ void run_with_spinner(void *(*thread_function)(void *))
     int result = pthread_create(&thread, NULL, thread_function, NULL);
     if (result != 0) 
     {
-        g_print("Log: Failed to create thread: %d\n", result);
+        LOG_ERROR("Failed to create thread: %d", result);
         return;
     }
 
