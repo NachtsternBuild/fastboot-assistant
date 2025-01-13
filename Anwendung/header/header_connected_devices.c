@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - connected_devices	 *
@@ -32,8 +32,8 @@ void connected_devices(const char *command, const char *label)
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        perror("Log: Error when opening the process!\n");
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Error when opening the process!");
+        exit(1);
     }
 
     // Read the output and display it in the message
