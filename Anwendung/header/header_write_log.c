@@ -51,7 +51,7 @@ void write_log()
     if (log_fd == -1) 
     {
         LOG_ERROR("Error when opening the log file.");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     // write info or errors to the file using dup2
