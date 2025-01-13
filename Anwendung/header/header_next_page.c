@@ -10,7 +10,7 @@
  *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *                                           *
  *              Headerpart - next_page       *
@@ -30,7 +30,7 @@ void next_page(GtkButton *button, gpointer data)
     // check data are okay
     if (!GTK_IS_NOTEBOOK(data)) 
     {
-        g_warning("Log: next_page: data is not a valid GtkNotebook pointer.");
+        g_warning("next_page: data is not a valid GtkNotebook pointer.");
         return;
     }
 
@@ -38,6 +38,6 @@ void next_page(GtkButton *button, gpointer data)
     int current_page = gtk_notebook_get_current_page(notebook);
     gtk_notebook_set_current_page(notebook, current_page + 1);
 
-    g_print("Log: Switched to page: %d\n", current_page + 1);
+    LOG_INFO("Switched to page: %d", current_page + 1);
 }
 
