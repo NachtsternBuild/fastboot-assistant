@@ -10,7 +10,7 @@
  *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *                                           *
  *              Headerpart - css_provider    *
@@ -30,17 +30,19 @@
 
 GtkCssProvider *provider = NULL;
 
+// function that create a css provider
 GtkCssProvider* create_css_provider() 
 {
     GtkCssProvider *new_provider = gtk_css_provider_new();
     if (!new_provider) 
     {
-        fprintf(stderr, "Fehler: Konnte den CSS-Provider nicht erstellen.\n");
+        LOG_ERROR("Could not create the CSS provider.");
         exit(1);
     }
     return new_provider;
 }
 
+// function to unload the css provider
 void unload_css_provider(GtkCssProvider *provider) 
 {
     if (provider) 
@@ -49,6 +51,7 @@ void unload_css_provider(GtkCssProvider *provider)
     }
 }
     
+// function for load css
 void load_css(const char *theme) 
 {
     if (provider) 
@@ -156,7 +159,7 @@ void load_css(const char *theme)
         "    color: white;"
         "}";
 
-    // CSS für das gewählte Theme laden
+    // load css for the theme
     if (strcmp(theme, "dark") == 0) 
     {
         gtk_css_provider_load_from_string(provider, dark_css);
@@ -166,7 +169,7 @@ void load_css(const char *theme)
         gtk_css_provider_load_from_string(provider, light_css);
     }
 
-    // CSS auf das GTK4-Display anwenden
+    // run css for gtk4
     gtk_style_context_add_provider_for_display(
         gdk_display_get_default(),
         GTK_STYLE_PROVIDER(provider),
