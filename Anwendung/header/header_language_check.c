@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              Headerpart - language_check	 *
@@ -66,29 +66,8 @@ void create_directory_if_not_exists_lang(const char *path)
 // thanks to my book for programming for linux
 void write_language_file() 
 {
-    // use the full path
-    char *home = getenv("HOME");
-    if (home == NULL) 
-    {
-        perror("Log: Error when retrieving the home directory.\n");
-        exit(EXIT_FAILURE);
-    }
-    
-    // WSL Logik
-	const char *user = getenv("USER");
-	if (user == NULL) 
-	{	
-    	g_print("Log: Error: Could not determine the user name.\n");
-    	exit(1);  // close the program if there are errors
-	}
-
-
     char dir_path[512];
-    //char wsl_dir[512];
-    // for windows
-	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
-	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
-    snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
+    get_config_dir(dir_path, sizeof(dir_path));
     
     // create the dir 
     create_directory_if_not_exists_lang(dir_path);
@@ -104,35 +83,15 @@ void write_language_file()
     }
     fprintf(file, "English");
     fclose(file);
-    g_print("Log: Written to the file '%s'.\n", path);
+    LOG_INFO("Written to the file '%s'.", path);
 }
 
 // thanks to my book for programming for linux
 // function that delete the dark.txt
 void delete_language_file() 
 {
-    // use the full path
-    char *home = getenv("HOME");
-    if (home == NULL) 
-    {
-        perror("Log: Error when retrieving the home directory.\n");
-        exit(EXIT_FAILURE);
-    }
-    
-    // WSL logic
-	const char *user = getenv("USER");
-	if (user == NULL) 
-	{	
-    	g_print("Log: Error: Could not determine the user name.\n");
-    	exit(1);  // close the program if there are errors
-	}
-
     char dir_path[512];
-    //char wsl_dir[512];
-    // for windows
-	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
-	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
-    snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
+    get_config_dir(dir_path, sizeof(dir_path));
 
     char path[512];
     snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
@@ -140,31 +99,20 @@ void delete_language_file()
     // try to remove the file
     if (remove(path) == 0) 
     {
-        g_print("Log: File '%s' successfully deleted.\n", path);
+        LOG_INFO("File '%s' successfully deleted.", path);
     } 
+    
     else 
     {
-        perror("Log: Error deleting the file.\n");
+        LOG_ERROR("Error deleting the file.");
     }
 }
 
 // function that check if there are the dark.txt
 void check_language_file() 
 {
-    // use the full path
-    char *home = getenv("HOME");
-    if (home == NULL) 
-    {
-        perror("Log: Error when retrieving the home directory.\n");
-        exit(EXIT_FAILURE);
-    }
-
     char dir_path[512];
-    //char wsl_dir[512];
-    // for windows
-	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
-	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
-    snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
+    get_config_dir(dir_path, sizeof(dir_path));
 
     char path[512];
     snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
@@ -172,33 +120,21 @@ void check_language_file()
     FILE *file = fopen(path, "r");
     if (file != NULL) 
     {
-        g_print("Log: English\n");
+        LOG_INFO("English");
         language = "en";
         fclose(file);
     }
      
     else 
     {
-        g_print("Log: Deutsch\n");
+        LOG_INFO("Deutsch");
     }
 }
 
 void check_language_file_light() 
 {
-    // use the full path
-    char *home = getenv("HOME");
-    if (home == NULL) 
-    {
-        perror("Log: Error when retrieving the home directory.\n");
-        exit(EXIT_FAILURE);
-    }
-
     char dir_path[512];
-    //char wsl_dir[512];
-    // for windows
-	//snprintf(wsl_dir, sizeof(wsl_dir), "/mnt/c/Users/%s", user);
-	//snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", wsl_dir);
-    snprintf(dir_path, sizeof(dir_path), "%s/Downloads/ROM-Install/config", home);
+    get_config_dir(dir_path, sizeof(dir_path));
 
     char path[512];
     snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
@@ -206,7 +142,7 @@ void check_language_file_light()
     FILE *file = fopen(path, "r");
     if (file != NULL) 
     {
-        g_print("Log: Deutsch\n");
+        LOG_INFO("Deutsch");
         language = "de";
         delete_language_file();
         fclose(file);
@@ -214,7 +150,7 @@ void check_language_file_light()
      
     else 
     {
-        g_print("Log: English\n");
+        LOG_INFO("English");
     }
 }
 
