@@ -187,20 +187,20 @@ void handle_flash_error(GtkWindow *parent_window, const char *error_details)
 }
 
 // function to create the flash command
-char *build_flash_command(const char *device_command, const char *partition1, const char *partition2, const char *image_path, const char *optional_flags)
+char *build_flash_command(const char *device_command, const char *partition1, const char *partition2, const char *image_info, const char *optional_flags)
 {
     char *command = malloc(8192);  
 
     if (partition2)  // for a/b devices
     {
         snprintf(command, 8192, "%s flash %s %s %s && %s flash %s %s %s && exit",
-                 device_command, partition1, image_path, optional_flags ? optional_flags : "",
-                 device_command, partition2, image_path, optional_flags ? optional_flags : "");
+                 device_command, partition1, image_info, optional_flags ? optional_flags : "",
+                 device_command, partition2, image_info, optional_flags ? optional_flags : "");
     }
     else  // for only-a devices
     {
         snprintf(command, 8192, "%s flash %s %s %s && exit",
-                 device_command, partition1, image_path, optional_flags ? optional_flags : "");
+                 device_command, partition1, image_info, optional_flags ? optional_flags : "");
     }
 
     return command;
@@ -269,12 +269,14 @@ void *run_flash_command(void *command)
 // function to flash an image
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name, const char *optional_flags)
 {
+    char config_file[4096];
+    char image_info[4096];
     apply_theme();
     apply_language();
 
     // create the path for the image
     // use the new methode
-    set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
+    //set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
     get_config_file_path(config_file, sizeof(config_file));
     // load the path
     const char *image_path = load_path_from_file(config_file);
@@ -283,13 +285,15 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     {
         LOG_INFO("Loaded path: %s", image_path);
     }
-
+	
+	snprintf(image_info, sizeof(image_info), "%s/%s", image_path, image_name);
+	
     // check if the image exists
     if (access(image_path, F_OK) == -1)
     {
         char error_message[3072];
        
-        snprintf(error_message, sizeof(error_message), g_strcmp0(language, "de") == 0 ? "Image '%s' nicht gefunden." : "Image file '%s' not found.\n", image_path);
+        snprintf(error_message, sizeof(error_message), g_strcmp0(language, "de") == 0 ? "Image '%s' nicht gefunden." : "Image file '%s' not found.\n", image_info);
         show_error_message(GTK_WIDGET(parent_window), error_message);
         LOG_ERROR("%s", error_message);
         return;
@@ -297,7 +301,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
 
     // create the command
     const char *device_command = fastboot_command();
-    char *function_command = build_flash_command(device_command, partition1, partition2, image_path, optional_flags);
+    char *function_command = build_flash_command(device_command, partition1, partition2, image_info, optional_flags);
 
     // create a new window
     spinner_window_flash = gtk_window_new();
