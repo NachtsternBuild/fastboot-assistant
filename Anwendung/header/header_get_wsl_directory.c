@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - get_wsl_directory	 *
@@ -30,7 +30,7 @@ void get_wsl_directory(char* wsl_dir, size_t size)
     const char* user = getenv("USER");
     if (!user) 
     {
-        g_print("Log: Error: Could not determine the user name.\n");
+        LOG_ERROR("Could not determine the user name.");
         exit(1);
     }
     snprintf(wsl_dir, size, "/mnt/c/Users/%s", user);
