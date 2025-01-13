@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - check_active_slot	 *
@@ -42,9 +42,9 @@ void check_active_slot(char *active_slot, size_t size)
     pipe = popen(command, "r");
     if (!pipe) 
     {
-        fprintf(stderr, "Log: Could not open the pipe.\n");
+        LOG_ERROR("Could not open the pipe.");
         free(device_command);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     // reading output
@@ -62,5 +62,5 @@ void check_active_slot(char *active_slot, size_t size)
     pclose(pipe);
     free(device_command);
     // the slot
-    g_print("Log: current-slot: %s\n", active_slot);
+    LOG_INFO("current-slot: %s", active_slot);
 }
