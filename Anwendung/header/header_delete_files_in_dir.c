@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *        Headerpart - delete_files_in_dir	 *
@@ -24,7 +24,9 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
+// function to delete file in dir
 void delete_files_in_dir(const char *path) 
 {
     DIR *dir;
@@ -35,7 +37,7 @@ void delete_files_in_dir(const char *path)
     dir = opendir(path);
     if (dir == NULL) 
     {
-        perror("Log: Error opening the directory.\n");
+        LOG_ERROR("Error opening the directory.");
         exit(EXIT_FAILURE);
     }
 
@@ -54,12 +56,12 @@ void delete_files_in_dir(const char *path)
         // delet files
         if (remove(fullpath) != 0) 
         {
-            perror("Log: Error deleting the file.\n");
+            LOG_ERROR("Error deleting the file.");
         } 
         
         else 
         {
-            g_print("Log: File deleted: %s\n", fullpath);
+            LOG_INFO("File deleted: %s", fullpath);
         }
     }
 
