@@ -10,7 +10,7 @@
  *  zu erleichtern                           *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *                                           *
  *         Headerpart - flash_heimdall       *
@@ -36,7 +36,7 @@ void *run_heimdall_command(void *command)
     char *function_command = (char *)command;
 
     // Run command
-    g_print("Log: Run: %s\n", function_command);
+    LOG_INFO("Run: %s", function_command);
     system(function_command);
 
     // Close spinner and window
@@ -50,23 +50,33 @@ void *run_heimdall_command(void *command)
 // Function to flash with heimdall
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name) 
 {
-    char image_path[4096];  // Erhöhen des Puffers für große Dateipfade
-    set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
+    char config_file[4096];  
+    char image_info[4096];
+    // set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
     apply_theme();
     apply_language();
+    
+    get_config_file_path(config_file, sizeof(config_file));
+    // load the path
+    const char *image_path = load_path_from_file(config_file);
 
+    if (image_path) 
+    {
+        LOG_INFO("Loaded path: %s", image_path);
+    }
+	snprintf(image_info, sizeof(image_info), "%s/%s", image_path, image_name);
     // Check if the image exists
-    if (access(image_path, F_OK) == -1) 
+    if (access(image_info, F_OK) == -1) 
     {
         char error_message[4096];
-        snprintf(error_message, sizeof(error_message), "Log: Error: Image file '%s' not found.\n", image_path);
+        snprintf(error_message, sizeof(error_message), g_strcmp0(language, "de") == 0 ? "Image nicht '%s' gefunden.\n" : "Image file '%s' not found.\n", image_info);
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
 
     // Create the command
     char *function_command = malloc(4096);  // Erhöhen des Puffers für längere Kommandos
-    snprintf(function_command, 4096, "heimdall flash --%s %s --no-reboot && exit", partition, image_path);
+    snprintf(function_command, 4096, "heimdall flash --%s %s --no-reboot && exit", partition, image_info);
 
     // Create new window
     spinner_window_heimdall = gtk_window_new();
