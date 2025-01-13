@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *      Headerpart - convert_wsl_path		 *
@@ -37,14 +37,14 @@ void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path)
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        g_print("Log: Error: Could not convert the path.\n");
+        LOG_ERROR("Could not convert the path.");
         exit(1);
     }
 
     // Read the output of wslpath and store it in windows_path
     if (fgets(windows_path, size, fp) == NULL) 
     {
-        g_print("Log: Error: Could not read the converted path.\n");
+        LOG_ERROR("Could not read the converted path.");
         pclose(fp);
         exit(1);
     }
