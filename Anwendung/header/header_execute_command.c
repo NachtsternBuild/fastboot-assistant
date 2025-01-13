@@ -10,10 +10,10 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
- *              Headerpart - run command	 *
+ *         Headerpart - execute_command		 *
  *											 *
  *-------------------------------------------*
  */
@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
 // Function to execute a command and capture its output
 char *execute_command(const char *command) 
@@ -33,8 +34,8 @@ char *execute_command(const char *command)
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        perror("Log: Error when executing the command.\n");
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Error when executing the command.");
+        exit(1);
     }
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) 
