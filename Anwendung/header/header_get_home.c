@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - get_home			 *
@@ -22,13 +22,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
 gchar* get_home(const gchar *path) 
 {
     const gchar *home = getenv("HOME");
     if (home == NULL) 
     {
-        g_print("Log: Error: HOME environment variable not found.\n");
+        LOG_ERROR("HOME environment variable not found.");
         return NULL;
     }
     // for '~/'
