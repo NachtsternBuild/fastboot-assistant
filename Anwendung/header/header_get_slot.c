@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *         Headerpart - get_slot			 *
@@ -42,9 +42,9 @@ int get_slot_of_device()
     fp = popen(command, "r");
     if (fp == NULL) 
     {
-        fprintf(stderr, "Log: Failed to run command.\n");
+        LOG_ERROR("Failed to run command.");
         free(device_command);
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 
     // read the output
