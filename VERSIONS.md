@@ -1,22 +1,23 @@
-# Versions of the fastboot-assistant
-## Version build
+# Build Versions of the fastboot-assistant
+## build versions
 
-| Version     | Build status                 | Informations                                    | Status             | OS                |
-| ----------- | ---------------------------- | ----------------------------------------------- | ------------------ | ----------------- |
-| 0.7.1       | :white_check_mark:           | **on work**                                     | **dev**            | Ubuntu            |
-| 0.7.x       | :white_check_mark:           | **build version, all versions from v.0.7.x**    | **dev**            | Ubuntu            |
-| 0.6.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, Fedora    |
-| 0.6.2.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            |           
-| 0.6.1.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            |          
-| 0.6.x       | :x:                          | *old version*                                   | **dev**            | Ubuntu            |
+| Version     | Build status                 | Informations                                    | Status             | OS                | Packages                    |
+| ----------- | ---------------------------- | ----------------------------------------------- | ------------------ | ----------------- | --------------------------- |
+| 0.7.2       | :x:                          | *future version*                                | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
+| 0.7.1       | :white_check_mark:           | **on work**                                     | **dev**            | Ubuntu            | DEB, Zip, possibly Snap     |
+| 0.7.x       | :white_check_mark:           | **build version, all versions from v.0.7.x**    | **dev**            | Ubuntu            | :x:                         |
+| 0.6.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, Fedora    | DEB, RPM, Zip               |
+| 0.6.2.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | DEB                         |          
+| 0.6.1.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | :x:                         |         
+| 0.6.x       | :x:                          | *old version*                                   | **dev**            | Ubuntu            | DEB, RPM, Zip               |
 
-## Roadmap
+## Roadmap for build
 ### 0.7.x
 ---
-| Version     | Feature Freeze        | Version Freeze      | Release                       | Features                          |
-| ----------- | --------------------- | ------------------- | ------------------------------| --------------------------------- |
-| 0.7.1       | 15.01.2025            | 20.01.2025          | :white_check_mark:            | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#80](https://github.com/NachtsternBuild/fastboot-assistant/issues/80), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81) |
-| 0.7.2       | 15.02.2025            | 28.02.2025          | &#x1F914;                     | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#80](https://github.com/NachtsternBuild/fastboot-assistant/issues/80), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81), fix all errors            |
+| Version     | Feature Freeze        | Version Freeze      | Release                       | Release Date      | Features                          |
+| ----------- | --------------------- | ------------------- | ------------------------------| ----------------- | --------------------------------- |
+| 0.7.1       | 20.01.2025            | 25.01.2025          | :white_check_mark:            | 25.01. / 27.01.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#90](https://github.com/NachtsternBuild/fastboot-assistant/issues/90), [#91](https://github.com/NachtsternBuild/fastboot-assistant/issues/91) |
+| 0.7.2       | 15.02.2025            | 28.02.2025          | &#x1F914;                     | 28.02. / 01.03.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#80](https://github.com/NachtsternBuild/fastboot-assistant/issues/80), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81), fix all errors            |
 
 ### 0.6.x
 ---
