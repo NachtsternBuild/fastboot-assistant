@@ -30,47 +30,47 @@
 // check connected adb devices
 static void get_adb(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: Start get_adb\n");
+    LOG_INFO("get_adb");
     char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Geräte (ADB)");
     free(device_command);
-    g_print("Log: End of get_adb\n");
+    LOG_INFO("end get_adb");
 }
 
 // check connected fastboot devices
 static void get_fastboot(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: Start get_fastboot");
+    LOG_INFO("get_fastboot");
     char *device_command = fastboot_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Geräte (fastboot)");
     free(device_command);
-    g_print("Log: End of get_fastboot\n");
+    LOG_INFO("end get_fastboot");
 }
 
 static void bootloader_status_adb()
 {
-	g_print("Log: Start bootloader_status_adb\n");
+	LOG_INFO("bootloader_status_adb");
 	char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s shell getprop ro.boot.flash.locked", device_command);
     connected_devices(command, "Bootloader Status (ADB)");
     free(device_command);
-    g_print("Log: End of bootloader_status_adb\n");
+    LOG_INFO("end bootloader_status_adb");
 }
 
 static void bootloader_status_fastboot()
 {
-	g_print("Log: Start bootloader_status_fastboot\n");
+	LOG_INFO("bootloader_status_fastboot");
 	char *device_command = fastboot_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s getvar unlocked", device_command);
     connected_devices(command, "Bootloader Status (fastboot)");
     free(device_command);
-    g_print("Log: End of bootloader_status_fastboot\n");
+    LOG_INFO("bootloader_status_fastboot");
 }
 
 // Function to set up button labels based on the language
@@ -96,7 +96,7 @@ void set_button_labels_get_devices(char labels[][30])
 /* main function of get_devices*/
 void get_devices(int argc, char *argv[]) 
 {
-	g_print("Log: get_devices\n");
+	LOG_INFO("get_devices");
 	GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
@@ -158,5 +158,5 @@ void get_devices(int argc, char *argv[])
     	main_loop = NULL;
 	}
 
-    g_print("Log: End of get_devices\n");
+    LOG_INFO("end get_devices");
 }
