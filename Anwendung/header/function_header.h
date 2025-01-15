@@ -35,12 +35,17 @@ void preflash_GUI();
 void flash_GUI();
 void instruction_GUI();
 void info();
-void updater();
 void about();
 void wsl_config();
+void post_update();
 
 // function for the header - other GUIs
 void get_devices();
+
+// function for updater
+void updater();
+void updater_devmode();
+void updater_stable();
 
 // for reboot_GUI
 void reboot_fastboot();
