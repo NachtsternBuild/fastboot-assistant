@@ -140,12 +140,13 @@ void set_main_dir_with_wsl(char *path, size_t size, const char *filename); // th
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 int directory_exists(const char *path);
 void delete_files_in_dir();
+void delete_directory(const char *path);
 
 // delete config file
 void delete_config_file();
 
 // flash functions
-void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name);
+void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name, const char *optional_flags);
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
 
 // button connection for UI
