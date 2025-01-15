@@ -56,9 +56,12 @@ SRCS = \
 	header_get_config_dir.c \
 	header_get_config_file_path.c \
 	header_program_dir.c \
+	header_download_file.c \
 	header_write_log.c \
+	header_verify_package_type.c \
 	get_devices.c \
 	wsl_config.c \
+	post_update.c \
 	reboot_fastboot.c \
 	reboot.c \
 	reboot_recovery.c \
@@ -110,6 +113,8 @@ SRCS = \
 	run_first_run_setup.c \
 	info.c \
 	updater.c \
+	updater_devmode.c \
+	updater_stable.c \
 	about.c \
 	GUI.c 
 
