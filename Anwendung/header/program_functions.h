@@ -177,4 +177,8 @@ void install_with_pkexec(const gchar *command);
 void config_start();
 void config_dir_setup(const char *pfad); 
 
+// for the updater
+int download_file(const char *url, const char *outfilename);
+int verify_package_type(const char *filepath, const char *expected_extension);
+
 #endif
