@@ -41,6 +41,7 @@ void wsl_config();
 void post_update();
 void program_dir();
 void write_log();
+void rm_rom_install();
 
 // function for the header - other GUIs
 
