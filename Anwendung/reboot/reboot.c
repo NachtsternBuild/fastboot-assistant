@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              reboot						 *
@@ -30,7 +30,7 @@
 // reboot system
 static void reboot_system(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: reboot_system\n");
+    LOG_INFO("reboot_system");
     const char *message = strcmp(language, "de") == 0 ? "Neustart wird durchgeführt." : "Restart is performed.";    
     show_message(message);
     
@@ -40,31 +40,33 @@ static void reboot_system(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s reboot", device_command);
     command_with_spinner(command);
     free(device_command);
-    g_print("Log: end reboot_system\n");
+    LOG_INFO("end reboot_system");
 }
 
 // boot to an image
 static void boot_to_image(const gchar *i_filename) 
 {
-    g_print("Log: boot_to_image\n");
-    gchar *target_directory_image = get_home("~/Downloads/ROM-Install/");
-    if (target_directory_image == NULL) 
+    LOG_INFO("boot_to_image");
+    char boot_image[4096];
+    char boot_command[4096];
+    get_config_file_path(boot_image, sizeof(boot_image));
+    // load the path
+    const char *boot_image_path = load_path_from_file(boot_image);
+
+    if (boot_image_path) 
     {
-        g_print("Log: Error when expanding the directory path.\n");
-        return;
+        LOG_INFO("Loaded path: %s", boot_image_path);
     }
 
     // create fastboot command
     char *device_command = fastboot_command(); 
-    gchar *target_path_image = g_strdup_printf("%s boot %s", device_command, i_filename);
-    g_print("Log: command: %s \n", target_path_image);
-    command_with_spinner(target_path_image);
+    snprintf(boot_command, sizeof(boot_command), "%s boot %s/%s", device_command, boot_image_path, i_filename);
+    LOG_INFO("Run: %s \n", boot_command);
+    command_with_spinner(boot_command);
 
     // free memory
     free(device_command);
-    g_free(target_directory_image);
-    g_free(target_path_image);
-    g_print("Log: end boot_to_image\n");
+    LOG_INFO("end boot_to_image");
 }
 
 // Function to set up button labels based on the language
@@ -86,7 +88,7 @@ void set_button_labels_reboot(char labels[][30])
 /* start main programm - reboot*/
 void reboot(int argc, char *argv[])
 {
-	g_print("Log: reboot\n");
+	LOG_INFO("reboot");
 	GtkWidget *window, *grid, *button;
     char button_labels[2][30];
     
@@ -142,5 +144,5 @@ void reboot(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end reboot\n");
+    LOG_INFO("end reboot");
 }
