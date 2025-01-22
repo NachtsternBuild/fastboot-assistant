@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              make_dir					 *
@@ -19,66 +19,56 @@
  */
  
 /* headers that are used in the main program */
+#include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "language_check.h"
 #include "program_functions.h"
 
-// Function to construct a directory path and create the directory
-void create_directory(const char *base_dir, const char *sub_dir) 
+// function to create dirs
+// this use g_mkdir_with_parents
+void create_directory(const char *path) 
 {
-    char path[2048];
-    snprintf(path, sizeof(path), "%s/%s", base_dir, sub_dir);
-    
-    char command[2048];
-    snprintf(command, sizeof(command), "mkdir -p %s", path);
-    
-    if (system(command) == -1) 
+    if (g_mkdir_with_parents(path, 0755) != 0) 
     {
-        g_print("Log: Error when creating the directory: %s\n", path);
+        LOG_ERROR("Error when creating the directory: %s", path);
     } 
-    
     else 
     {
-        g_print("Log: Directory created: %s\n", path);
+        LOG_INFO("Directory created: %s", path);
     }
 }
 
-// make dir function
+/* main function - make_dir */
 void make_dir() 
 {
-    const char *home_dir = getenv("HOME");
-    if (home_dir == NULL) 
+    gtk_init();
+    char rom_install_dirs_file[4096];
+    char main_path[4096];
+    char backup_path[4096];
+    char path_images[4096];
+    
+    get_config_file_path(rom_install_dirs_file, sizeof(rom_install_dirs_file));
+    // load the path
+    const char *rom_install_dirs = load_path_from_file(rom_install_dirs_file);
+
+    if (rom_install_dirs) 
     {
-        g_print("Log: Error: Could not determine the home directory.\n");
-        return;
+        LOG_INFO("Loaded path: %s", rom_install_dirs);
     }
-
-    // standard linux paths
-    create_directory(home_dir, "Downloads/ROM-Install");
-    create_directory(home_dir, "Downloads/ROM-Install/Backup");
-    create_directory(home_dir, "Downloads/ROM-Install/Images");
-    create_directory(home_dir, "Downloads/ROM-Install/config");
 	
-	/*
-    // the wsl logic
-    const char *user = getenv("USER");
-    if (user == NULL) 
-    {
-        g_print("Log: Error: Could not determine the user name.\n");
-        return;
-    }
+    // create the full path 
+    snprintf(main_path, sizeof(main_path), "%s/ROM-Install", rom_install_dirs);
+    snprintf(backup_path, sizeof(backup_path), "%s/ROM-Install/Backup", rom_install_dirs);
+    snprintf(path_images, sizeof(path_images), "%s/ROM-Install/Images", rom_install_dirs);
 
-    char wsl_base_dir[512];
-    snprintf(wsl_base_dir, sizeof(wsl_base_dir), "/mnt/c/Users/%s/Downloads/ROM-Install", user);
-
-    create_directory(wsl_base_dir, "");
-    create_directory(wsl_base_dir, "Backup");
-    create_directory(wsl_base_dir, "Images");
-    create_directory(wsl_base_dir, "config");
-	*/
-	
-    g_print("Log: All directories successfully created.\n");
+    // create path
+    create_directory(main_path);
+    create_directory(backup_path);
+    create_directory(path_images);
+		
+    LOG_INFO("all directories successfully created.");
 }
 
