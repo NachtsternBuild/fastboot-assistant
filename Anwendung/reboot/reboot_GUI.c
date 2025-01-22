@@ -10,7 +10,7 @@
  *	zu erleichtern - reboot_GUI				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -76,9 +76,10 @@ void set_button_labels_reboot_GUI(char labels[][30])
     }
 }
 
+/* main function - reboot_GUI */
 void reboot_GUI(int argc, char *argv[]) 
 {
-	g_print("Log: reboot_GUI\n");
+	LOG_INFO("reboot_GUI");
 	GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
@@ -140,5 +141,5 @@ void reboot_GUI(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end reboot_GUI\n");
+    LOG_INFO("end reboot_GUI");
 }
