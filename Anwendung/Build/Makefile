@@ -112,6 +112,7 @@ SRCS = \
 	instruction_GUI.c \
 	run_first_run_setup.c \
 	info.c \
+	info_tools.c \
 	updater.c \
 	updater_devmode.c \
 	updater_stable.c \
