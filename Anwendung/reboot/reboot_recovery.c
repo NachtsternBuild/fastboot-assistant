@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              reboot_recovery				 *
@@ -31,7 +31,7 @@
 // start reboot_recovery adb-function
 static void start_recovery_adb(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: start_recovery_adb\n");
+    LOG_INFO("start_recovery_adb");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!" : "Please note that USB debugging is activated in the developer options!";    
     show_message(message);
     
@@ -40,13 +40,13 @@ static void start_recovery_adb(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s reboot recovery", device_command);
     system(command);
     free(device_command);  
-    g_print("Log: end start_recovery_adb\n");
+    LOG_INFO("end start_recovery_adb");
 }
 
 // start reboot_recovery fastboot
 static void start_recovery_fastboot(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: start_recovery_fastboot\n");
+    LOG_INFO("start_recovery_fastboot");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
     show_message(message);
     
@@ -55,7 +55,7 @@ static void start_recovery_fastboot(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s reboot recovery", device_command);
     system(command);
     free(device_command);
-    g_print("Log: end start_recovery_fastboot\n");
+    LOG_INFO("end start_recovery_fastboot");
 }
 
 // Function to set up button labels based on the language
@@ -78,7 +78,7 @@ void set_button_labels_reboot_recovery(char labels[][30])
 /* main function of reboot*/
 void reboot_recovery(int argc, char *argv[]) 
 {
-    g_print("Log: reboot_recovery\n");
+    LOG_INFO("reboot_recovery");
     GtkWidget *window, *grid, *button;
     char button_labels[2][30];
     
@@ -134,5 +134,5 @@ void reboot_recovery(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end reboot_recovery\n");
+    LOG_INFO("end reboot_recovery");
 }
