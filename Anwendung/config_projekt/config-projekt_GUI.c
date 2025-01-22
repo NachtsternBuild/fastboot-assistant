@@ -10,7 +10,7 @@
  *	zu erleichtern - config-projekt_GUI 	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -78,7 +78,7 @@ void set_button_labels_config_projekt(char labels[][30])
 /* main function of config-projekt_GUI*/
 void config_projekt_GUI(int argc, char *argv[]) 
 {
-	g_print("Log: config_projekt_GUI\n");
+	LOG_INFO("config_projekt_GUI");
 	GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
@@ -140,5 +140,5 @@ void config_projekt_GUI(int argc, char *argv[])
     	main_loop = NULL;
 	}
 	
-    g_print("Log: end config_projekt_GUI\n");
+    LOG_INFO("end config_projekt_GUI");
 }
