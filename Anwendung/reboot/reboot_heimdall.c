@@ -30,7 +30,7 @@
 // reboot to download from adb
 static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: reboot_from_adb_heimdall\n");
+    LOG_INFO("reboot_from_adb_heimdall");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!" : "Please note that USB debugging is activated in the developer options!";
     show_message(message);
     
@@ -39,26 +39,26 @@ static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s reboot download", device_command);
     system(command);
     free(device_command);
-    g_print("Log: end reboot_from_adb_heimdall\n");
+    LOG_INFO("end reboot_from_adb_heimdall");
 }
 
 // heimdall help
 static void heimdall_help(GtkWidget *widget, gpointer data)
 { 
-    g_print("Log: heimdall_help\n");
+    LOG_INFO("heimdall_help");
     open_terminal_by_desktop("heimdall help");
-    g_print("Log: end heimdall_help\n");
+    LOG_INFO("end heimdall_help");
 }
 	
 // get pit
 static void get_pit(GtkWidget *widget, gpointer data) 
 {
-	g_print("Log: get_pit");
+	LOG_INFO("get_pit");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Download-Modus befindet!" : "Please note that your device is in download mode!";
     show_message(message);
     
     open_terminal_by_desktop("heimdall print-pit");
-    g_print("Log: end get_pit\n");
+    LOG_INFO("end get_pit");
 }
 
 // Function to set up button labels based on the language
@@ -82,7 +82,7 @@ void set_button_labels_reboot_heim(char labels[][30])
 /* start main programm */
 void reboot_heimdall(int argc, char *argv[])
 {
-	g_print("Log: reboot_heimdall\n");
+	LOG_INFO("reboot_heimdall");
 	GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
@@ -141,5 +141,5 @@ void reboot_heimdall(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end reboot_heimdall\n");
+    LOG_INFO("end reboot_heimdall");
 }
