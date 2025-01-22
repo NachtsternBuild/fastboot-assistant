@@ -46,6 +46,7 @@ extern void about();
 extern void make_dir();
 
 extern void run_first_run_setup();
+extern void post_update();
 
 
 // Callback functions for each button
@@ -220,13 +221,17 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     	run_first_run_setup(provider);
     	LOG_INFO("Setup completed.");
 	}
-
+	
+	// run post update function
+	post_update(); 
+	
+	// create new window
     window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant");
     gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
-    
+    // new grid
     grid = gtk_grid_new();
     gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
