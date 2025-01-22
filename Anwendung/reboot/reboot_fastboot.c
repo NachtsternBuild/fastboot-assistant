@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              reboot_fastboot				 *
@@ -30,7 +30,7 @@
 // reboot to bootloader from adb
 static void reboot_from_adb(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: reboot_from_adb\n");
+    LOG_INFO("reboot_from_adb");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!": "Please note that USB debugging is activated in the developer options!";
     show_message(message);
     
@@ -41,13 +41,13 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
     free(device_command);
     // this is the old command
     // system("adb reboot bootloader");
-    g_print("Log: end reboot_from_adb\n");
+    LOG_INFO("end reboot_from_adb");
 }
 
 // reboot to bootloader from fastboot
 static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: reboot_from_fastboot\n");
+    LOG_INFO("reboot_from_fastboot");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
     show_message(message);
     
@@ -56,13 +56,13 @@ static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s reboot bootloader", device_command);
     open_terminal_by_desktop(command);
     free(device_command);
-    g_print("Log: end reboot_from_fastboot\n");
+    LOG_INFO("end reboot_from_fastboot");
 }
 	
 // start help-function
 static void fastboot_help(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: fastboot_help\n");
+    LOG_INFO("fastboot_help");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
     show_message(message);
     
@@ -71,13 +71,13 @@ static void fastboot_help(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s help", device_command);
     open_terminal_by_desktop(command);
     free(device_command);
-    g_print("Log: end fastboot_help\n");
+    LOG_INFO("end fastboot_help");
 }
 
 // get bootloader variablen-function
 static void list_bootloader_var(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: list_bootloader_var\n");
+    LOG_INFO("list_bootloader_var");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
     show_message(message);
     
@@ -86,7 +86,7 @@ static void list_bootloader_var(GtkWidget *widget, gpointer data)
     snprintf(command, sizeof(command), "%s getvar all", device_command);
     open_terminal_by_desktop(command);
     free(device_command);
-    g_print("Log: end list_bootloader_var\n");
+    LOG_INFO("end list_bootloader_var");
 }
 
 // Function to set up button labels based on the language
@@ -112,7 +112,7 @@ void set_button_labels_reboot_fast(char labels[][30])
 /* start main programm */
 void reboot_fastboot(int argc, char *argv[])
 {
-	g_print("Log: reboot_fastboot\n");
+	LOG_INFO("reboot_fastboot");
 	GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
@@ -174,5 +174,5 @@ void reboot_fastboot(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end reboot_fastboot\n");
+    LOG_INFO("end reboot_fastboot");
 }
