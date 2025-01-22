@@ -10,7 +10,7 @@
  *	zu erleichtern  - function_header		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -34,13 +34,16 @@ void config_projekt_GUI();
 void preflash_GUI();
 void flash_GUI();
 void instruction_GUI();
-void info();
 void about();
 void wsl_config();
 void post_update();
 
 // function for the header - other GUIs
 void get_devices();
+
+// info functions
+void info();
+void info_tools();
 
 // function for updater
 void updater();
