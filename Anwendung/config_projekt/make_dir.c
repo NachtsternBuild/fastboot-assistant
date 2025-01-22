@@ -60,9 +60,9 @@ void make_dir()
     }
 	
     // create the full path 
-    snprintf(main_path, sizeof(main_path), "%s/ROM-Install", rom_install_dirs);
-    snprintf(backup_path, sizeof(backup_path), "%s/ROM-Install/Backup", rom_install_dirs);
-    snprintf(path_images, sizeof(path_images), "%s/ROM-Install/Images", rom_install_dirs);
+    snprintf(main_path, sizeof(main_path), "%s", rom_install_dirs);
+    snprintf(backup_path, sizeof(backup_path), "%s/Backup", rom_install_dirs);
+    snprintf(path_images, sizeof(path_images), "%s/Images", rom_install_dirs);
 
     // create path
     create_directory(main_path);
