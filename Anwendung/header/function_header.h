@@ -35,11 +35,14 @@ void preflash_GUI();
 void flash_GUI();
 void instruction_GUI();
 void about();
+
+// setup functions
 void wsl_config();
 void post_update();
+void program_dir();
+void write_log();
 
 // function for the header - other GUIs
-void get_devices();
 
 // info functions
 void info();
