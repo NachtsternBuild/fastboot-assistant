@@ -72,7 +72,7 @@ void on_folder_selected(GtkFileChooser *chooser, gpointer user_data)
 
     // expand path
     char full_path[2048];
-    snprintf(full_path, sizeof(full_path), "%s/ROM-Install/", folder_path);
+    snprintf(full_path, sizeof(full_path), "%s/ROM-Install", folder_path);
 
     // create path
     create_directory(full_path);
