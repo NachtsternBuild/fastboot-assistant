@@ -21,26 +21,41 @@
 #include <stdlib.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include "function_header.h"
 #include "program_functions.h"
 #include "language_check.h"
 
 #define MAX_BUFFER_SIZE 2048
 
-// Callback functions for each button
-// Remove the 'ROM-Install' directory
+// function that delete ROM-Install
+void rm_rom_install()
+{
+	LOG_INFO("remove_rom_install");
+    char command[MAX_BUFFER_SIZE];
+    char rom_install_rm_file[4096];
+    char main_path_rm[4096];
+    
+    get_config_file_path(rom_install_rm_file, sizeof(rom_install_rm_file));
+    // load the path
+    const char *rom_install_rm = load_path_from_file(rom_install_rm_file);
+
+    if (rom_install_rm) 
+    {
+        LOG_INFO("Loaded path: %s", rom_install_rm);
+    }
+	
+    // create the full path 
+    snprintf(main_path_rm, sizeof(main_path_rm), "%s", rom_install_rm);
+    snprintf(command, sizeof(command), "rm -rf %s", main_path_rm);
+    system(command);
+	
+    LOG_INFO("end remove_rom_install");
+}
+// callback functions for each button
+// remove the 'ROM-Install' directory
 static void remove_rom_install(GtkWidget *widget, gpointer data) 
 {
-    char command[MAX_BUFFER_SIZE];
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", get_home_directory_flash());
-    system(command);
-	
-	/*
-    char wsl_dir[MAX_BUFFER_SIZE];
-    get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install", wsl_dir);
-    system(command);
-	*/
-	
+    rm_rom_install();
     const char *message = "Ready.\n";
     show_message(message);
 }
@@ -48,57 +63,42 @@ static void remove_rom_install(GtkWidget *widget, gpointer data)
 // Remove old files in 'ROM-Install'
 static void remove_old_files(GtkWidget *widget, gpointer data) 
 {
-	// add the config.txt
-    char command[MAX_BUFFER_SIZE];
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", get_home_directory_flash());
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup", get_home_directory_flash());
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory_flash());
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Images", get_home_directory_flash());
-    system(command);
-	
-	/*
-    char wsl_dir[MAX_BUFFER_SIZE];
-    get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/*", wsl_dir);
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup", wsl_dir);
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", wsl_dir);
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Images", wsl_dir);
-    system(command);
-	*/
+	LOG_INFO("remove_old_files");
+	rm_rom_install();
+	make_dir();
 	
     const char *message = "Ready.\n";
     show_message(message);
+    LOG_INFO("end remove_old_files");
 }
 
 // Remove backups
 static void remove_backups(GtkWidget *widget, gpointer data) 
 {
-    char command[MAX_BUFFER_SIZE];
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", get_home_directory_flash());
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", get_home_directory_flash());
-    system(command);
+    LOG_INFO("remove_backups");
+    char backup_rm_file[4096];
+    char two_commands[8192];
+    
+    get_config_file_path(backup_rm_file, sizeof(backup_rm_file));
+    // load the path
+    const char *backup_rm = load_path_from_file(backup_rm_file);
+
+    if (backup_rm) 
+    {
+        LOG_INFO("Loaded path: %s", backup_rm);
+    }
 	
-	/*
-    char wsl_dir[MAX_BUFFER_SIZE];
-    get_wsl_directory(wsl_dir, sizeof(wsl_dir));
-    snprintf(command, sizeof(command), "rm -rf %s/Downloads/ROM-Install/Backup/*", wsl_dir);
-    system(command);
-    snprintf(command, sizeof(command), "mkdir -p %s/Downloads/ROM-Install/Backup/Noroot", wsl_dir);
-    system(command);
-	*/
+    // create the full path and remove the dir
+    snprintf(two_commands, sizeof(two_commands), "%s/Backup/* && mkdir -p %s/Backup/Noroot", backup_rm, backup_rm);
+    system(two_commands);
+
 	
     const char *message = "Ready.\n";
     show_message(message);
+    LOG_INFO("end remove_backups");
 }
 
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_remove(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
@@ -115,9 +115,10 @@ void set_button_labels_remove(char labels[][30])
         strcpy(labels[2], "Backups");
     }
 }
-/* main function of preflash_GUI */
+/* main function - remove_old */
 void remove_old(int argc, char *argv[]) 
 {
+	LOG_INFO("remove_old");
 	GtkWidget *window, *grid, *button;
     char button_labels[3][30];
     
@@ -175,5 +176,5 @@ void remove_old(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end remove_old\n");
+    LOG_INFO("end remove_old");
 }
