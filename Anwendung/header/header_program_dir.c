@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *        headerpart - program_dir			 *
@@ -18,27 +18,13 @@
  *-------------------------------------------*
  */
 
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glib.h>
+#include <gtk/gtk.h>
 #include "language_check.h"
 #include "program_functions.h"
-
-// function to create dirs
-// this use g_mkdir_with_parents
-void create_directory(const char *path) 
-{
-    if (g_mkdir_with_parents(path, 0755) != 0) 
-    {
-        LOG_ERROR("Error when creating the directory: %s", path);
-    } 
-    else 
-    {
-        LOG_INFO("Directory created: %s", path);
-    }
-}
 
 // function that save the config path to a file
 void save_path_to_file(const char *path, const char *file_path) 
