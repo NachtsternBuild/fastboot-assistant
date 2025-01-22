@@ -10,7 +10,7 @@
  *  zu erleichtern - run_first_run_setup     *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *
  */
@@ -26,14 +26,14 @@
 
 GtkWidget *window;
 
-// Function to quit the application
+// function to quit the application
 gboolean quit_application(gpointer data)
 {
     exit(1);
     return FALSE;  // Return FALSE to ensure the timeout callback is called only once
 }
 
-// Callback to switch the language in the setup
+// callback to switch the language in the setup
 void toggle_language_setup(GtkWidget *button, gpointer user_data) 
 {
 
@@ -45,7 +45,8 @@ void toggle_language_setup(GtkWidget *button, gpointer user_data)
         apply_language();
         const char *message = "Please restart the Fastboot Assistant.";
         show_message(message);
-    } 
+    }
+     
     else 
     {
         language = "de";
@@ -63,7 +64,7 @@ void toggle_language_setup(GtkWidget *button, gpointer user_data)
 // the setup wizard
 void run_first_run_setup(GtkCssProvider *provider) 
 {
-    g_print("Log: run_first_run_setup\n");
+    LOG_INFO("run_first_run_setup");
     
     // GTK init
     gtk_init();
@@ -74,7 +75,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     GtkWidget *notebook;
     GtkWidget *page1, *page2, *page3, *page4, *page5;
     GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label_page3_1, *label_page3_2, *label_page3_3, *label_page3_4, *label_page4_1, *label_page4_2, *label_page4_3, *label_page4_4, *label_end_1, *label_end_2;
-    GtkWidget *button_welcome_1, *button_toggle_language, *button_toggle_theme, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button_page3_1, *button_page3_2, *button_page4_1, *button_page4_2, *button_end_1, *button_end_2;
+    GtkWidget *button_welcome_1, *button_setup_dir, *button_toggle_language, *button_toggle_theme, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button_page3_1, *button_page3_2, *button_page4_1, *button_page4_2, *button_end_1, *button_end_2;
 
     // create the main window
     window = gtk_window_new();
@@ -92,6 +93,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     // button and label
     button_welcome_1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Willkommen zum Fastboot Assistant!" : "Welcome to the Fastboot Assistant!");
     label_welcome_1 = gtk_label_new(" ");
+    button_setup_dir = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Ordner für den Flash festlegen" : "Set folder for the flash");
     button_toggle_language = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Sprache wechseln/Switch Language (Deutsch/Englisch)" : "Switch Language/Sprache wechseln (English/German)");
     button_toggle_theme = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Thema wechseln (hell/dunkel)" : "Toggle Theme (Light/Dark)");
     label_welcome_2 = gtk_label_new(" ");
@@ -100,12 +102,14 @@ void run_first_run_setup(GtkCssProvider *provider)
     // add everything to the page
     gtk_box_append(GTK_BOX(page1), button_welcome_1);
     gtk_box_append(GTK_BOX(page1), label_welcome_1);
+    gtk_box_append(GTK_BOX(page1), button_setup_dir);
     gtk_box_append(GTK_BOX(page1), button_toggle_language);
     gtk_box_append(GTK_BOX(page1), button_toggle_theme);
     gtk_box_append(GTK_BOX(page1), label_welcome_2);
     gtk_box_append(GTK_BOX(page1), button_welcome_2);
 
     // connect everything
+    g_signal_connect(button_setup_dir, "clicked", G_CALLBACK(program_dir), notebook);
     g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(toggle_language_setup), notebook);
     g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme), notebook);
     g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(next_page), notebook);
@@ -168,7 +172,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     // button and label
     button_page4_1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Verwendung" : "Use");
 	label_page4_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Lesen sie vor der Verwendung die \nAnleitungen und die Dokumentation." : "1. Read the instructions and \ndocumentation before use.");
-	label_page4_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "2. Kopieren sie immer alle Systemabbilder \ndes Flashs nach ~/Downloads/ROM-Install." : "2. Always copy all system images \ndes Flashs to ~/Downloads/ROM-Install.");
+	label_page4_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "2. Kopieren sie immer alle Systemabbilder \ndes Flashs nach '/ROM-Install'." : "2. Always copy all system images \ndes Flashs to '/ROM-Install'.");
 	label_page4_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. Sollten sie ein Samsung-Gerät flashen \nwollen nutzen sie immer 'heimdall'." : "3. If you want to flash a Samsung device, \nalways use 'heimdall'.");
 	label_page4_4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Prüfen sie regelmäßig, ob es Updates für das Programm gibt." : "4. Check regularly whether there are updates for the program.");
     button_page4_2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
@@ -211,5 +215,5 @@ void run_first_run_setup(GtkCssProvider *provider)
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-    g_print("Log: end run_first_run_setup\n");
+    LOG_INFO("end run_first_run_setup");
 }
