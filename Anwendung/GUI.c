@@ -10,7 +10,7 @@
  *  zu erleichtern - GUI                     *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *
  */
@@ -104,9 +104,10 @@ static void start_about(GtkWidget *widget, gpointer data)
 }
 
 // create the dir for the setup
+// I thinks this has no use
 void config_dir_setup(const char *pfad) 
 {
-    g_print("Log: config_dir_setup\n");
+    LOG_INFO("config_dir_setup");
     char tmp[2048];
     snprintf(tmp, sizeof(tmp), "%s", pfad);  // copy the path
     char *p = tmp;
@@ -121,19 +122,19 @@ void config_dir_setup(const char *pfad)
         }
     }
     mkdir(tmp, 0700);  // create the dir
-	g_print("Log: end config_dir_setup\n");
+	LOG_INFO("end config_dir_setup");
 }
 
 // config the program
 void config_start() 
 {
-    g_print("Log: config_start\n");
+    LOG_INFO("config_start");
     const char *message;
     message = "Konfiguration beendet!\n";
     make_dir();
     wsl_config();
     show_message(message);
-    g_print("Log: end config_start\n");
+    LOG_INFO("end config_start");
 }
 
 // Function to set up button labels based on the language
@@ -168,7 +169,7 @@ void set_button_labels(char labels[][30])
 
 static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 {
-	g_print("Log: activate_fastboot_assistant\n");
+	LOG_INFO("activate_fastboot_assistant");
 	GtkWidget *window, *grid, *button;
     char button_labels[9][30];
     
@@ -184,34 +185,9 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 	char fish_path[2048];
 	char setup_dir[2048];
 	char *homeDir = getenv("HOME");
-	if (homeDir == NULL) 
-	{
-    	fprintf(stderr, "Log: Error: Could not find the home directory.\n");
-    	exit(1);  // close the program if there are errors
-	}
-
-	// WSL Logik
-	const char *user = getenv("USER");
-	if (user == NULL) 
-	{	
-    	g_print("Log: Error: Could not determine the user name.\n");
-    	exit(1);  // close the program if there are errors
-	}
-
-	char wsl_setup_base[2048];
-	snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
-
-	// for linux
-	snprintf(setup_dir, sizeof(setup_dir), "%s", homeDir);
-	// for wsl
-	// snprintf(setup_dir, sizeof(setup_dir), "%s", wsl_setup_base);
-
-	// create the dir for the config
-	snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config", setup_dir);
-	config_dir_setup(fish_path);
-
-	// create full path for the config.txt
-	snprintf(fish_path, sizeof(fish_path), "%s/Downloads/ROM-Install/config/config.txt", setup_dir);
+	
+	get_config_file_path(fish_path, sizeof(fish_path));
+	LOG_INFO("Config file path: %s\n", fish_path);
 
 	FILE *file;
 
@@ -220,24 +196,29 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 	{
     	// file exsists
     	fclose(file);
-    	g_print("Log: No Setup\n");
-    	g_print("Log: old fish!\n");
+    	LOG_INFO("No Setup");
+    	LOG_INFO("old fish!");
 	} 
+	
 	else 
 	{
+	    // remove logic and give this to the first setup
 	    // file not exsists
+	    /*
     	file = fopen(fish_path, "w");
     	if (file == NULL) 
     	{
-    	    fprintf(stderr, "Log: Error: Could not create the file.\n");
+    	    fprintf(stderr, "Error: Could not create the file.\n");
     	    exit(1);  // close the program if there are errors
     	}
     	fprintf(file, "%s", content);
     	fclose(file);
-    	g_print("Log: fish\n");
+    	*/
+    	fclose(file);
+    	LOG_INFO("fish");
     	// run setup
     	run_first_run_setup(provider);
-    	g_print("Log: Setup completed.\n");
+    	LOG_INFO("Setup completed.");
 	}
 
     window = gtk_window_new();
@@ -307,21 +288,22 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
 	}
-	g_print("Log: end activate_fastboot_assistant\n");
+	LOG_INFO("end activate_fastboot_assistant");
 }
 
 /* main function - GUI */
 int main(int argc, char *argv[]) 
 {
-    g_print("Log: fastboot-assistant\n");
+	write_log();
+    LOG_INFO("start fastboot-assistant");
 	GtkApplication *app;
     int status;
 
-    app = gtk_application_new("org.nachtsternbuild.FastbootAssistant", G_APPLICATION_DEFAULT_FLAGS);
+    app = gtk_application_new("org.Nachtsternbuild.FastbootAssistant", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK (activate_fastboot_assistant), NULL);
     status = g_application_run (G_APPLICATION (app), argc, argv);
     g_object_unref(app);
 
-    g_print("Log: end fastboot-assistant\n");
+    LOG_INFO("end fastboot-assistant");
     return status;
 }
