@@ -87,7 +87,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
 /* the main function from info */
 void info(int argc, char *argv[], GtkWindow *parent_window) 
 {  
-	g_print("Log: info\n");
+	LOG_INFO("info");
 	gtk_init();
 	main_loop = g_main_loop_new(NULL, FALSE);
 	apply_theme();
@@ -224,5 +224,5 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
 	}
-    g_print("Log: end info\n");
+    LOG_INFO("end info");
 }
