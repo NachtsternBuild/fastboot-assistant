@@ -10,7 +10,7 @@
  *  zu erleichtern - about                   *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz        *
+ *      (C) Copyright 2025 Elias Mörz        *
  *-------------------------------------------*
  *
  */
@@ -21,6 +21,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
@@ -68,10 +69,23 @@ void brownie_jean(GtkWidget *widget, gpointer data)
 	open_url(brownie_jean_url);
 }
 
+// function for start the updater
+// for v.0.7.2
+void run_updater(GtkWidget *widget, gpointer data)
+{
+	updater();
+}
+
+// function that output version infos about the system and installed packages
+void run_tools_info(GtkWidget *widget, gpointer data)
+{
+	info_tools();
+}
+
 // the main function
 void about(int argc, char *argv[]) 
 {
-    g_print("Log: about\n");
+    LOG_INFO("about");
     
     // GTK init
     gtk_init();
@@ -83,7 +97,7 @@ void about(int argc, char *argv[])
     GtkWidget *window, *notebook;
     GtkWidget *page1, *page2, *page3;
     GtkWidget *label_about2;
-    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6;
+    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about2_5, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6;
     
     // create the main window
     window = gtk_window_new();
@@ -100,9 +114,11 @@ void about(int argc, char *argv[])
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     button_about_1 = gtk_button_new_with_label("Fastboot Assistant");
-    button_about_2 = gtk_button_new_with_label("Version 0.6.2");
-    button_about_3 = gtk_button_new_with_label("Rostiges Red Hat");
+    button_about_2 = gtk_button_new_with_label("Version 0.7.1.dev");
+    button_about_3 = gtk_button_new_with_label("Mutiges Mint 20.3");
     button_about_4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Programm um das installieren von Custom-ROM \nund GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM \nand GSIs on Android devices.");
+    // new button for v.0.7.2
+    // button_about_5 = gtk_button_new_with_label("Updater");
     button_about_5 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
     
     // add everything to the page
@@ -113,6 +129,8 @@ void about(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page1), button_about_5);
 
     // connect everything
+    // for v.0.7.2
+    // g_signal_connect(button_about_5, "clicked", G_CALLBACK(run_updater), notebook);
     g_signal_connect(button_about_5, "clicked", G_CALLBACK(next_page), notebook);
     
     // add page to the notebook
@@ -121,11 +139,12 @@ void about(int argc, char *argv[])
     // page 2
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
-    button_about2_1 = gtk_button_new_with_label("(C) Copyright 2024 Elias Mörz");
+    button_about2_1 = gtk_button_new_with_label("(C) Copyright 2025 Elias Mörz");
     button_about2_2 = gtk_button_new_with_label("Apache License, Version 2.0");
     button_about2_3 = gtk_button_new_with_label("https://github.com/NachtsternBuild/fastboot-assistant");
     label_about2 = gtk_button_new_with_label("thanks to:\n@mrrfv → Open Android Backup\n@Jean28518 → my build-fastboot-assistant.sh \nbased on his build-scripts.");
-    button_about2_4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    button_about2_4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "System- und Paketinformationen" : "System and package information");
+    button_about2_5 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
     
     // add everything to the page
     gtk_box_append(GTK_BOX(page2), button_about2_1);
@@ -133,9 +152,11 @@ void about(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page2), button_about2_3);
     gtk_box_append(GTK_BOX(page2), label_about2);
     gtk_box_append(GTK_BOX(page2), button_about2_4);
+    gtk_box_append(GTK_BOX(page2), button_about2_5);
 
     // connect everything
-    g_signal_connect(button_about2_4, "clicked", G_CALLBACK(next_page), notebook);   
+    g_signal_connect(button_about2_4, "clicked", G_CALLBACK(), notebook);
+    g_signal_connect(button_about2_5, "clicked", G_CALLBACK(next_page), notebook);   
     
     // add page to the notebook
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Das Programm" : "The program"));
@@ -188,5 +209,5 @@ void about(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end about\n");
+    LOG_INFO("end about");
 }
