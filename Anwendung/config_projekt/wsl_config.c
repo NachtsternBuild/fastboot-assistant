@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              wsl_config					 *
@@ -28,6 +28,7 @@
 
 char path[3072];
 char config[3072];
+char config_two[3072];
 char mv_adb[3072];
 char mv_fastboot[3072];
 char command_adb[3072];
@@ -51,12 +52,14 @@ static void config_adb(GtkButton *button, gpointer user_data)
             snprintf(command_fastboot, sizeof(command_fastboot), "ln -s %s /usr/bin/fastboot", path);
 
             // create the command
-            snprintf(config, sizeof(config), "%s && %s && %s && %s", mv_adb, mv_fastboot, command_adb, command_fastboot);
-
-            g_print("Log: Run: %s\n", config);
+            snprintf(config, sizeof(config), "%s && %s", mv_adb, mv_fastboot);
+			snprintf(config_two, sizeof(config_two), "%s && %s", command_adb, command_fastboot);
+            LOG_INFO("Run: %s\n", config);
+            LOG_INFO("Run: %s\n", config_two);
 
             // run command with pkexec
             install_with_pkexec(config);
+            install_with_pkexec(config_two);
         }
     }
 }
@@ -88,6 +91,7 @@ void wsl_config()
     gtk_init();
     GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
+    apply_language();
     
     int found = 0;
 
@@ -138,16 +142,20 @@ void wsl_config()
     // no WSL system
     else 
     {
-        g_print("Log: No WSL system");
-
-        const char *message = strcmp(language, "de") == 0 ? "Kein WSL-System gefunden." : "No WSL-System.";
-        show_message(message);
+        LOG_INFO("Log: No WSL system");
     }
 
     // run GTK main loop
     g_main_loop_run(main_loop); 
-    
-    if (main_loop != NULL) 
+	
+	// free the provider
+    if (provider != NULL) 
+    {
+    	g_object_unref(provider);
+    	provider = NULL;
+	}
+	
+	if (main_loop != NULL) 
 	{
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
