@@ -49,7 +49,7 @@ void post_update()
     apply_theme();
     apply_language();
     
-    get_config_file_path(main_config_dir, sizeof(main_config_dir));
+    get_config_dir(main_config_dir, sizeof(main_config_dir));
     
     char config_dir[2048];
     char updater_dir[2048];
@@ -72,7 +72,7 @@ void post_update()
             exit(1);
         }
 
-        const char *initial_version = "0.7.1";
+        const char *initial_version = "v.0.7.1";
         fprintf(file, "%s\n", initial_version);
         fclose(file);
         LOG_INFO("Version file created with version: %s", initial_version);
@@ -109,7 +109,7 @@ void post_update()
         
         /* this are the new version */
         // set a new version before build
-        const char *new_version = "0.7.1"; 
+        const char *new_version = "v.0.7.1"; 
         
         // user information
         snprintf(version_message, sizeof(version_message), g_strcmp0(language, "de") == 0 ? "Alte Version: %s\n\nNeue Version: %s\n\n" : "Old version: %s\n\nNew Version %s\n\n", current_version, new_version);
