@@ -10,7 +10,7 @@
  *	zu erleichtern - preflash_GUI			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -95,10 +95,10 @@ void set_button_labels_preflash(char labels[][30])
 }
 
 
-/* main function of preflash_GUI*/
+/* main function - preflash_GUI*/
 void preflash_GUI(int argc, char *argv[]) 
 {
-    g_print("Log: preflash_GUI\n");
+    LOG_INFO("preflash_GUI");
     GtkWidget *window, *grid, *button;
     char button_labels[6][30];
     
@@ -166,6 +166,6 @@ void preflash_GUI(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end preflash_GUI\n");
+    LOG_INFO("end preflash_GUI");
 }
 
