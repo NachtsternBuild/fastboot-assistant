@@ -74,10 +74,10 @@ static void download_backup(GtkWidget *widget, gpointer data)
 {
     const char *message1 = strcmp(language, "de") == 0 ? "Das Tool 'Open Android Backup' wird heruntergeladen und entpackt." : "The 'Open Android Backup' tool is downloaded and unpacked.";
     show_message(message1);
-	const char path_file[4096];
-    const char run_open_backup[4096];
-    const char main_path_build[4096];
-    const char wget_command[8192];
+	char path_file[4096];
+    char run_open_backup[4096];
+    char main_path_build[4096];
+    char wget_command[8192];
     // load path
     get_config_file_path(path_file, sizeof(path_file));
     // load the path
@@ -97,8 +97,8 @@ static void download_backup(GtkWidget *widget, gpointer data)
 // start backup
 static void open_backup(GtkWidget *widget, gpointer data) 
 {
-    const char bash_command[4096];
-    const char run_open_backup[4096];
+    char bash_command[4096];
+    char run_open_backup[4096];
     // load path
     get_config_file_path(run_open_backup, sizeof(run_open_backup));
     // load the path
