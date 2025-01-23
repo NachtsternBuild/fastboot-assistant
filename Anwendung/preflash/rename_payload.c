@@ -10,7 +10,7 @@
  *	zu erleichtern - rename_payload			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -25,16 +25,31 @@
 #include "flash_function_header.h"
 
 // rename a file to payload.zip
-void rename_payload(const gchar *pay_filename) 
+void rename_payload(const gchar *py_filename) 
 {
-    const gchar *payload_filename = "payload.zip"; 
-    if (rename(pay_filename, payload_filename) == 0) 
+    char rename_payload_path[4096];
+    get_config_file_path(rename_payload_path, sizeof(rename_payload_path));
+    // load the path
+    const char *target_directory_payload = load_path_from_file(rename_payload_path);
+
+    if (target_directory_payload) 
     {
-        g_print("Datei erfolgreich umbenannt: %s -> %s\n", pay_filename, payload_filename);
+        LOG_INFO("Loaded path: %s", target_directory_payload);
+    }
+    
+    const gchar *payload_filename = "payload.zip"; 
+    gchar *target_path_payload = g_strconcat(target_directory_payload, payload_filename, NULL);
+    
+    if (rename(py_filename, target_path_payload) == 0) 
+    {
+        LOG_INFO("File renamed successfully: %s → %s", py_filename, payload_filename);
     } 
     
     else 
     {
-        g_print("Fehler beim Umbenennen der Datei: %s\n", pay_filename);
+        LOG_ERROR("Error renaming the file: %s", py_filename);
     }
+    
+    free(target_directory_payload);
+    g_free(target_path_payload);
 }
