@@ -28,6 +28,9 @@
 void backup_root() 
 {
     LOG_INFO("backup_root");
+
+    apply_theme();
+    apply_language();
     
     const char command[4096];
     const char backup_dir[4096];
