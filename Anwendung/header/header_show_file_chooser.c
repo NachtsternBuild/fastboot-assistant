@@ -70,21 +70,21 @@ void show_file_chooser(GtkWidget *widget, gpointer data)
     // filter for .img-files
     GtkFileFilter *filter_img = gtk_file_filter_new();
     gtk_file_filter_add_pattern(filter_img, "*.img");
-    const char *filter_2_name = strcmp(language, "de") == 0 ? "Image-Dateien" : "Image files"
+    const char *filter_2_name = strcmp(language, "de") == 0 ? "Image-Dateien" : "Image files";
     gtk_file_filter_set_name(filter_img, filter_2_name);
     g_list_store_append(filter_list, filter_img);
     
     // filter for .img.xz-files
     GtkFileFilter *filter_img_xz = gtk_file_filter_new();
     gtk_file_filter_add_pattern(filter_img_xz, "*.img.xz");
-    const char *filter_3_name = strcmp(language, "de") == 0 ? "Komprimierte Image-Dateien (xz)" : "Compressed image files (xz)"
+    const char *filter_3_name = strcmp(language, "de") == 0 ? "Komprimierte Image-Dateien (xz)" : "Compressed image files (xz)";
     gtk_file_filter_set_name(filter_img_xz, filter_3_name);
     g_list_store_append(filter_list, filter_img_xz);
     
     // filter for .zip-files
     GtkFileFilter *filter_zip = gtk_file_filter_new();
     gtk_file_filter_add_pattern(filter_zip, "*.zip");
-    const char *filter_4_name = strcmp(language, "de") == 0 ? "Zip-Dateien" : "Zip files"
+    const char *filter_4_name = strcmp(language, "de") == 0 ? "Zip-Dateien" : "Zip files";
     gtk_file_filter_set_name(filter_zip, filter_4_name);
     g_list_store_append(filter_list, filter_zip);
 
