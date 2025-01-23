@@ -10,7 +10,7 @@
  *	zu erleichtern - backup_function		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "language_check.h"
 #include "program_functions.h"
 
 #define SU "su"
@@ -26,53 +27,56 @@
 
 void backup_root() 
 {
-    g_print("Log: backup_root\n");
-    char command[512];
-    char *homeDir = getenv("HOME");
-    char backup_predir[2048];
-    char backup_dir[2048];	
+    LOG_INFO("backup_root");
+    
+    const char command[4096];
+    const char backup_dir[4096];
+    const char backup_predir[4096];	
+    const char backup_predir_file[4096];
     char *adb = adb_command();
-	
-	// WSL logic
-    const char *user = getenv("USER");
-    if (user == NULL) 
-    {	
-        g_print("Log: Error: Could not determine the user name.\n");
-        exit(1);
-    }
-	// linux logic
-    if (homeDir == NULL) 
+    
+	// get path
+	get_config_file_path(backup_predir_file, sizeof(backup_predir_file));
+    // load the path
+    const char *backup_predir = load_path_from_file(backup_predir_file);
+
+    if (backup_predir) 
     {
-        fprintf(stderr, "Log: Error: Could not find the home directory.\n");
-        exit(1);
+        LOG_INFO("Loaded path: %s", backup_predir);
     }
-    char wsl_setup_base[2048];
-    snprintf(wsl_setup_base, sizeof(wsl_setup_base), "/mnt/c/Users/%s", user);
-	
-	// for linux
-    snprintf(backup_predir, sizeof(backup_predir), "%s", homeDir);
-    // for windows
-    //snprintf(backup_predir, sizeof(backup_predir), "%s", wsl_setup_base);
     // create full path
     snprintf(backup_dir, sizeof(backup_dir), "%s/Downloads/ROM-Install/Backup", backup_predir);
-    g_print("Log: Sicherung aller verfügbaren Partitionen nach %s.\n", backup_dir);
+    LOG_INFO("Backup of all available partitions to %s.", backup_dir);
+    
 	// create backup path
     snprintf(command, sizeof(command), "mkdir -p %s", backup_dir);
     execute_command(command);
+    
 	// wait for a device
     snprintf(command, sizeof(command), "%s wait-for-device", adb);
+    if (!is_android_device_connected()) 
+    {      
+        const char *message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt. Prüfen sie ob ihr Gerät verbunden ist." : "No device recognized. Check whether your device is connected.";
+        show_message(message);
+        LOG_INFO("No device recognized.");
+    }
+    
+    snprintf(command, sizeof(command), "%s wait-for-device", adb);
     execute_command(command);
+    
 	// write partition list to partition.txt
     snprintf(command, sizeof(command), "%s shell %s -c \"ls %s\" > %s/partitions.txt", adb, SU, BLOCK_PATH, backup_dir);
     execute_command(command);
     
+    // file with all partitions
     char file_partition[2048];
     snprintf(file_partition, sizeof(file_partition), "%s/partitions.txt", backup_dir);
     
+    // open file
     FILE *file = fopen(file_partition, "r");
     if (!file) 
     {
-        g_print("Log: Error when opening the partitions.txt.\n");
+        LOG_ERROR("Error when opening the partitions.txt.");
         exit(1); 
     }
 
@@ -81,35 +85,43 @@ void backup_root()
     {
         // delete linebreak
         partition[strcspn(partition, "\r\n")] = 0;
+        
 		// get slots 
         snprintf(command, sizeof(command), "%s shell %s -c \"ls %s%s_a\" >/dev/null 2>&1", adb, SU, BLOCK_PATH, partition);
         int has_slot_a = system(command);
-
-        if (has_slot_a == 0) // for devices with a/b slots
+		
+		// for devices with a/b slots
+        if (has_slot_a == 0)
         {
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
                 snprintf(command, sizeof(command), "%s/%s_%c.img", backup_dir, partition, slot);
-                g_print("Log: Safe %s (slot %c) to %s\n", partition, slot, command);
+                LOG_INFO("Safe %s (slot %c) to %s", partition, slot, command);
 
                 snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", 
                         adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
                 execute_command(command);
             }
         } 
-        else // for devices without a/b slots
+        
+        // for devices without a/b slots
+        else 
         {
             snprintf(command, sizeof(command), "%s/%s.img", backup_dir, partition);
-            g_print("Log: Safe %s to %s\n", partition, command);
+            LOG_INFO("Safe %s to %s", partition, command);
 
             snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", 
                     adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
             execute_command(command);
         }
     }
-
+	
+	// close the file
     fclose(file);
-    g_print("Log: Backup completed. Files are located in %s.\n", backup_dir);
-    g_print("Log: end backup_root\n");
+    
+    const char *message1 = strcmp(language, "de") == 0 ? "Backup beendet." : "Backup completed.";
+    show_message(message1);
+    LOG_INFO("Backup completed. Files are located in %s.", backup_dir);
+    LOG_INFO("end backup_root");
 }
 
