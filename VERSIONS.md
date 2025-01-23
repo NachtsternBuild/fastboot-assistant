@@ -14,10 +14,10 @@
 ## Roadmap for build
 ### 0.7.x
 ---
-| Version     | Feature Freeze        | Version Freeze      | Release                       | Release Date      | Features                          |
-| ----------- | --------------------- | ------------------- | ------------------------------| ----------------- | --------------------------------- |
-| 0.7.1       | 20.01.2025            | 25.01.2025          | :white_check_mark:            | 25.01. / 27.01.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#90](https://github.com/NachtsternBuild/fastboot-assistant/issues/90), [#91](https://github.com/NachtsternBuild/fastboot-assistant/issues/91) |
-| 0.7.2       | 15.02.2025            | 28.02.2025          | &#x1F914;                     | 28.02. / 01.03.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#80](https://github.com/NachtsternBuild/fastboot-assistant/issues/80), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81), fix all errors            |
+| Version     | Feature Freeze        | Version Freeze      | Release                         | Release Date      | Features                          |
+| ----------- | --------------------- | ------------------- | --------------------------------| ----------------- | --------------------------------- |
+| 0.7.1       | 20.01.2025            | 01.02.2025          | :white_check_mark:, prerelease  | 01.02. / 03.02.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#90](https://github.com/NachtsternBuild/fastboot-assistant/issues/90), [#91](https://github.com/NachtsternBuild/fastboot-assistant/issues/91) |
+| 0.7.2       | 15.02.2025            | 28.02.2025          | &#x1F914;                       | 28.02. / 01.03.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#80](https://github.com/NachtsternBuild/fastboot-assistant/issues/80), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81), fix all errors            |
 
 ### 0.6.x
 ---
