@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              lock_unlock_bootloader		 *
@@ -18,7 +18,7 @@
  *-------------------------------------------*
  */
  
-/* headers that used in the main programm */
+/* headers that used the programm */
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
@@ -32,49 +32,49 @@ char bootloader_lock_command[2048];
 // button 1 - unlock bootloader new
 static void bootloader_new(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: bootloader_new\n");
+    LOG_INFO("bootloader_new");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way. \nStart procedure to open the bootloader.";
     show_message(message);
     
     char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s flashing unlock", device_command);
-    g_print("Log: Run: %s\n", bootloader_lock_command);
+    LOG_INFO("Run: %s", bootloader_lock_command);
     command_with_spinner(bootloader_lock_command);
     free(device_command);
-    g_print("Log: end bootloader_new\n");
+    LOG_INFO("end bootloader_new");
 }
 
 // button 2 - unlock bootloader old
 static void bootloader_old(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: bootloader_old\n");
+    LOG_INFO("bootloader_old");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way.\n\nStart the process to open the bootloader.";
     show_message(message);
     
     char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s oem unlock", device_command);
-    g_print("Log: Run: %s\n", bootloader_lock_command);
+    LOG_INFO("Run: %s", bootloader_lock_command);
     command_with_spinner(bootloader_lock_command);
     free(device_command);
-    g_print("Log: end bootloader_old\n");
+    LOG_INFO("end bootloader_old");
 }
 
 // button 3 - lock bootloader
 static void bootloader_lock(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: bootloader_lock\n");
+    LOG_INFO("bootloader_lock");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu schließen." : "Some chipsets do not support this process in this way.\n\nStart the process to close the bootloader.";
     show_message(message);
     
     char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s flashing lock", device_command);
-    g_print("Log: Run: %s\n", bootloader_lock_command);
+    LOG_INFO("Run: %s", bootloader_lock_command);
     command_with_spinner(bootloader_lock_command);
     free(device_command);
-    g_print("Log: end bootloader_lock\n");
+    LOG_INFO("end bootloader_lock");
 }
 
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_bootloader(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
@@ -92,10 +92,10 @@ void set_button_labels_bootloader(char labels[][30])
     }
 }
 
-/* start main programm - lock_unlock_bootloader*/
+/* main programm - lock_unlock_bootloader*/
 void lock_unlock_bootloader(int argc, char *argv[])
 {
-	g_print("Log: lock_unlock_bootloader\n");
+	LOG_INFO("lock_unlock_bootloader");
 	GtkWidget *window, *grid, *button;
     char button_labels[3][30];
     
@@ -152,5 +152,5 @@ void lock_unlock_bootloader(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end lock_unlock_bootloader\n");
+    LOG_INFO("end lock_unlock_bootloader");
 }
