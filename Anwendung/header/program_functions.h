@@ -91,10 +91,10 @@ void close_window_mainloop(GtkWidget *widget, gpointer data);
 char *execute_command();
 
 // function that write the log to a file
-void write_log() 
+void write_log();
 
 // function to create dirs, use g_mkdir
-void create_directory(const char *path) 
+void create_directory(const char *path); 
 
 // functions for standard path of the program
 void save_path_to_file(const char *path, const char *file_path);
