@@ -10,7 +10,7 @@
  *	zu erleichtern - erase_data				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,7 +27,7 @@ char erase_data_command[2048];
 // Function to erase user data
 void erase_data(GtkWidget *widget, gpointer data) 
 {
-    g_print("Log: erase_data\n");
+    LOG_INFO("erase_data");
     apply_language();
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
 
@@ -39,9 +39,9 @@ void erase_data(GtkWidget *widget, gpointer data)
     snprintf(erase_data_command, sizeof(erase_data_command), "%s erase userdata", device_command);
     // I don't now if you need this command
     // system("fastboot erase metadata");
-    g_print("Log: Run: %s", erase_data_command);
+    LOG_INFO("Run: %s", erase_data_command);
     command_with_spinner(erase_data_command);
     free(device_command);
-    g_print("Log: end erase_data\n");
+    LOG_INFO("end erase_data");
 }
 
