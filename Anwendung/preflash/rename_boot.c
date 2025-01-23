@@ -10,7 +10,7 @@
  *	zu erleichtern - rename_boot			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -27,11 +27,14 @@
 // rename a file to boot.img
 void rename_boot(const gchar *bo_filename) 
 {
-    gchar *target_directory_boot = get_home("~/Downloads/ROM-Install/");
-    if (target_directory_boot == NULL) 
+    char rename_boot_path[4096];
+    get_config_file_path(rename_boot_path, sizeof(rename_boot_path));
+    // load the path
+    const char *target_directory_boot = load_path_from_file(rename_boot_path);
+
+    if (target_directory_boot) 
     {
-        g_print("Fehler beim Erweitern des Verzeichnispfads.\n");
-        return;
+        LOG_INFO("Loaded path: %s", target_directory_boot);
     }
     
     const gchar *boot_filename = "boot.img"; 
@@ -39,13 +42,14 @@ void rename_boot(const gchar *bo_filename)
     
     if (rename(bo_filename, target_path_boot) == 0) 
     {
-        g_print("Datei erfolgreich umbenannt: %s -> %s\n", bo_filename, boot_filename);
+        LOG_INFO("File renamed successfully: %s → %s", bo_filename, boot_filename);
     } 
     
     else 
     {
-        g_print("Fehler beim Umbenennen der Datei: %s\n", bo_filename);
+        LOG_ERROR("Error renaming the file: %s", bo_filename);
     }
-    g_free(target_directory_boot);
+    
+    free(target_directory_boot);
     g_free(target_path_boot);
 }
