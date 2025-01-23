@@ -10,7 +10,7 @@
  *	zu erleichtern - prepare				 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -55,7 +55,7 @@ void set_button_labels_prepare(char labels[][30])
 /* main function of prepare*/
 void prepare(int argc, char *argv[]) 
 {
-    g_print("Log: prepare\n");
+    LOG_INFO("prepare");
     GtkWidget *window, *grid, *button;
     char button_labels[6][30];
     
@@ -123,5 +123,5 @@ void prepare(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end prepare\n");
+    LOG_INFO("end prepare");
 }
