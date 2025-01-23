@@ -10,7 +10,7 @@
  *	zu erleichtern - backup_function		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -71,7 +71,7 @@ void set_button_labels_backup(char labels[][30])
 /* main function of the backup_function */
 void backup_function(int argc, char *argv[]) 
 {
-    g_print("Log: backup_function\n");
+    LOG_INFO("backup_function");
     GtkWidget *window, *grid, *button;
     char button_labels[2][30];
     
@@ -127,5 +127,5 @@ void backup_function(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end backup_function\n");
+    LOG_INFO("end backup_function");
 }
