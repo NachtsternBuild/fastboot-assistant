@@ -10,7 +10,7 @@
  *	zu erleichtern - rename_recovery		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -25,28 +25,32 @@
 #include "flash_function_header.h"
 
 // rename a file to recovery.img
-void rename_recovery(const gchar *rec_filename) 
+void rename_recovery(const gchar *re_filename) 
 {
-    gchar *target_directory_recovery = get_home("~/Downloads/ROM-Install/");
-    if (target_directory_recovery == NULL) 
+    char rename_recovery_path[4096];
+    get_config_file_path(rename_recovery_path, sizeof(rename_recovery_path));
+    // load the path
+    const char *target_directory_recovery = load_path_from_file(rename_recovery_path);
+
+    if (target_directory_recovery) 
     {
-        g_print("Fehler beim Erweitern des Verzeichnispfads.\n");
-        return;
+        LOG_INFO("Loaded path: %s", target_directory_recovery);
     }
     
-    const gchar *recovery_filename = "recovery.img";
+    const gchar *recovery_filename = "recovery.img"; 
     gchar *target_path_recovery = g_strconcat(target_directory_recovery, recovery_filename, NULL);
-     
-    if (rename(rec_filename, target_path_recovery) == 0) 
+    
+    if (rename(re_filename, target_path_recovery) == 0) 
     {
-        g_print("Datei erfolgreich umbenannt: %s -> %s\n", rec_filename, recovery_filename);
+        LOG_INFO("File renamed successfully: %s → %s", re_filename, recovery_filename);
     } 
     
     else 
     {
-        g_print("Fehler beim Umbenennen der Datei: %s\n", rec_filename);
+        LOG_ERROR("Error renaming the file: %s", re_filename);
     }
-    g_free(target_directory_recovery);
+    
+    free(target_directory_recovery);
     g_free(target_path_recovery);
 }
 
