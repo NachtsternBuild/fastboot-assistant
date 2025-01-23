@@ -10,7 +10,7 @@
  *	zu erleichtern - rename_vendor			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -25,27 +25,31 @@
 #include "flash_function_header.h"
 
 // rename a file to vendor.img
-void rename_vendor(const gchar *ven_filename) 
+void rename_vendor(const gchar *ve_filename) 
 {
-    gchar *target_directory_vendor = get_home("~/Downloads/ROM-Install/");
-    if (target_directory_vendor == NULL) 
+    char rename_vendor_path[4096];
+    get_config_file_path(rename_vendor_path, sizeof(rename_vendor_path));
+    // load the path
+    const char *target_directory_vendor = load_path_from_file(rename_vendor_path);
+
+    if (target_directory_vendor) 
     {
-        g_print("Fehler beim Erweitern des Verzeichnispfads.\n");
-        return;
+        LOG_INFO("Loaded path: %s", target_directory_vendor);
     }
     
-    const gchar *vendor_filename = "vendor.img";
+    const gchar *vendor_filename = "vendor.img"; 
     gchar *target_path_vendor = g_strconcat(target_directory_vendor, vendor_filename, NULL);
-     
-    if (rename(ven_filename, target_path_vendor) == 0) 
+    
+    if (rename(ve_filename, target_path_vendor) == 0) 
     {
-        g_print("Datei erfolgreich umbenannt: %s -> %s\n", ven_filename, vendor_filename);
+        LOG_INFO("File renamed successfully: %s → %s", ve_filename, vendor_filename);
     } 
     
     else 
     {
-        g_print("Fehler beim Umbenennen der Datei: %s\n", ven_filename);
+        LOG_ERROR("Error renaming the file: %s", ve_filename);
     }
-    g_free(target_directory_vendor);
+    
+    free(target_directory_vendor);
     g_free(target_path_vendor);
 }
