@@ -155,7 +155,7 @@ void about(int argc, char *argv[])
     gtk_box_append(GTK_BOX(page2), button_about2_5);
 
     // connect everything
-    g_signal_connect(button_about2_4, "clicked", G_CALLBACK(), notebook);
+    g_signal_connect(button_about2_4, "clicked", G_CALLBACK(info_tools), notebook);
     g_signal_connect(button_about2_5, "clicked", G_CALLBACK(next_page), notebook);   
     
     // add page to the notebook
