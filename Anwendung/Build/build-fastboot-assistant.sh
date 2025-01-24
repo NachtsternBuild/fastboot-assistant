@@ -95,6 +95,8 @@ create_target_dir() {
                 echo "Erstelle Verzeichnis..."
                 rm -rf "$target_dir"
                 mkdir "$target_dir"
+                echo "Setze ccache Speichergröße..."
+                ccache -M 5G
                 build_info "Fertig."
                 break
                 ;;
@@ -199,6 +201,7 @@ build_snap() {
     start_info "Building Snap package..."
     echo "Remove old builds..."
 	rm -r "$build_dir_snap"
+	snapcraft clean
 	
 	echo "Create required directories..."
 	mkdir -p "$build_dir_snap"
@@ -217,7 +220,7 @@ build_snap() {
     # Create the snap package using snapcraft
     echo "Starting snap build..."
     cd "$build_dir_snap" || { error_msg "Failed to change to $build_dir_snap"; exit 1; }
-    snapcraft --use-lxd
+    snapcraft
 
     if [ -f "$build_dir_snap/$snap_name_${VERSION}_amd64.snap" ]; then
         echo "Snap package built successfully: $build_dir_snap/$snap_name_${VERSION}_amd64.snap"
@@ -278,6 +281,7 @@ build_program_linux() {
     	echo "Kopiere alle Dateien nach $target_dir..."
     	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir"; do
         	find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+        	rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
     	done
 		echo "Alle Dateien wurden nach $target_dir kopiert."
 		
