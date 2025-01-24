@@ -31,11 +31,13 @@ void write_log()
 {
     char log_dir[4096];
     char log_file[4096];
+    char create_log_dir[4096];
     
     // get config dir
     get_config_dir(log_dir, sizeof(log_dir));
     
     // log file with path
+    snprintf(create_log_dir, sizeof(create_log_dir), "%s/log", log_dir);
     snprintf(log_file, sizeof(log_file), "%s/log/log.txt", log_dir);
     LOG_INFO("Log-file: %s", log_file);
 
@@ -43,7 +45,7 @@ void write_log()
     // only if it not exsists
     if (access(log_dir, F_OK) == -1) 
     {
-        mkdir(log_dir, 0755);
+        create_directory(create_log_dir);
     }
 
     // open log file or create it
