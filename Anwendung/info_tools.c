@@ -128,7 +128,7 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     // function to get the infos
     for (int i = 0; i < 8; i++) 
     {
-        get_package_version(commands_system[i], informations[i], sizeof(informations[i]));
+        get_package_status(commands_system[i], informations[i], sizeof(informations[i]), &is_installed[i]);
     }
     
     // function to get the installed packages
@@ -151,7 +151,7 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_window), box);
 	
 	// system informations
-	GtkWidget *system_info_title_label = gtk_button_new_with_label(version_package);
+	GtkWidget *system_info_title_label = gtk_button_new_with_label(system_infos);
     gtk_box_append(GTK_BOX(box), system_info_title_label);
     
     GtkWidget *assistant_version_label = gtk_button_new_with_label("Fastboot-Assistant: v.0.7.1");
@@ -168,7 +168,6 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     GtkWidget *version_title_label = gtk_button_new_with_label(version_package);
     gtk_box_append(GTK_BOX(box), version_title_label);
     
-
     // add version info labels to the window
     // packageinforamtions with labels
     for (int i = 0; i < 12; i++) 
