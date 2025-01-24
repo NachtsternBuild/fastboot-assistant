@@ -34,7 +34,6 @@ void backup_root()
     
     char command[4096];
     char backup_dir[4096];
-    char backup_predir[4096];	
     char backup_predir_file[4096];
     const char *adb = adb_command();
     
