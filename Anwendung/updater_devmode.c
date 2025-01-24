@@ -22,21 +22,21 @@
 #include "language_check.h"
 #include "program_functions.h"
 
-char output_file[2048];
-char package_url[2048];
-char bash_script_path[2048];
-GtkWidget *update_window_install;
-GtkWidget *info_button;
+char output_file_devmode[2048];
+char package_url_devmode[2048];
+char bash_script_path_devmode[2048];
+GtkWidget *update_window_install_devmode;
+GtkWidget *info_button_devmode;
 
 // Function to quit the application - updater
-gboolean quit_application_updater(gpointer data)
+gboolean quit_application_updater_devmode(gpointer data)
 {
     exit(1);
     return FALSE;  // Return FALSE to ensure the timeout callback is called only once
 }
 
 // Function to create and execute the Bash script
-void create_and_run_bash_script(const char *package_url, const char *package_type)
+void create_and_run_bash_script_devmode(const char *package_url_devmode, const char *package_type)
 {
     char updater_dir[2048];
 	char updater_path[2048];
@@ -56,10 +56,10 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
     }
 
     // Path to the Bash script
-    snprintf(bash_script_path, sizeof(bash_script_path), "%s/install_update.sh", updater_path);
+    snprintf(bash_script_path_devmode, sizeof(bash_script_path_devmode), "%s/install_update.sh", updater_path);
 
     // Write Bash script content
-    FILE *script_file = fopen(bash_script_path, "w");
+    FILE *script_file = fopen(bash_script_path_devmode, "w");
     if (!script_file)
     {
         LOG_ERROR("Failed to create the Bash script.\n");
@@ -69,7 +69,7 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
 	const char *package = ".deb";
 	//const char *package = ".zip";
 	LOG_INFO("%s", package);
-	LOG_INFO("%s", package_url);
+	LOG_INFO("%s", package_url_devmode);
 	LOG_INFO("%s", package_type);
 	
     fprintf(script_file,
@@ -125,7 +125,7 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
 
     // Set executable permissions
     char chmod_command[2048];
-    snprintf(chmod_command, sizeof(chmod_command), "chmod a+x %s", bash_script_path);
+    snprintf(chmod_command, sizeof(chmod_command), "chmod a+x %s", bash_script_path_devmode);
     if (system(chmod_command) != 0)
     {
         LOG_ERROR("Failed to set executable permissions.");
@@ -133,16 +133,16 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
     }
     
     char cat_command[2048];
-    snprintf(cat_command, sizeof(cat_command), "cat %s", bash_script_path);
+    snprintf(cat_command, sizeof(cat_command), "cat %s", bash_script_path_devmode);
     LOG_INFO("Run: %s\n", cat_command);
     system(cat_command);
 
     // Run the script in a new terminal
-    open_terminal_by_desktop(bash_script_path);
+    open_terminal_by_desktop(bash_script_path_devmode);
 }
 
 // function to extract the version from the url
-const char* extract_version_from_url(const char* url) 
+const char* extract_version_from_url_devmode(const char* url) 
 {
     const char* version_start = strstr(url, "/releases/download/");
     if (version_start) 
@@ -209,13 +209,13 @@ void updater_devmode(void)
     const char *package_type = ".deb";
     //const char *package_type = ".zip"; 
 
-    get_latest_release_url(repo, package_type, package_url, sizeof(package_url));
+    get_latest_release_url_devmode(repo, package_type, package_url_devmode, sizeof(package_url_devmode));
 
-    if (strlen(package_url) > 0)
+    if (strlen(package_url_devmode) > 0)
     {
- 		LOG_INFO("Latest version URL: %s", package_url);
+ 		LOG_INFO("Latest version URL: %s", package_url_devmode);
                 
-        const char* version = extract_version_from_url(package_url);
+        const char* version = extract_version_from_url_devmode(package_url_devmode);
         if (version) 
         {
             LOG_INFO("Extracted version: %s", version);
@@ -231,12 +231,12 @@ void updater_devmode(void)
 		
 		get_config_file_path(output_directory, sizeof(output_directory));
 
-        snprintf(output_file, sizeof(output_file), "%s/updater/fastboot-assistant%s", output_directory, package_type);
+        snprintf(output_file_devmode, sizeof(output_file_devmode), "%s/updater/fastboot-assistant%s", output_directory, package_type);
         snprintf(updater_version_file, sizeof(updater_version_file), "%s/config/version.txt", output_directory);
         
         // function to verify package type
-        LOG_INFO("Package downloading: %s", output_file);
-        if (!verify_package_type(output_file, package_type)) 
+        LOG_INFO("Package downloading: %s", output_file_devmode);
+        if (!verify_package_type(output_file_devmode, package_type)) 
         {
             LOG_ERROR("The downloaded package is not a %s package.", package_type);
             exit(1);
@@ -289,7 +289,7 @@ void updater_devmode(void)
         GtkWidget *confirm_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
         gtk_box_append(GTK_BOX(vbox), confirm_button);
 
-        g_signal_connect(confirm_button, "clicked", G_CALLBACK(create_and_run_bash_script), package_url);
+        g_signal_connect(confirm_button, "clicked", G_CALLBACK(create_and_run_bash_script_devmode), package_url_devmode);
 			
         GtkWidget *cancel_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Später Installieren" : "Install later");
         gtk_box_append(GTK_BOX(vbox), cancel_button);
