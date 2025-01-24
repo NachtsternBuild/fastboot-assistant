@@ -33,7 +33,7 @@ void recovery_img(GtkWidget *widget, GtkWindow *window)
 // function to flash recovery.img (heimdall)
 void recovery_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "RECOVERY", "recovery.img", NULL);
+    flash_heimdall(widget, window, "RECOVERY", "recovery.img");
 }
 
 // Function to set up button labels based on the language
