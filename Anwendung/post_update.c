@@ -110,22 +110,22 @@ void post_update()
         /* this are the new version */
         // set a new version before build
         const char *new_version = "v.0.7.1"; 
-        
+        char version_message[4096];
         // user information
         snprintf(version_message, sizeof(version_message), g_strcmp0(language, "de") == 0 ? "Alte Version: %s\n\nNeue Version: %s\n\n" : "Old version: %s\n\nNew Version %s\n\n", current_version, new_version);
         
 		show_message(version_message);
 		
 		// write a new version to version file
-		FILE *file = fopen(version_file, "w");
-		if (!file) 
+		FILE *new_file = fopen(version_file, "w");
+		if (!new_file) 
 		{
     		LOG_ERROR("Failed to write new version to file: %s", version_file);
     		exit(1);
 		}
 
-		fprintf(file, "%s\n", new_version);
-		fclose(file);
+		fprintf(new_file, "%s\n", new_version);
+		fclose(new_file);
 		LOG_INFO("Version file updated with new version: %s", new_version);
 
 		// remove the updater dir
