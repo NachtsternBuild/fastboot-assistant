@@ -132,11 +132,9 @@ void open_url();
 // there are new function, that replace some of these functions
 void get_config_dir(char *config_folder, size_t size); // new
 void get_config_file_path(char *config_file, size_t size); // new
-/*
 void set_main_dir(); // this
 void get_wsl_directory(char* wsl_dir, size_t size); // this
 void set_main_dir_with_wsl(char *path, size_t size, const char *filename); // this
-*/
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 int directory_exists(const char *path);
 void delete_files_in_dir();
