@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include "program_functions.h"
 
 // Function to construct the full path for an image file in the Downloads directory
 void set_main_dir(char *buffer, size_t buffer_size, const char *filename) 
