@@ -57,19 +57,19 @@ void super_img(GtkWidget *widget, GtkWindow *window)
 // function to flash preloader.bin (heimdall)
 void preloader_bin_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "PRELOADER", "preloader.bin", NULL);
+    flash_heimdall(widget, window, "PRELOADER", "preloader.bin");
 }
 
 // function to flash preloader.img (heimdall)
 void preloader_img_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "PRELOADER", "preloader.img", NULL);
+    flash_heimdall(widget, window, "PRELOADER", "preloader.img");
 }
 
 // function to flash super.img (heimdall)
 void super_img_heimdall(GtkWidget *widget, GtkWindow *window)
 {
-    flash_heimdall(widget, window, "SUPER", "super.img", NULL);
+    flash_heimdall(widget, window, "SUPER", "super.img");
 }
 
 // Function to set up button labels based on the language
