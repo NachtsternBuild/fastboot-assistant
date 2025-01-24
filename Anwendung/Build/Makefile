@@ -2,7 +2,7 @@
 # Sweet Unix
 
 # compiler
-CC = gcc
+CC = ccache gcc
 
 # compiler flags
 CFLAGS = -Wall `pkg-config --cflags gtk4 libsecret-1`
