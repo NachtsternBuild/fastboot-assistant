@@ -135,14 +135,13 @@ void flash_list_images()
 {
     LOG_INFO("flash_other");
 	
-    char other_dir[2048];
     char directory[2048];
 
 	// snprintf(other_dir, sizeof(other_dir), "%s", wsl_setup_base);
-	const char config_file[2048];
-    get_config_file_path(config_file, sizeof(config_file));
+	char config_file_images[2048];
+    get_config_file_path(config_file_images, sizeof(config_file_images));
     // load the path
-    const char *other_dir = load_path_from_file(config_file);
+    const char *other_dir = load_path_from_file(config_file_images);
 
     if (other_dir) 
     {
@@ -151,7 +150,7 @@ void flash_list_images()
     snprintf(directory, sizeof(directory), "%s/Images", other_dir);
     flash_images_in_directory(directory);
     
-    g_free(other_dir); // free the info (because g_file_get_contents was used)
+    free(other_dir); // free the info (because g_file_get_contents was used)
     free(directory);
     LOG_INFO("end flash_other");
 }
