@@ -169,6 +169,7 @@ void get_latest_release_url_stable(const char *repo, const char *package_type, c
 {
     LOG_INFO("get_latest_release_url");
     char command[2048];
+    char pre_command[2048];
     // get the url from the github api
     snprintf(command, sizeof(command),
              "curl -s https://api.github.com/repos/%s/releases/latest | grep 'browser_download_url' | grep '%s' | head -n 1 | cut -d '\"' -f 4",
@@ -211,7 +212,7 @@ void updater_stable(void)
     const char *package_type = ".deb";
     //const char *package_type = ".zip"; 
 
-    get_latest_release_url(repo, package_type, package_url, sizeof(package_url));
+    get_latest_release_url_stable(repo, package_type, package_url, sizeof(package_url));
 
     if (strlen(package_url) > 0)
     {
