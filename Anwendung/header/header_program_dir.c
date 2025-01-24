@@ -63,10 +63,19 @@ char *load_path_from_file(const char *file_path)
 // callback for dialog for dirs
 void on_folder_selected(GtkFileChooser *chooser, gpointer user_data) 
 {
-    char *folder_path = gtk_file_chooser_get_filename(chooser);
-    if (!folder_path) 
+    GFile *file = gtk_file_chooser_get_file(chooser);
+    if (!file) 
     {
         LOG_ERROR("No folder selected.");
+        return;
+    }
+
+    char *folder_path = g_file_get_path(file);
+    g_object_unref(file); // GFile freigeben
+
+    if (!folder_path) 
+    {
+        LOG_ERROR("Failed to get folder path.");
         return;
     }
 
@@ -92,7 +101,23 @@ void on_folder_selected(GtkFileChooser *chooser, gpointer user_data)
     g_free(folder_path);
 }
 
-/* main function - program_dir */
+// Callback zum Öffnen des Dialogs
+void on_open_folder_dialog(GtkWidget *button, gpointer user_data) 
+{
+    GtkWidget *dialog = gtk_file_chooser_dialog_new(
+        "Select Folder",
+        NULL, // Kein Parent
+        GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
+        "_Cancel", GTK_RESPONSE_CANCEL,
+        "_Select", GTK_RESPONSE_ACCEPT,
+        NULL);
+
+    g_signal_connect(dialog, "response", G_CALLBACK(on_folder_selected), NULL);
+
+    gtk_widget_show(dialog); // Statt veralteter Methoden
+}
+
+// Hauptfunktion ersetzt durch program_dir
 void program_dir(int argc, char *argv[]) 
 {
     gtk_init();
@@ -100,44 +125,37 @@ void program_dir(int argc, char *argv[])
     // get language and theme
     apply_theme();
     apply_language();
-	
-	const char *folder_text = strcmp(language, "de") == 0 ? "Ordner auswählen" : "Select folder";
-	const char *cancel_text = strcmp(language, "de") == 0 ? "_Abbrechen" : "_Cancel";
-    const char *select_text = strcmp(language, "de") == 0 ? "_Auswählen" : "_Select";
-	
-    // create dialog for dirs
-    GtkWidget *dialog = gtk_file_chooser_dialog_new(
-        folder_text,
-        NULL,
-        GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-        cancel_text, GTK_RESPONSE_CANCEL,
-        select_text, GTK_RESPONSE_ACCEPT,
-        NULL
-    );
-	
-	// run dialog
-    if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) 
-    {
-        on_folder_selected(GTK_FILE_CHOOSER(dialog), NULL);
-    }
-	
-	// destroy dialog
-    gtk_widget_destroy(dialog);
 
-	// example way to use and get the path
-	// use this in a modified way in the program
-    const char config_file[2048];
+    char config_file[2048];
     get_config_file_path(config_file, sizeof(config_file));
+
     // load the path
-    const char *loaded_path = load_path_from_file(config_file);
+    char *loaded_path = load_path_from_file(config_file);
 
     if (loaded_path) 
     {
-        LOG_INFO("Loaded path: %s", loaded_path);
-        g_free(loaded_path); // free the info (because g_file_get_contents was used)
+        g_print("Loaded path: %s\n", loaded_path);
+        g_free(loaded_path); // Typ-Korrektur
     }
-	
-	// Let's see, if I'll use this as int or void
-    // return EXIT_SUCCESS;
+
+    GtkWidget *button = gtk_button_new_with_label("Select Folder");
+    g_signal_connect(button, "clicked", G_CALLBACK(on_open_folder_dialog), NULL);
+
+    gtk_widget_set_visible(button, TRUE); // Statt gtk_widget_show
+    // run GTK main loop
+    g_main_loop_run(main_loop); 
+    
+    // free the provider
+    if (provider != NULL) 
+    {
+    	g_object_unref(provider);
+    	provider = NULL;
+	}
+
+	if (main_loop != NULL) 
+	{
+    	g_main_loop_unref(main_loop);
+    	main_loop = NULL;
+	}
 }
 
