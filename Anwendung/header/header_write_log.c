@@ -62,6 +62,7 @@ void write_log()
 
     // close the log file
     close(log_fd);
+    LOG_INFO("Close Log.");
 }
 /*
 * Usage:
