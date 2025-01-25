@@ -60,19 +60,17 @@ char *load_path_from_file(const char *file_path)
     return content;
 }
 
-// callback for dialog for dirs
-void on_folder_selected(GtkFileChooser *chooser, gpointer user_data) 
+// callback for dialog for the dialog and get the setup path
+static void on_folder_selected(GtkFileDialog *dialog, GAsyncResult *res, gpointer user_data) 
 {
-    GFile *file = gtk_file_chooser_get_file(chooser);
-    if (!file) 
+    g_autoptr(GFile) folder = gtk_file_dialog_select_folder_finish(dialog, res, NULL);
+    if (!folder) 
     {
         LOG_ERROR("No folder selected.");
         return;
     }
 
-    char *folder_path = g_file_get_path(file);
-    g_object_unref(file); // GFile freigeben
-
+    g_autofree char *folder_path = g_file_get_path(folder);
     if (!folder_path) 
     {
         LOG_ERROR("Failed to get folder path.");
@@ -83,13 +81,14 @@ void on_folder_selected(GtkFileChooser *chooser, gpointer user_data)
     char full_path[2048];
     snprintf(full_path, sizeof(full_path), "%s/ROM-Install", folder_path);
 
-    // create path
+    // create directory for ROM-Install
     create_directory(full_path);
 
     // get config file path
     char config_dir[2048];
     get_config_dir(config_dir, sizeof(config_dir));
-    // mkdir
+
+    // create config directory
     create_directory(config_dir);
 
     char config_file[2048];
@@ -98,64 +97,26 @@ void on_folder_selected(GtkFileChooser *chooser, gpointer user_data)
     // save the path
     save_path_to_file(full_path, config_file);
 
-    g_free(folder_path);
+    LOG_INFO("Folder setup completed successfully: %s", full_path);
 }
 
-// Callback zum Öffnen des Dialogs
-void on_open_folder_dialog(GtkWidget *button, gpointer user_data) 
+
+// function to show file chooser
+void show_folder_chooser(GtkWidget *widget, gpointer data) 
 {
-    GtkWidget *dialog = gtk_file_chooser_dialog_new(
-        "Select Folder",
-        NULL, // Kein Parent
-        GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER,
-        "_Cancel", GTK_RESPONSE_CANCEL,
-        "_Select", GTK_RESPONSE_ACCEPT,
-        NULL);
-
-    g_signal_connect(dialog, "response", G_CALLBACK(on_folder_selected), NULL);
-
-    gtk_widget_show(dialog); // Statt veralteter Methoden
-}
-
-// Hauptfunktion ersetzt durch program_dir
-void program_dir(int argc, char *argv[]) 
-{
-    gtk_init();
-
-    // get language and theme
-    apply_theme();
-    apply_language();
-
-    char config_file[2048];
-    get_config_file_path(config_file, sizeof(config_file));
-
-    // load the path
-    char *loaded_path = load_path_from_file(config_file);
-
-    if (loaded_path) 
+    GtkWindow *parent_window = GTK_WINDOW(gtk_widget_get_root(widget));
+    if (!GTK_IS_WINDOW(parent_window)) 
     {
-        g_print("Loaded path: %s\n", loaded_path);
-        g_free(loaded_path); // Typ-Korrektur
+        parent_window = NULL;
     }
 
-    GtkWidget *button = gtk_button_new_with_label("Select Folder");
-    g_signal_connect(button, "clicked", G_CALLBACK(on_open_folder_dialog), NULL);
+    apply_language();
 
-    gtk_widget_set_visible(button, TRUE); // Statt gtk_widget_show
-    // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
-    {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
+    // create folder chooser dialog
+    GtkFileDialog *dialog = gtk_file_dialog_new();
 
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+    // show dialog for folder selection and connect callback
+    gtk_file_dialog_select_folder(dialog, parent_window, NULL, (GAsyncReadyCallback)on_folder_selected, data);
 }
+
 
