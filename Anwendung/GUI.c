@@ -185,15 +185,22 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     const char *content = "Fisch";
 	char fish_path[2048];
 	char setup_dir[2048];
-	char *homeDir = getenv("HOME");
+	char setup_file[2048];
 	
-	get_config_file_path(fish_path, sizeof(fish_path));
-	LOG_INFO("Config file path: %s\n", fish_path);
-
+	get_config_dir(fish_path, sizeof(fish_path));
+	snprintf(setup_dir, sizeof(setup_dir), "%s/config", fish_path);
+	LOG_INFO("Config path: %s", setup_dir);
+	// create dir 
+	create_directory(setup_dir);
+	
+	// create config file
+	snprintf(setup_file, sizeof(setup_file), "%s/config.txt", setup_dir);
+	
+	LOG_INFO("Get setup info");
 	FILE *file;
-
+	
 	// check if file exsists
-	if ((file = fopen(fish_path, "r")) != NULL) 
+	if ((file = fopen(setup_file, "r")) != NULL) 
 	{
     	// file exsists
     	fclose(file);
@@ -205,16 +212,13 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 	{
 	    // remove logic and give this to the first setup
 	    // file not exsists
-	    /*
-    	file = fopen(fish_path, "w");
+    	file = fopen(setup_file, "w");
     	if (file == NULL) 
     	{
-    	    fprintf(stderr, "Error: Could not create the file.\n");
+    	    LOG_ERROR("Could not create the file.");
     	    exit(1);  // close the program if there are errors
     	}
     	fprintf(file, "%s", content);
-    	fclose(file);
-    	*/
     	fclose(file);
     	LOG_INFO("fish");
     	// run setup
@@ -300,7 +304,7 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 int main(int argc, char *argv[]) 
 {
 	write_log();
-    LOG_INFO("start fastboot-assistant");
+    LOG_INFO("\n\nstart fastboot-assistant\n");
 	GtkApplication *app;
     int status;
 
@@ -309,6 +313,6 @@ int main(int argc, char *argv[])
     status = g_application_run (G_APPLICATION (app), argc, argv);
     g_object_unref(app);
 
-    LOG_INFO("end fastboot-assistant");
+    LOG_INFO("\nend fastboot-assistant\n\n");
     return status;
 }
