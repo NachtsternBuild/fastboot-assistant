@@ -24,7 +24,7 @@
 
 void instruction_gsi(int argc, char *argv[]) 
 {	
-	g_print("Log: instruction_gsi\n");
+	LOG_INFO("instruction_gsi");
 	
 	// GTK init
     gtk_init();
@@ -136,5 +136,5 @@ void instruction_gsi(int argc, char *argv[])
     	main_loop = NULL;
 	}
 	
-    g_print("Log: end instruction_gsi\n");
+    LOG_INFO("end instruction_gsi");
 }
