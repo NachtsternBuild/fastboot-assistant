@@ -12,7 +12,7 @@
  *			instruction_prepare_flash		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -61,7 +61,7 @@ void set_button_labels_instruction_prepare_flash(char labels[][30])
 /* start main programm - instruction_prepare_flash */
 void instruction_prepare_flash(int argc, char *argv[])
 {
-	g_print("Log: instruction_prepare_flash\n");
+	LOG_INFO("instruction_prepare_flash");
 	GtkWidget *window, *grid, *button;
     char button_labels[2][30];
     
@@ -117,5 +117,5 @@ void instruction_prepare_flash(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: End of instruction_prepare_flash\n");
+    LOG_INFO("end instruction_prepare_flash");
 }
