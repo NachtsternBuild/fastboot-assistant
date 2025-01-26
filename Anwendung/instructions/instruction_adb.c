@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_adb		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -25,7 +25,7 @@
 /* main function */
 void instruction_adb(int argc, char *argv[]) 
 {
-	g_print("Log: instruction_adb\n");
+	LOG_INFO("instruction_adb");
 	// GTK init
     gtk_init();
 	main_loop = g_main_loop_new(NULL, FALSE);
@@ -146,5 +146,5 @@ void instruction_adb(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end instruction_adb\n");
+    LOG_INFO("end instruction_adb");
 }
