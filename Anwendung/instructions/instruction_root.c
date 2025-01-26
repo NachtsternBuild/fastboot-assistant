@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_root		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -25,24 +25,24 @@
 // function to open the GitHub website from magisk
 void magisk(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: magisk\n");
+    LOG_INFO("magisk");
     const char *magisk_url = "https://github.com/topjohnwu/Magisk";
 	open_url(magisk_url);
-	g_print("Log: end magisk\n");
+	LOG_INFO("end magisk");
 }
 
 // open the downloads from the magisk apk
 void magisk_apk(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: magisk_apk\n");
+    LOG_INFO("magisk_apk");
     const char *magisk_apk_url = "https://github.com/topjohnwu/Magisk/releases/download/v27.0/Magisk-v27.0.apk";    
 	open_url(magisk_apk_url);
-	g_print("Log: end magisk_apk\n");
+	LOG_INFO("end magisk_apk");
 }
 
 void instruction_root(int argc, char *argv[]) 
 {
-	g_print("Log: instruction_root\n");
+	LOG_INFO("instruction_root");
 	
 	// GTK init
     gtk_init();
@@ -144,11 +144,18 @@ void instruction_root(int argc, char *argv[])
      // run GTK main loop
     g_main_loop_run(main_loop); 
     
+    // free the provider
+    if (provider != NULL) 
+    {
+    	g_object_unref(provider);
+    	provider = NULL;
+	}
+    
     if (main_loop != NULL) 
 	{
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
 	}
     
-    g_print("Log: end instruction_root\n");
+    LOG_INFO("end instruction_root");
 }
