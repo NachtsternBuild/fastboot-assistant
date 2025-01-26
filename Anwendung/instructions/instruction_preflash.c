@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_preflash	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,61 +24,61 @@
 // function to open the GitHub website from the fastboot-assistant
 void twrp(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: twrp\n");
+    LOG_INFO("twrp");
     const char *twrp_url = "https://www.twrp.me/";    
 	open_url(twrp_url);
-	g_print("Log: end twrp\n");
+	LOG_INFO("end twrp");
 }
 
 // function that open the GitHub Releases page
 void e_OS(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: e_OS\n");
+    LOG_INFO("e_OS");
     const char *e_OS_url = "https://e.foundation/e-os/";
 	open_url(e_OS_url);
-	g_print("Log: end e_OS\n");
+	LOG_INFO("end e_OS");
 }
 
 // function to open the website that used for the feedback for the fastboot-assistant
 void lineage_os(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: lineage_os\n");
+    LOG_INFO("lineage_os");
     const char *lineage_os_url = "https://lineageos.org/";
 	open_url(lineage_os_url);
-	g_print("Log: end lineage_os\n");
+	LOG_INFO("end lineage_os");
 }
 
 // function to open the website from 'Open Android Backup'
 void project_elixir(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: project_elixir\n");
+    LOG_INFO("project_elixir");
     const char *project_elixir_url = "https://projectelixiros.com/home";
 	open_url(project_elixir_url);
-	g_print("Log: end project_elixir\n");
+	LOG_INFO("end project_elixir");
 }
 
 // function to open the website from 'Open Android Backup'
 void crdroid(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: crdroid\n");
+    LOG_INFO("crdroid");
     const char *crdroid_url = "https://crdroid.net/";
 	open_url(crdroid_url);
-	g_print("Log: end crdroid\n");
+	LOG_INFO("end crdroid");
 }
 
 // function to open the website from 'Open Android Backup'
 void evolution_x(GtkWidget *widget, gpointer data)
 {
-    g_print("Log: evolution_x\n");
+    LOG_INFO("evolution_x");
     const char *evolution_x_url = "https://sourceforge.net/projects/evolution-x/";
 	open_url(evolution_x_url);
-	g_print("Log: end evolution_x\n");
+	LOG_INFO("end evolution_x");
 }
 
 /* main function */
 void instruction_preflash(int argc, char *argv[]) 
 {
-    g_print("Log: instruction_preflash\n");
+    LOG_INFO("instruction_preflash");
     
     // GTK init
     gtk_init();
@@ -171,5 +171,5 @@ void instruction_preflash(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end instruction_preflash\n");
+    LOG_INFO("end instruction_preflash");
 }
