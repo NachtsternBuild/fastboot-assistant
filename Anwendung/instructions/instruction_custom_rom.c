@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_custom_rom	 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2023 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,7 +24,7 @@
 
 void instruction_custom_rom(int argc, char *argv[]) 
 {
-	g_print("Log: instruction_custom_rom\n");
+	LOG_INFO("instruction_custom_rom");
 	
 	    // GTK init
     gtk_init();
@@ -100,5 +100,5 @@ void instruction_custom_rom(int argc, char *argv[])
     	main_loop = NULL;
 	}
 	
-    g_print("Log: end instruction_custom_rom\n");
+    LOG_INFO("end instruction_custom_rom");
 }
