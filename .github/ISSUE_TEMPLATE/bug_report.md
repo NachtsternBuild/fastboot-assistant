@@ -32,5 +32,5 @@ If applicable, add screenshots to help explain your problem.
  - **To be fixed in:** >= *v.0.7.2*
  - **Operating mode:** e.g. native / WSL / VM
  - **package type:** e.g. object file / DEB / Snap / Flatpak / Zip 
- - **Location of error:** e.g. build (compiler) / build (linker) / on run
- - **Section of error:** e.g. flash / prepare files / reboot / instructions / info / updater / config / backup / partitions / about / get devices / userdata / bootloader
+ - **Location of error:** e.g. source code error / build (compiler) / build (linker) / on run
+ - **Section of error:** e.g. flash / prepare files / reboot / instructions / info / updater / config / backup / partitions / about / get devices / userdata / bootloader / code security / UI
