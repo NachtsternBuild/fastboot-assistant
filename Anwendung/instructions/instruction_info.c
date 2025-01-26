@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_info		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -26,7 +26,7 @@
 
 void instruction_info(int argc, char *argv[]) 
 {
-	g_print("Log: instruction_info\n");
+	LOG_INFO("instruction_info");
 	
 	// GTK init
     gtk_init();
@@ -143,5 +143,5 @@ void instruction_info(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end instruction_info\n");
+    LOG_INFO("end instruction_info");
 }
