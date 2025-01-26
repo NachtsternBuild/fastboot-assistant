@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_backup		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,7 +24,7 @@
 
 void instruction_backup(int argc, char *argv[]) 
 {
-    g_print("Log: instruction_backup\n");
+    LOG_INFO("instruction_backup");
     // GTK init
     gtk_init();
 	main_loop = g_main_loop_new(NULL, FALSE);
@@ -76,5 +76,5 @@ void instruction_backup(int argc, char *argv[])
     	main_loop = NULL;
 	}
 	
-    g_print("Log: end instruction_backup\n");
+    LOG_INFO("end instruction_backup");
 }
