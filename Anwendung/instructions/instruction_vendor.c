@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_vendor		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -24,7 +24,7 @@
 
 void instruction_vendor(int argc, char *argv[]) 
 {
-    g_print("Log: instruction_vendor\n");
+    LOG_INFO("instruction_vendor");
     
     // GTK init
     gtk_init();
@@ -71,11 +71,18 @@ void instruction_vendor(int argc, char *argv[])
      // run GTK main loop
     g_main_loop_run(main_loop); 
     
+    // free the provider
+    if (provider != NULL) 
+    {
+    	g_object_unref(provider);
+    	provider = NULL;
+	}
+    
     if (main_loop != NULL) 
 	{
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
 	}
 	
-    g_print("Log: end instruction_vendor\n");
+    LOG_INFO("end instruction_vendor");
 }
