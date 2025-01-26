@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_others		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -25,7 +25,7 @@
 // the main function
 void instruction_others(int argc, char *argv[])
 {
-	g_print("Log: instruction_others\n");
+	LOG_INFO("instruction_others");
 	
 	// GTK init
     gtk_init();
@@ -113,6 +113,6 @@ void instruction_others(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end instruction_others\n");
+    LOG_INFO("end instruction_others");
 }
 	
