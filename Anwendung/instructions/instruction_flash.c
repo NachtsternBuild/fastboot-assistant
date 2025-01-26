@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_flash		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -96,7 +96,7 @@ void set_button_labels_instruction_flash(char labels[][30])
 /* start main programm */
 void instruction_flash(int argc, char *argv[])
 {
-	g_print("Log: instruction_flash\n");
+	LOG_INFO("instruction_flash");
 	GtkWidget *window, *grid, *button;
     char button_labels[6][30];
     
@@ -164,6 +164,6 @@ void instruction_flash(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end instruction_flash\n");
+    LOG_INFO("end instruction_flash");
 }
 
