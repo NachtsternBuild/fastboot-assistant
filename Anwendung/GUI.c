@@ -304,7 +304,7 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 int main(int argc, char *argv[]) 
 {
 	write_log();
-    LOG_INFO("\n\nstart fastboot-assistant\n");
+    LOG_INFO("start fastboot-assistant\n");
 	GtkApplication *app;
     int status;
 
@@ -313,6 +313,6 @@ int main(int argc, char *argv[])
     status = g_application_run (G_APPLICATION (app), argc, argv);
     g_object_unref(app);
 
-    LOG_INFO("\nend fastboot-assistant\n\n");
+    LOG_INFO("end fastboot-assistant\n\n");
     return status;
 }
