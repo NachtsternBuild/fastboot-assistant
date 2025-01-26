@@ -27,9 +27,9 @@ If applicable, add screenshots to help explain your problem.
  - **OS:** e.g. Ubuntu
  - **OS version:** e.g. 24.10.
  - **Browser:** e.g. firefox
- - **Browser version:** e.g. 133
- - **Program version:** <= *v.0.6.2.2*
- - **To be fixed in:** >= *v.0.7.1*
+ - **Browser version:** e.g. 134
+ - **Program version:** <= *v.0.7.1*
+ - **To be fixed in:** >= *v.0.7.2*
  - **Operating mode:** e.g. native / WSL / VM
  - **package type:** e.g. object file / DEB / Snap / Flatpak / Zip 
  - **Location of error:** e.g. build (compiler) / build (linker) / on run
