@@ -10,7 +10,7 @@
  *	zu erleichtern - instruction_GUI		 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -80,7 +80,7 @@ void set_button_labels_instruction_GUI(char labels[][30])
 /* main function of flash_GUI*/
 void instruction_GUI(int argc, char *argv[]) 
 {
-    g_print("Log: instruction_GUI\n");
+    LOG_INFO("instruction_GUI");
     GtkWidget *window, *grid, *button;
     char button_labels[4][30];
     
@@ -142,5 +142,5 @@ void instruction_GUI(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: End of instruction_GUI\n");
+    LOG_INFO("end instruction_GUI");
 }
