@@ -157,7 +157,7 @@ void flash_images()
 {
     LOG_INFO("flash_images");
     
-    const char config_file[2048];
+    char config_file[2048];
     get_config_file_path(config_file, sizeof(config_file));
     // load the path
     const char *directory = load_path_from_file(config_file);
@@ -171,7 +171,10 @@ void flash_images()
     // start flash from directory
     flash_dir(directory);
     
-    g_free(directory); // free the info (because g_file_get_contents was used)
+	if (directory != NULL) 
+	{
+    	g_free((gpointer)directory); // free the info (because g_file_get_contents was used)
+	}
     
     LOG_INFO("end flash_images");
 }
