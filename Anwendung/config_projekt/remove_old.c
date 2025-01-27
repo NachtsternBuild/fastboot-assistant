@@ -49,6 +49,11 @@ void rm_rom_install()
     snprintf(command, sizeof(command), "rm -rf %s", main_path_rm);
     system(command);
 	
+	if (rom_install_rm != NULL) 
+	{
+    	g_free((gpointer)rom_install_rm); // free the info (because g_file_get_contents was used)
+	}
+	
     LOG_INFO("end remove_rom_install");
 }
 // callback functions for each button
@@ -92,6 +97,10 @@ static void remove_backups(GtkWidget *widget, gpointer data)
     snprintf(two_commands, sizeof(two_commands), "%s/Backup/* && mkdir -p %s/Backup/Noroot", backup_rm, backup_rm);
     system(two_commands);
 
+	if (backup_rm != NULL) 
+	{
+    	g_free((gpointer)backup_rm); // free the info (because g_file_get_contents was used)
+	}
 	
     const char *message = "Ready.\n";
     show_message(message);
