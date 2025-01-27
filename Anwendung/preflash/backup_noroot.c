@@ -75,9 +75,8 @@ static void download_backup(GtkWidget *widget, gpointer data)
     const char *message1 = strcmp(language, "de") == 0 ? "Das Tool 'Open Android Backup' wird heruntergeladen und entpackt." : "The 'Open Android Backup' tool is downloaded and unpacked.";
     show_message(message1);
 	char path_file[4096];
-    char run_open_backup[4096];
     char main_path_build[4096];
-    char wget_command[8192];
+    char wget_command[16384];
     // load path
     get_config_file_path(path_file, sizeof(path_file));
     // load the path
@@ -88,10 +87,15 @@ static void download_backup(GtkWidget *widget, gpointer data)
         LOG_INFO("Loaded path: %s", path_file_load);
     }
     snprintf(main_path_build, sizeof(main_path_build), "%s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip", path_file_load);
-    snprintf(wget_command, sizeof(wget_command), "wget -O %s https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip %s -d %s");
+    snprintf(wget_command, sizeof(wget_command), "wget -O %s https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip %s -d %s", main_path_build, main_path_build, main_path_build);
 	
     LOG_INFO("Run: %s", wget_command);
     command_with_spinner(wget_command);
+    
+    if (path_file_load != NULL) 
+	{
+    	g_free((gpointer)path_file_load); // free the info (because g_file_get_contents was used)
+	}
 }
 
 // start backup
@@ -111,6 +115,11 @@ static void open_backup(GtkWidget *widget, gpointer data)
     // build command
     snprintf(bash_command, sizeof(bash_command), "bash %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh", run_open_backup_bash);
     open_terminal_by_desktop(bash_command);
+    
+    if (run_open_backup_bash != NULL) 
+	{
+    	g_free((gpointer)run_open_backup_bash); // free the info (because g_file_get_contents was used)
+	}
 }
 
 // Function to set up button labels based on the language
