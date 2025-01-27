@@ -64,6 +64,7 @@ void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *par
     {
         LOG_INFO("Loaded path: %s", image_path);
     }
+    
 	snprintf(image_info, sizeof(image_info), "%s/%s", image_path, image_name);
     // Check if the image exists
     if (access(image_info, F_OK) == -1) 
@@ -100,5 +101,10 @@ void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *par
     pthread_t thread;
     pthread_create(&thread, NULL, run_heimdall_command, function_command);
     pthread_detach(thread);  // Thread in the background
+    
+    if (image_path != NULL) 
+	{
+    	g_free((gpointer)image_path); // free the info (because g_file_get_contents was used)
+	}
 }
 
