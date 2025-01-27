@@ -232,7 +232,7 @@ void updater_stable(void)
 		char output_directory[4096];
 		char updater_version_file[4096];
 		
-		get_config_file_path(output_directory, sizeof(output_directory));
+		get_config_dir(output_directory, sizeof(output_directory));
 
         snprintf(output_file, sizeof(output_file), "%s/updater/fastboot-assistant%s", output_directory, package_type);
         snprintf(updater_version_file, sizeof(updater_version_file), "%s/config/version.txt", output_directory);
