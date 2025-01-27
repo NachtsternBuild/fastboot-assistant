@@ -50,6 +50,9 @@ void rename_vendor(const gchar *ve_filename)
         LOG_ERROR("Error renaming the file: %s", ve_filename);
     }
     
-    free(target_directory_vendor);
+    if (target_directory_vendor != NULL) 
+	{
+    	g_free((gpointer)target_directory_vendor); // free the info (because g_file_get_contents was used)
+	}
     g_free(target_path_vendor);
 }

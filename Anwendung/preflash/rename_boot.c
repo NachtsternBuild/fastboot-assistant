@@ -50,6 +50,9 @@ void rename_boot(const gchar *bo_filename)
         LOG_ERROR("Error renaming the file: %s", bo_filename);
     }
     
-    free(target_directory_boot);
+    if (target_directory_boot != NULL) 
+	{
+    	g_free((gpointer)target_directory_boot); // free the info (because g_file_get_contents was used)
+	}
     g_free(target_path_boot);
 }

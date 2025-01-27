@@ -50,7 +50,10 @@ void rename_recovery(const gchar *re_filename)
         LOG_ERROR("Error renaming the file: %s", re_filename);
     }
     
-    free(target_directory_recovery);
+    if (target_directory_recovery != NULL) 
+	{
+    	g_free((gpointer)target_directory_recovery); // free the info (because g_file_get_contents was used)
+	}
     g_free(target_path_recovery);
 }
 

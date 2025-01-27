@@ -50,6 +50,9 @@ void rename_system(const gchar *sys_filename)
         LOG_ERROR("Error renaming the file: %s", sys_filename);
     }
     
-    free(target_directory_system);
+    if (target_directory_system != NULL) 
+	{
+    	g_free((gpointer)target_directory_system); // free the info (because g_file_get_contents was used)
+	}
     g_free(target_path_system);
 }

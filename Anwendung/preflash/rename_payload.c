@@ -50,6 +50,9 @@ void rename_payload(const gchar *py_filename)
         LOG_ERROR("Error renaming the file: %s", py_filename);
     }
     
-    free(target_directory_payload);
+    if (target_directory_payload != NULL) 
+	{
+    	g_free((gpointer)target_directory_payload); // free the info (because g_file_get_contents was used)
+	}
     g_free(target_path_payload);
 }
