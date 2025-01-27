@@ -65,5 +65,10 @@ void unxz_files(const char *xz_filename)
     LOG_INFO("Run: %s", command);
     command_with_spinner(command);
     LOG_INFO("File successfully decompressed to: %s", output_xz_filename);
+    
+    if (file_path_unxz != NULL) 
+	{
+    	g_free((gpointer)file_path_unxz); // free the info (because g_file_get_contents was used)
+	}
 }
 
