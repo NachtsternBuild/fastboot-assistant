@@ -3,13 +3,13 @@
 
 | Version     | Build status                 | Informations                                    | Status             | OS                | Packages                    |
 | ----------- | ---------------------------- | ----------------------------------------------- | ------------------ | ----------------- | --------------------------- |
-| 0.7.2       | :x:                          | *future version*                                | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.7.1       | :white_check_mark:           | **on work**                                     | **dev**            | Ubuntu            | DEB, Zip, possibly Snap     |
-| 0.7.x       | :white_check_mark:           | **build version, all versions from v.0.7.x**    | **dev**            | Ubuntu            | :x:                         |
+| 0.7.2       | :white_check_mark:           | **on work**                                     | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
+| 0.7.1       | :white_check_mark:           | **on work, testing**                            | **beta**           | Ubuntu            | DEB, Zip                    |
+| 0.7.x       | :white_check_mark:           | **build version, all versions from v.0.7.x**    | **beta**           | Ubuntu            | :x:                         |
 | 0.6.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, Fedora    | DEB, RPM, Zip               |
 | 0.6.2.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | DEB                         |          
 | 0.6.1.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | :x:                         |         
-| 0.6.x       | :x:                          | *old version*                                   | **dev**            | Ubuntu            | DEB, RPM, Zip               |
+| 0.6.x       | :x:                          | *old version*                                   | *dev*              | Ubuntu            | DEB, RPM, Zip               |
 
 ## Roadmap for build
 ### 0.7.x
