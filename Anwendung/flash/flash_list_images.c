@@ -150,7 +150,14 @@ void flash_list_images()
     snprintf(directory, sizeof(directory), "%s/Images", other_dir);
     flash_images_in_directory(directory);
     
-    free(other_dir); // free the info (because g_file_get_contents was used)
-    free(directory);
+    if (other_dir != NULL) 
+	{
+    	g_free((gpointer)other_dir); // free the info (because g_file_get_contents was used)
+	}
+	
+    if (directory != NULL) 
+    {
+    	g_free((gpointer)directory); 
+	}
     LOG_INFO("end flash_other");
 }
