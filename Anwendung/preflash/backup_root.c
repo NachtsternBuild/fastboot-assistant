@@ -124,6 +124,11 @@ void backup_root()
     const char *message1 = strcmp(language, "de") == 0 ? "Backup beendet." : "Backup completed.";
     show_message(message1);
     LOG_INFO("Backup completed. Files are located in %s.", backup_dir);
+    
+    if (backup_predir != NULL) 
+	{
+    	g_free((gpointer)backup_predir); // free the info (because g_file_get_contents was used)
+	}
     LOG_INFO("end backup_root");
 }
 
