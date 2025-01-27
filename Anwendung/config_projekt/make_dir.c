@@ -68,7 +68,12 @@ void make_dir()
     create_directory(main_path);
     create_directory(backup_path);
     create_directory(path_images);
-		
+
+	if (rom_install_dirs != NULL) 
+	{
+    	g_free((gpointer)rom_install_dirs); // free the info (because g_file_get_contents was used)
+	}	
+	
     LOG_INFO("all directories successfully created.");
 }
 
