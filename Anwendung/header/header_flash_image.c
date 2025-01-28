@@ -31,7 +31,7 @@
 GtkWidget *spinner_window_flash;
 GtkWidget *spinner_flash;
 
-// Nutzung
+// Usage:
 /*
 // Flashen der Boot-Partitionen für ein A/B-Gerät (ohne zusätzliche Flags)
 flash_image(widget, parent_window, "boot_a", "boot_b", "boot.img", NULL);
@@ -326,6 +326,9 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     pthread_create(&thread, NULL, run_flash_command, function_command);
     pthread_detach(thread);  // thread in the background
     
-    g_free(image_path); // free the info (because g_file_get_contents was used)
+	if (image_path != NULL) 
+	{
+    	g_free((gpointer)image_path); // free the info (because g_file_get_contents was used)
+	}
 }
 
