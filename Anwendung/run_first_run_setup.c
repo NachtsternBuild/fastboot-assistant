@@ -71,6 +71,17 @@ void run_first_run_setup(GtkCssProvider *provider)
 
     apply_theme();
     apply_language();
+    
+    char config_file[2048];
+    get_config_file_path(config_file, sizeof(config_file));
+
+    // load the path
+    char *loaded_path = load_path_from_file(config_file);
+
+    if (loaded_path) 
+    {
+        LOG_INFO("Loaded path: %s\n", loaded_path);
+    }
 
     GtkWidget *notebook;
     GtkWidget *page1, *page2, *page3, *page4, *page5;
@@ -109,7 +120,7 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page1), button_welcome_2);
 
     // connect everything
-    g_signal_connect(button_setup_dir, "clicked", G_CALLBACK(program_dir), notebook);
+    g_signal_connect(button_setup_dir, "clicked", G_CALLBACK(show_folder_chooser), notebook);
     g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(toggle_language_setup), notebook);
     g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme), notebook);
     g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(next_page), notebook);
@@ -214,6 +225,6 @@ void run_first_run_setup(GtkCssProvider *provider)
     
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
+	free(loaded_path);
     LOG_INFO("end run_first_run_setup");
 }
