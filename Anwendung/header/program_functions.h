@@ -99,8 +99,8 @@ void create_directory(const char *path);
 // functions for standard path of the program
 void save_path_to_file(const char *path, const char *file_path);
 char *load_path_from_file(const char *file_path);
-void on_folder_selected(GtkFileChooser *chooser, gpointer user_data);
-void program_dir();
+void show_folder_chooser(GtkWidget *widget, gpointer data);
+//void program_dir();
 
 // messages
 void show_message();
