@@ -10,13 +10,11 @@ description: |
 grade: stable
 confinement: strict
 
-# architectures:
-#   - amd64
-
 platforms:
   amd64:
     build-on: [amd64]
     build-for: [amd64]
+
 apps:
   fastboot-assistant:
     command: usr/bin/fastboot-assistant
@@ -33,7 +31,12 @@ apps:
       - mount-observe
       - opengl
       - adb-support
+      - gsettings
+      - cups
     desktop: usr/share/applications/fastboot-assistant.desktop
+    environment:
+      XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
+      GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
 
 plugs:
   gtk-3-themes:
@@ -63,6 +66,7 @@ parts:
       - fastboot
       - xz-utils
       - unzip
+      - zip
       - wget
       - curl
       - pkexec
@@ -72,12 +76,22 @@ parts:
       - libgtk-4-1
       - libgtk-3-0
       - libglib2.0-0
+      - dconf-gsettings-backend
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-utils
       - libgl1-mesa-dri
       - mesa-vulkan-drivers
       - libvulkan1
+      - libdbus-glib-1-dev
+      - libglib2.0-bin
+      - dconf-gsettings-backend
+    build-packages:
+      - libglib2.0-bin
+    override-build: |
+      snapcraftctl build
+      glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
+
 
 slots:
   fastboot-assistant:
