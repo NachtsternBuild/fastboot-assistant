@@ -57,13 +57,13 @@ void command_with_spinner(const gchar *command)
     // create a new window
     spinner_command_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(spinner_command_window), " ");
-    gtk_window_set_default_size(GTK_WINDOW(spinner_command_window), 200, 100);
+    gtk_window_set_default_size(GTK_WINDOW(spinner_command_window), 200, 200);
 
     // create a spinner
     spinner_command = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_box_append(GTK_BOX(vbox), spinner_command);
-    gtk_widget_set_size_request(spinner_command, 100, 100);
+    gtk_widget_set_size_request(spinner_command, 150, 150);
     gtk_window_set_child(GTK_WINDOW(spinner_command_window), vbox);
 	
     // start the spinner
