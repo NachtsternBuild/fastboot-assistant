@@ -64,7 +64,7 @@ GtkWidget* create_spinner_window()
     // create new window
     spinner_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(spinner_window), " ");
-    gtk_window_set_default_size(GTK_WINDOW(spinner_window), 200, 100);
+    gtk_window_set_default_size(GTK_WINDOW(spinner_window), 200, 200);
     
     // connect destroy event
     g_signal_connect(spinner_window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
@@ -73,7 +73,9 @@ GtkWidget* create_spinner_window()
     spinner = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_box_append(GTK_BOX(vbox), spinner);
+    gtk_widget_set_size_request(spinner, 150, 150);
     gtk_window_set_child(GTK_WINDOW(spinner_window), vbox);
+	
 
     // make the window visible using gtk_widget_set_visible
     gtk_widget_set_visible(spinner_window, TRUE);
