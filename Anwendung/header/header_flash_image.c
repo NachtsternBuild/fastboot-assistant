@@ -288,12 +288,10 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
 	
 	snprintf(image_info, sizeof(image_info), "%s/%s", image_path, image_name);
 	
-    // check if the image exists
-    if (access(image_path, F_OK) == -1)
-    {
-        char error_message[3072];
-       
-        snprintf(error_message, sizeof(error_message), g_strcmp0(language, "de") == 0 ? "Image '%s' nicht gefunden." : "Image file '%s' not found.\n", image_info);
+    // check if the image not exists
+    if (access(image_info, F_OK) == -1)
+    {      
+        const char *error_message = g_strcmp0(language, "de") == 0 ? "Image nicht gefunden." : "Image file not found.";
         show_error_message(GTK_WIDGET(parent_window), error_message);
         LOG_ERROR("%s", error_message);
         return;
@@ -306,13 +304,13 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     // create a new window
     spinner_window_flash = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(spinner_window_flash), " ");
-    gtk_window_set_default_size(GTK_WINDOW(spinner_window_flash), 200, 100);
+    gtk_window_set_default_size(GTK_WINDOW(spinner_window_flash), 200, 200);
 
     // create spinner
     spinner_flash = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_box_append(GTK_BOX(vbox), spinner_flash);
-    gtk_widget_set_size_request(spinner_flash, 100, 100);
+    gtk_widget_set_size_request(spinner_flash, 150, 150);
     gtk_window_set_child(GTK_WINDOW(spinner_window_flash), vbox);
 
     // start the spinner
