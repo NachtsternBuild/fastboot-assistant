@@ -47,7 +47,7 @@ void backup_root()
         LOG_INFO("Loaded path: %s", backup_predir);
     }
     // create full path
-    snprintf(backup_dir, sizeof(backup_dir), "%s/Downloads/ROM-Install/Backup", backup_predir);
+    snprintf(backup_dir, sizeof(backup_dir), "%s/Backup", backup_predir);
     LOG_INFO("Backup of all available partitions to %s.", backup_dir);
     
 	// create backup path
