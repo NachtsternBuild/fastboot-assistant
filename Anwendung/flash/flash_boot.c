@@ -88,7 +88,7 @@ void set_button_labels_flash_boot(char labels[][30])
 // main function
 void flash_boot(int argc, char *argv[])
 {
-	g_print("Log: flash_boot\n");
+	LOG_INFO("flash_boot");
 	GtkWidget *window, *grid, *button;
     char button_labels[6][30];
     
@@ -155,6 +155,6 @@ void flash_boot(int argc, char *argv[])
     	main_loop = NULL;
 	}
     
-    g_print("Log: end flash_boot\n");
+    LOG_INFO("end flash_boot");
 }
 
