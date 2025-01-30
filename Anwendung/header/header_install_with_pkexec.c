@@ -62,7 +62,7 @@ void install_with_pkexec(const gchar *command)
     spinner_install = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_box_append(GTK_BOX(vbox), spinner_install);
-    gtk_widget_set_size_request(spinner_install, 100, 100);
+    gtk_widget_set_size_request(spinner_install, 150, 150);
     gtk_window_set_child(GTK_WINDOW(spinner_install_window), vbox);
 	
     // start the spinner
