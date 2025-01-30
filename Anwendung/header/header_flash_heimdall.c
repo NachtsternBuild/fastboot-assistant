@@ -82,13 +82,13 @@ void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *par
     // Create new window
     spinner_window_heimdall = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(spinner_window_heimdall), " ");
-    gtk_window_set_default_size(GTK_WINDOW(spinner_window_heimdall), 200, 100);
+    gtk_window_set_default_size(GTK_WINDOW(spinner_window_heimdall), 200, 200);
 
     // Create the spinner
     spinner_heimdall = gtk_spinner_new();
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_box_append(GTK_BOX(vbox), spinner_heimdall);
-    gtk_widget_set_size_request(spinner_heimdall, 100, 100);
+    gtk_widget_set_size_request(spinner_heimdall, 150, 150);
     gtk_window_set_child(GTK_WINDOW(spinner_window_heimdall), vbox);
 
     // Start the spinner
