@@ -24,7 +24,6 @@
 #include "file_chooser_header.h"
 #include "flash_function_header.h"
 
-// rename a file to boot.img
 void rename_boot(const gchar *bo_filename) 
 {
     char rename_boot_path[4096];
@@ -38,11 +37,11 @@ void rename_boot(const gchar *bo_filename)
     }
     
     const gchar *boot_filename = "boot.img"; 
-    gchar *target_path_boot = g_strconcat(target_directory_boot, boot_filename, NULL);
+    gchar *target_path_boot = g_build_filename(target_directory_boot, boot_filename, NULL);
     
     if (rename(bo_filename, target_path_boot) == 0) 
     {
-        LOG_INFO("File renamed successfully: %s → %s", bo_filename, boot_filename);
+        LOG_INFO("File renamed successfully: %s → %s", bo_filename, target_path_boot);
     } 
     
     else 
@@ -51,8 +50,9 @@ void rename_boot(const gchar *bo_filename)
     }
     
     if (target_directory_boot != NULL) 
-	{
-    	g_free((gpointer)target_directory_boot); // free the info (because g_file_get_contents was used)
-	}
+    {
+        g_free((gpointer)target_directory_boot); // free the info (because g_file_get_contents was used)
+    }
     g_free(target_path_boot);
 }
+
