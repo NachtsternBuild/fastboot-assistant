@@ -28,7 +28,7 @@ VERSION="$(cat Build/version.txt)"
 # Directory paths
 home_dir="$HOME"
 source_dir="$home_dir/fastboot-assistant/Anwendung"
-#source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_7_1"
+# source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_7_1"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -38,11 +38,11 @@ instructions_dir="${source_dir}/instructions"
 target_dir="${source_dir}/build_project"
 output_dir="${source_dir}/output"
 build_dir="${source_dir}/Build"
+
+# for WSL
 windows_dir="${source_dir}/Windows"
-config_dir_win="${windows_dir}/config_projekt"
 preflash_dir_win="${windows_dir}/preflash"
 header_dir_win="${windows_dir}/header"
-other_dir_win="${windows_dir}/Others"
 
 # Snap build info
 snapcraft_dir="${source_dir}/snap"
@@ -58,7 +58,7 @@ flatpak_manifest="${flatpak_dir}/io.github.nachtsternbuild.Fastboot-Assistant.ym
 
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
-unused_files=("make_dir.c" "remove_old.c" "flash_images.c" "flash_list_images.c" "backup_root.c" "backup_noroot.c" "unxz_files.c" "header_set_main_dir_with_wsl.c" "header_dark_theme.c" "header_language_check.c" "GUI.c" "updater.c")
+unused_files=("backup_noroot.c" "header_set_main_dir_with_wsl.c" "header_get_config_dir.c" "header_get_config_file_path.c")
 zip_files=("WSL_install.bat" "Enable_WSL.bat" "README.md" "fastboot-assistant.deb")
 
 # function that have output with color
@@ -207,7 +207,8 @@ build_snap() {
 	mkdir -p "$build_dir_snap"
 	echo "Copy all files to $build_dir_snap..."
 	for dir in "$snapcraft_dir" "$output_dir" "$build_dir"; do
-        	find "$dir" -maxdepth 1 -type f -exec cp {} "$build_dir_snap" \;
+        	# find "$dir" -maxdepth 1 -type f -exec cp {} "$build_dir_snap" \;
+        	rsync -av --update --exclude '.git/' "$dir/" "$build_dir_snap/"
     	done
 		echo "Alle Dateien wurden nach $build_dir_snap kopiert."
 	chmod a+x "$build_dir_snap"
@@ -235,7 +236,8 @@ build_flatpak() {
     start_info "Building Flatpak package..."
 	
 	for dir in "$flatpak_dir" "$output_dir" "$build_dir"; do
-        	find "$dir" -maxdepth 1 -type f -exec cp {} "$build_dir_flatpak" \;
+        	# find "$dir" -maxdepth 1 -type f -exec cp {} "$build_dir_flatpak" \;
+        	rsync -av --update --exclude '.git/' "$dir/" "$build_dir_flatpak/"
     	done
 		echo "Alle Dateien wurden nach $build_dir_flatpak kopiert."
 	
@@ -280,7 +282,7 @@ build_program_linux() {
     	echo "Starte Build für Linux..."
     	echo "Kopiere alle Dateien nach $target_dir..."
     	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir"; do
-        	find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+        	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
         	rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
     	done
 		echo "Alle Dateien wurden nach $target_dir kopiert."
@@ -321,7 +323,7 @@ build_program_linux() {
             break
             ;;
         * )
-            build_info "Bitte 'l', 'w' oder 'b' verwenden."
+            build_info "Bitte 'l', 'w', 'b' oder 'n' verwenden."
             ;;
     esac
 done
@@ -333,12 +335,13 @@ build_program_windows() {
     build_info "Dies ist keine native Windows-Version, sondern läuft nur über WSL."
     echo "Starte Build für Windows..."
     echo "Kopiere alle Dateien nach $target_dir..."
-    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$other_dir_win"; do
-        find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir"; do
+        # find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+        rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
     done
 
     echo "Alle Dateien wurden nach $target_dir kopiert."
-    echo "Entferne linux-spezifische Dateien in $target_dir..."
+    echo "Entferne Linux spezifische Dateien in $target_dir..."
 
     # remove unused files
     for unused in "${unused_files[@]}"; do
@@ -355,10 +358,11 @@ build_program_windows() {
 	read -p " " answer
 	if [ "$answer" == "j" ] || [ "$answer" == "J" ] || [ "$answer" == "y" ] || [ "$answer" == "Y" ]; 
  	then
-    	echo "Starte Build für Linux..."
+    	echo "Starte Build für WSL..."
     	echo "Kopiere alle Dateien nach $target_dir..."
-    	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir"; do
-        	find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+    	for dir in "$preflash_dir_win" "$header_dir_win" "$windows_dir"; do
+        	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
+        	rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
     	done
 		echo "Alle Dateien wurden nach $target_dir kopiert."
 		
