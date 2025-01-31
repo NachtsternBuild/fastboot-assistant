@@ -89,6 +89,7 @@ GtkWidget* create_spinner_window()
 // function to start spinner in another thread
 void run_with_spinner(void *(*thread_function)(void *)) 
 { 
+    setenv("GSK_RENDERER", "cairo", 1);
     pthread_t thread;
 	
 	gtk_init();
