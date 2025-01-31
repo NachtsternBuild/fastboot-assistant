@@ -38,7 +38,7 @@ void rename_vendor(const gchar *ve_filename)
     }
     
     const gchar *vendor_filename = "vendor.img"; 
-    gchar *target_path_vendor = g_strconcat(target_directory_vendor, vendor_filename, NULL);
+    gchar *target_path_vendor = g_build_filename(target_directory_vendor, vendor_filename, NULL);
     
     if (rename(ve_filename, target_path_vendor) == 0) 
     {
