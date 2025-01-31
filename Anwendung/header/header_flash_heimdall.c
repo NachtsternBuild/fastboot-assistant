@@ -50,6 +50,7 @@ void *run_heimdall_command(void *command)
 // Function to flash with heimdall
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name) 
 {
+    setenv("GSK_RENDERER", "cairo", 1);
     char config_file[4096];  
     char image_info[4096];
     // set_main_dir_with_wsl(image_path, sizeof(image_path), image_name);
