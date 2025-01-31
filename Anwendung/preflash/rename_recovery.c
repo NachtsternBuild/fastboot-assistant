@@ -38,7 +38,7 @@ void rename_recovery(const gchar *re_filename)
     }
     
     const gchar *recovery_filename = "recovery.img"; 
-    gchar *target_path_recovery = g_strconcat(target_directory_recovery, recovery_filename, NULL);
+    gchar *target_path_recovery = g_build_filename(target_directory_recovery, recovery_filename, NULL);
     
     if (rename(re_filename, target_path_recovery) == 0) 
     {
