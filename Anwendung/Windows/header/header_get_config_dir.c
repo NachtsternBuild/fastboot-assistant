@@ -52,7 +52,7 @@ void get_config_dir(char *config_folder, size_t size)
 }
 */
 // for wsl
-void get_config_file_path(char *config_file, size_t size) 
+void get_config_dir(char *config_file, size_t size) 
 {
     const char* user = getenv("USER");
     if (user && config_file && size > 0) 
