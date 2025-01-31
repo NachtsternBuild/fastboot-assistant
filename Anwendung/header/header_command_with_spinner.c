@@ -41,7 +41,6 @@ void *run_command_spinner(void *command)
     // stop the spinner
     gtk_spinner_stop(GTK_SPINNER(spinner_command));
     gtk_window_destroy(GTK_WINDOW(spinner_command_window));
-
     free(full_command);  // free memory
     return NULL;
 }
@@ -49,6 +48,7 @@ void *run_command_spinner(void *command)
 // function to start the spinner and the command
 void command_with_spinner(const gchar *command) 
 {
+    setenv("GSK_RENDERER", "cairo", 1);
     gtk_init();  // Initialize GTK without command-line arguments
     apply_theme();
 
@@ -76,9 +76,5 @@ void command_with_spinner(const gchar *command)
     pthread_t thread;
     pthread_create(&thread, NULL, run_command_spinner, full_command);
     pthread_detach(thread);  // run thread in the background
-
-     // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
 }
 
