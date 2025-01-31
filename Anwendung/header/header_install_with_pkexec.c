@@ -75,8 +75,4 @@ void install_with_pkexec(const gchar *command)
     pthread_t thread;
     pthread_create(&thread, NULL, run_install_with_pkexec, full_command);
     pthread_detach(thread);  // run thread in the background
-
-    // run GTK main loop
-    GMainLoop *loop = g_main_loop_new(NULL, FALSE);
-    g_main_loop_run(loop); 
 }
