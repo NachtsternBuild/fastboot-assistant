@@ -118,7 +118,7 @@ void wsl_config()
     {
         // create the window
         window = gtk_window_new();
-        const char *config_window = strcmp(language, "de") == 0 ? "Konfigurieren" : "Configure";
+        const char *config_window = strcmp(language, "de") == 0 ? "Konfiguriatioen" : "Configurations";
         gtk_window_set_title(GTK_WINDOW(window), config_window);
         gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
         g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
