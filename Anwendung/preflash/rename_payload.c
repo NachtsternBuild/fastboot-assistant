@@ -38,7 +38,7 @@ void rename_payload(const gchar *py_filename)
     }
     
     const gchar *payload_filename = "payload.zip"; 
-    gchar *target_path_payload = g_strconcat(target_directory_payload, payload_filename, NULL);
+    gchar *target_path_payload = g_build_filename(target_directory_payload, payload_filename, NULL);
     
     if (rename(py_filename, target_path_payload) == 0) 
     {
