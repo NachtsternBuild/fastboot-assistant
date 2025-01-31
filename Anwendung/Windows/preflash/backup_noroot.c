@@ -34,7 +34,7 @@ static void install_depends(GtkButton *button)
     // for linux
     //snprintf(install_command_backup, sizeof(install_command_backup), "apt install p7zip-full adb curl whiptail pv bc secure-delete zenity -y");
     // for windows
-    snprintf(install_command, sizeof(install_command), "apt-get install p7zip-full secure-delete whiptail curl dos2unix pv bc zenity '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev -y");
+    snprintf(install_command_backup, sizeof(install_command_backup), "apt-get install p7zip-full secure-delete whiptail curl dos2unix pv bc zenity '^libxcb.*-dev' libx11-xcb-dev libglu1-mesa-dev libxrender-dev libxi-dev libxkbcommon-dev libxkbcommon-x11-dev -y");
     
     LOG_INFO("Run: %s", install_command_backup);
 
