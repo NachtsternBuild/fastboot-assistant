@@ -38,7 +38,7 @@ void rename_system(const gchar *sys_filename)
     }
     
     const gchar *system_filename = "system.img"; 
-    gchar *target_path_system = g_strconcat(target_directory_system, system_filename, NULL);
+    gchar *target_path_system = g_build_filename(target_directory_system, system_filename, NULL);
     
     if (rename(sys_filename, target_path_system) == 0) 
     {
