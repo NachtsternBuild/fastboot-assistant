@@ -269,6 +269,7 @@ void *run_flash_command(void *command)
 // function to flash an image
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name, const char *optional_flags)
 {
+    setenv("GSK_RENDERER", "cairo", 1);
     char config_file[4096];
     char image_info[4096];
     apply_theme();
