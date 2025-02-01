@@ -30,6 +30,10 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
+### Mutiges Mint v.0.7.x
+- **[fastboot-assistant v.0.7.1.beta](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.1)** → Linux (Ubuntu/Debian) / Windows via WSL
+
+
 ### Rostiges Red Hat v.0.6.x
 - **[fastboot-assistant v.0.6.2.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2.2)** → Linux (Ubuntu/Debian) / Windows via WSL
 - **[fastboot-assistant v.0.6.2.1](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2.1)** → Linux (Ubuntu/Debian) / Windows via WSL
@@ -95,6 +99,11 @@ sudo dpkg -i /PATH/to/fastboot-assistant.deb
 ```
 ***or via a graphical user interface.***
 
+- **Install the Snap:**
+```sh
+sudo snap install ~/path/to/the/snap/fastboot-assistant.snap --devmode
+```
+
 ### Windows
 1. unzip the zip file
 2. Follow the steps in the README.md from the Zip
@@ -105,6 +114,8 @@ sudo dpkg -i /PATH/to/fastboot-assistant.deb
 ```sh
 # Debian/Ubuntu
 sudo dpkg -r --force-all fastboot-assistant
+# or if you use snap
+sudo snap remove fastboot-assistant
 ```
 
 ## Further information
@@ -113,6 +124,7 @@ sudo dpkg -r --force-all fastboot-assistant
 
 ## In case of errors
 - Don't be shy, just complain. 
-- Or do it better (*see build*)
-## build
+- Or do it better (*see **Build***)
+  
+## Build
 *see build: <https://github.com/NachtsternBuild/fastboot-assistant/tree/main/Anwendung>*
