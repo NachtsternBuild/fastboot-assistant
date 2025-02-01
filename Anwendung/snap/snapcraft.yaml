@@ -33,6 +33,7 @@ apps:
       - adb-support
       - gsettings
       - cups
+
     desktop: usr/share/applications/fastboot-assistant.desktop
     environment:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
@@ -53,6 +54,53 @@ plugs:
     default-provider: gtk-common-themes
 
 parts:
+  adb-fastboot:
+    plugin: nil
+    source: https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+    override-build: |
+      set -xe
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
+      curl -L -o platform-tools.zip https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+      unzip -o platform-tools.zip
+      mv platform-tools/* $SNAPCRAFT_PART_INSTALL/usr/bin/
+      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/adb
+      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/fastboot
+    build-packages:
+      - unzip
+      - curl
+    stage-packages:
+      - libusb-1.0-0
+      
+  heimdall:
+    plugin: nil
+    source: https://github.com/Benjamin-Dobell/Heimdall/archive/refs/tags/v1.4.2.zip
+    override-build: |
+      set -xe
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
+      curl -L -o heimdall.zip https://github.com/Benjamin-Dobell/Heimdall/archive/refs/tags/v1.4.2.zip
+      unzip -o heimdall.zip
+      cd Heimdall-1.4.2
+      mkdir build && cd build
+      cmake ..
+      make -j$(nproc)
+      cp bin/heimdall $SNAPCRAFT_PART_INSTALL/usr/bin/
+      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/heimdall
+    build-packages:
+      - cmake
+      - build-essential
+      - libusb-1.0-0-dev
+      - qtbase5-dev
+      - qttools5-dev
+      - qttools5-dev-tools
+      - qtchooser
+      - qt5-qmake
+    stage-packages:
+      - libusb-1.0-0
+      - libqt5widgets5
+      - qt5-qmake
+      - libqt5gui5
+      - libqt5core5a
+      
   fastboot-assistant:
     source: .
     plugin: dump
@@ -62,15 +110,15 @@ parts:
       fastboot-assistant: usr/bin/fastboot-assistant
       sweet_unix.png: usr/share/icons/hicolor/256x256/apps/sweet_unix.png
     stage-packages:
-      - adb
-      - fastboot
+      #- adb
+      #- fastboot
       - xz-utils
       - unzip
       - zip
       - wget
       - curl
       - pkexec
-      - heimdall-flash
+      # - heimdall-flash
       - coreutils
       - libc6
       - libgtk-4-1
