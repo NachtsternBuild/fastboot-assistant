@@ -2,7 +2,8 @@
 ## Application development
 ---
 ### Status:
-- **v.0.7.1:** *dev* → on work
+- **v.0.7.2:** *dev* → on work
+- **v.0.7.1:** *beta* → testing
 - **v.0.6.2.1:** *stable*
 - **v.0.5.5.2:** *stable*
 ---
@@ -12,20 +13,34 @@
 ```sh
 git clone https://github.com/NachtsternBuild/fastboot-assistant.git
 ```
-2. Install *GCC, GTK, ADB/Fastboot, desktop-file-utils, make, dpkg-dev, debhelper*:
+2. Install *GCC, GTK, ADB/Fastboot, desktop-file-utils, make, dpkg-dev, debhelper, ccache*:
 
 ```sh
 # Debian / Ubuntu:
-sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper
-
+sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper ccache
 ```
-3. Edit the source code with an editor of your choice according to your requirements. *Note that the Makefile must also be changed if you change the name.
-4. Change to the directory *Applications*:
+3. For the Snap build you need this tools: *qtbase5-dev, qtchooser, qt5-qmake, qtbase5-dev-tools, snapcraft, lxd*
+```sh
+# Debian / Ubuntu:
+sudo apt update && sudo apt install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+# 1. Install snapcraft:
+sudo snap install snapcraft --classic
+# 2. Install lxd:
+sudo snap install lxd
+# 3. Add yourself to the group for lxd
+sudo usermod -a -G lxd $USER
+# 4. Reboot your system
+sudo reboot
+# 5. Run this command to init lxd
+lxd init --minimal
+```
+4. Edit the source code with an editor of your choice according to your requirements. *Note that the Makefile must also be changed if you change the name.
+5. Change to the directory *Applications*:
    ```sh
    cd ~/fastboot-assistant/Anwendungen
    ```
 
-5. Compile the code:
+6. Compile the code:
 ```sh
 bash Build/build-fastboot-assistant.sh
 ```
@@ -35,6 +50,7 @@ bash Build/build-fastboot-assistant.sh
   
 *The following package types are available for Linux:*
 - Debian package
+- Snap
 
 *For Windows, a zip file is packed which contains the Debian package included for the WSL.*
 
@@ -111,11 +127,15 @@ GUI.c ––––|
 	  |
 	  |– info.c
 	  |
-	  |– updater.c
+	  |– updater.c –––––––––––––––––|
+          |                             |– updater_stable.c
+          |                             |– updater_devmode.c
 	  |
+	  |– post_update.c
+	  |– info_tools.c
 	  |– about.c
 	  |– run_first_setup.c
-	  
+	  |
 	  |– /header –––––––––––––––––––| 
 	  |				|– header_connected_devices.c
 	  |				|– header_delete_files_in_dir.c
@@ -153,6 +173,10 @@ GUI.c ––––|
 	  |				|– header_install_with_pkexec.c
 	  |				|– header_language_check.c
 	  |				|– header_command_adb_fastboot.c
+          |                             |– header_write_log.c
+          |                             |– header_program_dir.c
+          |                             |– header_get_config_dir.c
+          |                             |– header_get_config_file_path.c
 	  |				|
 	  |				|– function_header.h
 	  |				|– flash_function_header.h
@@ -165,16 +189,26 @@ GUI.c ––––|
 	  |  
 	  + Build/Makefile
 	  + Build/build-fastboot-assistant.sh ← by @Jean28518, thank you
-	  
-	  + Enable_WSL.bat
-	  + WSL_install.bat
-	  + Anpassungen einiger Programmteile für Windows
-	  
-	  + fastboot-assistent.desktop ← by @Jean28518, thank you
+	  |
 	  + /deb/DEBIAN/control ← by @Jean28518, thank you
 	  + /deb/DEBIAN/install ← by @Jean28518, thank you
+	  |
+	  + /snap/snapcraft.yaml
+	  + /snap/io.github.nachtsternbuild.Fastboot-Assistant.appdata.xml
+	  |
+	  + /flatpak/io.github.nachtsternbuild.Fastboot-Assistant.desktop
+	  + /flatpak/io.github.nachtsternbuild.Fastboot-Assistant.metainfo.xml
+	  + /flatpak/io.github.nachtsternbuild.Fastboot-Assistant.yml
+	  |
+	  + /Windows/Enable_WSL.bat
+	  + /Windows/WSL_install.bat
+	  + /Windows/Adaptations of some program parts for WSL
+	  |
+	  + fastboot-assistent.desktop ← by @Jean28518, thank you
 	  + version.txt
 	  + sweet_unix.png
+	  |
 	  + /rpmbuild/SPECS/fastboot-assistant.spec
+
 	  						
 ```
