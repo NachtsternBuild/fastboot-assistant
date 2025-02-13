@@ -172,8 +172,8 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     // packageinforamtions with labels
     for (int i = 0; i < 12; i++) 
     {
-        const char *checkmark = is_installed[i] ? " ✓" : " ✗";
-        GtkWidget *label = gtk_label_new(g_strdup_printf("%s%s%s", labels_packages[i], versions[i], checkmark));
+        const char *checkmark = is_installed[i] ? "✅ " : "❌ ";
+        GtkWidget *label = gtk_label_new(g_strdup_printf("%s%s%s", checkmark, labels_packages[i], versions[i]));
         gtk_box_append(GTK_BOX(box), label);
     }
 	
