@@ -25,6 +25,8 @@
 #include "language_check.h"
 #include "program_functions.h"
 
+GtkWidget *root_status_label;
+
 // check if device are connected
 int is_android_device_connected() 
 {
@@ -39,7 +41,7 @@ int is_android_device_connected()
     {
         return 0;  // no device
     }
-    return 1;  // device
+    return 1;  // device detected
 }
 
 // create function to show info windows
@@ -47,7 +49,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
 {
     if (!is_android_device_connected()) 
     {
-        g_print("Log: No Android device connected.\n");
+        LOG_ERROR("No Android device connected.");
         return;
     }
 
@@ -67,10 +69,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
 
     // get active slot
     snprintf(active_slot, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.boot.slot_suffix", info_command)));
-    
-    // check for root
-    snprintf(get_root, 2048, "%s", execute_command(g_strdup_printf("%s shell su -c id", info_command)));
-    
+       
     // soc info
     snprintf(get_soc, 2048, "%s", execute_command(g_strdup_printf("%s shell cat /proc/cpuinfo", info_command)));
 
@@ -84,14 +83,14 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
     snprintf(get_session_type, 2048, "%s", execute_command("echo $XDG_SESSION_TYPE"));
 }
 
-/* the main function from info */
+/* main function - info */
 void info(int argc, char *argv[], GtkWindow *parent_window) 
 {  
 	LOG_INFO("info");
+	
 	gtk_init();
 	main_loop = g_main_loop_new(NULL, FALSE);
 	apply_theme();
-
     apply_language();
 
     // Define labels based on the selected language
@@ -101,8 +100,8 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     const char *device_name_label = strcmp(language, "de") == 0 ? "Gerätename: " : "Device Name: ";
     const char *project_treble_label = strcmp(language, "de") == 0 ? "Project Treble: " : "Project Treble: ";
     const char *active_slot_label = strcmp(language, "de") == 0 ? "Aktiver Slot: " : "Active Slot: ";
-    const char *root_access_label = strcmp(language, "de") == 0 ? "Root-Rechte verfügbar: " : "Root Access: ";
-    const char *soc_label = strcmp(language, "de") == 0 ? "System-on-Chip: " : "<b>System-on-Chip: ";
+    const char *root_access_label = strcmp(language, "de") == 0 ? "Root-Rechte: " : "Root Access: ";
+    const char *soc_label = strcmp(language, "de") == 0 ? "System-on-Chip: " : "System-on-Chip: ";
     const char *computer_info_title = strcmp(language, "de") == 0 ? "Computer-Info:" : "Computer Info:";
     const char *distro_label = strcmp(language, "de") == 0 ? "Distribution: " : "Distribution: ";
     const char *version_label = strcmp(language, "de") == 0 ? "Version: " : "Version: ";
@@ -110,10 +109,9 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     const char *language_label = strcmp(language, "de") == 0 ? "Sprache: " : "Language: ";
     const char *session_type_label = strcmp(language, "de") == 0 ? "Session Typ: " : "Session Type: ";
     
-     if (!is_android_device_connected()) 
+    if (!is_android_device_connected()) 
     {      
-        char error_message[1024];
-        snprintf(error_message, sizeof(error_message), "No device!");
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
@@ -134,8 +132,9 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     char get_session_type[2048] = {0};
     
     // Get all infos
-    get_android_info(android_version, kernel_version, device_name, project_treble, active_slot, get_root, get_soc, get_distro, get_version, get_desktop, get_language, get_session_type);
-
+    get_android_info(android_version, kernel_version, device_name, project_treble, active_slot, get_soc, get_distro, get_version, get_desktop, get_language, get_session_type);
+    // check for root
+	check_root_access();
 
     // create a window
     GtkWidget *window = gtk_window_new();
@@ -175,13 +174,15 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     GtkWidget *slot_label = gtk_label_new(g_strdup_printf("%s%s", active_slot_label, active_slot));
     gtk_box_append(GTK_BOX(box), slot_label);
 	
-	// get info for root
-    GtkWidget *root_label = gtk_label_new(g_strdup_printf("%s%s", root_access_label, get_root));
-    gtk_box_append(GTK_BOX(box), root_label);
-	
 	// get the SoC info
     GtkWidget *soc_info_label = gtk_label_new(g_strdup_printf("%s%s", soc_label, get_soc));
     gtk_box_append(GTK_BOX(box), soc_info_label);
+    
+    // get info for root
+    GtkWidget *root_label = gtk_label_new(g_strdup_printf("%s", root_access_label));
+    root_status_label = gtk_label_new("Check for root permissions...");
+    gtk_box_append(GTK_BOX(box), root_label);
+    gtk_box_append(GTK_BOX(vbox), root_status_label);
 
     GtkWidget *info2_label = gtk_button_new_with_label(computer_info_title);
     gtk_box_append(GTK_BOX(box), info2_label);
