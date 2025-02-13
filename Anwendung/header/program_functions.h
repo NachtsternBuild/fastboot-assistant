@@ -36,12 +36,17 @@
 #define WINDOW_HEIGHT 600
 
 /* 
-* makros for logging *
+* makros for the logging *
+*
 * log output: 
-* [yy-mm-dd HH:MM:SS] [INFO]: This are a message for the program. *
-* [yy-mm-dd HH:MM:SS] [ERROR]: This shows a error from the program. *
+* [yy-mm-dd HH:MM:SS] [INFO]: This are a message for the program. 
+* [yy-mm-dd HH:MM:SS] [ERROR]: This shows a error from the program.
+*
+* Usage:
+* LOG_INFO("This are a message for the program.");
+* LOG_ERROR("This shows a error from the program.");
 */
-// only for infos
+// the makro for infos
 #define LOG_INFO(msg, ...) { \
     time_t now = time(NULL); \
     struct tm *tm_info = localtime(&now); \
@@ -50,7 +55,7 @@
     g_print("[%s] [INFO]: " msg "\n", time_buf, ##__VA_ARGS__); \
 }
 
-// for errors
+// the makro for errors
 #define LOG_ERROR(msg, ...) { \
     time_t now = time(NULL); \
     struct tm *tm_info = localtime(&now); \
@@ -59,8 +64,25 @@
     g_print("[%s] [ERROR]: " msg "\n", time_buf, ##__VA_ARGS__); \
 }
 
+/* 
+* makro for autofree the memory *
+*
+* this only works with GCC
+*
+* Usage:
+* auto_free char *output = execute_command("ls /");
+* char *output = execute_command("ls -l");
+* printf("%s", output);
+*/
+// the wrapper for autofree the memory
+void free_wrapper(void *p) { free(*(void **)p); }
 
-/* global variables that are used in each file */
+// the makro that use the wrapper
+#define auto_free __attribute__((cleanup(free_wrapper)))
+
+/* 
+* global variables that are used in each file *
+*/
 // for the css-provider
 extern GtkCssProvider *provider;
 
@@ -73,7 +95,12 @@ extern const char *language;
 // for GTK main loop
 extern GMainLoop *main_loop;
 
-/* function from the header */
+// for check root access
+extern GtkWidget *root_status_label;
+
+/* 
+* function from the header *
+*/
 // destroy window/dialog/loops
 // end  GTK main loop
 void on_window_destroy(GtkWidget *widget, gpointer data);
@@ -117,6 +144,9 @@ void get_info();
 int is_android_device_connected();
 void connected_devices();
 void get_android_info();
+
+// check root access
+void check_root_access(void): 
 
 // show file chooser
 void show_file_chooser(GtkWidget *widget, gpointer data);
