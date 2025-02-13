@@ -138,6 +138,8 @@ void show_error_message();
 // check and get the slot
 int get_slot_of_device();
 void check_active_slot();
+// this get the active slot via adb
+char *get_inactive_slot() 
 
 // get devices
 void get_info();
