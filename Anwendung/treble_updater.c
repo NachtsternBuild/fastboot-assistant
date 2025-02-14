@@ -26,17 +26,19 @@
 #include "language_check.h"
 #include "program_functions.h"
 
-GMainLoop *main_loop = NULL; 
 GtkWidget *start_button;
 GtkWidget *boot_checkbox;
 GtkWidget *system_checkbox;
 GtkWidget *treble_spinner;
 GtkWidget *restarting_system;
 GtkWidget *root_status_label;
+GtkWidget *free_space1;
+GtkWidget *free_space2;
 GtkWidget *boot_image_file_chooser;
 GtkWidget *system_image_file_chooser;
 GtkWidget *set_active_slot_checkbox;
 GtkWidget *treble_spinner_window;
+
 
 // get the active slot with adb
 char *get_inactive_slot() 
@@ -142,6 +144,7 @@ void *flash_thread_func(void *arg)
 // function that create the window for the spinner and run all commands in the background
 void update_device(GtkWidget *widget, gpointer user_data) 
 {
+    LOG_INFO("Start the Update via ADB");
     // window for the spinner
     treble_spinner_window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(treble_spinner_window), " ");
@@ -169,11 +172,12 @@ void update_device(GtkWidget *widget, gpointer user_data)
 // function to reboot use 'adb reboot'
 void restart_system(GtkWidget *widget, gpointer user_data)
 {
+	LOG_INFO("Restart with ADB");
 	char *command = execute_command("adb reboot");
 }
 
 /* main function - treble_updater */
-treble_updater(int argc, char *argv[]) 
+void treble_updater(int argc, char *argv[]) 
 {
     LOG_INFO("treble_updater");
     gtk_init();
@@ -185,16 +189,24 @@ treble_updater(int argc, char *argv[])
 	// create a new window for the treble updater
     GtkWidget *window = gtk_window_new();
     gtk_window_set_title(GTK_WINDOW(window), "Treble Updater");
-    gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
+    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_window_set_child(GTK_WINDOW(window), vbox);
     
+    // label for some free space
+    free_space1 = gtk_label_new("  ");
+    gtk_box_append(GTK_BOX(vbox), free_space1);
+    
     // root status label
     root_status_label = gtk_label_new("Prüfe Root-Rechte...");
     gtk_box_append(GTK_BOX(vbox), root_status_label);
    
+    // label for some free space
+    free_space2 = gtk_label_new("  ");
+    gtk_box_append(GTK_BOX(vbox), free_space2);
+    
     // checkbox for boot.img
     boot_checkbox = gtk_check_button_new_with_label("boot.img");
     gtk_box_append(GTK_BOX(vbox), boot_checkbox);
