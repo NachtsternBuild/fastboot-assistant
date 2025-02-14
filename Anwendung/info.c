@@ -25,8 +25,6 @@
 #include "language_check.h"
 #include "program_functions.h"
 
-GtkWidget *root_status_label;
-
 // check if device are connected
 int is_android_device_connected() 
 {
@@ -45,7 +43,7 @@ int is_android_device_connected()
 }
 
 // create function to show info windows
-void get_android_info(char *android_version, char *kernel_version, char *device_name, char *project_treble, char *active_slot, char *get_root, char *get_soc, char *get_distro, char *get_version, char *get_desktop, char *get_language, char *get_session_type) 
+void get_android_info(char *android_version, char *kernel_version, char *device_name, char *project_treble, char *active_slot, char *get_soc, char *get_distro, char *get_version, char *get_desktop, char *get_language, char *get_session_type) 
 {
     if (!is_android_device_connected()) 
     {
@@ -123,7 +121,6 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     char device_name[2048] = {0};
     char project_treble[2048] = {0};
     char active_slot[2048] = {0};
-    char get_root[2048] = {0};
     char get_soc[2048] = {0};
     char get_distro[2048] = {0};
     char get_version[2048] = {0};
@@ -182,7 +179,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     GtkWidget *root_label = gtk_label_new(g_strdup_printf("%s", root_access_label));
     root_status_label = gtk_label_new("Check for root permissions...");
     gtk_box_append(GTK_BOX(box), root_label);
-    gtk_box_append(GTK_BOX(vbox), root_status_label);
+    gtk_box_append(GTK_BOX(box), root_status_label);
 
     GtkWidget *info2_label = gtk_button_new_with_label(computer_info_title);
     gtk_box_append(GTK_BOX(box), info2_label);
