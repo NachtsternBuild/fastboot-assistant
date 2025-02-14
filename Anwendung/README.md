@@ -3,7 +3,7 @@
 ---
 ### Status:
 - **v.0.7.2:** *dev* → on work
-- **v.0.7.1:** *beta* → testing
+- **v.0.7.1:** *beta* 
 - **v.0.6.2.1:** *stable*
 - **v.0.5.5.2:** *stable*
 ---
