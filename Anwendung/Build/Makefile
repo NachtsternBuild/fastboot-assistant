@@ -60,6 +60,7 @@ SRCS = \
 	header_write_log.c \
 	header_verify_package_type.c \
 	header_check_root_access.c \
+	header_free_wrapper.c \
 	treble_updater.c \
 	get_devices.c \
 	wsl_config.c \
