@@ -37,7 +37,7 @@ lxd init --minimal
 4. Edit the source code with an editor of your choice according to your requirements. *Note that the Makefile must also be changed if you change the name.
 5. Change to the directory *Applications*:
    ```sh
-   cd ~/fastboot-assistant/Anwendungen
+   cd ~/fastboot-assistant/Anwendung
    ```
 
 6. Compile the code:
