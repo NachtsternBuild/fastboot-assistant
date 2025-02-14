@@ -35,6 +35,7 @@ void preflash_GUI();
 void flash_GUI();
 void instruction_GUI();
 void about();
+void treble_updater(); 
 
 // setup functions
 void wsl_config();
