@@ -74,8 +74,8 @@
 * char *output = execute_command("ls -l");
 * printf("%s", output);
 */
-// the wrapper for autofree the memory
-void free_wrapper(void *p) { free(*(void **)p); }
+// declare the wrapper for autofree the memory
+void free_wrapper(void *p);
 
 // the makro that use the wrapper
 #define auto_free __attribute__((cleanup(free_wrapper)))
@@ -139,7 +139,7 @@ void show_error_message();
 int get_slot_of_device();
 void check_active_slot();
 // this get the active slot via adb
-char *get_inactive_slot() 
+char *get_inactive_slot(); 
 
 // get devices
 void get_info();
@@ -148,7 +148,7 @@ void connected_devices();
 void get_android_info();
 
 // check root access
-void check_root_access(void): 
+void check_root_access(void);
 
 // show file chooser
 void show_file_chooser(GtkWidget *widget, gpointer data);
