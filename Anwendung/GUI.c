@@ -42,6 +42,7 @@ extern void flash_GUI();
 extern void instruction_GUI();
 extern void info();
 extern void updater();
+extern void treble_updater();
 extern void about();
 extern void make_dir();
 
@@ -92,10 +93,10 @@ static void start_info(GtkWidget *widget, gpointer data)
     info();
 }
 
-// start updater-function
-static void start_updater(GtkWidget *widget, gpointer data) 
+// start the treble_updater-function
+static void start_treble_updater(GtkWidget *widget, gpointer data) 
 {
-    updater();
+    treble_updater();
 }
 
 // start about-function
@@ -150,7 +151,7 @@ void set_button_labels(char labels[][30])
         strcpy(labels[4], "Flash");
         strcpy(labels[5], "Instructions");
         strcpy(labels[6], "Info");
-        strcpy(labels[7], "Updater");
+        strcpy(labels[7], "Treble Updater");
         strcpy(labels[8], "About");
     } 
     
@@ -163,7 +164,7 @@ void set_button_labels(char labels[][30])
         strcpy(labels[4], "Flashen");
         strcpy(labels[5], "Anleitungen");
         strcpy(labels[6], "Info");
-        strcpy(labels[7], "Updater");
+        strcpy(labels[7], "Treble Updater");
         strcpy(labels[8], "Über das Programm");
     }
 }
@@ -272,7 +273,7 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
                 g_signal_connect(button, "clicked", G_CALLBACK(start_info), NULL);
                 break;
             case 7:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_updater), NULL);
+                g_signal_connect(button, "clicked", G_CALLBACK(start_treble_updater), NULL);
                 break;
             case 8:
                 g_signal_connect(button, "clicked", G_CALLBACK(start_about), NULL);
