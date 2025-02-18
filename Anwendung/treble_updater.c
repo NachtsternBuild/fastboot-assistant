@@ -236,8 +236,12 @@ void treble_updater(int argc, char *argv[])
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_window_set_child(GTK_WINDOW(window), vbox);
     
+    // some informations
     info_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "\nDer Treble Updater funktioniert nur mit a/b-Geräten. \nEs müssen Root-Rechte bereitgestellt werden.\n" : "\nThe Treble Updater only works with a/b devices. \nRoot rights must be provided.\n");
+    gtk_box_append(GTK_BOX(vbox), info_treble);
+    
     info2_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Treble Updater hat die Aufgabe ein neues Boot/System-Image \nin den inaktiven Slot zu flashen und \ndiesen aktiv zusetzen.\n" : "The Treble Updater has the task of flashing \na new boot/system image into the inactive slot \nand making it active.\n");
+    gtk_box_append(GTK_BOX(vbox), info2_treble);
     
     // label for some free space
     free_space1 = gtk_label_new("  ");
