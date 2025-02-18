@@ -51,7 +51,10 @@ void check_root_access()
     }
 
     // check for root
-    int status = system("adb shell su -c 'whoami' > /dev/null 2>&1");
+    auto_free char *root_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s shell su -c 'whomai' > /dev/null 2>&1", root_command);
+    int status = system(command);
 
     // set status label
     gtk_label_set_text(GTK_LABEL(root_status_label), (status == 0) ? root_access : no_root_access);
