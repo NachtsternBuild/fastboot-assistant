@@ -31,6 +31,13 @@ void check_root_access()
 	apply_language();
     const char *root_access;
     const char *no_root_access;
+    
+    if (!is_android_device_connected()) 
+    {      
+        const char *no_device = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        gtk_label_set_text(GTK_LABEL(root_status_label), no_device);
+        return;
+    }
 
     if (strcmp(language, "de") == 0) 
     {
