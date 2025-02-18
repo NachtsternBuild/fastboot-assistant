@@ -98,6 +98,9 @@ extern GMainLoop *main_loop;
 // for check root access
 extern GtkWidget *root_status_label;
 
+// for detecting the android bootctl
+extern GtkWidget *bootctl_status_label;
+
 /* 
 * function from the header *
 */
@@ -149,6 +152,9 @@ void get_android_info();
 
 // check root access
 void check_root_access(void);
+
+// detect the android bootctl
+void get_bootctl(void);
 
 // show file chooser
 void show_file_chooser(GtkWidget *widget, gpointer data);
