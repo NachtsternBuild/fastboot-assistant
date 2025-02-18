@@ -1,0 +1,58 @@
+/*
+ *-------------------------------------------*
+ *                Projekt 122                *
+ *-------------------------------------------*
+ *      Apache License, Version 2.0          *
+ *-------------------------------------------*
+ *                                           *
+ *  Programm um das Installieren von         *
+ *  Custom-ROM und GSIs auf Android-Geräte   *
+ *  zu erleichtern                           *
+ *                                           *
+ *-------------------------------------------*
+ *      (C) Copyright 2025 Elias Mörz        *
+ *-------------------------------------------*
+ *                                           *
+ *       Headerpart - get_bootctl		     *
+ *                                           *
+ *-------------------------------------------*
+ */
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <gtk/gtk.h>
+#include "language_check.h"
+#include "program_functions.h"
+
+// function detect the android bootctl
+void get_bootctl() 
+{
+	apply_language();
+    const char *detected_bootctl;
+    const char *not_detected_bootctl;
+    
+    if (!is_android_device_connected()) 
+    {      
+        const char *no_device = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        gtk_label_set_text(GTK_LABEL(bootctl_status_label), no_device);
+        return;
+    }
+    
+    if (strcmp(language, "de") == 0) 
+    {
+        detected_bootctl = "✅ Bootctl erkannt.";
+        not_detected_bootctl = "❌ Bootctl nicht erkannt.";
+    } 
+    else 
+    {
+        detected_bootctl = "✅ Bootctl detected.";
+        not_detected_bootctl = "❌ Bootctl not detected.";
+    }
+
+    // check for root
+    int status = system("adb shell su -c 'bootctl' >/dev/null 2>&1");
+
+    // set status label
+    gtk_label_set_text(GTK_LABEL(bootctl_status_label), (status == 0) ? detected_bootctl : not_detected_bootctl);
+}
