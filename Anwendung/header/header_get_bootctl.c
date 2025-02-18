@@ -51,7 +51,10 @@ void get_bootctl()
     }
 
     // check for root
-    int status = system("adb shell su -c 'bootctl' >/dev/null 2>&1");
+    auto_free char *bootctl_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s shell su -c 'bootctl' >/dev/null 2>&1", bootctl_command);
+    int status = system(command);
 
     // set status label
     gtk_label_set_text(GTK_LABEL(bootctl_status_label), (status == 0) ? detected_bootctl : not_detected_bootctl);
