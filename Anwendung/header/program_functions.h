@@ -175,7 +175,8 @@ void get_wsl_directory(char* wsl_dir, size_t size); // this
 void set_main_dir_with_wsl(char *path, size_t size, const char *filename); // this
 void convert_wsl_path(char *windows_path, size_t size, const char *wsl_path);
 int directory_exists(const char *path);
-void delete_files_in_dir();
+void delete_files_in_dir(const char *path);
+void delete_config_files(const char *path);
 void delete_directory(const char *path);
 
 // delete config file
