@@ -33,8 +33,9 @@ GtkWidget *treble_spinner;
 GtkWidget *restarting_system;
 GtkWidget *root_status_label;
 GtkWidget *bootctl_status_label;
-GtkWidget *free_space1;
-GtkWidget *free_space2;
+GtkWidget *root_status_info;
+GtkWidget *bootctl_status_info;
+GtkWidget *free_space;
 GtkWidget *boot_image_file_chooser;
 GtkWidget *system_image_file_chooser;
 GtkWidget *set_active_slot_checkbox;
@@ -240,24 +241,26 @@ void treble_updater(int argc, char *argv[])
     info_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "\nDer Treble Updater funktioniert nur mit a/b-Geräten. \nEs müssen Root-Rechte bereitgestellt werden.\n" : "\nThe Treble Updater only works with a/b devices. \nRoot rights must be provided.\n");
     gtk_box_append(GTK_BOX(vbox), info_treble);
     
-    info2_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Treble Updater hat die Aufgabe ein neues Boot/System-Image \nin den inaktiven Slot zu flashen und \ndiesen aktiv zusetzen.\n" : "The Treble Updater has the task of flashing \na new boot/system image into the inactive slot \nand making it active.\n");
+    info2_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Treble Updater hat die Aufgabe ein neues Boot/System-Image \nin den inaktiven Slot zu flashen und diesen aktiv zusetzen.\n" : "The Treble Updater has the task of flashing \na new boot/system image into the inactive slot and making it active.\n");
     gtk_box_append(GTK_BOX(vbox), info2_treble);
-    
-    // label for some free space
-    free_space1 = gtk_label_new("  ");
-    gtk_box_append(GTK_BOX(vbox), free_space1);
-    
+      
+    // root info label
+    root_status_info = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Root-Rechte:" : "Root permission:");
+    gtk_box_append(GTK_BOX(vbox), root_status_info);
     // root status label
     root_status_label = gtk_label_new("Check Root permission...");
     gtk_box_append(GTK_BOX(vbox), root_status_label);
     
+    // bootctl info label
+    bootctl_status_info = gtk_label_new("Bootctl:");
+    gtk_box_append(GTK_BOX(vbox), bootctl_status_info);
     // bootctl status label
     bootctl_status_label = gtk_label_new("Search for bootctl...");
     gtk_box_append(GTK_BOX(vbox), bootctl_status_label);
     
     // label for some free space
-    free_space2 = gtk_label_new("  ");
-    gtk_box_append(GTK_BOX(vbox), free_space2);
+    free_space = gtk_label_new("  ");
+    gtk_box_append(GTK_BOX(vbox), free_space);
     
     // checkbox for boot.img
     boot_checkbox = gtk_check_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashe neues Boot-Image" : "Flash new boot image");
@@ -290,6 +293,13 @@ void treble_updater(int argc, char *argv[])
 	
     // run GTK main loop
     g_main_loop_run(main_loop);
+    
+    // free the provider
+    if (provider != NULL) 
+    {
+        g_object_unref(provider);
+        provider = NULL;
+    }
     
     if (main_loop != NULL) 
 	{
