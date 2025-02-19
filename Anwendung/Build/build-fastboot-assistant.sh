@@ -27,8 +27,7 @@ VERSION="$(cat Build/version.txt)"
 
 # Directory paths
 home_dir="$HOME"
-source_dir="$home_dir/fastboot-assistant/Anwendung"
-# source_dir="$home_dir/Dokumente/Schule/Bell/Projekt_122/Master/Projekt_122_GUI/v_0_7_1"
+source_dir="$(pwd)"
 header_dir="${source_dir}/header"
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
