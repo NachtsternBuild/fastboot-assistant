@@ -74,8 +74,8 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
         "grep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d '\"'",
         "grep '^VERSION=' /etc/os-release | cut -d'=' -f2 | cut -d' ' -f1 | tr -d '\"'",
         "uname -r",
-        "lscpu | grep \"Modellname:\"",
-        "lspci | grep -E \"VGA|3D|Display\" | awk -F: '{print $3}' | sed 's/^ *//'",
+        "grep \"model name\" /proc/cpuinfo | head -1 | awk -F ': ' '{print $2}'",
+        "lspci | grep -i \"vga\" | awk -F ': ' '{print $2}'",
         "echo $XDG_CURRENT_DESKTOP",
         "echo $LANG | cut -d'_' -f1",
         "echo $XDG_SESSION_TYPE",
@@ -154,7 +154,7 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
 	GtkWidget *system_info_title_label = gtk_button_new_with_label(system_infos);
     gtk_box_append(GTK_BOX(box), system_info_title_label);
     
-    GtkWidget *assistant_version_label = gtk_button_new_with_label("Fastboot-Assistant: v.0.7.1");
+    GtkWidget *assistant_version_label = gtk_button_new_with_label("Fastboot-Assistant: v.0.7.2");
     gtk_box_append(GTK_BOX(box), assistant_version_label);
 
     // add system info labels to the window
@@ -173,7 +173,7 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     for (int i = 0; i < 12; i++) 
     {
         const char *checkmark = is_installed[i] ? "✅ " : "❌ ";
-        GtkWidget *label = gtk_label_new(g_strdup_printf("%s%s%s", checkmark, labels_packages[i], versions[i]));
+        GtkWidget *label = gtk_label_new(g_strdup_printf("%s%s%s", labels_packages[i], checkmark, versions[i]));
         gtk_box_append(GTK_BOX(box), label);
     }
 	
