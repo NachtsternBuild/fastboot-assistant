@@ -28,12 +28,11 @@
 // check if device are connected
 int is_android_device_connected() 
 {
-    char *info_command = adb_command();
+    auto_free char *info_command = adb_command();
     char command[256];
     snprintf(command, sizeof(command), "%s devices | grep -w 'device'", info_command);
     
     char *output = execute_command(command);
-    free(info_command);  // clean memory
 
     if (output == NULL || strlen(output) == 0) 
     {
