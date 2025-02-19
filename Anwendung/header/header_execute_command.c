@@ -31,7 +31,7 @@
 * DEBUG 1 ← active debugging
 */
 
-#define DEBUG 1
+#define DEBUG 0
 
 // function to execute a command and capture its output
 char *execute_command(const char *command) 
@@ -59,7 +59,7 @@ char *execute_command(const char *command)
     LOG_INFO("Command Output: %s", result);
 #endif
 
-    return result;  // autofree the memory
+    return buffer;  // autofree the memory
 }
 
 
