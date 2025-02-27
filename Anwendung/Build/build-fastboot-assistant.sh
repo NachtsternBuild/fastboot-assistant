@@ -42,6 +42,7 @@ build_dir="${source_dir}/Build"
 windows_dir="${source_dir}/Windows"
 preflash_dir_win="${windows_dir}/preflash"
 header_dir_win="${windows_dir}/header"
+other_dir_win="${windows_dir}/Others"
 
 # Snap build info
 snapcraft_dir="${source_dir}/snap"
@@ -57,7 +58,7 @@ flatpak_manifest="${flatpak_dir}/io.github.nachtsternbuild.Fastboot-Assistant.ym
 
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
-unused_files=("backup_noroot.c" "header_set_main_dir_with_wsl.c" "header_get_config_dir.c" "header_get_config_file_path.c")
+unused_files=("backup_noroot.c" "header_set_main_dir_with_wsl.c" "header_get_config_dir.c" "header_get_config_file_path.c" "updater_stable.c")
 zip_files=("WSL_install.bat" "Enable_WSL.bat" "README.md" "fastboot-assistant.deb")
 
 # function that have output with color
