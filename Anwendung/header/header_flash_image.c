@@ -299,7 +299,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     }
 
     // create the command
-    const char *device_command = fastboot_command();
+    auto_free const char *device_command = fastboot_command();
     char *function_command = build_flash_command(device_command, partition1, partition2, image_info, optional_flags);
 
     // create a new window
