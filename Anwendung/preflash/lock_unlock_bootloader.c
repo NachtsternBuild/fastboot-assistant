@@ -33,14 +33,13 @@ char bootloader_lock_command[2048];
 static void bootloader_new(GtkWidget *widget, gpointer data)
 {
     LOG_INFO("bootloader_new");
-    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way. \nStart procedure to open the bootloader.";
+    auto_free const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way. \nStart procedure to open the bootloader.";
     show_message(message);
     
     char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s flashing unlock", device_command);
     LOG_INFO("Run: %s", bootloader_lock_command);
     command_with_spinner(bootloader_lock_command);
-    free(device_command);
     LOG_INFO("end bootloader_new");
 }
 
@@ -51,11 +50,10 @@ static void bootloader_old(GtkWidget *widget, gpointer data)
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way.\n\nStart the process to open the bootloader.";
     show_message(message);
     
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s oem unlock", device_command);
     LOG_INFO("Run: %s", bootloader_lock_command);
     command_with_spinner(bootloader_lock_command);
-    free(device_command);
     LOG_INFO("end bootloader_old");
 }
 
@@ -66,11 +64,10 @@ static void bootloader_lock(GtkWidget *widget, gpointer data)
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu schließen." : "Some chipsets do not support this process in this way.\n\nStart the process to close the bootloader.";
     show_message(message);
     
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s flashing lock", device_command);
     LOG_INFO("Run: %s", bootloader_lock_command);
     command_with_spinner(bootloader_lock_command);
-    free(device_command);
     LOG_INFO("end bootloader_lock");
 }
 
