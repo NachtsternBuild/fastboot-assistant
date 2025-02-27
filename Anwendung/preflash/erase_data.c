@@ -35,13 +35,12 @@ void erase_data(GtkWidget *widget, gpointer data)
     show_message(message);
     
     // Erase user data and metadata
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     snprintf(erase_data_command, sizeof(erase_data_command), "%s erase userdata", device_command);
     // I don't now if you need this command
     // system("fastboot erase metadata");
     LOG_INFO("Run: %s", erase_data_command);
     command_with_spinner(erase_data_command);
-    free(device_command);
     LOG_INFO("end erase_data");
 }
 

@@ -35,7 +35,7 @@ void backup_root()
     char command[4096];
     char backup_dir[4096];
     char backup_predir_file[4096];
-    const char *adb = adb_command();
+    auto_free const char *adb = adb_command();
     
 	// get path
 	get_config_file_path(backup_predir_file, sizeof(backup_predir_file));

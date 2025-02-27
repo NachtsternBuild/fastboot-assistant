@@ -34,11 +34,10 @@ static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!" : "Please note that USB debugging is activated in the developer options!";
     show_message(message);
     
-    char *device_command = adb_command();
+    auto_free char *device_command = adb_command();
     char command[256];
     snprintf(command, sizeof(command), "%s reboot download", device_command);
-    system(command);
-    free(device_command);
+    command_with_spinner(command);
     LOG_INFO("end reboot_from_adb_heimdall");
 }
 

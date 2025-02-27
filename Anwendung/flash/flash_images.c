@@ -56,11 +56,10 @@ int flash_partition(const char *partition, const char *image_path, int ab_device
     {
         LOG_INFO("Flash other Images (a/b).");
         char function_command[3072];
-        char *device_command = fastboot_command();
+        auto_free char *device_command = fastboot_command();
         snprintf(function_command, sizeof(function_command), "%s flash %s_a %s && %s flash %s_b %s", device_command, partition, image_path, device_command, partition, image_path);
         LOG_INFO("Run: %s", function_command);
         command_with_spinner(function_command);
-        free(device_command);
         LOG_INFO("Finished.");
     } 
     
@@ -68,11 +67,10 @@ int flash_partition(const char *partition, const char *image_path, int ab_device
     else if (strcmp(partition, "system") == 0 && ab_device) 
     {
         char function_command[3072];
-    	char *device_command = fastboot_command();
+    	auto_free char *device_command = fastboot_command();
     	snprintf(function_command, sizeof(function_command), "%s erase system", device_command);
     	LOG_INFO("Run: %s", function_command);
     	system(function_command);
-    	free(device_command);
         system_images(NULL, NULL);  // Passing NULL for widget and window
     }
     
@@ -99,11 +97,10 @@ int flash_partition(const char *partition, const char *image_path, int ab_device
     {
         LOG_INFO("Flash partitions without slot.");
         char function_command[3072];
-        char *device_command = fastboot_command();
+        auto_free char *device_command = fastboot_command();
         snprintf(function_command, sizeof(function_command), "%s flash %s %s", device_command, partition, image_path);
         LOG_INFO("Run: %s", function_command);
         command_with_spinner(function_command);
-        free(device_command);
         LOG_INFO("Finished.");
     }
     LOG_INFO("Image %s successfully flashed on partition %s.", image_path, partition);

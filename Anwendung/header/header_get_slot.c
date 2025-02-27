@@ -34,7 +34,7 @@ int get_slot_of_device()
     char result[2048];
 
     // fastboot-command for the boot slot
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     char command[BUFFER_SIZE];
     snprintf(command, BUFFER_SIZE, "%s getvar slot-count 2>&1", device_command);
 
@@ -60,6 +60,5 @@ int get_slot_of_device()
 	
 	// close the pipe
     pclose(fp);
-    free(device_command);
     return ab_device;
 }
