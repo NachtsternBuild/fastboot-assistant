@@ -34,7 +34,7 @@ void check_active_slot(char *active_slot, size_t size)
     FILE *pipe;
 
     // fastboot-command for the boot-slot
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     char command[BUFFER_SIZE];
     snprintf(command, BUFFER_SIZE, "%s getvar current-slot 2>&1", device_command);
 
@@ -60,7 +60,6 @@ void check_active_slot(char *active_slot, size_t size)
 
     // close pipe
     pclose(pipe);
-    free(device_command);
     // the slot
     LOG_INFO("current-slot: %s", active_slot);
 }
