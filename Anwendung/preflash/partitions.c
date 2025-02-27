@@ -36,7 +36,7 @@ static void remove_boot(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
 
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s delete-logical-partition boot_a && %s delete-logical-partition boot_b", device_command, device_command);
     
     LOG_INFO("Run: %s", partition_command);
@@ -52,7 +52,7 @@ static void remove_vendor(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
 
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s delete-logical-partition vendor_a && %s delete-logical-partition vendor_b", device_command, device_command);
     
 	LOG_INFO("Run: %s", partition_command);
@@ -69,7 +69,7 @@ static void remove_system(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
 
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s delete-logical-partition system_a && %s delete-logical-partition system_b", device_command, device_command);
     
 	LOG_INFO("Run: %s", partition_command);
@@ -86,7 +86,7 @@ static void resize_boot(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
  
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s resize-logical-partition boot_a 400000000 && %s resize-logical-partition boot_b 400000000", device_command, device_command);
     
     LOG_INFO("Run: %s", partition_command);
@@ -103,7 +103,7 @@ static void resize_vendor(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
 
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s resize-logical-partition vendor_a 900000000 && %s resize-logical-partition vendor_b 900000000", device_command, device_command);
     
 	LOG_INFO("Run: %s", partition_command);
@@ -120,7 +120,7 @@ static void resize_system(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
 
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s resize-logical-partition system_a 7500000000 && %s resize-logical-partition system_b 7500000000", device_command, device_command);
     
 	LOG_INFO("Run: %s", partition_command);
@@ -137,7 +137,7 @@ static void create_boot(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
 
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s create-logical-partition boot_a 400000000 && %s create-logical-partition boot_b 400000000", device_command, device_command);
     
 	LOG_INFO("Run: %s", partition_command);
@@ -154,7 +154,7 @@ static void create_vendor(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
 
-    char *device_command = fastboot_command();    
+    auto_free char *device_command = fastboot_command();    
     snprintf(partition_command, sizeof(partition_command), "%s create-logical-partition vendor_a 900000000 && %s create-logical-partition vendor_b 900000000", device_command, device_command);
     
 	LOG_INFO("Run: %s", partition_command);
@@ -171,7 +171,7 @@ static void create_system(GtkWidget *widget, gpointer data)
     // show message
     show_message(message);
     
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     snprintf(partition_command, sizeof(partition_command), "%s create-logical-partition system_a 7500000000 && %s create-logical-partition system_b 7500000000", device_command, device_command);
     
 	LOG_INFO("Run: %s", partition_command);
