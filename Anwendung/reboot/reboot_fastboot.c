@@ -37,7 +37,7 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
     char *device_command = adb_command();
     char command[256];
     snprintf(command, sizeof(command), "%s -d reboot bootloader", device_command);
-    open_terminal_by_desktop(command);
+    command_with_spinner(command);
     free(device_command);
     // this is the old command
     // system("adb reboot bootloader");
@@ -54,7 +54,7 @@ static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
     char *device_command = fastboot_command();
     char command[256];
     snprintf(command, sizeof(command), "%s reboot bootloader", device_command);
-    open_terminal_by_desktop(command);
+    command_with_spinner(command);
     free(device_command);
     LOG_INFO("end reboot_from_fastboot");
 }
