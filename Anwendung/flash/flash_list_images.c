@@ -30,7 +30,7 @@ void flash_partition_list(const char *partition, const char *img_file)
 {
     LOG_INFO("flash_partition");
     char command[512];
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     snprintf(command, sizeof(command), "%s flash %s %s", device_command, partition, img_file);
     LOG_INFO("Executing: %s", command);
     int ret = system(command);
@@ -38,7 +38,6 @@ void flash_partition_list(const char *partition, const char *img_file)
     {
         LOG_ERROR("The command '%s' was not executed successfully.", command);
     }
-    free(device_command);
     LOG_INFO("end flash_partition");
 }
 
