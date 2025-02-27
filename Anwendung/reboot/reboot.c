@@ -35,11 +35,10 @@ static void reboot_system(GtkWidget *widget, gpointer data)
     show_message(message);
     
     // reboot from fastboot
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     char command[256];
     snprintf(command, sizeof(command), "%s reboot", device_command);
     command_with_spinner(command);
-    free(device_command);
     LOG_INFO("end reboot_system");
 }
 
@@ -59,13 +58,11 @@ static void boot_to_image(const gchar *i_filename)
     }
 
     // create fastboot command
-    char *device_command = fastboot_command(); 
+    auto_free char *device_command = fastboot_command(); 
     snprintf(boot_command, sizeof(boot_command), "%s boot %s/%s", device_command, boot_image_path, i_filename);
     LOG_INFO("Run: %s \n", boot_command);
     command_with_spinner(boot_command);
 
-    // free memory
-    free(device_command);
     LOG_INFO("end boot_to_image");
 }
 
