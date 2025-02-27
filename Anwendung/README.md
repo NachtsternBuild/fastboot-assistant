@@ -2,9 +2,9 @@
 ## Application development
 ---
 ### Status:
-- **v.0.7.2:** *dev* → on work
+- **v.0.7.2:** *beta* → testing
 - **v.0.7.1:** *beta* 
-- **v.0.6.2.1:** *stable*
+- **v.0.6.2.2:** *stable*
 - **v.0.5.5.2:** *stable*
 ---
   
@@ -135,6 +135,7 @@ GUI.c ––––|
 	  |– info_tools.c
 	  |– about.c
 	  |– run_first_setup.c
+	  |– treble_updater.c
 	  |
 	  |– /header –––––––––––––––––––| 
 	  |				|– header_connected_devices.c
@@ -177,6 +178,11 @@ GUI.c ––––|
           |                             |– header_program_dir.c
           |                             |– header_get_config_dir.c
           |                             |– header_get_config_file_path.c
+	  |				|– header_check_root_access.c
+	  |				|– header_delete_file.c
+	  |				|– header_download_file.c
+	  |				|– header_free_wrapper.c
+	  |				|– header_get_bootctl.c
 	  |				|
 	  |				|– function_header.h
 	  |				|– flash_function_header.h
