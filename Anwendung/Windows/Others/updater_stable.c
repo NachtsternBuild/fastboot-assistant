@@ -42,7 +42,7 @@ void create_and_run_bash_script(const char *package_url, const char *package_typ
 	char updater_path[2048];
 	char mkdir_command[2048];
 
-	get_config_file_path(updater_dir, sizeof(updater_dir));
+	get_config_dir(updater_dir, sizeof(updater_dir));
 	
 	// Create directory for updater
     snprintf(updater_path, sizeof(updater_path), "%s/updater", updater_dir);
