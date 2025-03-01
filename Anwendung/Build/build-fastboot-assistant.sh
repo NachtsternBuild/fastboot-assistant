@@ -360,7 +360,7 @@ build_program_windows() {
  	then
     	echo "Starte Build für WSL..."
     	echo "Kopiere alle Dateien nach $target_dir..."
-    	for dir in "$preflash_dir_win" "$header_dir_win" "$windows_dir"; do
+    	for dir in "$preflash_dir_win" "$header_dir_win" "$windows_dir" "$other_dir_win"; do
         	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
         	rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
     	done
