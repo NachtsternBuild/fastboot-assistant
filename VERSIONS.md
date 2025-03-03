@@ -4,11 +4,11 @@
 | Version     | Build status                 | Informations                                    | Status             | OS                | Packages                    |
 | ----------- | ---------------------------- | ----------------------------------------------- | ------------------ | ----------------- | --------------------------- |
 | 0.8.2       | :x:                          | *future version*                                | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.8.1       | :x:                          | *future version*                                | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.8.x       | :x:                          | *future version*                                | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.7.2       | :white_check_mark:           | **testing**                                     | **beta**           | Ubuntu, WSL       | DEB, Snap, Zip              |
+| 0.8.1       | :white_check_mark:           | **build version**                               | **dev**            | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
+| 0.8.x       | :white_check_mark:           | **build version, all versions from v.0.8.x**    | **dev**            | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
+| 0.7.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, WSL       | DEB, Snap, Zip              |
 | 0.7.1       | :x:                          | *old version*                                   | *beta*             | Ubuntu, WSL       | DEB, Zip, exp. Snap         |
-| 0.7.x       | :white_check_mark:           | **build version, all versions from v.0.7.x**    | **beta**           | Ubuntu            | DEB, Zip, exp. Snap         |
+| 0.7.x       | :x:                          | *old version*                                   | *stable*           | Ubuntu            | DEB, Zip, exp. Snap         |
 | 0.6.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, Fedora    | DEB, RPM, Zip               |
 | 0.6.2.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | DEB                         |          
 | 0.6.1.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | :x:                         |         
