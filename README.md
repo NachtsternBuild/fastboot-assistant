@@ -31,6 +31,7 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
 
 ### Mutiges Mint v.0.7.x
+- **[fastboot-assistant v.0.7.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.2)** → Linux (Ubuntu/Debian) / Linux (Snap) / Windows via WSL
 - **[fastboot-assistant v.0.7.1.beta](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.1)** → Linux (Ubuntu/Debian) / Windows via WSL
 
 
