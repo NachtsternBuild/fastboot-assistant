@@ -151,10 +151,10 @@ void connected_devices();
 void get_android_info();
 
 // check root access
-void check_root_access(void);
+void check_root_access();
 
 // detect the android bootctl
-void get_bootctl(void);
+void get_bootctl();
 
 // show file chooser
 void show_file_chooser(GtkWidget *widget, gpointer data);
