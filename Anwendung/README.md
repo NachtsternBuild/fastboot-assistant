@@ -2,7 +2,8 @@
 ## Application development
 ---
 ### Status:
-- **v.0.7.2:** *beta* → testing
+- **v.0.8.1:** *dev*
+- **v.0.7.2:** *stable*
 - **v.0.7.1:** *beta* 
 - **v.0.6.2.2:** *stable*
 - **v.0.5.5.2:** *stable*
