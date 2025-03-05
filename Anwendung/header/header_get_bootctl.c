@@ -26,7 +26,7 @@
 #include "program_functions.h"
 
 // function detect the android bootctl
-void get_bootctl() 
+void get_bootctl(GtkWidget *bootctl_status_label) 
 {
 	apply_language();
     const char *detected_bootctl;
@@ -53,7 +53,7 @@ void get_bootctl()
     // check for root
     auto_free char *bootctl_command = adb_command();
     char command[256];
-    snprintf(command, sizeof(command), "%s shell su -c 'bootctl' >/dev/null 2>&1", bootctl_command);
+    snprintf(command, sizeof(command), "%s shell su -c command -v bootctl", bootctl_command);
     int status = system(command);
 
     // set status label
