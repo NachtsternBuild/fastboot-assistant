@@ -287,9 +287,9 @@ void treble_updater(int argc, char *argv[])
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 	
 	// check root access at the start
-    check_root_access();
+    check_root_access(root_status_label);
     // chech for android bootctl
-    get_bootctl();
+    get_bootctl(bootctl_status_label);
 	
     // run GTK main loop
     g_main_loop_run(main_loop);
