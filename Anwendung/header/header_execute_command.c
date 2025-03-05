@@ -38,14 +38,17 @@ char *execute_command(const char *command)
 {
     FILE *fp;
     char buffer[2048];
-    auto_free char *result = calloc(1, 8192);  // autofree the memory
+    char *result = calloc(1, 8192);  // memory for output
 
     if (!result) 
         return NULL;
 
     fp = popen(command, "r");
     if (!fp) 
+    {
+        free(result);
         return NULL;
+    }
 
     while (fgets(buffer, sizeof(buffer), fp) != NULL) 
     {
@@ -54,13 +57,11 @@ char *execute_command(const char *command)
 
     pclose(fp);
 
-#ifdef DEBUG
-    // output for debugging
-    LOG_INFO("Command Output: %s", result);
+#if DEBUG
+    LOG_INFO("Command Output: %s\n", result);
 #endif
 
-    return buffer;  // autofree the memory
+    return result; 
 }
-
 
 
