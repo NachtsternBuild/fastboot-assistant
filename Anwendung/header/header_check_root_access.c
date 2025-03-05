@@ -26,7 +26,7 @@
 #include "program_functions.h"
 
 // header that check for root access
-void check_root_access() 
+void check_root_access(GtkWidget *root_status_label) 
 {
 	apply_language();
     const char *root_access;
@@ -53,7 +53,7 @@ void check_root_access()
     // check for root
     auto_free char *root_command = adb_command();
     char command[256];
-    snprintf(command, sizeof(command), "%s shell su -c 'whomai' > /dev/null 2>&1", root_command);
+    snprintf(command, sizeof(command), "%s shell su -c id -u", root_command);
     int status = system(command);
 
     // set status label
