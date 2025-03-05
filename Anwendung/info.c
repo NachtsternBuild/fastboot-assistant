@@ -49,8 +49,10 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
         LOG_ERROR("No Android device connected.");
         return;
     }
+    char *test_output = execute_command("adb devices");
+	printf("ADB Output: %s\n", test_output);
 
-    char *info_command = adb_command();
+    auto_free char *info_command = adb_command();
 
     // android version
     snprintf(android_version, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.build.version.release", info_command)));
@@ -68,9 +70,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
     snprintf(active_slot, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.boot.slot_suffix", info_command)));
        
     // soc info
-    snprintf(get_soc, 2048, "%s", execute_command(g_strdup_printf("%s shell cat /proc/cpuinfo", info_command)));
-
-    free(info_command);  // clean memory
+    snprintf(get_soc, 2048, "%s", execute_command(g_strdup_printf("%s shell grep \"model name\" /proc/cpuinfo | head -1 | awk -F ': ' '{print $2}'", info_command)));
 
     // get other infos 
     snprintf(get_distro, 2048, "%s", execute_command("grep '^NAME=' /etc/os-release | cut -d'=' -f2 | tr -d '\"'"));
@@ -129,8 +129,6 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     
     // Get all infos
     get_android_info(android_version, kernel_version, device_name, project_treble, active_slot, get_soc, get_distro, get_version, get_desktop, get_language, get_session_type);
-    // check for root
-	check_root_access();
 
     // create a window
     GtkWidget *window = gtk_window_new();
@@ -205,7 +203,10 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
 
     // show all widgets
     gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
+	
+	// check for root
+	check_root_access(root_status_label);
+	
      // run GTK main loop
     g_main_loop_run(main_loop); 
     
