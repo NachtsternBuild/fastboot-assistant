@@ -18,7 +18,7 @@ git clone https://github.com/NachtsternBuild/fastboot-assistant.git
 
 ```sh
 # Debian / Ubuntu:
-sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper ccache
+sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper ccache libsecret-1-dev build-essential
 ```
 3. For the Snap build you need this tools: *qtbase5-dev, qtchooser, qt5-qmake, qtbase5-dev-tools, snapcraft, lxd*
 ```sh
