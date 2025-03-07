@@ -10,7 +10,7 @@
  *	zu erleichtern - get_devices			 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *
  */
@@ -26,9 +26,9 @@
 
 #define MAX_BUFFER_SIZE 256
 
-// Callback functions for each button
+// callback functions for each button
 // check connected adb devices
-static void get_adb(GtkWidget *widget, gpointer data) 
+static void get_adb(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("get_adb");
     char *device_command = adb_command();
@@ -40,7 +40,7 @@ static void get_adb(GtkWidget *widget, gpointer data)
 }
 
 // check connected fastboot devices
-static void get_fastboot(GtkWidget *widget, gpointer data) 
+static void get_fastboot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("get_fastboot");
     char *device_command = fastboot_command();
@@ -51,7 +51,7 @@ static void get_fastboot(GtkWidget *widget, gpointer data)
     LOG_INFO("end get_fastboot");
 }
 
-static void bootloader_status_adb()
+static void bootloader_status_adb(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("bootloader_status_adb");
 	char *device_command = adb_command();
@@ -62,7 +62,7 @@ static void bootloader_status_adb()
     LOG_INFO("end bootloader_status_adb");
 }
 
-static void bootloader_status_fastboot()
+static void bootloader_status_fastboot(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("bootloader_status_fastboot");
 	char *device_command = fastboot_command();
@@ -82,6 +82,7 @@ void set_button_labels_get_devices(char labels[][30])
         strcpy(labels[1], "Devices in Fastboot");
         strcpy(labels[2], "Bootloader status (ADB)");
         strcpy(labels[3], "Bootloader status (fastboot)");
+        strcpy(labels[4], "Back to Home");
     } 
     
     else 
@@ -90,73 +91,50 @@ void set_button_labels_get_devices(char labels[][30])
         strcpy(labels[1], "Geräte in Fastboot");
         strcpy(labels[2], "Bootloader Status (ADB)");
         strcpy(labels[3], "Bootloader Status (fastboot)");
+        strcpy(labels[4], "Zurück zur Startseite");
     }
 }
 
-/* main function of get_devices*/
-void get_devices(int argc, char *argv[]) 
-{
-	LOG_INFO("get_devices");
-	GtkWidget *window, *grid, *button;
-    char button_labels[4][30];
+/* main function - get_devices */
+void get_devices(GtkWidget *widget, gpointer stack) 
+{ 
+    char labels[5][30];  // labels for the button 
+    set_button_labels(labels);  // for both languages
     
-    gtk_init();
-    main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
-    apply_language();
-    set_button_labels_get_devices(button_labels);
-    
-    window = gtk_window_new();
-    const char *get_devices_window = strcmp(language, "de") == 0 ? "Geräte" : "devices";
-    gtk_window_set_title(GTK_WINDOW(window), get_devices_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-    
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    // create box for get_devices
+    GtkWidget *get_devices = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(get_devices, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(get_devices, GTK_ALIGN_CENTER);
+	
+	// create a grid
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-
-    for (int i = 0; i < 4; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-		
-		switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(get_adb), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(get_fastboot), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(bootloader_status_adb), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(bootloader_status_fastboot), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create the button for get_devices
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(get_adb), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(get_fastboot), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(bootloader_status_adb), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(bootloader_status_fastboot), stack);
+    GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(show_home_page), stack);
+	
+    // add the button to the grid
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn4, 1, 1, 1, 1);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(get_devices), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(get_devices), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "get_devices")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-
-    LOG_INFO("end get_devices");
+        gtk_stack_add_named(GTK_STACK(stack), sub_page_1, "get_devices");
+    }
+    
+    LOG_INFO("get_devices");
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "get_devices");
 }
