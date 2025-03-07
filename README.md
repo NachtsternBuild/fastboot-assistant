@@ -29,6 +29,7 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - ***see [CHANGELOG](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/CHANGELOG) for all changes.***
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
 - ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
+- ***see the [BUILDLOG.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/BUILDLOG.md) for more information about future versions.***
 
 ### Latest
 - **[fastboot-assistant v.0.7.2.1](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.2.1)** → Linux (Ubuntu/Debian) / Linux (Snap) / Windows via WSL
