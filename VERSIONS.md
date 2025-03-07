@@ -1,38 +1,26 @@
-# Build Versions of the fastboot-assistant
-## build versions
-
-| Version     | Build status                 | Informations                                    | Status             | OS                | Packages                    |
-| ----------- | ---------------------------- | ----------------------------------------------- | ------------------ | ----------------- | --------------------------- |
-| 0.8.2       | :x:                          | *future version*                                | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.8.1       | :white_check_mark:           | **build version**                               | **dev**            | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.8.x       | :white_check_mark:           | **build version, all versions from v.0.8.x**    | **dev**            | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.7.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, WSL       | DEB, Snap, Zip              |
-| 0.7.1       | :x:                          | *old version*                                   | *beta*             | Ubuntu, WSL       | DEB, Zip, exp. Snap         |
-| 0.7.x       | :x:                          | *old version*                                   | *stable*           | Ubuntu            | DEB, Zip, exp. Snap         |
-| 0.6.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, Fedora    | DEB, RPM, Zip               |
-| 0.6.2.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | DEB                         |          
-| 0.6.1.dev   | :x:                          | *old version*                                   | *dev*              | Ubuntu            | :x:                         |         
-| 0.6.x       | :x:                          | *old version*                                   | *dev*              | Ubuntu            | DEB, RPM, Zip               |
-
-## Roadmap for build
-### 0.8.x
----
-| Version     | Feature Freeze        | Version Freeze      | Release                         | Release Date      | Features                          |
-| ----------- | --------------------- | ------------------- | --------------------------------| ----------------- | --------------------------------- |
-| 0.8.2       | &#x1F914;             | &#x1F914;           | :white_check_mark:              | &#x1F914;         | [#97](https://github.com/NachtsternBuild/fastboot-assistant/issues/97), [#100](https://github.com/NachtsternBuild/fastboot-assistant/issues/100) |
-| 0.8.1       | &#x1F914;             | &#x1F914;           | :white_check_mark:              | &#x1F914;         | [#93](https://github.com/NachtsternBuild/fastboot-assistant/issues/93), [#99](https://github.com/NachtsternBuild/fastboot-assistant/issues/99), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81) support flatpak |
+# Versions of the fastboot-assistant
+*<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
+- ***see [CHANGELOG](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/CHANGELOG) for all changes.***
+- ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
+- ***see the [VERSIONS.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/VERSIONS.md)***
+  
+### Mutiges Mint v.0.7.x
+- **[fastboot-assistant v.0.7.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.2)** → Linux (Ubuntu/Debian) / Linux (Snap) / Windows via WSL
+- **[fastboot-assistant v.0.7.1.beta](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.1)** → Linux (Ubuntu/Debian) / Windows via WSL
 
 
-### 0.7.x
----
-| Version     | Feature Freeze        | Version Freeze      | Release                         | Release Date      | Features                          |
-| ----------- | --------------------- | ------------------- | --------------------------------| ----------------- | --------------------------------- |
-| 0.7.2       | 15.02.2025            | 28.02.2025          | :white_check_mark:              | 28.02. / 01.03.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#80](https://github.com/NachtsternBuild/fastboot-assistant/issues/80), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81), fix all errors, no flatpak |
-| 0.7.1       | 20.01.2025            | 01.02.2025          | :white_check_mark:, prerelease  | 01.02. / 03.02.   | [#62](https://github.com/NachtsternBuild/fastboot-assistant/issues/62), [#90](https://github.com/NachtsternBuild/fastboot-assistant/issues/90), [#91](https://github.com/NachtsternBuild/fastboot-assistant/issues/91) |
+### Rostiges Red Hat v.0.6.x
+- **[fastboot-assistant v.0.6.2.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2.2)** → Linux (Ubuntu/Debian) / Windows via WSL
+- **[fastboot-assistant v.0.6.2.1](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2.1)** → Linux (Ubuntu/Debian) / Windows via WSL
+- **[fastboot-assistant v.0.6.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.6.2)** → Linux (Ubuntu/Debian/Fedora/RHEL) / Windows via WSL
+- *fastboot-assistant v.0.6.1.dev* → build this from source / Linux (Ubuntu)
 
-### 0.6.x
----
-| Version     | Feature Freeze        | Version Freeze      | Release                       | Features                          |
-| ----------- | --------------------- | ------------------- | ------------------------------| --------------------------------- |
-| 0.6.2       | 29.11.                | 05.12.              | :white_check_mark:,           | [#60](https://github.com/NachtsternBuild/fastboot-assistant/issues/60), [#59](https://github.com/NachtsternBuild/fastboot-assistant/issues/59), [#26](https://github.com/NachtsternBuild/fastboot-assistant/issues/26)          |
-| 0.6.1.dev   | 03.11.                | 07.11.              | :x:, build this from source   | [#61](https://github.com/NachtsternBuild/fastboot-assistant/issues/61), [#63](https://github.com/NachtsternBuild/fastboot-assistant/issues/63), [#64](https://github.com/NachtsternBuild/fastboot-assistant/issues/64), [#65](https://github.com/NachtsternBuild/fastboot-assistant/issues/65), start [#66](https://github.com/NachtsternBuild/fastboot-assistant/issues/66)               |
+**→ It is not recommended to use the RPM.**       
+
+### Sweet Unix v.0.5.x
+- **[fastboot-assistant v.0.5.5.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.5.5.2)** → Linux (Ubuntu/Debain/Fedora/RHEL/CentOS) / Windows via WSL          
+
+### Important Notes
+- **With *v.0.6.2.1* and *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
+- **It is recommended to run the Fastboot-Assistant natively under Linux, because the WSL does not provide the same amount of tools as the real Ubuntu. *This version should only be used if there is no other option.***
+- **The possibility of building the Fastboot Assistant as a Snap and Flatpak is experimental and has not yet been fully tested. Especially for the construction of the Flatpak. The dependencies are missing here.**
