@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *       Headerfile - program_functions		 *
@@ -104,6 +104,12 @@ extern GtkWidget *bootctl_status_label;
 /* 
 * function from the header *
 */
+// functions for single windows UI
+// create button
+GtkWidget *create_nav_button(const char *label, GCallback callback, gpointer data);
+// show home page
+void show_home_page(GtkWidget *widget, gpointer stack);
+
 // destroy window/dialog/loops
 // end  GTK main loop
 void on_window_destroy(GtkWidget *widget, gpointer data);
