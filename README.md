@@ -36,9 +36,9 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - **[fastboot-assistant v.0.7.2](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.2)** → Linux (Ubuntu/Debian) / Linux (Snap) / Windows via WSL
 ---
 ### Important Notes
-- **With *v.0.6.2.1* and *v.0.7.x* the support for RPM based Linux distributions is discontinued, because there are many missing tools, like *pkexec* or *heimdall*. Hopefully *Snap* and *Flatpak* will be a suitable replacement for the RPMs.**
+- **With `v.0.6.2.1` and `v.0.7.x` the support for RPM based Linux distributions is discontinued, because there are many missing tools, like `pkexec` or `heimdall`. Hopefully `Snap` and `Flatpak` will be a suitable replacement for the `RPMs`.**
 - **It is recommended to run the Fastboot-Assistant natively under Linux, because the WSL does not provide the same amount of tools as the real Ubuntu. *This version should only be used if there is no other option.***
-- **The possibility of building the Fastboot Assistant as a Snap and Flatpak is experimental and has not yet been fully tested. Especially for the construction of the Flatpak. The dependencies are missing here.**
+- **The possibility of building the Fastboot Assistant as a `Snap` and `Flatpak` is experimental and has not yet been fully tested. Especially for the construction of the `Flatpak. The dependencies are missing here.**
 
 ## Notes
 - Use at your own risk.
