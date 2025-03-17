@@ -45,12 +45,14 @@ void set_button_labels_updater(char labels[][30])
     {
         strcpy(labels[0], "Updater");
         strcpy(labels[1], "Updater (for development)");
+        strcpy(labels[2], "Back to Home");
     }
     
     else
     {
     	strcpy(labels[0], "Updater");
     	strcpy(labels[1], "Updater (für Entwicklung)");
+    	strcpy(labels[2], "Zurück zur Startseite");
     }
 } 
 
@@ -60,7 +62,7 @@ void updater(GtkWidget *widget, gpointer stack)
     LOG_INFO("updater");
     apply_language();
     
-    char labels[9][30];  // labels for the button 
+    char labels[3][30];  // labels for the button 
     set_button_labels_updater(labels);  // for both languages
     
     GtkWidget *updater = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
@@ -74,6 +76,7 @@ void updater(GtkWidget *widget, gpointer stack)
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_updater_stable), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(start_updater_devmode), stack);
+    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(show_home_page), stack);
 
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
