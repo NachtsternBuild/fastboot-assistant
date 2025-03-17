@@ -65,6 +65,8 @@ void toggle_language_setup(GtkWidget *button, gpointer user_data)
 void run_first_run_setup(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("run_first_run_setup");
+	apply_language();
+	
 	// widgets
 	GtkWidget *page1, *page2, *page3, *page4, *page5;
     GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label_page3_1, *label_page3_2, *label_page3_3, *label_page3_4, *label_page4_1, *label_page4_2, *label_page4_3, *label_page4_4, *label_end_1, *label_end_2;
