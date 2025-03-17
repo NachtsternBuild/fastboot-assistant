@@ -61,44 +61,16 @@ void toggle_language_setup(GtkWidget *button, gpointer user_data)
     g_timeout_add(2000, (GSourceFunc)quit_application, NULL); // After 5 seconds
 }
 
-// the setup wizard
-void run_first_run_setup(GtkCssProvider *provider) 
+/* the setup wizard */
+void run_first_run_setup(GtkWidget *widget, gpointer stack) 
 {
-    LOG_INFO("run_first_run_setup");
-    
-    // GTK init
-    gtk_init();
-
-    apply_theme();
-    apply_language();
-    
-    char config_file[2048];
-    get_config_file_path(config_file, sizeof(config_file));
-
-    // load the path
-    char *loaded_path = load_path_from_file(config_file);
-
-    if (loaded_path) 
-    {
-        LOG_INFO("Loaded path: %s\n", loaded_path);
-    }
-
-    GtkWidget *notebook;
-    GtkWidget *page1, *page2, *page3, *page4, *page5;
+	LOG_INFO("run_first_run_setup");
+	// widgets
+	GtkWidget *page1, *page2, *page3, *page4, *page5;
     GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label_page3_1, *label_page3_2, *label_page3_3, *label_page3_4, *label_page4_1, *label_page4_2, *label_page4_3, *label_page4_4, *label_end_1, *label_end_2;
     GtkWidget *button_welcome_1, *button_setup_dir, *button_toggle_language, *button_toggle_theme, *button_welcome_2, *button_page2_1, *button_dir, *button_page2_2, *button_page3_1, *button_page3_2, *button_page4_1, *button_page4_2, *button_end_1, *button_end_2;
-
-    // create the main window
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Fastboot Assistant Setup");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-	g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-
-    // create the notebook
-    notebook = gtk_notebook_new();
-    gtk_window_set_child(GTK_WINDOW(window), notebook);
-
-    // page 1
+	
+	/* page 1 */
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
     // button and label
@@ -120,15 +92,22 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page1), button_welcome_2);
 
     // connect everything
-    g_signal_connect(button_setup_dir, "clicked", G_CALLBACK(show_folder_chooser), notebook);
-    g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(toggle_language_setup), notebook);
-    g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme), notebook);
-    g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(next_page), notebook);
-
-    // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Begrüßung" : "Welcome"));
+    g_signal_connect(button_setup_dir, "clicked", G_CALLBACK(show_folder_chooser), stack);
+    g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(toggle_language_setup), stack);
+    g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme), stack);
     
-    // page 2
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "welcome")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page1, "welcome");
+	}
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "welcome");
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_welcome_2), "stack", stack);
+	g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(switch_page), "config");
+	
+	/* page 2 */
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
@@ -146,13 +125,18 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page2), button_page2_2);
 
     // connect everything
-    g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(config_start), notebook);
-    g_signal_connect(button_page2_2, "clicked", G_CALLBACK(next_page), notebook);
-
-    // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Konfiguration" : "Configuration"));
+    g_signal_connect(button_dir, "clicked", G_CALLBACK(config_start), stack);
+    
+	// add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "config")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page2, "config");
+	}
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_page2_2), "stack", stack);
+	g_signal_connect(button_page2_2, "clicked", G_CALLBACK(switch_page), "notes");
 	
-	// page 3
+	/* page 3 */
     page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
@@ -171,13 +155,16 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page3), label_page3_4);
     gtk_box_append(GTK_BOX(page3), button_page3_2);
     
-    // connect everything
-    g_signal_connect(button_page3_2, "clicked", G_CALLBACK(next_page), notebook);
-
-    // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page3, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Hinweise" : "Notes"));
-    
-    // page 4
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "notes")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page3, "notes");
+	}
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_page3_2), "stack", stack);
+	g_signal_connect(button_page3_2, "clicked", G_CALLBACK(switch_page), "use");
+	
+	/* page 4 */
     page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
@@ -196,13 +183,16 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page4), label_page4_4);
     gtk_box_append(GTK_BOX(page4), button_page4_2);
     
-    // connect everything
-    g_signal_connect(button_page4_2, "clicked", G_CALLBACK(next_page), notebook);
-
-    // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page4, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Verwendung" : "Use"));
-    
-    // page 5
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "use")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page4, "use");
+	}
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_page4_2), "stack", stack);
+	g_signal_connect(button_page4_2, "clicked", G_CALLBACK(switch_page), "end");
+	
+	// page 5
     page5 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
@@ -217,14 +207,12 @@ void run_first_run_setup(GtkCssProvider *provider)
     gtk_box_append(GTK_BOX(page5), label_end_2);
     gtk_box_append(GTK_BOX(page5), button_end_2);
     
-    // connect everything
-    g_signal_connect(button_end_2, "clicked", G_CALLBACK(close_window), window);
-    
-    // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page5, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Ende" : "End"));
-    
-    // show all widgets
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-	free(loaded_path);
-    LOG_INFO("end run_first_run_setup");
-}
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "end")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page5, "end");
+	}
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_end_2), "stack", stack);
+	g_signal_connect(button_end_2, "clicked", G_CALLBACK(show_home_page), stack);
+}	
