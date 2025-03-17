@@ -51,6 +51,7 @@ static void get_fastboot(GtkWidget *widget, gpointer stack)
     LOG_INFO("end get_fastboot");
 }
 
+// get bootloader status
 static void bootloader_status_adb(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("bootloader_status_adb");
@@ -62,6 +63,7 @@ static void bootloader_status_adb(GtkWidget *widget, gpointer stack)
     LOG_INFO("end bootloader_status_adb");
 }
 
+// get bootloader status
 static void bootloader_status_fastboot(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("bootloader_status_fastboot");
@@ -73,7 +75,7 @@ static void bootloader_status_fastboot(GtkWidget *widget, gpointer stack)
     LOG_INFO("bootloader_status_fastboot");
 }
 
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_get_devices(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
@@ -98,6 +100,9 @@ void set_button_labels_get_devices(char labels[][30])
 /* main function - get_devices */
 void get_devices(GtkWidget *widget, gpointer stack) 
 { 
+    LOG_INFO("get_devices");
+    apply_language();
+    
     char labels[5][30];  // labels for the button 
     set_button_labels(labels);  // for both languages
     
