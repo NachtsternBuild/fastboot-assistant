@@ -90,4 +90,5 @@ void updater(GtkWidget *widget, gpointer stack)
         gtk_stack_add_named(GTK_STACK(stack), updater, "updater");
     }
 	gtk_stack_set_visible_child_name(GTK_STACK(stack), "updater");
+	LOG_INFO("end updater");
 }

@@ -142,4 +142,5 @@ void get_devices(GtkWidget *widget, gpointer stack)
     
     LOG_INFO("get_devices");
 	gtk_stack_set_visible_child_name(GTK_STACK(stack), "get_devices");
+	LOG_INFO("end get_devices");
 }

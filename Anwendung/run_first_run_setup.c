@@ -215,4 +215,5 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	// set stack reference for the button function
 	g_object_set_data(G_OBJECT(button_end_2), "stack", stack);
 	g_signal_connect(button_end_2, "clicked", G_CALLBACK(show_home_page), stack);
+	LOG_INFO("end run_first_setup");
 }	
