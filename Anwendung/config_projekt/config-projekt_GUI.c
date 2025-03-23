@@ -37,7 +37,7 @@ char success_message[4096];
 
 // Callback functions for each button
 // function that start make_dir
-static void start_make_dir_function(GtkWidget *widget, gpointer data) 
+static void start_make_dir_function(GtkWidget *widget, gpointer stack) 
 {
     const char *message = strcmp(language, "de") == 0 ? "Fertig!": "Ready!";
     make_dir();
@@ -45,25 +45,26 @@ static void start_make_dir_function(GtkWidget *widget, gpointer data)
 }
 
 // function that start remove_old
-static void start_remove_old(GtkWidget *widget, gpointer data) 
+// will replaced
+static void start_remove_old(GtkWidget *widget, gpointer stack) 
 {
     remove_old();
 }
 
 // function that start wsl_config
-static void start_wsl_config(GtkWidget *widget, gpointer data) 
+static void start_wsl_config(GtkWidget *widget, gpointer stack) 
 {
     wsl_config();
 }
 
 // function start post_update
-static void run_post_update(GtkWidget *widget, gpointer data)
+static void run_post_update(GtkWidget *widget, gpointer stack)
 {
 	post_update();
 }
 
 // function restart the update
-static void run_setup(GtkWidget *widget, gpointer data)
+static void run_setup(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("run_setup");
 	char restart_setup[2048];
@@ -82,12 +83,12 @@ static void run_setup(GtkWidget *widget, gpointer data)
 	delete_config_files(restart_setup_file_path);
 	
 	// start first setup
-	run_first_run_setup(provider);
+	run_first_run_setup(stack);
 	LOG_INFO("end run_setup");
 }
 
 // function to clean the log
-static void clean_log(GtkWidget *widget, gpointer data)
+static void clean_log(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("clean_log");
 	char log_dir_settings[4096];
@@ -126,7 +127,7 @@ static void clean_log(GtkWidget *widget, gpointer data)
 }
 
 // function to create a new setup dir
-static void new_setup_dir(GtkWidget *widget, gpointer data)
+static void new_setup_dir(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("new_setup_dir");
 	char old_dir_path[4096];
@@ -161,6 +162,7 @@ void set_button_labels_config_projekt(char labels[][30])
         strcpy(labels[6], "Define new directory");
         strcpy(labels[7], "Post update");
         strcpy(labels[8], "Restart Setup");
+        strcpy(labels[9], "Back to Home");
     } 
     
     else 
@@ -174,88 +176,67 @@ void set_button_labels_config_projekt(char labels[][30])
         strcpy(labels[6], "Neues Verzeichnis festlegen");
         strcpy(labels[7], "Update Nachbearbeitung");
         strcpy(labels[8], "Erneutes Setup");
+        strcpy(labels[9], "Zurück zur Startseite");
     }
 }
 
-/* main function of config-projekt_GUI*/
-void config_projekt_GUI(int argc, char *argv[]) 
+/* main function - config-projekt_GUI*/
+void config_projekt_GUI(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("config_projekt_GUI");
-	GtkWidget *window, *grid, *button;
     char button_labels[9][30];
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
-    set_button_labels_config_projekt(button_labels);
     
-    window = gtk_window_new();
-    const char *config_projekt_window = strcmp(language, "de") == 0 ? "Zusätze" : "Additions";
-    gtk_window_set_title(GTK_WINDOW(window), config_projekt_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char button_labels[10][30];  // labels for the button 
+    set_button_labels_config_projekt(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *config_projekt_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(config_projekt_GUI, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(config_projekt_GUI, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 9; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_make_dir_function), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_remove_old), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_wsl_config), NULL);
-                break;
-            case 3:
-            	g_signal_connect(button, "clicked", G_CALLBACK(toggle_language), NULL);
-            	break;
-            case 4:
-            	g_signal_connect(button, "clicked", G_CALLBACK(toggle_theme), NULL);
-            	break;
-            case 5:
-            	g_signal_connect(button, "clicked", G_CALLBACK(clean_log), NULL);
-            	break;
-            case 6:
-            	g_signal_connect(button, "clicked", G_CALLBACK(new_setup_dir), NULL);
-            	break;
-            case 7:
-            	g_signal_connect(button, "clicked", G_CALLBACK(run_post_update), NULL);
-            	break;
-            case 8:
-            	g_signal_connect(button, "clicked", G_CALLBACK(run_setup), NULL);
-            	break;
-        }
-    }
-
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
-    {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
 	
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_make_dir_function), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(remove_old), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(start_wsl_config), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(toggle_language), stack);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(toggle_theme), stack);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(clean_log), stack);
+    GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(new_setup_dir), stack);
+    GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(run_post_update), stack);
+    GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(run_setup), stack);
+    GtkWidget *btn_back = create_nav_button(labels[9], G_CALLBACK(show_home_page), stack);
+
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+    // line 2 (1)
+    gtk_grid_attach(GTK_GRID(grid), btn4, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn5, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
+    // line 3 (2)
+    gtk_grid_attach(GTK_GRID(grid), btn7, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn8, 1, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn9, 2, 2, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(config_projekt_GUI), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(config_projekt_GUI), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "config_projekt_GUI")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), config_projekt_GUI, "config_projekt_GUI");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "config_projekt_GUI");
+
     LOG_INFO("end config_projekt_GUI");
 }
