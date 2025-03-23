@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *              reboot_heimdall				 *
@@ -28,7 +28,7 @@
 #define MAX_BUFFER_SIZE 3072
 
 // reboot to download from adb
-static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
+static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_from_adb_heimdall");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!" : "Please note that USB debugging is activated in the developer options!";
@@ -42,7 +42,7 @@ static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer data)
 }
 
 // heimdall help
-static void heimdall_help(GtkWidget *widget, gpointer data)
+static void heimdall_help(GtkWidget *widget, gpointer stack)
 { 
     LOG_INFO("heimdall_help");
     open_terminal_by_desktop("heimdall help");
@@ -50,7 +50,7 @@ static void heimdall_help(GtkWidget *widget, gpointer data)
 }
 	
 // get pit
-static void get_pit(GtkWidget *widget, gpointer data) 
+static void get_pit(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("get_pit");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Download-Modus befindet!" : "Please note that your device is in download mode!";
@@ -68,6 +68,7 @@ void set_button_labels_reboot_heim(char labels[][30])
         strcpy(labels[0], "Restart in Download");
         strcpy(labels[1], "Help");
         strcpy(labels[2], "Output pit");
+        strcpy(labels[3], "Back");
     } 
     
     else 
@@ -75,70 +76,50 @@ void set_button_labels_reboot_heim(char labels[][30])
         strcpy(labels[0], "In Download neustarten");
         strcpy(labels[1], "Hilfe");
         strcpy(labels[2], "Pit ausgeben");
+        strcpy(labels[3], "Zurück");
     }
 }
 
-/* start main programm */
-void reboot_heimdall(int argc, char *argv[])
+/* main function - reboot_heimdall */
+void reboot_heimdall(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("reboot_heimdall");
-	GtkWidget *window, *grid, *button;
-    char button_labels[4][30];
+	
+	apply_language();
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
-    apply_language();
-    set_button_labels_reboot_heim(button_labels);
+    char labels[4][30];  // labels for the button 
+    set_button_labels_reboot_heim(labels);  // for both languages
     
-    window = gtk_window_new();
-    const char *reboot_heim_window = strcmp(language, "de") == 0 ? "Neustart (heimdall)" : "Reboot (heimdall)";
-    gtk_window_set_title(GTK_WINDOW(window), reboot_heim_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-    
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *reboot_heimdall = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(reboot_heimdall, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(reboot_heimdall, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 3; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(reboot_from_adb_heimdall), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(heimdall_help), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(get_pit), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(reboot_from_adb_heimdall), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(heimdall_help), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(get_pit), stack);
+    GtkWidget *btn_back = create_nav_button(labels[3], G_CALLBACK(reboot_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(reboot_heimdall), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(reboot_heimdall), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "reboot_heimdall")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-    
+        gtk_stack_add_named(GTK_STACK(stack), reboot_heimdall, "reboot_heimdall");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "reboot_heimdall");
+           
     LOG_INFO("end reboot_heimdall");
 }
