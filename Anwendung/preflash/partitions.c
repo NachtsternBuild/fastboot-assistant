@@ -216,9 +216,7 @@ void set_button_labels_partitions(char labels[][30])
 void partitions(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("partitions");
-    
-    char button_labels[9][30];
-    
+       
     apply_language();
     
     char button_labels[10][30];  // labels for the button 
