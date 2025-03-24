@@ -99,7 +99,7 @@ void lock_unlock_bootloader(GtkWidget *widget, gpointer stack)
 	apply_language();
     
     char labels[4][30];  // labels for the button 
-    set_button_labels_reboot_heim(labels);  // for both languages
+    set_button_labels_bootloader(labels);  // for both languages
     
     GtkWidget *lock_unlock_bootloader = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_widget_set_halign(lock_unlock_bootloader, GTK_ALIGN_CENTER);

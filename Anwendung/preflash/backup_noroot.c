@@ -150,7 +150,7 @@ void backup_noroot(GtkWidget *widget, gpointer stack)
 	apply_language();
     
     char labels[4][30];  // labels for the button 
-    set_button_labels_reboot_heim(labels);  // for both languages
+    set_button_labels_backup_noroot(labels);  // for both languages
     
     GtkWidget *backup_noroot = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_widget_set_halign(backup_noroot, GTK_ALIGN_CENTER);
