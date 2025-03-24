@@ -28,104 +28,81 @@
 
 // include all functions
 extern void backup_root();
-extern void backup_noroot();
-GtkWidget *spinner_backup = NULL;
-GtkWidget *spinner_backup_window = NULL;
+extern void backup_noroot(GtkWidget *widget, gpointer stack);
+
+// function to run the backup and stop the spinner
+// for pthread 
+void *backup_root_thread(void *arg) 
+{
+    // run the backup
+    backup_root();
+    stop_loading_spinner(); // stop the spinner, after the backup
+    return NULL;
+}
 
 // Callback functions for each button
 // function backup via root
-static void start_backup_root(GtkWidget *widget, gpointer data) 
+static void start_backup_root(GtkWidget *widget, gpointer stack) 
 {
-    GtkSpinner *spinner_backup = GTK_SPINNER(data);  // Get the spinner_backup from the callback data
-
-    start_loading_spinner(spinner_backup);  // Start the spinner
-    
-    // Run the backup process with a spinner in a separate thread
-    run_with_spinner((void *)backup_root);
-    
-    stop_loading_spinner(spinner_backup);  // Stop the spinner when the process finishes
+    run_with_spinner(backup_root_thread);
 }
 
-// function backup with no root
-static void start_backup_noroot(GtkWidget *widget, gpointer data) 
-{
-    backup_noroot();
-}
-
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_backup(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
         strcpy(labels[0], "Backup with root");
         strcpy(labels[1], "Backup without root");
+        strcpy(labels[2], "Back");
     }
     
     else
     {
     	strcpy(labels[0], "Backup mit Root");
     	strcpy(labels[1], "Backup ohne Root");
+    	strcpy(labels[2], "Zurück");
     }
 } 
 
-/* main function of the backup_function */
-void backup_function(int argc, char *argv[]) 
+/* main function - backup_function */
+void backup_function(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("backup_function");
-    GtkWidget *window, *grid, *button;
-    char button_labels[2][30];
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
     apply_language();
-    set_button_labels_backup(button_labels);
     
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Backup");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[3][30];  // labels for the button 
+    set_button_labels_backup(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *backup_function = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(backup_function, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(backup_function, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 2; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-        
-         // Connect buttons to corresponding functions
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_backup_root), spinner_backup);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_backup_noroot), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_backup_root), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(backup_noroot), stack);
+    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(preflash_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(backup_function), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(backup_function), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "backup_function")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
+        gtk_stack_add_named(GTK_STACK(stack), backup_function, "backup_function");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "backup_function");
 
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-    
     LOG_INFO("end backup_function");
 }
