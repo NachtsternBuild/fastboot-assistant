@@ -38,6 +38,7 @@ void set_button_labels_prepare(char labels[][30])
         strcpy(labels[3], "System.img");
         strcpy(labels[4], "payload.zip");
         strcpy(labels[5], "Decompress (xz)");
+        strcpy(labels[6], "Back");
     } 
     
     else 
@@ -48,80 +49,57 @@ void set_button_labels_prepare(char labels[][30])
         strcpy(labels[3], "System.img");
         strcpy(labels[4], "payload.zip");
         strcpy(labels[5], "Dekomprimieren (xz)");
+        strcpy(labels[6], "Zurück");
     }
 }
 
-// Callback functions for each button
-/* main function of prepare*/
-void prepare(int argc, char *argv[]) 
+/* main function - prepare */
+void prepare(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("prepare");
-    GtkWidget *window, *grid, *button;
-    char button_labels[6][30];
-    
-    gtk_init();
-    main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
     apply_language();
-    set_button_labels_prepare(button_labels);
     
-    window = gtk_window_new();
-    const char *prepare_window = strcmp(language, "de") == 0 ? "Vorbereiten:" : "Prepare:";
-    gtk_window_set_title(GTK_WINDOW(window), prepare_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char button_labels[7][30];  // labels for the button 
+    set_button_labels_preflash(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *prepare = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(prepare, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(prepare, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 6; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_boot);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_recovery);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_vendor);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_system);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)rename_payload);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(show_file_chooser), (gpointer)unxz_files);
-                break;            
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(show_file_chooser), (gpointer)rename_boot);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(show_file_chooser), (gpointer)rename_recovery);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(show_file_chooser), (gpointer)rename_vendor);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(show_file_chooser), (gpointer)rename_system);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(show_file_chooser), (gpointer)rename_payload);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(show_file_chooser), (gpointer)unxz_files);
+    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(preflash_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+    // line 2 (1)
+    gtk_grid_attach(GTK_GRID(grid), btn4, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn5, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(prepare), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(prepare), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "prepare")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+        gtk_stack_add_named(GTK_STACK(stack), prepare, "prepare");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "prepare");
     
     LOG_INFO("end prepare");
 }
