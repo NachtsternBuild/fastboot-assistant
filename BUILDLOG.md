@@ -4,8 +4,8 @@
 | Version     | Build status                 | Informations                                    | Status             | OS                | Packages                    |
 | ----------- | ---------------------------- | ----------------------------------------------- | ------------------ | ----------------- | --------------------------- |
 | 0.8.2       | :x:                          | *future version*                                | :x:                | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.8.1       | :white_check_mark:           | **build version**                               | **dev**            | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
-| 0.8.x       | :white_check_mark:           | **build version, all versions from v.0.8.x**    | **dev**            | Ubuntu, WSL       | DEB, Snap, Flatpak, Zip     |
+| 0.8.1       | :white_check_mark:           | **build version**                               | **dev**            | Ubuntu, WSL       | DEB, Snap, Zip              |
+| 0.8.x       | :white_check_mark:           | **build version, all versions from v.0.8.x**    | **dev**            | Ubuntu, WSL       | DEB, Snap, Zip              |
 | 0.7.2       | :x:                          | *old version*                                   | *stable*           | Ubuntu, WSL       | DEB, Snap, Zip              |
 | 0.7.1       | :x:                          | *old version*                                   | *beta*             | Ubuntu, WSL       | DEB, Zip, exp. Snap         |
 | 0.7.x       | :x:                          | *old version*                                   | *stable*           | Ubuntu            | DEB, Zip, exp. Snap         |
@@ -19,8 +19,8 @@
 ---
 | Version     | Feature Freeze        | Version Freeze      | Release                         | Release Date      | Features                          |
 | ----------- | --------------------- | ------------------- | --------------------------------| ----------------- | --------------------------------- |
-| 0.8.2       | &#x1F914;             | &#x1F914;           | :white_check_mark:              | &#x1F914;         | [#97](https://github.com/NachtsternBuild/fastboot-assistant/issues/97), [#100](https://github.com/NachtsternBuild/fastboot-assistant/issues/100) |
-| 0.8.1       | &#x1F914;             | &#x1F914;           | :white_check_mark:              | &#x1F914;         | [#93](https://github.com/NachtsternBuild/fastboot-assistant/issues/93), [#99](https://github.com/NachtsternBuild/fastboot-assistant/issues/99), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81) support flatpak |
+| 0.8.2       | &#x1F914;             | &#x1F914;           | :white_check_mark:              | &#x1F914;         | [#97](https://github.com/NachtsternBuild/fastboot-assistant/issues/97), [#81](https://github.com/NachtsternBuild/fastboot-assistant/issues/81) support flatpak |
+| 0.8.1       | &#x1F914;             | &#x1F914;           | :white_check_mark:              | &#x1F914;         | [#93](https://github.com/NachtsternBuild/fastboot-assistant/issues/93), [#99](https://github.com/NachtsternBuild/fastboot-assistant/issues/99), [#100](https://github.com/NachtsternBuild/fastboot-assistant/issues/100) |
 
 
 ### 0.7.x
