@@ -26,48 +26,18 @@
 #define MAX_BUFFER_SIZE 256
 
 // include all functions
-extern void backup_function();
-extern void prepare_function();
+extern void backup_function(GtkWidget *widget, gpointer stack);
+extern void prepare(GtkWidget *widget, gpointer stack);
 extern void erase_data();
-extern void lock_unlock_bootloader();
-extern void set_active_slot();
-extern void partitions();
+extern void lock_unlock_bootloader(GtkWidget *widget, gpointer stack);
+extern void set_active_slot(GtkWidget *widget, gpointer stack);
+extern void partitions(GtkWidget *widget, gpointer stack);
 
 // Callback functions for each button
-// start backup_function-function
-static void start_backup_function(GtkWidget *widget, gpointer data) 
-{
-    backup_function();
-}
-
-// start start_prepare-function
-static void start_prepare_function(GtkWidget *widget, gpointer data) 
-{
-    prepare();
-}
-
 // start erase_data-function
-static void start_erase_data(GtkWidget *widget, gpointer data) 
+static void start_erase_data(GtkWidget *widget, gpointer stack) 
 {
     erase_data();
-}
-
-// function without any function
-static void start_set_active_slot(GtkWidget *widget, gpointer data) 
-{
-    set_active_slot();
-}
-
-// start lock_unlock_bootloader-function
-static void start_lock_unlock_bootloader(GtkWidget *widget, gpointer data) 
-{
-    lock_unlock_bootloader();
-}
-
-// function without any function
-static void start_partitions(GtkWidget *widget, gpointer data) 
-{
-    partitions();
 }
 
 // Function to set up button labels based on the language
@@ -81,6 +51,7 @@ void set_button_labels_preflash(char labels[][30])
         strcpy(labels[3], "Set active slot");
         strcpy(labels[4], "Bootloader");
         strcpy(labels[5], "Partitioning");
+        strcpy(labels[6], "Back to Home");
     } 
     
     else 
@@ -91,80 +62,59 @@ void set_button_labels_preflash(char labels[][30])
         strcpy(labels[3], "Setze aktiven Slot");
         strcpy(labels[4], "Bootloader");
         strcpy(labels[5], "Partitionierung");
+        strcpy(labels[6], "Zurück zur Startseite");
     }
 }
 
 
 /* main function - preflash_GUI*/
-void preflash_GUI(int argc, char *argv[]) 
+void preflash_GUI(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("preflash_GUI");
-    GtkWidget *window, *grid, *button;
-    char button_labels[6][30];
-    
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
+       
     apply_language();
-    set_button_labels_preflash(button_labels);
     
-    window = gtk_window_new();
-    const char *preflash_window = strcmp(language, "de") == 0 ? "Vorbereitung" : "Preparation";
-    gtk_window_set_title(GTK_WINDOW(window), preflash_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char button_labels[7][30];  // labels for the button 
+    set_button_labels_preflash(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *preflash_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(preflash_GUI, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(preflash_GUI, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 6; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_backup_function), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_prepare_function), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_erase_data), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_set_active_slot), NULL);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_lock_unlock_bootloader), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_partitions), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(backup_function), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(prepare), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(erase_data), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(set_active_slot), stack);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(lock_unlock_bootloader), stack);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(partitions), stack);
+    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(show_home_page), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop);
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+    // line 2 (1)
+    gtk_grid_attach(GTK_GRID(grid), btn4, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn5, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(preflash_GUI), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(preflash_GUI), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "preflash_GUI")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+        gtk_stack_add_named(GTK_STACK(stack), preflash_GUI, "preflash_GUI");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "preflash_GUI");
     
     LOG_INFO("end preflash_GUI");
 }
