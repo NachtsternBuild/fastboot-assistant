@@ -60,7 +60,7 @@ void prepare(GtkWidget *widget, gpointer stack)
     apply_language();
     
     char button_labels[7][30];  // labels for the button 
-    set_button_labels_preflash(labels);  // for both languages
+    set_button_labels_prepare(labels);  // for both languages
     
     GtkWidget *prepare = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_widget_set_halign(prepare, GTK_ALIGN_CENTER);
