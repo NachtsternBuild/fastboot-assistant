@@ -21,8 +21,8 @@
 | Version     | Supported          | Informations                 | Status            | Release Code                 | For the operating systems (OS)                             | Packages                   |
 | ----------- | ------------------ | ---------------------------- | ----------------- | ---------------------------- | ---------------------------------------------------------- | -------------------------- |
 | 0.8.2       | :x:                | *future version*             | :x:               | *Glitschiges GNOME*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
-| 0.8.1       | :x:                | *build version*              | *dev*             | *Glitschiges GNOME*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
-| 0.8.x       | :x:                | *build version*              | *dev*             | *Glitschiges GNOME*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
+| 0.8.1       | :x:                | **build version**            | **dev**           | **Glitschiges GNOME**        | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Snap, Zip*           |
+| 0.8.x       | :x:                | *build version*              | *dev*             | *Glitschiges GNOME*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Zip*           |
 | 0.7.2.1     | :white_check_mark: | **active version**           | **stable**        | **Mutiges Mint 22**          | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Zip, Snap*           |
 | 0.7.2       | :white_check_mark: | **active version**           | **stable**        | **Mutiges Mint 21.3**        | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Zip, Snap*           |
 | 0.7.1       | :x:                | *old version*                | *beta*            | *Mutiges Mint 20.3*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip, exp. Snap*      |
