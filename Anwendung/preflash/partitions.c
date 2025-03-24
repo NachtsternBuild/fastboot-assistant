@@ -29,7 +29,7 @@ char partition_command[2048];
 
 // callback functions for each button
 // remove the boot partition
-static void remove_boot(GtkWidget *widget, gpointer data) 
+static void remove_boot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("remove_boot");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -45,7 +45,7 @@ static void remove_boot(GtkWidget *widget, gpointer data)
 }
 
 // remove the vendor partition
-static void remove_vendor(GtkWidget *widget, gpointer data) 
+static void remove_vendor(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("remove_vendor");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -62,7 +62,7 @@ static void remove_vendor(GtkWidget *widget, gpointer data)
 }
 
 // remove the system partition
-static void remove_system(GtkWidget *widget, gpointer data) 
+static void remove_system(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("remove_system");
     const char *message = strcmp(language, "de") == 0 ?  "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -79,7 +79,7 @@ static void remove_system(GtkWidget *widget, gpointer data)
 }
 
 // resize of the boot partition
-static void resize_boot(GtkWidget *widget, gpointer data) 
+static void resize_boot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("resize_boot");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -96,7 +96,7 @@ static void resize_boot(GtkWidget *widget, gpointer data)
 }
 
 // resize of the vendor partition
-static void resize_vendor(GtkWidget *widget, gpointer data) 
+static void resize_vendor(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("resize_vendor");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -113,7 +113,7 @@ static void resize_vendor(GtkWidget *widget, gpointer data)
 }
 
 // resize of the system partition
-static void resize_system(GtkWidget *widget, gpointer data) 
+static void resize_system(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("resize_system");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -130,7 +130,7 @@ static void resize_system(GtkWidget *widget, gpointer data)
 }
 
 // create boot partition
-static void create_boot(GtkWidget *widget, gpointer data) 
+static void create_boot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("create_boot");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -147,7 +147,7 @@ static void create_boot(GtkWidget *widget, gpointer data)
 }
 
 // create vendor partition
-static void create_vendor(GtkWidget *widget, gpointer data) 
+static void create_vendor(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("create_vendor");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -164,7 +164,7 @@ static void create_vendor(GtkWidget *widget, gpointer data)
 }
 
 // create system partition
-static void create_system(GtkWidget *widget, gpointer data) 
+static void create_system(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("create_system");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
@@ -194,6 +194,7 @@ void set_button_labels_partitions(char labels[][30])
         strcpy(labels[6], "Create Boot");
         strcpy(labels[7], "Create Vendor");
         strcpy(labels[8], "Create System");
+        strcpy(labels[9], "Back");
     } 
     
     else 
@@ -207,89 +208,68 @@ void set_button_labels_partitions(char labels[][30])
         strcpy(labels[6], "Erstelle Boot");
         strcpy(labels[7], "Erstelle Vendor");
         strcpy(labels[8], "Erstelle System");
+        strcpy(labels[9], "Zurück");
     }
 }
 
 /* main function - partitions*/
-void partitions(int argc, char *argv[]) 
+void partitions(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("partitions");
-    GtkWidget *window, *grid, *button;
+    
     char button_labels[9][30];
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
     apply_language();
-    set_button_labels_partitions(button_labels);
     
-    window = gtk_window_new();
-    const char *preflash_window = strcmp(language, "de") == 0 ? "Partitionen" : "Partitions";
-    gtk_window_set_title(GTK_WINDOW(window), preflash_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char button_labels[10][30];  // labels for the button 
+    set_button_labels_partitions(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *partitions = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(partitions, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(partitions, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 9; i++) 
+	
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(remove_boot), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(remove_vendor), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(remove_system), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(resize_boot), stack);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(resize_vendor), stack);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(resize_system), stack);
+    GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(create_boot), stack);
+    GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(create_vendor), stack);
+    GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(create_system), stack);
+    GtkWidget *btn_back = create_nav_button(labels[9], G_CALLBACK(preflash_GUI), stack);
+
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+    // line 2 (1)
+    gtk_grid_attach(GTK_GRID(grid), btn4, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn5, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
+    // line 3 (2)
+    gtk_grid_attach(GTK_GRID(grid), btn7, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn8, 1, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn9, 2, 2, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(partitions), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(partitions), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "partitions")) 
     {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(remove_boot), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(remove_vendor), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(remove_system), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(resize_boot), NULL);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(resize_vendor), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(resize_system), NULL);
-                break;
-            case 6:
-            	g_signal_connect(button, "clicked", G_CALLBACK(create_boot), NULL);
-            	break;
-            case 7:
-            	g_signal_connect(button, "clicked", G_CALLBACK(create_vendor), NULL);
-            	break;
-            case 8:
-            	g_signal_connect(button, "clicked", G_CALLBACK(create_system), NULL);
-            	break;
-        }
+        gtk_stack_add_named(GTK_STACK(stack), partitions, "partitions");
     }
-	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
-     // run GTK main loop
-    g_main_loop_run(main_loop);
-    
-    // free the provider
-    if (provider != NULL) 
-    {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-	
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "partitions");
+        
     LOG_INFO("end partitions");
 }
 
