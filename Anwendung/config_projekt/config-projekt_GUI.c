@@ -184,7 +184,6 @@ void set_button_labels_config_projekt(char labels[][30])
 void config_projekt_GUI(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("config_projekt_GUI");
-    char button_labels[9][30];
     
     apply_theme();
     apply_language();
