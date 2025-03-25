@@ -44,6 +44,7 @@ void *backup_root_thread(void *arg)
 // function backup via root
 static void start_backup_root(GtkWidget *widget, gpointer stack) 
 {
+    LOG_INFO("start_backup_root");
     run_with_spinner(backup_root_thread);
 }
 
