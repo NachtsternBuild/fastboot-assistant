@@ -28,72 +28,17 @@
 #define MAX_BUFFER_SIZE 256
 
 // includde all functions
-extern void flash_recovery();
-extern void flash_boot();
-extern void flash_vendor();
-extern void flash_payload();
-extern void flash_system();
-extern void flash_vbmeta_dtbo();
-extern void flash_preloader();
-extern void flash_data();
-extern void flash_others();
+extern void flash_recovery(GtkWidget *widget, gpointer stack);
+extern void flash_boot(GtkWidget *widget, gpointer stack);
+extern void flash_vendor(GtkWidget *widget, gpointer stack);
+extern void flash_payload(GtkWidget *widget, gpointer stack);
+extern void flash_system(GtkWidget *widget, gpointer stack);
+extern void flash_vbmeta_dtbo(GtkWidget *widget, gpointer stack);
+extern void flash_preloader(GtkWidget *widget, gpointer stack);
+extern void flash_data(GtkWidget *widget, gpointer stack);
+extern void flash_others(GtkWidget *widget, gpointer stack);
 
-// Callback functions for each button
-// start recovery_flash-function
-static void start_recovery_flash(GtkWidget *widget, gpointer data) 
-{
-    flash_recovery();
-}
-
-// start flash_boot-function
-static void start_boot_flash(GtkWidget *widget, gpointer data) 
-{
-    flash_boot();
-}
-
-// start flash_vendor-function
-static void start_vendor_flash(GtkWidget *widget, gpointer data) 
-{
-    flash_vendor();
-}
-
-// start flash_payload-function
-static void start_payload_flash(GtkWidget *widget, gpointer data) 
-{
-    flash_payload();
-}
-
-// start flash_system-function
-static void start_system_flash(GtkWidget *widget, gpointer data) 
-{
-    flash_system();
-}
-
-// start flash_vbemta_dtbo-function
-static void start_vbmeta_dtbo_flash(GtkWidget *widget, gpointer data) 
-{
-    flash_vbmeta_dtbo();
-}
-
-// start flash_preloader-function
-static void start_flash_preloader(GtkWidget *widget, gpointer data)
-{
-	flash_preloader_super();
-}
-
-// start flash_preloader-function
-static void start_flash_data(GtkWidget *widget, gpointer data)
-{
-	flash_data();
-}
-
-// start flash_others
-static void start_flash_others(GtkWidget *widget, gpointer data)
-{
-	flash_others();
-}
-
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_flash_GUI(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
@@ -107,6 +52,7 @@ void set_button_labels_flash_GUI(char labels[][30])
         strcpy(labels[6], "Flash Preloader");
         strcpy(labels[7], "Flash Nutzerdaten");
         strcpy(labels[8], "Flash Other Images");
+        strcpy(labels[9], "Back to Home");
     } 
     
     else 
@@ -120,89 +66,67 @@ void set_button_labels_flash_GUI(char labels[][30])
         strcpy(labels[6], "Flash Preloader");
         strcpy(labels[7], "Flash Nutzerdaten");
         strcpy(labels[8], "Flash Andere Images");
+        strcpy(labels[9], "Zurück zur Startseite");
     }
 }
 
 
 /* main function - flash_GUI*/
-void flash_GUI(int argc, char *argv[]) 
+void flash_GUI(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("flash_GUI");
-    GtkWidget *window, *grid, *button;
-    char button_labels[9][30];
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
     apply_theme();
     apply_language();
-    set_button_labels_flash_GUI(button_labels);
     
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Flashen");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char button_labels[10][30];  // labels for the button 
+    set_button_labels_flash_GUI(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *flash_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(flash_GUI, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(flash_GUI, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 9; i++) 
+	
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(flash_recovery), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(flash_boot), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(flash_vendor), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(flash_payload), stack);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(flash_system), stack);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(flash_vbmeta_dtbo), stack);
+    GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(flash_preloader_super), stack);
+    GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(flash_data), stack);
+    GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(flash_others), stack);
+    GtkWidget *btn_back = create_nav_button(labels[9], G_CALLBACK(show_home_page), stack);
+
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+    // line 2 (1)
+    gtk_grid_attach(GTK_GRID(grid), btn4, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn5, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
+    // line 3 (2)
+    gtk_grid_attach(GTK_GRID(grid), btn7, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn8, 1, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn9, 2, 2, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(flash_GUI), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(flash_GUI), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "flash_GUI")) 
     {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_recovery_flash), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_boot_flash), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_vendor_flash), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_payload_flash), NULL);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_system_flash), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_vbmeta_dtbo_flash), NULL);
-                break;
-            case 6:
-            	g_signal_connect(button, "clicked", G_CALLBACK(start_flash_preloader), NULL);
-            	break;
-            case 7:
-            	g_signal_connect(button, "clicked", G_CALLBACK(start_flash_data), NULL);
-            	break;
-            case 8:
-            	g_signal_connect(button, "clicked", G_CALLBACK(start_flash_others), NULL);
-            	break;
-            
-        }
+        gtk_stack_add_named(GTK_STACK(stack), flash_GUI, "flash_GUI");
     }
-	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-	
-	// free the provider
-    if (provider != NULL) 
-    {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "flash_GUI");
     
     LOG_INFO("end flash_GUI");
 }
