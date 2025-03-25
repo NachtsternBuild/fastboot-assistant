@@ -101,6 +101,9 @@ extern GtkWidget *root_status_label;
 // for detecting the android bootctl
 extern GtkWidget *bootctl_status_label;
 
+// for the main window of the program
+extern GtkWindow *main_window;
+
 /* 
 * function from the header *
 */
