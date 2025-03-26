@@ -23,56 +23,56 @@
 #include "program_functions.h"
 #include "flash_function_header.h"
 
-// Button handler functions
+// button handler functions
 // function to flash preloader.bin on only-a-devices
-void preloader_bin_on_a(GtkWidget *widget, GtkWindow *window)
+void preloader_bin_on_a(GtkWidget *widget, gpointer stack)
 {
     flash_image(widget, window, "preloader", NULL, "preloader.bin", NULL);
 }
 
 // function to flash preloader.bin (a/b-devices)
-void preloader_bin_on_ab(GtkWidget *widget, GtkWindow *window)
+void preloader_bin_on_ab(GtkWidget *widget, gpointer stack)
 {
     flash_image(widget, window, "preloader_a", "preloader_b", "preloader.bin", NULL);
 }
 
 // function to flash preloader.img (only-a-devices)
-void preloader_img_on_a(GtkWidget *widget, GtkWindow *window)
+void preloader_img_on_a(GtkWidget *widget, gpointer stack)
 {
     flash_image(widget, window, "preloader", NULL, "preloader.img", NULL);
 }
 
 // function to flash preloader.img (a/b-devices)
-void preloader_img_on_ab(GtkWidget *widget, GtkWindow *window)
+void preloader_img_on_ab(GtkWidget *widget, gpointer stack)
 {
     flash_image(widget, window, "preloader_a", "preloader_b", "preloader.img", NULL);
 }
 
 // function to flash super.img
-void super_img(GtkWidget *widget, GtkWindow *window)
+void super_img(GtkWidget *widget, gpointer stack)
 {
     flash_image(widget, window, "super", NULL, "super.img", NULL);
 }
 
 // function to flash preloader.bin (heimdall)
-void preloader_bin_heimdall(GtkWidget *widget, GtkWindow *window)
+void preloader_bin_heimdall(GtkWidget *widget, gpointer stack)
 {
     flash_heimdall(widget, window, "PRELOADER", "preloader.bin");
 }
 
 // function to flash preloader.img (heimdall)
-void preloader_img_heimdall(GtkWidget *widget, GtkWindow *window)
+void preloader_img_heimdall(GtkWidget *widget, gpointer stack)
 {
     flash_heimdall(widget, window, "PRELOADER", "preloader.img");
 }
 
 // function to flash super.img (heimdall)
-void super_img_heimdall(GtkWidget *widget, GtkWindow *window)
+void super_img_heimdall(GtkWidget *widget, gpointer stack)
 {
     flash_heimdall(widget, window, "SUPER", "super.img");
 }
 
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_flash_preloader_super(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
@@ -85,6 +85,7 @@ void set_button_labels_flash_preloader_super(char labels[][30])
         strcpy(labels[5], "preloader.img (heimdall)");
         strcpy(labels[6], "super.img");
         strcpy(labels[7], "super.img (heimdall)");
+        strcpy(labels[8], "Back");
     } 
     
     else 
@@ -97,83 +98,64 @@ void set_button_labels_flash_preloader_super(char labels[][30])
         strcpy(labels[5], "preloader.img (heimdall)");
         strcpy(labels[6], "super.img");
         strcpy(labels[7], "super.img (heimdall)");
+        strcpy(labels[8], "Zurück");
     }
 }
 
 /* main function - flash_preloader_super */
-void flash_preloader_super(int argc, char *argv[])
+void flash_preloader_super(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("flash_preloader_super");
-	GtkWidget *window, *grid, *button;
-    char button_labels[8][30];
+	
+	apply_language();
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
-    apply_language();
-    set_button_labels_flash_preloader_super(button_labels);
+    char button_labels[9][30];  // labels for the button 
+    set_button_labels_flash_preloader_super(labels);  // for both languages
     
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Flashen:");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-    
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *flash_preloader_super = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(flash_preloader_super, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(flash_preloader_super, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 8; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 4, i / 4, 1, 1);
-         switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(preloader_bin_on_a), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(preloader_bin_on_ab), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(preloader_img_on_a), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(preloader_img_on_ab), NULL);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(preloader_bin_heimdall), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(preloader_img_heimdall), NULL);
-                break;
-            case 6:
-            	g_signal_connect(button, "clicked", G_CALLBACK(super_img), NULL);
-            	break;
-            case 7:
-            	g_signal_connect(button, "clicked", G_CALLBACK(super_img_heimdall), NULL);
-            	break;            
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(preloader_bin_on_a), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(preloader_bin_on_ab), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(preloader_img_on_a), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(preloader_img_on_ab), stack);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(preloader_bin_heimdall), stack);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(preloader_img_heimdall), stack);
+    GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(super_img), stack);
+    GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(super_img_heimdall), stack);
+    GtkWidget *btn_back = create_nav_button(labels[8], G_CALLBACK(flash_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    // line 2
+    gtk_grid_attach(GTK_GRID(grid), btn3, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn4, 1, 1, 1, 1);
+    // line 3
+    gtk_grid_attach(GTK_GRID(grid), btn5, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 1, 2, 1, 1);
+    // line 4 
+    gtk_grid_attach(GTK_GRID(grid), btn7, 0, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn8, 1, 3, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(flash_preloader_super), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(flash_preloader_super), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "flash_preloader_super")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-    
+        gtk_stack_add_named(GTK_STACK(stack), flash_preloader_super, "flash_preloader_super");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "flash_preloader_super");
+         
     LOG_INFO("end flash_preloader_super");
 }
