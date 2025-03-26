@@ -25,7 +25,7 @@
 
 // Button handler functions
 // function to flash recovery.img on only-a-devices
-void recovery_img(GtkWidget *widget, gpointer stack))
+void recovery_img(GtkWidget *widget, gpointer stack)
 {
     flash_image(widget, window, "recovery", NULL, "recovery.img", NULL);
 }
