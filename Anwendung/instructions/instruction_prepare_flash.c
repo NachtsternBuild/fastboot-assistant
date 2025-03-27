@@ -56,7 +56,7 @@ void instruction_prepare_flash(GtkWidget *widget, gpointer stack)
     apply_language();
     
     char labels[3][30];  // labels for the button 
-    set_button_labels_reboot(labels);  // for both languages
+    set_button_labels_instruction_prepare_flash(labels);  // for both languages
     
     GtkWidget *instruction_prepare_flash = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_widget_set_halign(instruction_prepare_flash, GTK_ALIGN_CENTER);
