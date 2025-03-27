@@ -24,6 +24,7 @@
 #include <gtk/gtk.h>
 #include "language_check.h"
 #include "program_functions.h"
+#include "function_header.h"
 
 #define MAX_BUFFER_SIZE 256
 
@@ -133,7 +134,7 @@ void reboot_fastboot(GtkWidget *widget, gpointer stack)
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(reboot_from_adb), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(reboot_from_fastboot), stack);
     GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(fastboot_help), stack);
-    GtkWidget *btn3 = create_nav_button(labels[3], G_CALLBACK(list_bootloader_var), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(list_bootloader_var), stack);
     GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(reboot_GUI), stack);
 
     // add the button to the grid
