@@ -75,16 +75,15 @@ void run_tools_info(GtkWidget *widget, gpointer stack)
 	info_tools();
 }
 
-/* the main function - about */
+/* main function - about */
 void about(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("about");
     apply_language();
     
-    GtkWidget *window, *notebook;
     GtkWidget *page1, *page2, *page3;
     GtkWidget *label_about2;
-    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about_6, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about2_5, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6;
+    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about_6, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about2_5, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6, *button_about3_7;
     
     /* page 1 */
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
