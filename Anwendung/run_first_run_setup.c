@@ -61,6 +61,18 @@ void toggle_language_setup(GtkWidget *button, gpointer user_data)
     g_timeout_add(2000, (GSourceFunc)quit_application, NULL); // After 5 seconds
 }
 
+// config the program
+void config_start() 
+{
+    LOG_INFO("config_start");
+    const char *message;
+    message = "Konfiguration beendet!\n";
+    make_dir();
+    wsl_config();
+    show_message(message);
+    LOG_INFO("end config_start");
+}
+
 /* the setup wizard */
 void run_first_run_setup(GtkWidget *widget, gpointer stack) 
 {
@@ -217,5 +229,6 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	// set stack reference for the button function
 	g_object_set_data(G_OBJECT(button_end_2), "stack", stack);
 	g_signal_connect(button_end_2, "clicked", G_CALLBACK(show_home_page), stack);
+	
 	LOG_INFO("end run_first_setup");
 }	
