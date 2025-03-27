@@ -104,7 +104,7 @@ void get_devices(GtkWidget *widget, gpointer stack)
     apply_language();
     
     char labels[5][30];  // labels for the button 
-    set_button_labels(labels);  // for both languages
+    set_button_labels_get_devices(labels);  // for both languages
     
     // create box for get_devices
     GtkWidget *get_devices = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
@@ -137,7 +137,7 @@ void get_devices(GtkWidget *widget, gpointer stack)
 	// is needed to prevent it from being stacked again when called again
     if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "get_devices")) 
     {
-        gtk_stack_add_named(GTK_STACK(stack), sub_page_1, "get_devices");
+        gtk_stack_add_named(GTK_STACK(stack), get_devices, "get_devices");
     }
     
     LOG_INFO("get_devices");
