@@ -40,7 +40,7 @@ void magisk_apk(GtkWidget *widget, gpointer data)
 	LOG_INFO("end magisk_apk");
 }
 
-void instruction_root(int argc, char *argv[]) 
+void instruction_root(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("instruction_root");
 	

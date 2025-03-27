@@ -22,8 +22,8 @@
 #include "language_check.h"
 #include "program_functions.h"
 
-// the main function
-void instruction_others(int argc, char *argv[])
+/* main function */
+void instruction_others(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("instruction_others");
 	

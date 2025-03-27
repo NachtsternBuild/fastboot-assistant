@@ -24,7 +24,8 @@
 
 #define MAX_BUFFER_SIZE 256
 
-void instruction_info(int argc, char *argv[]) 
+/* main function */
+void instruction_info(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("instruction_info");
 	
