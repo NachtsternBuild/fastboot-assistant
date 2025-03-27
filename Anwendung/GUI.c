@@ -34,112 +34,31 @@
 #define MAX_BUFFER_SIZE 256
 
 // include all functions
-extern void get_devices();
-extern void reboot_GUI();
-extern void config_projekt_GUI();
-extern void preflash_GUI();
-extern void flash_GUI();
-extern void instruction_GUI();
+extern void get_devices(GtkWidget *widget, gpointer stack);
+extern void reboot_GUI(GtkWidget *widget, gpointer stack);
+extern void config_projekt_GUI(GtkWidget *widget, gpointer stack);
+extern void preflash_GUI(GtkWidget *widget, gpointer stack);
+extern void flash_GUI(GtkWidget *widget, gpointer stack);
+extern void instruction_GUI(GtkWidget *widget, gpointer stack);
 extern void info();
-extern void updater();
-extern void treble_updater();
+extern void updater(GtkWidget *widget, gpointer stack);
+extern void treble_updater(GtkWidget *widget, gpointer stack);
 extern void about();
 extern void make_dir();
 
-extern void run_first_run_setup();
+extern void run_first_run_setup(GtkWidget *widget, gpointer stack);
 extern void post_update();
 
-
-// Callback functions for each button
-// start get_devices-function
-static void start_get_devices(GtkWidget *widget, gpointer data) 
-{
-    get_devices();
-}
-
-// start reboot_GUI-function
-static void start_reboot_GUI(GtkWidget *widget, gpointer data) 
-{
-    reboot_GUI();
-}
-
-// start projekt-122-tools-function
-static void start_config_projekt(GtkWidget *widget, gpointer data) 
-{
-    config_projekt_GUI();
-}
-
-// start preflash_GUI-function
-static void start_preflash(GtkWidget *widget, gpointer data) 
-{
-    preflash_GUI();
-}
-
-// start flash_GUI-function
-static void start_flash_GUI(GtkWidget *widget, gpointer data) 
-{
-    flash_GUI();
-}
-
-// start instructions_GUI-function
-static void start_instruction_GUI(GtkWidget *widget, gpointer data) 
-{
-    instruction_GUI();
-}
+// for the main window
+GtkWindow *main_window = NULL;
 
 // start info-function
-static void start_info(GtkWidget *widget, gpointer data) 
+static void start_info(GtkWidget *widget, gpointer stack) 
 {
     info();
 }
 
-// start the treble_updater-function
-static void start_treble_updater(GtkWidget *widget, gpointer data) 
-{
-    treble_updater();
-}
-
-// start about-function
-static void start_about(GtkWidget *widget, gpointer data) 
-{
-    about();
-}
-
-// create the dir for the setup
-// I thinks this has no use
-void config_dir_setup(const char *pfad) 
-{
-    LOG_INFO("config_dir_setup");
-    char tmp[2048];
-    snprintf(tmp, sizeof(tmp), "%s", pfad);  // copy the path
-    char *p = tmp;
-
-    for (; *p; p++) 
-    {
-        if (*p == '/')
-         {
-            *p = '\0';  // set temp end
-            mkdir(tmp, 0700);  // create the dir
-            *p = '/';  // reset the option
-        }
-    }
-    mkdir(tmp, 0700);  // create the dir
-	LOG_INFO("end config_dir_setup");
-}
-
-// config the program
-void config_start() 
-{
-    LOG_INFO("config_start");
-    const char *message;
-    message = "Konfiguration beendet!\n";
-    make_dir();
-    wsl_config();
-    show_message(message);
-    LOG_INFO("end config_start");
-}
-
-// Function to set up button labels based on the language
+// labels
 void set_button_labels(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
@@ -163,31 +82,99 @@ void set_button_labels(char labels[][30])
         strcpy(labels[3], "Flash vorbereiten");
         strcpy(labels[4], "Flashen");
         strcpy(labels[5], "Anleitungen");
-        strcpy(labels[6], "Info");
+        strcpy(labels[6], "Infos");
         strcpy(labels[7], "Treble Updater");
         strcpy(labels[8], "Über das Programm");
     }
 }
 
+// function that show the fastboot-assistant window
 static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 {
 	LOG_INFO("activate_fastboot_assistant");
-	GtkWidget *window, *grid, *button;
-    char button_labels[9][30];
     
+    // init GTK
     gtk_init();
+    // new mainloop 
     main_loop = g_main_loop_new(NULL, FALSE);
+    // get theme and language
     apply_theme();
     apply_language();
-    set_button_labels(button_labels);
 
-    // function that check if the setup run the first time
+	// run post update function
+	post_update();
+	 
+    // create the main window
+    main_window = GTK_WINDOW(gtk_window_new());
+    gtk_window_set_title(GTK_WINDOW(main_window), "Fastboot-Assistant");
+    gtk_window_set_default_size(GTK_WINDOW(main_window),  WINDOW_WIDTH, WINDOW_HEIGHT);
+	
+    // signal to close the application
+    g_signal_connect(main_window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+
+	char labels[9][30];  // labels for the button 
+    set_button_labels(labels);  // for both languages
+    
+    // create a box container for the main content
+    GtkWidget *content_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_window_set_child(GTK_WINDOW(main_window), content_box);
+    gtk_widget_set_halign(content_box, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(content_box, GTK_ALIGN_CENTER);
+
+    // create the stack for navigation
+    GtkWidget *stack = gtk_stack_new();
+    gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
+    gtk_stack_set_transition_duration(GTK_STACK(stack), 300);
+    gtk_box_append(GTK_BOX(content_box), stack);
+
+    // create the home page
+	GtkWidget *home_page = gtk_grid_new();
+	gtk_grid_set_row_homogeneous(GTK_GRID(home_page), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(home_page), TRUE);
+    gtk_widget_set_halign(home_page, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(home_page, GTK_ALIGN_CENTER);
+    
+    // create the button with the labels
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(get_devices), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(reboot_GUI), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(config_projekt_GUI), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(preflash_GUI), stack);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(flash_GUI), stack);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(instruction_GUI), stack);
+    GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(start_info), stack);
+    GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(treble_updater), stack);
+    GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(about), stack);
+    // add the button to the grid 
+    // line 1 (0)
+    gtk_grid_attach(GTK_GRID(home_page), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(home_page), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(home_page), btn3, 2, 0, 1, 1);
+    // line 2 (1)
+    gtk_grid_attach(GTK_GRID(home_page), btn4, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(home_page), btn5, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(home_page), btn6, 2, 1, 1, 1);
+    // line 3 (2)
+    gtk_grid_attach(GTK_GRID(home_page), btn7, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(home_page), btn8, 1, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(home_page), btn9, 2, 2, 1, 1);
+    
+    // add grid to the stack and show it
+    gtk_stack_add_named(GTK_STACK(stack), home_page, "home_page");
+    gtk_stack_set_visible_child_name(GTK_STACK(stack), "home_page");
+    
+    // add grid to the main box
+	//gtk_box_append(GTK_BOX(content_box), home_page);
+	
+    gtk_window_present(GTK_WINDOW(main_window)); // gtk_window_present instead of gtk_widget_show
+	
+	// function that check if the setup run the first time
     // the crazy output came from the experiment with this
     const char *content = "Fisch";
 	char fish_path[2048];
 	char setup_dir[2048];
 	char setup_file[2048];
 	
+	// get config path
 	get_config_dir(fish_path, sizeof(fish_path));
 	snprintf(setup_dir, sizeof(setup_dir), "%s/config", fish_path);
 	LOG_INFO("Config path: %s", setup_dir);
@@ -223,67 +210,11 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     	fclose(file);
     	LOG_INFO("fish");
     	// run setup
-    	run_first_run_setup(provider);
+    	run_first_run_setup(GTK_WIDGET(main_window), stack);
     	LOG_INFO("Setup completed.");
 	}
 	
-	// run post update function
-	post_update(); 
-	
-	// create new window
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Fastboot-Assistant");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-
-    // new grid
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-
-    for (int i = 0; i < 9; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-
-        switch (i) 
-        {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_get_devices), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_GUI), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_config_projekt), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_preflash), NULL);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_flash_GUI), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_instruction_GUI), NULL);
-                break;
-            case 6:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_info), NULL);
-                break;
-            case 7:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_treble_updater), NULL);
-                break;
-            case 8:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_about), NULL);
-                break;
-        }
-    }	
-    
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
-     // run GTK main loop
+    // run GTK main loop
     g_main_loop_run(main_loop); 
     
     // free the provider
@@ -291,6 +222,12 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     {
     	g_object_unref(provider);
     	provider = NULL;
+	}
+	
+	if (stack != NULL && gtk_widget_get_parent(stack) == NULL)
+	{
+    	g_object_unref(GTK_STACK(stack));
+    	stack = NULL;
 	}
 
 	if (main_loop != NULL) 
@@ -304,14 +241,15 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 /* main function - GUI */
 int main(int argc, char *argv[]) 
 {
+	// start writing the log
 	write_log();
     LOG_INFO("start fastboot-assistant\n");
 	GtkApplication *app;
     int status;
 
-    app = gtk_application_new("org.Nachtsternbuild.FastbootAssistant", G_APPLICATION_DEFAULT_FLAGS);
+    app = gtk_application_new("io.github.nachtsternbuild.Fastboot-Assistant", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK (activate_fastboot_assistant), NULL);
-    status = g_application_run (G_APPLICATION (app), argc, argv);
+    status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
 
     LOG_INFO("end fastboot-assistant\n\n");

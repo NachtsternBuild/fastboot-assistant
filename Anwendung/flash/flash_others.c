@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "loading_spinner.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
@@ -27,42 +28,39 @@
 extern void flash_list_images();
 extern void flash_images();
 
-// start flash_list_images with spinner
-static void start_flash_list(GtkWidget *widget, gpointer data)
+/* function to run flash_images with spinner */
+// for pthread 
+void *flash_images_thread(void *arg) 
 {
-    LOG_INFO("start_flash_list");
-	const char *message = strcmp(language, "de") == 0 ? "Der Prozess kann eine Weile dauern. \nIgnorieren sie alle beenden erzwingen Meldungen." : "“The process may take a while. \nIgnore them all end forcing messages.";
-    show_message(message);
-    
-    GtkSpinner *spinner_flash = GTK_SPINNER(data);  // Get the spinner_backup from the callback data
-
-    start_loading_spinner(spinner_flash);  // Start the spinner
-    
-	 // Run the backup process with a spinner in a separate thread
-    run_with_spinner((void *)flash_list_images);
-    
-    stop_loading_spinner(spinner_flash);  // Stop the spinner when the process finishesflash_other();
-	
-	LOG_INFO("end start_flash_list");
+    // run the backup
+    flash_images();
+    stop_loading_spinner(); // stop the spinner, after the backup
+    return NULL;
 }
 
-// start flash_images with spinner
-static void start_flash_images_dir(GtkWidget *widget, gpointer data)
+// Callback functions for each button
+// function to flash_images
+static void start_flash_images_dir(GtkWidget *widget, gpointer stack) 
 {
-    LOG_INFO("start_flash_images_dir");
-	const char *message = strcmp(language, "de") == 0 ? "Der Prozess kann eine Weile dauern. \nIgnorieren sie alle beenden erzwingen Meldungen." : "“The process may take a while. \nIgnore them all end forcing messages.";
-    show_message(message);
-    
-    GtkSpinner *spinner_flash = GTK_SPINNER(data);  // Get the spinner_backup from the callback data
+     LOG_INFO("start_flash_images_dir");
+    run_with_spinner(flash_images_thread);
+}
 
-    start_loading_spinner(spinner_flash);  // Start the spinner
-    
-	 // Run the backup process with a spinner in a separate thread
-    run_with_spinner((void *)flash_images);
-    
-    stop_loading_spinner(spinner_flash);  // Stop the spinner when the process finishesflash_other();
-	
-	LOG_INFO("end start_flash_images_dir");
+/* function to run flash_images_list with spinner */
+// for pthread 
+void *flash_list_images_thread(void *arg) 
+{
+    // run the backup
+    flash_list_images();
+    stop_loading_spinner(); // stop the spinner, after the backup
+    return NULL;
+}
+
+// functio to flash_images_list
+static void start_flash_list(GtkWidget *widget, gpointer stack) 
+{
+    LOG_INFO("start_flash_list");
+    run_with_spinner(flash_list_images_thread);
 }
 
 // Function to set up button labels based on the language
@@ -72,73 +70,55 @@ void set_button_labels_flash_others(char labels[][30])
     {
         strcpy(labels[0], "Predefined images");
         strcpy(labels[1], "Images in the directory");
+        strcpy(labels[2], "Back");
     } 
     
     else 
     {
         strcpy(labels[0], "Vorbestimmte Images");
         strcpy(labels[1], "Images im Verzeichnis");
+        strcpy(labels[2], "Zurück");
     }
 }
 
-/* start main programm */
-void flash_others(int argc, char *argv[])
+/* main function - flash_others */
+void flash_others(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("flash_others");
-    GtkWidget *window, *grid, *button;
-    char button_labels[2][30];
-    
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
+   
     apply_language();
-    set_button_labels_flash_others(button_labels);
     
-    window = gtk_window_new();
-    const char *others_window = strcmp(language, "de") == 0 ? "Andere Images" : "Other images";
-    gtk_window_set_title(GTK_WINDOW(window), others_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[3][30];  // labels for the button 
+    set_button_labels_flash_others(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *flash_others = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(flash_others, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(flash_others, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 2; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_flash_list), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_flash_images_dir), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_flash_list), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(start_flash_images_dir), stack);
+    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(flash_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(flash_others), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(flash_others), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "flash_others")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-    
+        gtk_stack_add_named(GTK_STACK(stack), flash_others, "flash_others");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "flash_others");
+           
     LOG_INFO("end flash_others");
 }

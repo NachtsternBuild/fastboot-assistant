@@ -21,6 +21,7 @@
 #include "program_functions.h"
 #include "loading_spinner.h"
 #include "language_check.h"
+#include "function_header.h"
 
 #define MAX_BUFFER_SIZE 3072
 
@@ -44,7 +45,7 @@ static void install_depends(GtkButton *button)
 }
 
 // Callback function to install dependencies 
-static void install_depends_function(GtkWidget *widget, gpointer data) 
+static void install_depends_function(GtkWidget *widget, gpointer stack) 
 {
     GtkWidget *vbox, *install_depends_button;
 
@@ -53,7 +54,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
 
     // create window
     backup_window = gtk_window_new();
-    const char * backup_noroot_window = strcmp(language, "de") == 0 ? "Abhängigkeiten installieren" : "Install dependencies";
+    const char *backup_noroot_window = strcmp(language, "de") == 0 ? "Abhängigkeiten installieren" : "Install dependencies";
     gtk_window_set_title(GTK_WINDOW(backup_window), backup_noroot_window);
     gtk_window_set_default_size(GTK_WINDOW(backup_window), 500, 200);
     g_signal_connect(backup_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
@@ -70,7 +71,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
 }
 
 // download the backup
-static void download_backup(GtkWidget *widget, gpointer data) 
+static void download_backup(GtkWidget *widget, gpointer stack) 
 {
     const char *message1 = strcmp(language, "de") == 0 ? "Das Tool 'Open Android Backup' wird heruntergeladen und entpackt." : "The 'Open Android Backup' tool is downloaded and unpacked.";
     show_message(message1);
@@ -99,7 +100,7 @@ static void download_backup(GtkWidget *widget, gpointer data)
 }
 
 // start backup
-static void open_backup(GtkWidget *widget, gpointer data) 
+static void open_backup(GtkWidget *widget, gpointer stack) 
 {
     char bash_command[4096];
     char run_open_backup[4096];
@@ -130,6 +131,7 @@ void set_button_labels_backup_noroot(char labels[][30])
         strcpy(labels[0], "Prepare");
         strcpy(labels[1], "Download");
         strcpy(labels[2], "Start");
+        strcpy(labels[3], "Back");
     }
     
     else
@@ -137,72 +139,50 @@ void set_button_labels_backup_noroot(char labels[][30])
     	strcpy(labels[0], "Vorbereiten");
     	strcpy(labels[1], "Download");
     	strcpy(labels[2], "Starten");
+    	strcpy(labels[3], "Zurück");
     }
 } 
 
 /* main function - backup_noroot */
-void backup_noroot(int argc, char *argv[]) 
+void backup_noroot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("backup_noroot");
-    GtkWidget *window, *grid, *button;
-    char button_labels[3][30];
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
-    apply_language();
-    set_button_labels_backup_noroot(button_labels);
+	apply_language();
     
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Open Android Backup");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[4][30];  // labels for the button 
+    set_button_labels_backup_noroot(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *backup_noroot = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(backup_noroot, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(backup_noroot, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-
-    // add button
-    for (int i = 0; i < 3; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-
-        // callback
-        switch (i) 
-        {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(install_depends_function), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(download_backup), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(open_backup), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(install_depends_function), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(download_backup), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(open_backup), stack);
+    GtkWidget *btn_back = create_nav_button(labels[3], G_CALLBACK(preflash_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop);
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(backup_noroot), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(backup_noroot), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "backup_noroot")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+        gtk_stack_add_named(GTK_STACK(stack), backup_noroot, "backup_noroot");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "backup_noroot");
     
     LOG_INFO("end backup_noroot");
 }

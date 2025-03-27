@@ -23,7 +23,7 @@
 #include "program_functions.h"
 
 /* main function */
-void instruction_adb(int argc, char *argv[]) 
+void instruction_adb(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("instruction_adb");
 	// GTK init

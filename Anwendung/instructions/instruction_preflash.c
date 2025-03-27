@@ -76,7 +76,7 @@ void evolution_x(GtkWidget *widget, gpointer data)
 }
 
 /* main function */
-void instruction_preflash(int argc, char *argv[]) 
+void instruction_preflash(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("instruction_preflash");
     

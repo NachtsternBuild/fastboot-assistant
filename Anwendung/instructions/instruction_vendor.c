@@ -22,7 +22,8 @@
 #include "language_check.h"
 #include "program_functions.h"
 
-void instruction_vendor(int argc, char *argv[]) 
+/* main function */
+void instruction_vendor(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("instruction_vendor");
     

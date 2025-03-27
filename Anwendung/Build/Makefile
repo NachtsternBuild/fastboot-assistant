@@ -63,6 +63,8 @@ SRCS = \
 	header_delete_file.c \
 	header_free_wrapper.c \
 	header_get_bootctl.c \
+	header_create_nav_button.c \
+	header_show_home_page.c \
 	treble_updater.c \
 	get_devices.c \
 	wsl_config.c \

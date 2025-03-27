@@ -24,12 +24,13 @@
 #include <gtk/gtk.h>
 #include "language_check.h"
 #include "program_functions.h"
+#include "function_header.h"
 
 #define MAX_BUFFER_SIZE 256
 
 // Callback functions for each button
 // start reboot_recovery adb-function
-static void start_recovery_adb(GtkWidget *widget, gpointer data) 
+static void start_recovery_adb(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("start_recovery_adb");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!" : "Please note that USB debugging is activated in the developer options!";    
@@ -43,7 +44,7 @@ static void start_recovery_adb(GtkWidget *widget, gpointer data)
 }
 
 // start reboot_recovery fastboot
-static void start_recovery_fastboot(GtkWidget *widget, gpointer data) 
+static void start_recovery_fastboot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("start_recovery_fastboot");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
@@ -56,81 +57,63 @@ static void start_recovery_fastboot(GtkWidget *widget, gpointer data)
     LOG_INFO("end start_recovery_fastboot");
 }
 
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_reboot_recovery(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
         strcpy(labels[0], "Restart ADB");
         strcpy(labels[1], "Restarting Fastboot");
+        strcpy(labels[2], "Back");
     }
     
     else
     {
     	strcpy(labels[0], "Neustart von ADB");
     	strcpy(labels[1], "Neustart von Fastboot");
+    	strcpy(labels[2], "Zurück");
     }
 } 
 
 
-/* main function of reboot*/
-void reboot_recovery(int argc, char *argv[]) 
+/* main function - reboot_recovery */
+void reboot_recovery(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("reboot_recovery");
-    GtkWidget *window, *grid, *button;
-    char button_labels[2][30];
     
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
     apply_language();
-    set_button_labels_reboot_recovery(button_labels);
     
-    window = gtk_window_new();
-    const char *reboot_reco_window = strcmp(language, "de") == 0 ? "Neustart Recovery" : "Reboot Recovery";
-    gtk_window_set_title(GTK_WINDOW(window), reboot_reco_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[3][30];  // labels for the button 
+    set_button_labels_reboot_recovery(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *reboot_recovery = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(reboot_recovery, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(reboot_recovery, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 2; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_recovery_adb), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_recovery_fastboot), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_recovery_adb), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(start_recovery_fastboot), stack);
+    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(reboot_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(reboot_recovery), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(reboot_recovery), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "reboot_recovery")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+        gtk_stack_add_named(GTK_STACK(stack), reboot_recovery, "reboot_recovery");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "reboot_recovery");
     
     LOG_INFO("end reboot_recovery");
 }

@@ -20,47 +20,48 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
 
-// Button handler functions
+// button handler functions
 // function to flash vbmeta.img on only-a-devices
-void vbmeta_on_a(GtkWidget *widget, GtkWindow *window)
+void vbmeta_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vbmeta_a", NULL, "vbmeta.img", "--disable-verity --disable-verification");
+    flash_image(widget, main_window, "vbmeta_a", NULL, "vbmeta.img", "--disable-verity --disable-verification");
 }
 
 // function to flash vbmeta.img (a/b-devices)
-void vbmeta_on_ab(GtkWidget *widget, GtkWindow *window)
+void vbmeta_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vbmeta_a", "vbmeta_b", "vbmeta.img", "--disable-verity --disable-verification");
+    flash_image(widget, main_window, "vbmeta_a", "vbmeta_b", "vbmeta.img", "--disable-verity --disable-verification");
 }
 
 // function to flash dtbo.img (only-a-devices)
-void dtbo_on_a(GtkWidget *widget, GtkWindow *window)
+void dtbo_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "dtbo", NULL, "dtbo.img", NULL);
+    flash_image(widget, main_window, "dtbo", NULL, "dtbo.img", NULL);
 }
 
 // function to flash dtbo.img (a/b-devices)
-void dtbo_on_ab(GtkWidget *widget, GtkWindow *window)
+void dtbo_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "dtbo_a", "dtbo_b", "dtbo.img", NULL);
+    flash_image(widget, main_window, "dtbo_a", "dtbo_b", "dtbo.img", NULL);
 }
 
 // function to flash vbmeta.img (heimdall)
-void vbmeta_img_heimdall(GtkWidget *widget, GtkWindow *window)
+void vbmeta_img_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "VBMETA", "vbmeta.img");
+    flash_heimdall(widget, main_window, "VBMETA", "vbmeta.img");
 }
 
 // function to flash dtbo.img (heimdall)
-void dtbo_heimdall(GtkWidget *widget, GtkWindow *window)
+void dtbo_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "DTBO", "dtbo.img");
+    flash_heimdall(widget, main_window, "DTBO", "dtbo.img");
 }
 
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_flash_vbmeta_dtbo(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
@@ -71,6 +72,7 @@ void set_button_labels_flash_vbmeta_dtbo(char labels[][30])
         strcpy(labels[3], "dtbo (only-a)");
         strcpy(labels[4], "dtbo (a/b)");
         strcpy(labels[5], "dtbo (heimdall)");
+        strcpy(labels[6], "Back");
     } 
     
     else 
@@ -81,78 +83,58 @@ void set_button_labels_flash_vbmeta_dtbo(char labels[][30])
         strcpy(labels[3], "dtbo (only-a)");
         strcpy(labels[4], "dtbo (a/b)");
         strcpy(labels[5], "dtbo (heimdall)");
+        strcpy(labels[6], "Zurück");
     }
 }
 
 /* main function - flash_vbmeta_dtbo */
-void flash_vbmeta_dtbo(int argc, char *argv[])
+void flash_vbmeta_dtbo(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("flash_vbmeta_dtbo");
-	GtkWidget *window, *grid, *button;
-    char button_labels[6][30];
-    
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
+	   
     apply_language();
-    set_button_labels_flash_vbmeta_dtbo(button_labels);
     
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Flashen:");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[7][30];  // labels for the button 
+    set_button_labels_flash_vbmeta_dtbo(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *flash_vbmeta_dtbo = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(flash_vbmeta_dtbo, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(flash_vbmeta_dtbo, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 6; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 3, i / 3, 1, 1);
-        
-         switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(vbmeta_on_a), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(vbmeta_on_ab), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(vbmeta_img_heimdall), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(dtbo_on_a), NULL);
-                break;
-            case 4:
-                g_signal_connect(button, "clicked", G_CALLBACK(dtbo_on_ab), NULL);
-                break;
-            case 5:
-                g_signal_connect(button, "clicked", G_CALLBACK(dtbo_heimdall), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(vbmeta_on_a), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(vbmeta_on_ab), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(vbmeta_img_heimdall), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(dtbo_on_a), stack);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(dtbo_on_ab), stack);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(dtbo_heimdall), stack);
+    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(flash_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
+    // line 2 (1)
+    gtk_grid_attach(GTK_GRID(grid), btn4, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn5, 1, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(flash_vbmeta_dtbo), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(flash_vbmeta_dtbo), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "flash_vbmeta_dtbo")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-    
+        gtk_stack_add_named(GTK_STACK(stack), flash_vbmeta_dtbo, "flash_vbmeta_dtbo");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "flash_vbmeta_dtbo");
+        
     LOG_INFO("end flash_vbmeta_dtbo");
 }

@@ -10,7 +10,7 @@
  *	zu erleichtern  						 *
  *                                           *
  *-------------------------------------------*
- *      (C) Copyright 2024 Elias Mörz 		 *
+ *      (C) Copyright 2025 Elias Mörz 		 *
  *-------------------------------------------*
  *											 *
  *       Headerfile - program_functions		 *
@@ -32,7 +32,7 @@
 
 /* some makros */
 
-#define WINDOW_WIDTH 750
+#define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
 /* 
@@ -101,9 +101,18 @@ extern GtkWidget *root_status_label;
 // for detecting the android bootctl
 extern GtkWidget *bootctl_status_label;
 
+// for the main window of the program
+extern GtkWindow *main_window;
+
 /* 
 * function from the header *
 */
+// functions for single windows UI
+// create button
+GtkWidget *create_nav_button(const char *label, GCallback callback, gpointer data);
+// show home page
+void show_home_page(GtkWidget *widget, gpointer stack);
+
 // destroy window/dialog/loops
 // end  GTK main loop
 void on_window_destroy(GtkWidget *widget, gpointer data);
@@ -189,6 +198,7 @@ void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *par
 // button connection for UI
 void next_page(GtkButton *button, gpointer data);
 // void button_finish(GtkButton *button, gpointer data);
+void switch_page(GtkWidget *widget, gpointer user_data);
 
 // adb/fastboot command
 char* adb_command();

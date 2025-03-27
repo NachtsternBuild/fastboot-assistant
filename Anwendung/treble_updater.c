@@ -42,6 +42,7 @@ GtkWidget *set_active_slot_checkbox;
 GtkWidget *treble_spinner_window;
 GtkWidget *info_treble;
 GtkWidget *info2_treble;
+GtkWidget *back_to_home;
 
 
 // get the active slot with adb
@@ -180,7 +181,7 @@ void *flash_thread_func(void *arg)
 }
 
 // function that create the window for the spinner and run all commands in the background
-void update_device(GtkWidget *widget, gpointer user_data) 
+void update_device(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("Start the Update via ADB");
     // window for the spinner
@@ -208,7 +209,7 @@ void update_device(GtkWidget *widget, gpointer user_data)
 }
 
 // function to reboot use 'adb reboot'
-void restart_system(GtkWidget *widget, gpointer user_data)
+void restart_system(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("Restart with ADB");
 	char command_build[2048];
@@ -219,92 +220,79 @@ void restart_system(GtkWidget *widget, gpointer user_data)
 }
 
 /* main function - treble_updater */
-void treble_updater(int argc, char *argv[]) 
+void treble_updater(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("treble_updater");
-    gtk_init();
-    
-    apply_theme();
     apply_language();
-    main_loop = g_main_loop_new(NULL, FALSE);
-	
-	// create a new window for the treble updater
-    GtkWidget *window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Treble Updater");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-
-    GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    gtk_window_set_child(GTK_WINDOW(window), vbox);
+    
+    // create box for get_devices
+    GtkWidget *treble_updater = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(treble_updater, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(treble_updater, GTK_ALIGN_CENTER);
     
     // some informations
     info_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "\nDer Treble Updater funktioniert nur mit a/b-Geräten. \nEs müssen Root-Rechte bereitgestellt werden.\n" : "\nThe Treble Updater only works with a/b devices. \nRoot rights must be provided.\n");
-    gtk_box_append(GTK_BOX(vbox), info_treble);
+    gtk_box_append(GTK_BOX(treble_updater), info_treble);
     
     info2_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Treble Updater hat die Aufgabe ein neues Boot/System-Image \nin den inaktiven Slot zu flashen und diesen aktiv zusetzen.\n" : "The Treble Updater has the task of flashing \na new boot/system image into the inactive slot and making it active.\n");
-    gtk_box_append(GTK_BOX(vbox), info2_treble);
+    gtk_box_append(GTK_BOX(treble_updater), info2_treble);
       
     // root info label
     root_status_info = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Root-Rechte:" : "Root permission:");
-    gtk_box_append(GTK_BOX(vbox), root_status_info);
+    gtk_box_append(GTK_BOX(treble_updater), root_status_info);
     // root status label
     root_status_label = gtk_label_new("Check Root permission...");
-    gtk_box_append(GTK_BOX(vbox), root_status_label);
+    gtk_box_append(GTK_BOX(treble_updater), root_status_label);
     
     // bootctl info label
     bootctl_status_info = gtk_label_new("Bootctl:");
-    gtk_box_append(GTK_BOX(vbox), bootctl_status_info);
+    gtk_box_append(GTK_BOX(treble_updater), bootctl_status_info);
     // bootctl status label
     bootctl_status_label = gtk_label_new("Search for bootctl...");
-    gtk_box_append(GTK_BOX(vbox), bootctl_status_label);
+    gtk_box_append(GTK_BOX(treble_updater), bootctl_status_label);
     
     // label for some free space
     free_space = gtk_label_new("  ");
-    gtk_box_append(GTK_BOX(vbox), free_space);
+    gtk_box_append(GTK_BOX(treble_updater), free_space);
     
     // checkbox for boot.img
     boot_checkbox = gtk_check_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashe neues Boot-Image" : "Flash new boot image");
-    gtk_box_append(GTK_BOX(vbox), boot_checkbox);
+    gtk_box_append(GTK_BOX(treble_updater), boot_checkbox);
 	
 	// checkbox for system.img
     system_checkbox = gtk_check_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashe neues System-Image" : "Flash new system image");
-    gtk_box_append(GTK_BOX(vbox), system_checkbox);
+    gtk_box_append(GTK_BOX(treble_updater), system_checkbox);
 	
 	// use option to set active slot with setprop
     set_active_slot_checkbox = gtk_check_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Alternative für Slotwechsel (nicht empfohlen)" : "Alternative for slot change (not recommended)");
-    gtk_box_append(GTK_BOX(vbox), set_active_slot_checkbox);
+    gtk_box_append(GTK_BOX(treble_updater), set_active_slot_checkbox);
 	
 	// Start the flash
     start_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Starte Flash" : "Start Flash");
-    gtk_box_append(GTK_BOX(vbox), start_button);
-    g_signal_connect(start_button, "clicked", G_CALLBACK(update_device), NULL);
+    gtk_box_append(GTK_BOX(treble_updater), start_button);
+    g_signal_connect(start_button, "clicked", G_CALLBACK(update_device), stack);
 	
 	// restart the system
 	restarting_system = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Neustarten" : "Reboot Device");
-	gtk_box_append(GTK_BOX(vbox), restarting_system);
-	g_signal_connect(restarting_system, "clicked", G_CALLBACK(restart_system), NULL);
+	gtk_box_append(GTK_BOX(treble_updater), restarting_system);
+	g_signal_connect(restarting_system, "clicked", G_CALLBACK(restart_system), stack);
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// function to show the home page
+	back_to_home = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Zurück zur Startseite" : "Back to Home");
+	gtk_box_append(GTK_BOX(treble_updater), back_to_home);
+	g_signal_connect(back_to_home, "clicked", G_CALLBACK(show_home_page), stack);
+	
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "treble_updater")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), treble_updater, "treble_updater");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "treble_updater");
 	
 	// check root access at the start
     check_root_access(root_status_label);
     // chech for android bootctl
     get_bootctl(bootctl_status_label);
 	
-    // run GTK main loop
-    g_main_loop_run(main_loop);
-    
-    // free the provider
-    if (provider != NULL) 
-    {
-        g_object_unref(provider);
-        provider = NULL;
-    }
-    
-    if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
 	LOG_INFO("end treble_updater");
 }

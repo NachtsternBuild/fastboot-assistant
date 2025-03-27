@@ -28,7 +28,7 @@
 #include "flash_function_header.h"
 
 // reboot system
-static void reboot_system(GtkWidget *widget, gpointer data)
+static void reboot_system(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_system");
     const char *message = strcmp(language, "de") == 0 ? "Neustart wird durchgeführt." : "Restart is performed.";    
@@ -66,80 +66,62 @@ static void boot_to_image(const gchar *i_filename)
     LOG_INFO("end boot_to_image");
 }
 
-// Function to set up button labels based on the language
+// function to set up button labels based on the language
 void set_button_labels_reboot(char labels[][30]) 
 {
     if (strcmp(language, "en") == 0) 
     {
         strcpy(labels[0], "Reboot System");
         strcpy(labels[1], "Reboot Image(.img)");
+        strcpy(labels[2], "Back");
     }
     
     else
     {
     	strcpy(labels[0], "Neustart System");
     	strcpy(labels[1], "Neustart Image(.img)");
+    	strcpy(labels[2], "Zurück");
     }
 } 
 
-/* start main programm - reboot*/
-void reboot(int argc, char *argv[])
+/* main function - reboot*/
+void reboot(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("reboot");
-	GtkWidget *window, *grid, *button;
-    char button_labels[2][30];
-    
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
+
     apply_language();
-    set_button_labels_reboot(button_labels);
     
-    window = gtk_window_new();
-    const char *reboot_window = strcmp(language, "de") == 0 ? "Neustarten" : "Reboot";
-    gtk_window_set_title(GTK_WINDOW(window), reboot_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[3][30];  // labels for the button 
+    set_button_labels_reboot(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *reboot = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(reboot, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(reboot, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 2; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(reboot_system), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(boot_to_image), NULL);
-                break;
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(reboot_system), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(boot_to_image), stack);
+    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(reboot_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(reboot), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(reboot), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "reboot")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-    
+        gtk_stack_add_named(GTK_STACK(stack), reboot, "reboot");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "reboot");
+        
     LOG_INFO("end reboot");
 }

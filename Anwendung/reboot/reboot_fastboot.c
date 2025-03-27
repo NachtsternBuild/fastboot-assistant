@@ -24,11 +24,12 @@
 #include <gtk/gtk.h>
 #include "language_check.h"
 #include "program_functions.h"
+#include "function_header.h"
 
 #define MAX_BUFFER_SIZE 256
 
 // reboot to bootloader from adb
-static void reboot_from_adb(GtkWidget *widget, gpointer data)
+static void reboot_from_adb(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_from_adb");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!": "Please note that USB debugging is activated in the developer options!";
@@ -45,7 +46,7 @@ static void reboot_from_adb(GtkWidget *widget, gpointer data)
 }
 
 // reboot to bootloader from fastboot
-static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
+static void reboot_from_fastboot(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_from_fastboot");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
@@ -60,7 +61,7 @@ static void reboot_from_fastboot(GtkWidget *widget, gpointer data)
 }
 	
 // start help-function
-static void fastboot_help(GtkWidget *widget, gpointer data) 
+static void fastboot_help(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("fastboot_help");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
@@ -75,7 +76,7 @@ static void fastboot_help(GtkWidget *widget, gpointer data)
 }
 
 // get bootloader variablen-function
-static void list_bootloader_var(GtkWidget *widget, gpointer data) 
+static void list_bootloader_var(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("list_bootloader_var");
     const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
@@ -98,6 +99,7 @@ void set_button_labels_reboot_fast(char labels[][30])
         strcpy(labels[1], "Restarting Fastboot");
         strcpy(labels[2], "Fastboot help");
         strcpy(labels[3], "Bootloader variables");
+        strcpy(labels[4], "Back");
     } 
     
     else 
@@ -106,73 +108,54 @@ void set_button_labels_reboot_fast(char labels[][30])
         strcpy(labels[1], "Neustart von Fastboot");
         strcpy(labels[2], "Fastboot Hilfe");
         strcpy(labels[3], "Bootloader Variablen");
+        strcpy(labels[4], "Zurück");
     }
 }
 
-/* start main programm */
-void reboot_fastboot(int argc, char *argv[])
+/* main function - reboot_fastboot */
+void reboot_fastboot(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("reboot_fastboot");
-	GtkWidget *window, *grid, *button;
-    char button_labels[4][30];
-    
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
+
     apply_language();
-    set_button_labels_reboot_fast(button_labels);
     
-    window = gtk_window_new();
-    const char *reboot_fast_window = strcmp(language, "de") == 0 ? "Neustart Fastboot" : "Reboot Fastboot";
-    gtk_window_set_title(GTK_WINDOW(window), reboot_fast_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[5][30];  // labels for the button 
+    set_button_labels_reboot_fast(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *reboot_fastboot = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(reboot_fastboot, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(reboot_fastboot, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 4; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(reboot_from_adb), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(reboot_from_fastboot), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(fastboot_help), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(list_bootloader_var), NULL);
-                break;          
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(reboot_from_adb), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(reboot_from_fastboot), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(fastboot_help), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(list_bootloader_var), stack);
+    GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(reboot_GUI), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    // line 2
+    gtk_grid_attach(GTK_GRID(grid), btn3, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn4, 1, 1, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(reboot_fastboot), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(reboot_fastboot), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "reboot_fastboot")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
+        gtk_stack_add_named(GTK_STACK(stack), reboot_fastboot, "reboot_fastboot");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "reboot_fastboot");
 
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
-    
     LOG_INFO("end reboot_fastboot");
 }

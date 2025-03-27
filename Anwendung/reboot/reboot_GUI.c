@@ -26,35 +26,11 @@
 #define MAX_BUFFER_SIZE 256
 
 // include all functions
-extern void reboot_fastboot();
-extern void reboot();
-extern void reboot_recovery();
-extern void reboot_heimdall();
+extern void reboot_fastboot(GtkWidget *widget, gpointer stack);
+extern void reboot(GtkWidget *widget, gpointer stack);
+extern void reboot_recovery(GtkWidget *widget, gpointer stack);
+extern void reboot_heimdall(GtkWidget *widget, gpointer stack);
 
-// Callback functions for each button
-// start reboot_fastboot-function
-static void start_reboot_fastboot(GtkWidget *widget, gpointer data) 
-{
-    reboot_fastboot();
-}
-
-// start reboot-function
-static void start_reboot(GtkWidget *widget, gpointer data) 
-{
-    reboot();
-}
-
-// start reboot_recovery-function
-static void start_reboot_recovery(GtkWidget *widget, gpointer data) 
-{
-    reboot_recovery();
-}
-
-// start reboot-function heimdall
-static void start_reboot_heimdall(GtkWidget *widget, gpointer data) 
-{
-    reboot_heimdall();
-}
 
 // Function to set up button labels based on the language
 void set_button_labels_reboot_GUI(char labels[][30]) 
@@ -65,6 +41,7 @@ void set_button_labels_reboot_GUI(char labels[][30])
         strcpy(labels[1], "Reboot");
         strcpy(labels[2], "Reboot Recovery");
         strcpy(labels[3], "Reboot (heimdall)");
+        strcpy(labels[4], "Back to Home");
     } 
     
     else 
@@ -73,73 +50,54 @@ void set_button_labels_reboot_GUI(char labels[][30])
         strcpy(labels[1], "Neustart");
         strcpy(labels[2], "Neustart in Recovery");
         strcpy(labels[3], "Neustart (heimdall)");
+        strcpy(labels[4], "Zurück zur Startseite");
     }
 }
 
 /* main function - reboot_GUI */
-void reboot_GUI(int argc, char *argv[]) 
+void reboot_GUI(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("reboot_GUI");
-	GtkWidget *window, *grid, *button;
-    char button_labels[4][30];
-    
-    gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
+	
     apply_language();
-    set_button_labels_reboot_GUI(button_labels);
     
-    window = gtk_window_new();
-    const char *reboot_window = strcmp(language, "de") == 0 ? "Neustart" : "Reboot";
-    gtk_window_set_title(GTK_WINDOW(window), reboot_window);
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-    g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
+    char labels[5][30];  // labels for the button 
+    set_button_labels_reboot_GUI(labels);  // for both languages
     
-    grid = gtk_grid_new();
-    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
-    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+    GtkWidget *reboot_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
+    gtk_widget_set_halign(reboot_GUI, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(reboot_GUI, GTK_ALIGN_CENTER);
+
+    GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
-    gtk_window_set_child(GTK_WINDOW(window), grid);
-    
-    for (int i = 0; i < 4; i++) 
-    {
-        button = gtk_button_new_with_label(button_labels[i]);
-        gtk_grid_attach(GTK_GRID(grid), button, i % 2, i / 2, 1, 1);
-        
-        switch (i) {
-            case 0:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_fastboot), NULL);
-                break;
-            case 1:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_reboot), NULL);
-                break;
-            case 2:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_recovery), NULL);
-                break;
-            case 3:
-                g_signal_connect(button, "clicked", G_CALLBACK(start_reboot_heimdall), NULL);
-                break;          
-        }
-    }
 	
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
+	// create button
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(reboot_fastboot), stack);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(reboot), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(reboot_recovery), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(reboot_heimdall), stack);
+    GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(show_home_page), stack);
 
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
-    
-    // free the provider
-    if (provider != NULL) 
+    // add the button to the grid
+    // line 1
+    gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
+    // line 2
+    gtk_grid_attach(GTK_GRID(grid), btn3, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn4, 1, 1, 1, 1);
+
+    // pack the grid to the box
+    gtk_box_append(GTK_BOX(reboot_GUI), grid);
+    // add the back button under the grid
+    gtk_box_append(GTK_BOX(reboot_GUI), btn_back); 
+
+	// is needed to prevent it from being stacked again when called again
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "reboot_fastboot")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+        gtk_stack_add_named(GTK_STACK(stack), reboot_GUI, "reboot_fastboot");
+    }
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "reboot_fastboot");
     
     LOG_INFO("end reboot_GUI");
 }
