@@ -76,7 +76,7 @@ void instruction_GUI(GtkWidget *widget, gpointer stack)
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(instruction_adb), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_flash), stack);
     GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(instruction_prepare_flash), stack);
-    GtkWidget *btn3 = create_nav_button(labels[3], G_CALLBACK(instruction_info), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(instruction_info), stack);
     GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(show_home_page), stack);
 
     // add the button to the grid
