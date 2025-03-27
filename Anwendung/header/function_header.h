@@ -78,6 +78,6 @@ void set_active_slot();
 void partitions();
 
 // other functions
-void run_first_run_setup(GtkCssProvider *provider);
+void run_first_run_setup();
 
 #endif

@@ -198,6 +198,7 @@ void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *par
 // button connection for UI
 void next_page(GtkButton *button, gpointer data);
 // void button_finish(GtkButton *button, gpointer data);
+void switch_page(GtkWidget *widget, gpointer user_data);
 
 // adb/fastboot command
 char* adb_command();
