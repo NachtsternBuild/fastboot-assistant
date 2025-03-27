@@ -143,7 +143,7 @@ static void new_setup_dir(GtkWidget *widget, gpointer stack)
     delete_config_files(old_dir_file);
 	
 	// start the folder chooser
-	show_folder_chooser(widget, data);
+	show_folder_chooser(widget, stack);
 	
 	LOG_INFO("end new_setup_dir");
 }
@@ -188,7 +188,7 @@ void config_projekt_GUI(GtkWidget *widget, gpointer stack)
     apply_theme();
     apply_language();
     
-    char button_labels[10][30];  // labels for the button 
+    char labels[10][30];  // labels for the button 
     set_button_labels_config_projekt(labels);  // for both languages
     
     GtkWidget *config_projekt_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
