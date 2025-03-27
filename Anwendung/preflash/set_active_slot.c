@@ -23,7 +23,9 @@
 #include "language_check.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
+#include "function_header.h"
 
+#define BUFFER_SIZE 2048
 #define MAX_BUFFER_SIZE 256
 
 char slot_command[2048];

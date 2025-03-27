@@ -219,7 +219,7 @@ void partitions(GtkWidget *widget, gpointer stack)
        
     apply_language();
     
-    char button_labels[10][30];  // labels for the button 
+    char labels[10][30];  // labels for the button 
     set_button_labels_partitions(labels);  // for both languages
     
     GtkWidget *partitions = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);

@@ -74,7 +74,7 @@ void preflash_GUI(GtkWidget *widget, gpointer stack)
        
     apply_language();
     
-    char button_labels[7][30];  // labels for the button 
+    char labels[7][30];  // labels for the button 
     set_button_labels_preflash(labels);  // for both languages
     
     GtkWidget *preflash_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
@@ -88,7 +88,7 @@ void preflash_GUI(GtkWidget *widget, gpointer stack)
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(backup_function), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(prepare), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(erase_data), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(start_erase_data), stack);
     GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(set_active_slot), stack);
     GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(lock_unlock_bootloader), stack);
     GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(partitions), stack);

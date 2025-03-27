@@ -59,7 +59,7 @@ void prepare(GtkWidget *widget, gpointer stack)
     LOG_INFO("prepare");
     apply_language();
     
-    char button_labels[7][30];  // labels for the button 
+    char labels[7][30];  // labels for the button 
     set_button_labels_prepare(labels);  // for both languages
     
     GtkWidget *prepare = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);

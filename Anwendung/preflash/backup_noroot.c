@@ -21,6 +21,7 @@
 #include "program_functions.h"
 #include "loading_spinner.h"
 #include "language_check.h"
+#include "function_header.h"
 
 #define MAX_BUFFER_SIZE 3072
 
