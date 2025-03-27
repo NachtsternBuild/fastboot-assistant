@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
 
@@ -27,13 +28,13 @@
 // function to flash recovery.img on only-a-devices
 void recovery_img(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "recovery", NULL, "recovery.img", NULL);
+    flash_image(widget, main_window, "recovery", NULL, "recovery.img", NULL);
 }
 
 // function to flash recovery.img (heimdall)
 void recovery_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "RECOVERY", "recovery.img");
+    flash_heimdall(widget, main_window, "RECOVERY", "recovery.img");
 }
 
 // Function to set up button labels based on the language

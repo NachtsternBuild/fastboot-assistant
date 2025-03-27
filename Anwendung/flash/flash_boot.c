@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
 
@@ -27,37 +28,37 @@
 // function to flash boot.img on only-a-devices
 void boot_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "boot", NULL, "boot.img", NULL);
+    flash_image(widget, main_window, "boot", NULL, "boot.img", NULL);
 }
 
 // function to flash boot.img (a/b-devices)
 void boot_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "boot_a", "boot_b", "boot.img", NULL);
+    flash_image(widget, main_window, "boot_a", "boot_b", "boot.img", NULL);
 }
 
 // function to flash init_boot.img (only-a-devices)
 void init_boot_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "init_boot", NULL, "init_boot.img", NULL);
+    flash_image(widget, main_window, "init_boot", NULL, "init_boot.img", NULL);
 }
 
 // function to flash init_boot.img (a/b-devices)
 void init_boot_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "init_boot_a", "init_boot_b", "init_boot.img", NULL);  
+    flash_image(widget, main_window, "init_boot_a", "init_boot_b", "init_boot.img", NULL);  
 }
 
 // function to flash boot.img (heimdall)
 void boot_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "BOOT", "boot.img");
+    flash_heimdall(widget, main_window, "BOOT", "boot.img");
 }
 
 // function to flash init_boot.img (heimdall)
 void init_boot_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "INIT_BOOT", "init_boot.img");
+    flash_heimdall(widget, main_window, "INIT_BOOT", "init_boot.img");
 }
 
 // function to set up button labels based on the language
@@ -93,7 +94,7 @@ void flash_boot(GtkWidget *widget, gpointer stack)
 	   
     apply_language();
     
-    char button_labels[7][30];  // labels for the button 
+    char labels[7][30];  // labels for the button 
     set_button_labels_flash_boot(labels);  // for both languages
     
     GtkWidget *flash_boot = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);

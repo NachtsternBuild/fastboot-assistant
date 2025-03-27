@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
 
@@ -27,37 +28,37 @@
 // function to flash vbmeta.img on only-a-devices
 void vbmeta_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vbmeta_a", NULL, "vbmeta.img", "--disable-verity --disable-verification");
+    flash_image(widget, main_window, "vbmeta_a", NULL, "vbmeta.img", "--disable-verity --disable-verification");
 }
 
 // function to flash vbmeta.img (a/b-devices)
 void vbmeta_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vbmeta_a", "vbmeta_b", "vbmeta.img", "--disable-verity --disable-verification");
+    flash_image(widget, main_window, "vbmeta_a", "vbmeta_b", "vbmeta.img", "--disable-verity --disable-verification");
 }
 
 // function to flash dtbo.img (only-a-devices)
 void dtbo_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "dtbo", NULL, "dtbo.img", NULL);
+    flash_image(widget, main_window, "dtbo", NULL, "dtbo.img", NULL);
 }
 
 // function to flash dtbo.img (a/b-devices)
 void dtbo_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "dtbo_a", "dtbo_b", "dtbo.img", NULL);
+    flash_image(widget, main_window, "dtbo_a", "dtbo_b", "dtbo.img", NULL);
 }
 
 // function to flash vbmeta.img (heimdall)
 void vbmeta_img_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "VBMETA", "vbmeta.img");
+    flash_heimdall(widget, main_window, "VBMETA", "vbmeta.img");
 }
 
 // function to flash dtbo.img (heimdall)
 void dtbo_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "DTBO", "dtbo.img");
+    flash_heimdall(widget, main_window, "DTBO", "dtbo.img");
 }
 
 // function to set up button labels based on the language
@@ -93,7 +94,7 @@ void flash_vbmeta_dtbo(GtkWidget *widget, gpointer stack)
 	   
     apply_language();
     
-    char button_labels[7][30];  // labels for the button 
+    char labels[7][30];  // labels for the button 
     set_button_labels_flash_vbmeta_dtbo(labels);  // for both languages
     
     GtkWidget *flash_vbmeta_dtbo = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);

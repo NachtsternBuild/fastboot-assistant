@@ -21,6 +21,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
 
@@ -28,25 +29,25 @@
 // function to flash metadata.img
 void metadata_img(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "metadata", NULL, "metadata.img", NULL);
+    flash_image(widget, main_window, "metadata", NULL, "metadata.img", NULL);
 }
 
 // function to flash metadata.img (heimdall)
 void metadata_img_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "METADATA", "metadata.img");
+    flash_heimdall(widget, main_window, "METADATA", "metadata.img");
 }
 
 // function to flash userdata.img
 void userdata_img(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "userdata", NULL, "userdata.img", NULL);
+    flash_image(widget, main_window, "userdata", NULL, "userdata.img", NULL);
 }
 
 // function to flash userdata.img (heimdall)
 void userdata_img_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "userdata", "userdata.img");
+    flash_heimdall(widget, main_window, "userdata", "userdata.img");
 }
 
 // function to set up button labels based on the language
@@ -93,7 +94,7 @@ void flash_data(GtkWidget *widget, gpointer stack)
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(metadata_img), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(metadata_img_heimdall), stack);
     GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(userdata_img), stack);
-    GtkWidget *btn3 = create_nav_button(labels[3], G_CALLBACK(userdata_img_heimdall), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(userdata_img_heimdall), stack);
     GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(flash_GUI), stack);
 
     // add the button to the grid

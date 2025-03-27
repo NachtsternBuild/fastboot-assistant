@@ -108,7 +108,7 @@ void system_to_activ(GtkWidget *widget, gpointer stack)
     system(function_command);
     free(device_command);
     
-    flash_image(widget, window, "system", NULL, "system.img", NULL);
+    flash_image(widget, main_window, "system", NULL, "system.img", NULL);
     LOG_INFO("end system_to_activ");
 }
 
@@ -116,7 +116,7 @@ void system_to_activ(GtkWidget *widget, gpointer stack)
 void system_to_activ_heimdall(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("system_to_activ_heimdall");
-    flash_heimdall(widget, window, "SYSTEM", "system.img");
+    flash_heimdall(widget, main_window, "SYSTEM", "system.img");
     LOG_INFO("end system_to_activ_heimdall");
 }
 

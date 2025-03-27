@@ -79,7 +79,7 @@ void flash_GUI(GtkWidget *widget, gpointer stack)
     apply_theme();
     apply_language();
     
-    char button_labels[10][30];  // labels for the button 
+    char labels[10][30];  // labels for the button 
     set_button_labels_flash_GUI(labels);  // for both languages
     
     GtkWidget *flash_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);

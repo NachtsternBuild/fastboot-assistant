@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 #include "flash_function_header.h"
 
@@ -27,37 +28,37 @@
 // function to flash vendor.img on only-a-devices
 void vendor_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vendor", NULL, "vendor.img", NULL);
+    flash_image(widget, main_window, "vendor", NULL, "vendor.img", NULL);
 }
 
 // function to flash vendor.img (a/b-devices)
 void vendor_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vendor_a", "vendor_b", "vendor.img", NULL);
+    flash_image(widget, main_window, "vendor_a", "vendor_b", "vendor.img", NULL);
 }
 
 // function to flash vendor_boot.img (only-a-devices)
 void vendor_boot_on_a(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vendor_boot", NULL, "vendor_boot.img", NULL);
+    flash_image(widget, main_window, "vendor_boot", NULL, "vendor_boot.img", NULL);
 }
 
 // function to flash vendor_boot.img (a/b-devices)
 void vendor_boot_on_ab(GtkWidget *widget, gpointer stack)
 {
-    flash_image(widget, window, "vendor_boot_a", "vendor_boot_b", "vendor_boot.img", NULL);
+    flash_image(widget, main_window, "vendor_boot_a", "vendor_boot_b", "vendor_boot.img", NULL);
 }
 
 // function to flash boot.img (heimdall)
 void vendor_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "VENDOR", "vendor.img");
+    flash_heimdall(widget, main_window, "VENDOR", "vendor.img");
 }
 
 // function to flash init_boot.img (heimdall)
 void vendor_boot_heimdall(GtkWidget *widget, gpointer stack)
 {
-    flash_heimdall(widget, window, "VENDOR_BOOT", "vendor_boot.img");
+    flash_heimdall(widget, main_window, "VENDOR_BOOT", "vendor_boot.img");
 }
 
 // function to set up button labels based on the language
@@ -92,7 +93,7 @@ void flash_vendor(GtkWidget *widget, gpointer stack)
 	LOG_INFO("flash_vendor");
 	apply_language();
     
-    char button_labels[7][30];  // labels for the button 
+    char labels[7][30];  // labels for the button 
     set_button_labels_flash_vendor(labels);  // for both languages
     
     GtkWidget *flash_vendor = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
