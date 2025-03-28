@@ -145,7 +145,6 @@ void about(GtkWidget *widget, gpointer stack)
     {
         gtk_stack_add_named(GTK_STACK(stack), page2, "program");
 	}
-	gtk_stack_set_visible_child_name(GTK_STACK(stack), "program");
 	
 	// set stack reference for the button function
 	g_object_set_data(G_OBJECT(button_about2_5), "stack", stack);
@@ -186,7 +185,6 @@ void about(GtkWidget *widget, gpointer stack)
     {
         gtk_stack_add_named(GTK_STACK(stack), page3, "program_notes");
 	}
-	gtk_stack_set_visible_child_name(GTK_STACK(stack), "program_notes");
 	
 	// set stack reference for the button function
 	g_object_set_data(G_OBJECT(button_about3_7), "stack", stack);
