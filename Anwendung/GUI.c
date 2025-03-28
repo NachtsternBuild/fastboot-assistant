@@ -223,12 +223,6 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     	g_object_unref(provider);
     	provider = NULL;
 	}
-	
-	if (stack != NULL && gtk_widget_get_parent(stack) == NULL)
-	{
-    	g_object_unref(GTK_STACK(stack));
-    	stack = NULL;
-	}
 
 	if (main_loop != NULL) 
 	{
