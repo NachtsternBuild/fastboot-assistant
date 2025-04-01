@@ -77,7 +77,11 @@ void config_start()
 void run_first_run_setup(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("run_first_run_setup");
+	
 	apply_language();
+	
+	char *auto_theme = auto_path_theme();
+	
 	
 	// widgets
 	GtkWidget *page1, *page2, *page3, *page4, *page5;
@@ -95,7 +99,21 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     button_toggle_theme = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Thema wechseln (hell/dunkel)" : "Toggle Theme (Light/Dark)");
     label_welcome_2 = gtk_label_new(" ");
     button_welcome_2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
-
+	
+	// check if theme is auto or css only
+	// theme = auto (css + libadwaita)
+	if (file_exists(auto_theme))
+	{
+        // disable the button 
+        gtk_widget_set_visible(GTK_WIDGET(button_toggle_theme), FALSE);
+    } 
+    // theme = css only
+    else 
+    {
+        // enable the button
+        gtk_widget_set_visible(GTK_WIDGET(button_toggle_theme), TRUE);
+    }
+	
     // add everything to the page
     gtk_box_append(GTK_BOX(page1), button_welcome_1);
     gtk_box_append(GTK_BOX(page1), label_welcome_1);
@@ -108,7 +126,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     // connect everything
     g_signal_connect(button_setup_dir, "clicked", G_CALLBACK(show_folder_chooser), stack);
     g_signal_connect(button_toggle_language, "clicked", G_CALLBACK(toggle_language_setup), stack);
-    g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme), stack);
+    g_signal_connect(button_toggle_theme, "clicked", G_CALLBACK(toggle_theme_css), stack);
     
     // add page to the stack
 	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "welcome")) 
