@@ -1,0 +1,63 @@
+#!/bin/sh
+set -e
+
+echo "Starting postinstall"
+
+# depends
+# tools
+REQUIRED_TOOLS="adb fastboot xz-utils unzip zip wget curl pkexec heimdall-flash heimdall-flash-frontend coreutils xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils"
+# libs
+REQUIRED_LIBS="libgtk-4-1 libc6"
+
+MISSING_TOOLS=""
+MISSING_LIBS=""
+
+echo "Checking packages..."
+echo "Checking tools..."
+echo "$REQUIRED_TOOLS"
+# check for the installed tools
+for TOOL in $REQUIRED_TOOLS; do
+    if ! command -v "$TOOL" >/dev/null 2>&1; then
+        MISSING_TOOLS="$MISSING_TOOLS $TOOL"
+    fi
+done
+
+echo "Checking libs..."
+echo "REQUIRED_LIBS"
+# check for the libs
+for LIB in $REQUIRED_LIBS; do
+    if ! dpkg -s "$LIB" >/dev/null 2>&1; then
+        MISSING_LIBS="$MISSING_LIBS $LIB"
+    fi
+done
+
+echo "Checking GTK version..."
+# get GTK version
+if ! dpkg-query -W -f='${Version}' libgtk-4-1 2>/dev/null | grep -qE '^4\.[0-9]+(\.[0-9]+)?'; then
+    MISSING_LIBS="$MISSING_LIBS libgtk-4-1"
+fi
+
+echo "Checking libc version..."
+# get libc
+if ! dpkg-query -W -f='${Version}' libc6 2>/dev/null | awk -F. '{ if ($1 >= 2 && $2 >= 15) exit 0; else exit 1; }'; then
+    MISSING_LIBS="$MISSING_LIBS libc6"
+fi
+
+# install packages
+if [ -n "$MISSING_TOOLS" ] || [ -n "$MISSING_LIBS" ]; then
+    echo "Missing programs or libraries found: $MISSING_TOOLS $MISSING_LIBS"
+    echo "Try installing packages..."
+
+    if [ -n "$MISSING_TOOLS" ]; then
+        sudo apt update && sudo apt install -y $MISSING_TOOLS
+    fi
+
+    if [ -n "$MISSING_LIBS" ]; then
+        sudo apt update && sudo apt install -y $MISSING_LIBS
+    fi
+else
+    echo "All required programs and libraries are installed."
+fi
+
+echo "Postinstall completed."
+
