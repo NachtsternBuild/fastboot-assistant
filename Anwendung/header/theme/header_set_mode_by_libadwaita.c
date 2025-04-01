@@ -63,6 +63,5 @@ void set_mode_by_libadwaita()
     }
 	
 	LOG_INFO("end set_mode_by_libadwaita");
-    return 0;
 }
 
