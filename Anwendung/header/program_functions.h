@@ -148,6 +148,11 @@ void save_path_to_file(const char *path, const char *file_path);
 char *load_path_from_file(const char *file_path);
 void show_folder_chooser(GtkWidget *widget, gpointer data);
 //void program_dir();
+// config function for themeing
+gboolean file_exists(const char *filename);
+char *config_path_theme();
+char *auto_path_theme();
+char *dark_path_theme();
 
 // messages
 void show_message();
