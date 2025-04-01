@@ -93,20 +93,20 @@ void update_config_files(const char *active_switch)
     // auto theme (css + adw)
     if (strcmp(active_switch, "Switch 1") == 0)
     {
-        g_file_set_contents(AUTO_FILE, "", -1, NULL);
-        remove(DARK_FILE);
+        g_file_set_contents(auto_path_theme, "libadwaita", -1, NULL);
+        remove(dark_path_theme);
     }
     // css only (dark)
     else if (strcmp(active_switch, "Switch 2") == 0)
     {
-        g_file_set_contents(DARK_FILE, "", -1, NULL);
-        remove(AUTO_FILE);
+        g_file_set_contents(dark_path_theme, "css_only", -1, NULL);
+        remove(auto_path_theme);
     }
     // css only (light)
     else if (strcmp(active_switch, "Switch 3") == 0)
     {
-        remove(AUTO_FILE);
-        remove(DARK_FILE);
+        remove(auto_path_theme);
+        remove(dark_path_theme);
     }
 }
 
