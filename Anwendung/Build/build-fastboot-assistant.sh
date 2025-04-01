@@ -24,16 +24,39 @@ NC='\033[0m' # No Color
 
 # the version
 VERSION="$(cat Build/version.txt)"
+# the architecture
+ARCHITECTURE="amd64"
 
 # Directory paths
+# main dirs
 home_dir="$HOME"
 source_dir="$(pwd)"
+# dirs for code
 header_dir="${source_dir}/header"
+# header subdirs
+h_flash_dir="${source_dir}/header/flash"
+h_UI_dir="${source_dir}/header/UI"
+h_commands_dir="${source_dir}/header/commands"
+h_config_dir="${source_dir}/header/config"
+h_directory_dir="${source_dir}/header/directory"
+h_message_dir="${source_dir}/header/message"
+h_spinner_dir="${source_dir}/header/spinner"
+h_theme_dir="${source_dir}/header/theme"
+
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
+
 flash_dir="${source_dir}/flash"
+# flash subdirs
+f_others_dir="${source_dir}/flash/others"
+
 preflash_dir="${source_dir}/preflash"
+# preflash subdirs
+p_backup_dir="${source_dir}/preflash/backup"
+p_prepare_dir="${source_dir}/preflash/prepare"
+
 instructions_dir="${source_dir}/instructions"
+updater_dir="${source_dir}/updater"
 target_dir="${source_dir}/build_project"
 output_dir="${source_dir}/output"
 build_dir="${source_dir}/Build"
@@ -185,14 +208,20 @@ debian_package_build() {
 	echo "Set authorisations..."
 	chmod a+x deb/usr/bin/fastboot-assistant
 	chmod 755 deb/DEBIAN
-
+	chmod 755 deb/postinst
+	chmod 755 deb/postrm
+	
+	# Estimate the installed size by summing the sizes of all files in the deb directory
+	SIZE=$(du -s deb | cut -f1)
+	sed -i "s/Installed-Size: .*/Installed-Size: $SIZE/" deb/DEBIAN/control
+	
 	# Build deb package
 	echo "Build package..."
 	echo "Set version..."
 	sed -i "2s/.*/Version: $VERSION/" deb/DEBIAN/control
 	echo "Build DEBIAN package..."
 	dpkg-deb --build -Zxz --root-owner-group deb
-	mv deb.deb fastboot-assistant.deb
+	mv deb.deb "fastboot-assistant_${VERSION}_${ARCHITECTURE}.deb"
 	echo "Package ready."
 }
 
@@ -223,8 +252,8 @@ build_snap() {
     cd "$build_dir_snap" || { error_msg "Failed to change to $build_dir_snap"; exit 1; }
     snapcraft
 
-    if [ -f "$build_dir_snap/$snap_name_${VERSION}_amd64.snap" ]; then
-        echo "Snap package built successfully: $build_dir_snap/$snap_name_${VERSION}_amd64.snap"
+    if [ -f "$build_dir_snap/${snap_name}_${VERSION}_${ARCHITECTURE}.snap" ]; then
+        echo "Snap package built successfully: $build_dir_snap/${snap_name}_${VERSION}_${ARCHITECTURE}.snap"
     else
         error_msg "Snap build failed."
         exit 1
@@ -281,9 +310,9 @@ build_program_linux() {
  	then
     	echo "Starte Build für Linux..."
     	echo "Kopiere alle Dateien nach $target_dir..."
-    	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir"; do
+    	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
         	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
-        	rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
+        	rsync -av --update --exclude '.git/' --exclude='*/' "$dir/" "$target_dir/"
     	done
 		echo "Alle Dateien wurden nach $target_dir kopiert."
 		
@@ -335,9 +364,9 @@ build_program_windows() {
     build_info "Dies ist keine native Windows-Version, sondern läuft nur über WSL."
     echo "Starte Build für Windows..."
     echo "Kopiere alle Dateien nach $target_dir..."
-    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir"; do
+    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
         # find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
-        rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
+        rsync -av --update --exclude '.git/' --exclude='*/' "$dir/" "$target_dir/"
     done
 
     echo "Alle Dateien wurden nach $target_dir kopiert."
