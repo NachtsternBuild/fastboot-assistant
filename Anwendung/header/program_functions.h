@@ -92,6 +92,9 @@ extern const char *current_theme;
 // and the language
 extern const char *language;
 
+// and the auto theme function
+extern const char *auto_theme;
+
 // for GTK main loop
 extern GMainLoop *main_loop;
 
@@ -112,6 +115,11 @@ extern GtkWindow *main_window;
 GtkWidget *create_nav_button(const char *label, GCallback callback, gpointer data);
 // show home page
 void show_home_page(GtkWidget *widget, gpointer stack);
+
+// button connection for UI
+void next_page(GtkButton *button, gpointer data);
+// void button_finish(GtkButton *button, gpointer data);
+void switch_page(GtkWidget *widget, gpointer user_data);
 
 // destroy window/dialog/loops
 // end  GTK main loop
@@ -187,6 +195,7 @@ int directory_exists(const char *path);
 void delete_files_in_dir(const char *path);
 void delete_config_files(const char *path);
 void delete_directory(const char *path);
+void create_directory_if_not_exists(const char *path);
 
 // delete config file
 void delete_config_file();
@@ -195,23 +204,35 @@ void delete_config_file();
 void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partition1, const char *partition2, const char *image_name, const char *optional_flags);
 void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *partition, const char *image_name);
 
-// button connection for UI
-void next_page(GtkButton *button, gpointer data);
-// void button_finish(GtkButton *button, gpointer data);
-void switch_page(GtkWidget *widget, gpointer user_data);
-
 // adb/fastboot command
 char* adb_command();
 char* fastboot_command();
 
-// everything for the css provider
-void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
-void load_css(const char *theme);
-void toggle_theme(GtkWidget *button, gpointer user_data);
-void apply_theme();
+// everything for the themeing
+// creating a css provider
+GtkCssProvider* create_css_provider(void);
+// unload the provider
+void unload_css_provider(GtkCssProvider *provider);
+// config functions for the provider
 void write_dark_file();
 void check_dark_file();
 void check_dark_file_light();
+// config for auto theme
+void write_auto_theme_file();
+void check_auto_theme();
+void set_mode_by_libadwaita();
+// load the provider
+void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
+void load_css();
+void load_css_adw();
+// apply to the provider
+void apply_theme_css_adw();
+void apply_theme_css_only();
+// apply the theme → css_only / css_adw
+void apply_theme();
+// functions to switch themes
+void toggle_theme();
+void toggle_theme_css(GtkWidget *button, gpointer user_data);
 
 // functions with spinner
 //void install_with_root(GtkButton *button, GtkEntry *password_entry, const gchar *command);
