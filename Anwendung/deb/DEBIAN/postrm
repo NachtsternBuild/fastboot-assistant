@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+
+echo "Removing package..."
+
+home_dir="$HOME"
+CONFIG_DIR="$HOME/.config/fastboot-assistant"
+CONFIG_FILE="$CONFIG_DIR/config.conf"
+
+case "$1" in
+  remove)
+    echo "Konfigurationsdateien bleiben erhalten."
+    ;;
+  purge)
+    echo "Delete all configuration files..."
+    rm -rf "$CONFIG_DIR"
+    sudo apt update && sudo apt autoremove && sudo apt reinstall --fix-broken
+    ;;
+  *)
+    echo "Unknown operation: $1"
+    exit 1
+    ;;
+esac
+
+echo "Removal completed."
+
