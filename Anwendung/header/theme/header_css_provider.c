@@ -179,7 +179,7 @@ void load_css(const char *theme)
 
 
 // Callback to switch the theme
-void toggle_theme(GtkWidget *button, gpointer user_data) 
+void toggle_theme_css(GtkWidget *button, gpointer user_data) 
 {
     // Switch the theme
     if (strcmp(current_theme, "light") == 0) 
@@ -197,8 +197,8 @@ void toggle_theme(GtkWidget *button, gpointer user_data)
     load_css(current_theme);
 }
 
-// Apply the current theme when called
-void apply_theme() 
+// apply the current theme when called
+void apply_theme_css_only() 
 {
     check_dark_file();  // Assuming this checks the current theme state
     load_css(current_theme);
