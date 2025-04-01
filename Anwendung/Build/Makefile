@@ -65,6 +65,12 @@ SRCS = \
 	header_get_bootctl.c \
 	header_create_nav_button.c \
 	header_show_home_page.c \
+	header_switch_page.c \
+	header_set_mode_by_libadwaita.c \
+	header_load_theme.c \
+	header_css_provider_adw.c \
+	header_apply_theme.c \
+	toggle_theme.c \
 	treble_updater.c \
 	get_devices.c \
 	wsl_config.c \
