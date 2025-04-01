@@ -19,17 +19,18 @@
 #include <glib.h>
 #include <stdio.h>
 #include <fcntl.h>
-#include <sys/stat.h>
 #include <stdlib.h>
 #include <string.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <gtk/gtk.h>
+#include <adwaita.h>
+#include <sys/stat.h>  
+#include "language_check.h"
 #include "function_header.h"
 #include "program_functions.h"
 #include "instruction_header.h"
 #include "flash_function_header.h"
-#include "language_check.h"
 
 #define MAX_BUFFER_SIZE 256
 
@@ -103,6 +104,52 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 
 	// run post update function
 	post_update();
+	
+	// function that check if the setup run the first time
+    // the crazy output came from the experiment with this
+    const char *content = "Fisch";
+	char fish_path[2048];
+	char setup_dir[2048];
+	char setup_file[2048];
+	char setup_info[2048];
+	
+	// get config path
+	get_config_dir(fish_path, sizeof(fish_path));
+	snprintf(setup_dir, sizeof(setup_dir), "%s/config", fish_path);
+	LOG_INFO("Config path: %s", setup_dir);
+	// create dir 
+	create_directory(setup_dir);
+	
+	// create config file
+	snprintf(setup_file, sizeof(setup_file), "%s/config.txt", setup_dir);
+	
+	LOG_INFO("Get setup info");
+	FILE *file;
+	
+	// check if file exsists
+	if ((file = fopen(setup_file, "r")) != NULL) 
+	{
+    	// file exsists
+    	fclose(file);
+    	setup_info = "old_fish";
+    	LOG_INFO("old fish!");
+	} 
+	
+	else 
+	{
+	    // remove logic and give this to the first setup
+	    // file not exsists
+    	file = fopen(setup_file, "w");
+    	if (file == NULL) 
+    	{
+    	    LOG_ERROR("Could not create the file.");
+    	    exit(1);  // close the program if there are errors
+    	}
+    	fprintf(file, "%s", content);
+    	fclose(file);
+    	setup_fish = "fish";
+    	LOG_INFO("fish");
+	}
 	 
     // create the main window
     main_window = GTK_WINDOW(gtk_window_new());
@@ -167,53 +214,21 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 	
     gtk_window_present(GTK_WINDOW(main_window)); // gtk_window_present instead of gtk_widget_show
 	
-	// function that check if the setup run the first time
-    // the crazy output came from the experiment with this
-    const char *content = "Fisch";
-	char fish_path[2048];
-	char setup_dir[2048];
-	char setup_file[2048];
-	
-	// get config path
-	get_config_dir(fish_path, sizeof(fish_path));
-	snprintf(setup_dir, sizeof(setup_dir), "%s/config", fish_path);
-	LOG_INFO("Config path: %s", setup_dir);
-	// create dir 
-	create_directory(setup_dir);
-	
-	// create config file
-	snprintf(setup_file, sizeof(setup_file), "%s/config.txt", setup_dir);
-	
-	LOG_INFO("Get setup info");
-	FILE *file;
-	
-	// check if file exsists
-	if ((file = fopen(setup_file, "r")) != NULL) 
-	{
-    	// file exsists
-    	fclose(file);
-    	LOG_INFO("No Setup");
-    	LOG_INFO("old fish!");
-	} 
-	
-	else 
-	{
-	    // remove logic and give this to the first setup
-	    // file not exsists
-    	file = fopen(setup_file, "w");
-    	if (file == NULL) 
-    	{
-    	    LOG_ERROR("Could not create the file.");
-    	    exit(1);  // close the program if there are errors
-    	}
-    	fprintf(file, "%s", content);
-    	fclose(file);
-    	LOG_INFO("fish");
-    	// run setup
+	// function that run setup or not
+	if (g_strcmp0(setup_info, "fish") == 0) 
+    {
+		LOG_INFO("run setup");
+		set_mode_by_libadwaita();
+		// run setup
     	run_first_run_setup(GTK_WIDGET(main_window), stack);
     	LOG_INFO("Setup completed.");
-	}
-	
+    }
+    
+    else 
+    {
+    	LOG_INFO("no setup");
+    }
+    
     // run GTK main loop
     g_main_loop_run(main_loop); 
     
