@@ -81,8 +81,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	apply_language();
 	
 	char *auto_theme = auto_path_theme();
-	
-	
+
 	// widgets
 	GtkWidget *page1, *page2, *page3, *page4, *page5;
     GtkWidget *label_welcome_1, *label_welcome_2, *label_page2_1, *label_page2_2, *label_page3_1, *label_page3_2, *label_page3_3, *label_page3_4, *label_page4_1, *label_page4_2, *label_page4_3, *label_page4_4, *label_end_1, *label_end_2;
@@ -102,7 +101,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	
 	// check if theme is auto or css only
 	// theme = auto (css + libadwaita)
-	if (file_exists(auto_theme))
+	if (file_exists_theme(auto_theme))
 	{
         // disable the button 
         gtk_widget_set_visible(GTK_WIDGET(button_toggle_theme), FALSE);
