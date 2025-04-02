@@ -131,7 +131,7 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 	{
     	// file exsists
     	fclose(file);
-    	setup_info = "old_fish";
+    	snprintf(setup_info, sizeof(setup_info), "old_fish");
     	LOG_INFO("old fish!");
 	} 
 	
@@ -147,7 +147,7 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     	}
     	fprintf(file, "%s", content);
     	fclose(file);
-    	setup_fish = "fish";
+    	snprintf(setup_info, sizeof(setup_info), "fish");
     	LOG_INFO("fish");
 	}
 	 
