@@ -35,8 +35,11 @@ char dir_path[512];
 char dark_path[2048];
 char auto_path[2048];
 
+static GtkWidget *css_adw_switch, *css_dark_switch, *css_light_switch, *back_to_home;
+static char *current_switch = NULL;
+
 // function to check for a file, using g_file_test
-gboolean file_exists(const char *filename)
+gboolean file_exists_theme(const char *filename)
 {
     return g_file_test(filename, G_FILE_TEST_EXISTS);
 }
@@ -67,46 +70,52 @@ char *dark_path_theme()
 // function to set the active switch
 void set_current_switch()
 {
+    const char *auto_theme = auto_path_theme();
+    const char *dark_theme = dark_path_theme();
+    
     // for auto.txt
-    if (file_exists(auto_path_theme))
+    if (file_exists_theme(auto_theme))
     {
         current_switch = "Switch 1";
-        gtk_switch_set_active(GTK_SWITCH(switch1), TRUE);
+        gtk_switch_set_active(GTK_SWITCH(css_adw_switch), TRUE);
     }
     // for dark.txt
-    else if (file_exists(dark_path_theme))
+    else if (file_exists_theme(dark_theme))
     {
         current_switch = "Switch 2";
-        gtk_switch_set_active(GTK_SWITCH(switch2), TRUE);
+        gtk_switch_set_active(GTK_SWITCH(css_dark_switch), TRUE);
     }
     // no config files
     else
     {
         current_switch = "Switch 3";
-        gtk_switch_set_active(GTK_SWITCH(switch3), TRUE);
+        gtk_switch_set_active(GTK_SWITCH(css_light_switch), TRUE);
     }
 }
 
 // function to update the config files
 void update_config_files(const char *active_switch)
 {
+    const char *auto_theme = auto_path_theme();
+    const char *dark_theme = dark_path_theme();
+    
     // auto theme (css + adw)
     if (strcmp(active_switch, "Switch 1") == 0)
     {
-        g_file_set_contents(auto_path_theme, "libadwaita", -1, NULL);
-        remove(dark_path_theme);
+        g_file_set_contents(auto_theme, "libadwaita", -1, NULL);
+        remove(dark_theme);
     }
     // css only (dark)
     else if (strcmp(active_switch, "Switch 2") == 0)
     {
-        g_file_set_contents(dark_path_theme, "css_only", -1, NULL);
-        remove(auto_path_theme);
+        g_file_set_contents(dark_theme, "css_only", -1, NULL);
+        remove(auto_theme);
     }
     // css only (light)
     else if (strcmp(active_switch, "Switch 3") == 0)
     {
-        remove(auto_path_theme);
-        remove(dark_path_theme);
+        remove(auto_theme);
+        remove(dark_theme);
     }
 }
 
