@@ -29,36 +29,58 @@
 #include <sys/types.h> 
 #include "program_functions.h"
 
-GtkCssProvider *provider = NULL;
+GtkCssProvider *provider_adw = NULL;
+
+char* rgba_to_hex(const GdkRGBA *color) 
+{
+    static char hex_color[8];  // 7 Zeichen für #RRGGBB + Nullterminierung
+    snprintf(hex_color, sizeof(hex_color), "#%02X%02X%02X",
+             (int)(color->red * 255),
+             (int)(color->green * 255),
+             (int)(color->blue * 255));
+    return hex_color;
+}
+
 
 // function to load the css provider with adw themes
 void load_css_adw() 
 {
-    if (provider) 
+    if (provider_adw) 
     {
-        g_object_unref(provider);
+        g_object_unref(provider_adw);
     }
-    provider = create_css_provider();
-
+    provider_adw = create_css_provider();
+	
     // get the adw styl manager
-    AdwStyleManager *style_manager = adw_style_manager_get_default();
-    
-    // get the colors
-    GdkRGBA bg_color, fg_color, button_color, accent_color;
-    adw_style_manager_get_color(style_manager, "window_bg_color", &bg_color); // get window bg color
-    adw_style_manager_get_color(style_manager, "window_fg_color", &fg_color); // get window fg color
-    adw_style_manager_get_color(style_manager, "button_bg_color", &button_color); // get button color
-    adw_style_manager_get_accent_color(style_manager, &accent_color);  // get accent color
-    adw_style_manager_get_color(style_manager, "text_color", &text_color); // get text color → option
+	AdwStyleManager *style_manager = adw_style_manager_get_default();
 
-    // convert gtkrgba to hex
-    char bg_color_str[8], fg_color_str[8], button_color_str[8], accent_color_str[8];
-    snprintf(bg_color_str, sizeof(bg_color_str), "#%02X%02X%02X", (int)(bg_color.red * 255), (int)(bg_color.green * 255), (int)(bg_color.blue * 255));
-    snprintf(fg_color_str, sizeof(fg_color_str), "#%02X%02X%02X", (int)(fg_color.red * 255), (int)(fg_color.green * 255), (int)(fg_color.blue * 255));
-    snprintf(button_color_str, sizeof(button_color_str), "#%02X%02X%02X", (int)(button_color.red * 255), (int)(button_color.green * 255), (int)(button_color.blue * 255));
-    snprintf(accent_color_str, sizeof(accent_color_str), "#%02X%02X%02X", (int)(accent_color.red * 255), (int)(accent_color.green * 255), (int)(accent_color.blue * 255));
-    snprintf(text_color_str, sizeof(text_color_str), "#%02X%02X%02X", (int)(text_color.red * 255), (int)(text_color.green * 255), (int)(text_color.blue * 255));
+	// define the colors
+	char bg_color_str[8];
+	char fg_color_str[8];
+	char text_color_str[8];
+	// get the accent color from adw
+	const GdkRGBA *accent_color = adw_style_manager_get_accent_color_rgba(style_manager);
 
+	// get the background color → adw
+	// dark theme
+	if (adw_style_manager_get_dark(style_manager)) 
+	{
+    	snprintf(bg_color_str, sizeof(bg_color_str), "#2e3436"); // dark
+    	snprintf(fg_color_str, sizeof(fg_color_str), "#E0E0E0"); // light
+    	snprintf(text_color_str, sizeof(text_color_str), "#FFFFFF"); // light
+	} 
+	
+	// light theme
+	else 
+	{
+    	snprintf(bg_color_str, sizeof(bg_color_str), "#f0f0f0"); // light
+    	snprintf(fg_color_str, sizeof(fg_color_str), "#000000"); // dark
+    	snprintf(text_color_str, sizeof(text_color_str), "#000000"); // dark
+	}
+         
+    // convert the gdkrgba to hex
+    char *accent_color_str = rgba_to_hex(accent_color);
+             
     // create css and add colors from libadwaita
     char css[2048];
     snprintf(css, sizeof(css),
@@ -74,7 +96,7 @@ void load_css_adw()
         "    border: 2px solid %s;" // accent color - 4
         "    border-radius: 35px;"
         "    padding: 24px 48px;"
-        "    background-color: %s;" // bg / button color - 5
+        "    background-color: %s;" // bg color - 5
         "    color: %s;" // text / fg color - 6 
         "    font-size: 16px;"
         "}"
@@ -101,16 +123,16 @@ void load_css_adw()
         "    background-color: %s;" // bg color - 13
         "    color: %s;" // text / fg color - 14
         "}",
-        bg_color_str, accent_color_str, fg_color_str, accent_color_str, button_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str
+        bg_color_str, accent_color_str, fg_color_str, accent_color_str, bg_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str
     );
 
-    // CSS aus dem String laden
-    gtk_css_provider_load_from_data(provider, css, -1, NULL);
+    // load css
+    gtk_css_provider_load_from_string(provider_adw, css);
 
-    // CSS-Provider auf das Display anwenden
+    // run css provider
     gtk_style_context_add_provider_for_display(
         gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider),
+        GTK_STYLE_PROVIDER(provider_adw),
         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
     );
 }
