@@ -122,8 +122,17 @@ void load_css_adw()
         "notebook tab:selected {"
         "    background-color: %s;" // bg color - 13
         "    color: %s;" // text / fg color - 14
+        "}"
+        "headerbar {"
+        "    background-color: %s;" // bg color - 15
+        "    font-weight: bold;"
+        "    border: 2px solid %s;" // accent color - 16
+        "    border-radius: 35px;"
+        "    padding: 12px 24px;"
+        "    color: %s;" // text / fg color - 17
+        "    font-size: 16px;"
         "}",
-        bg_color_str, accent_color_str, fg_color_str, accent_color_str, bg_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str
+        bg_color_str, accent_color_str, fg_color_str, accent_color_str, bg_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str, bg_color_str, accent_color_str, fg_color_str
     );
 
     // load css
