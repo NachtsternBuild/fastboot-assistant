@@ -7,7 +7,7 @@ echo "Starting postinstall"
 # tools
 REQUIRED_TOOLS="adb fastboot xz-utils unzip zip wget curl pkexec heimdall-flash heimdall-flash-frontend coreutils xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils"
 # libs
-REQUIRED_LIBS="libgtk-4-1 libc6"
+REQUIRED_LIBS="libgtk-4-1 libc6 libadwaita-1"
 
 MISSING_TOOLS=""
 MISSING_LIBS=""
@@ -30,18 +30,6 @@ for LIB in $REQUIRED_LIBS; do
         MISSING_LIBS="$MISSING_LIBS $LIB"
     fi
 done
-
-echo "Checking GTK version..."
-# get GTK version
-if ! dpkg-query -W -f='${Version}' libgtk-4-1 2>/dev/null | grep -qE '^4\.[0-9]+(\.[0-9]+)?'; then
-    MISSING_LIBS="$MISSING_LIBS libgtk-4-1"
-fi
-
-echo "Checking libc version..."
-# get libc
-if ! dpkg-query -W -f='${Version}' libc6 2>/dev/null | awk -F. '{ if ($1 >= 2 && $2 >= 15) exit 0; else exit 1; }'; then
-    MISSING_LIBS="$MISSING_LIBS libc6"
-fi
 
 # install packages
 if [ -n "$MISSING_TOOLS" ] || [ -n "$MISSING_LIBS" ]; then
