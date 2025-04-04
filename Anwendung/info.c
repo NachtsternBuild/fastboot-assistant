@@ -50,7 +50,7 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
         return;
     }
     char *test_output = execute_command("adb devices");
-	printf("ADB Output: %s\n", test_output);
+	LOG_INFO("ADB Output: %s\n", test_output);
 
     auto_free char *info_command = adb_command();
 
@@ -135,7 +135,6 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     gtk_window_set_title(GTK_WINDOW(window), "Info");
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 600);
     g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-    add_css_provider(GTK_WIDGET(window), provider); // Apply CSS
 
     GtkWidget *scrolled_window = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
