@@ -313,7 +313,7 @@ build_program_linux() {
     	echo "Kopiere alle Dateien nach $target_dir..."
     	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
         	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
-        	rsync -av --update --exclude '.git/' --exclude='*/' "$dir/" "$target_dir/"
+        	rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$dir/" "$target_dir/"
     	done
 		echo "Alle Dateien wurden nach $target_dir kopiert."
 		
@@ -367,7 +367,7 @@ build_program_windows() {
     echo "Kopiere alle Dateien nach $target_dir..."
     for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
         # find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
-        rsync -av --update --exclude '.git/' --exclude='*/' "$dir/" "$target_dir/"
+        rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$dir/" "$target_dir/"
     done
 
     echo "Alle Dateien wurden nach $target_dir kopiert."
@@ -392,7 +392,7 @@ build_program_windows() {
     	echo "Kopiere alle Dateien nach $target_dir..."
     	for dir in "$preflash_dir_win" "$header_dir_win" "$windows_dir" "$other_dir_win"; do
         	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
-        	rsync -av --update --exclude '.git/' "$dir/" "$target_dir/"
+        	rsync -av --update --exclude '.git/' --exclude='*.md' "$dir/" "$target_dir/"
     	done
 		echo "Alle Dateien wurden nach $target_dir kopiert."
 		
