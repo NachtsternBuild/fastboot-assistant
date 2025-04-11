@@ -92,7 +92,7 @@ void free_wrapper(void *p);
 */
 #define NOT_AB_DEVICE 0
 #define AB_DEVICE 1
-#define AB_DEVICE_ERROR -1
+#define AB_DEVICE_ERROR 2
 
 // function for a/b device info
 int ab_partition_info(void);
@@ -215,10 +215,14 @@ void show_dialog_with_entry(const char *title, const char *placeholder, NumberCa
 /*
 * Usage:
 * GMainLoop *main_loop = NULL;
+* // global int for the output
+* int number_partition = 0;
+*
 * // callback for the show_dialog_with_entry
 * void get_number(int number) 
 * {
-*     g_print("Number from the main program: %d\n", number);
+*     number_partition = number;
+*	  g_print("Number from the main program: %d\n", number);
 *     g_main_loop_quit(main_loop);
 * }
 *
@@ -227,7 +231,9 @@ void show_dialog_with_entry(const char *title, const char *placeholder, NumberCa
 *     gtk_init();
 *     main_loop = g_main_loop_new(NULL, FALSE);
 *
-*     show_number_input_dialog("Input a number", "e.g. 42 :)", get_number);
+*     show_dialog_with_entry("Input a number:", "e.g. 42 :)", get_number);
+*
+*	  g_print("Main program with the number: %d\n", number_partition);
 *
 *     g_main_loop_run(main_loop);
 *     if (main_loop != NULL) 
@@ -325,6 +331,13 @@ void apply_theme();
 // functions to switch themes
 void toggle_theme();
 void toggle_theme_css(GtkWidget *button, gpointer user_data);
+
+/*
+* functions for partitions
+*/
+void remove_partition(const char *partition);
+void resize_partition(const char *partition);
+void create_partition(const char *partition);
 
 /* 
 * functions with spinner
