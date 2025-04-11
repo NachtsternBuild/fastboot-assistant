@@ -5,10 +5,10 @@
 CC = ccache gcc
 
 # compiler flags
-CFLAGS = -Wall `pkg-config --cflags gtk4 libsecret-1`
+CFLAGS = -Wall `pkg-config --cflags gtk4 libsecret-1  libadwaita-1`
 
 # linker flags
-LIBS = `pkg-config --libs gtk4 libsecret-1`
+LIBS = `pkg-config --libs gtk4 libsecret-1  libadwaita-1`
 
 # header files
 HEADERS = \
@@ -70,6 +70,11 @@ SRCS = \
 	header_load_theme.c \
 	header_css_provider_adw.c \
 	header_apply_theme.c \
+	header_ab_partition_info.c \
+	header_show_dialog_with_entry.c \
+	header_remove_partition.c \
+	header_resize_partition.c \
+	header_create_partition.c \
 	toggle_theme.c \
 	treble_updater.c \
 	get_devices.c \
