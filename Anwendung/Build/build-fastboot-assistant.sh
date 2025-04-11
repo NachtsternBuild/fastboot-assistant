@@ -34,26 +34,27 @@ source_dir="$(pwd)"
 # dirs for code
 header_dir="${source_dir}/header"
 # header subdirs
-h_flash_dir="${source_dir}/header/flash"
-h_UI_dir="${source_dir}/header/UI"
-h_commands_dir="${source_dir}/header/commands"
-h_config_dir="${source_dir}/header/config"
-h_directory_dir="${source_dir}/header/directory"
-h_message_dir="${source_dir}/header/message"
-h_spinner_dir="${source_dir}/header/spinner"
-h_theme_dir="${source_dir}/header/theme"
+h_flash_dir="${header_dir}/flash"
+h_UI_dir="${header_dir}/UI"
+h_commands_dir="${header_dir}/commands"
+h_config_dir="${header_dir}/config"
+h_directory_dir="${header_dir}/directory"
+h_message_dir="${header_dir}/message"
+h_spinner_dir="${header_dir}/spinner"
+h_theme_dir="${header_dir}/theme"
+h_partition_dir="${header_dir}/partitions"
 
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
 
 flash_dir="${source_dir}/flash"
 # flash subdirs
-f_others_dir="${source_dir}/flash/others"
+f_others_dir="${flash_dir}/others"
 
 preflash_dir="${source_dir}/preflash"
 # preflash subdirs
-p_backup_dir="${source_dir}/preflash/backup"
-p_prepare_dir="${source_dir}/preflash/prepare"
+p_backup_dir="${preflash_dir}/backup"
+p_prepare_dir="${preflash_dir}/prepare"
 
 instructions_dir="${source_dir}/instructions"
 updater_dir="${source_dir}/updater"
