@@ -2,7 +2,8 @@
 # Sweet Unix
 
 # compiler
-CC = ccache gcc
+#CC = ccache gcc
+CC = gcc
 
 # compiler flags
 CFLAGS = -Wall `pkg-config --cflags gtk4 libsecret-1  libadwaita-1`
