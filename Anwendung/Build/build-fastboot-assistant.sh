@@ -42,7 +42,7 @@ h_directory_dir="${header_dir}/directory"
 h_message_dir="${header_dir}/message"
 h_spinner_dir="${header_dir}/spinner"
 h_theme_dir="${header_dir}/theme"
-h_partition_dir="${header_dir}/partitions"
+h_partition_dir="${header_dir}/partition"
 
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -311,7 +311,7 @@ build_program_linux() {
  	then
     	echo "Starte Build für Linux..."
     	echo "Kopiere alle Dateien nach $target_dir..."
-    	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
+    	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$h_partition_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
         	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
         	rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$dir/" "$target_dir/"
     	done
@@ -365,7 +365,7 @@ build_program_windows() {
     build_info "Dies ist keine native Windows-Version, sondern läuft nur über WSL."
     echo "Starte Build für Windows..."
     echo "Kopiere alle Dateien nach $target_dir..."
-    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
+    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$h_partition_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir"; do
         # find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
         rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$dir/" "$target_dir/"
     done
