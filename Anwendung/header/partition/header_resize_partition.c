@@ -52,16 +52,20 @@ void resize_partition(const char *partition)
     const char *dialog_entry = strcmp(language, "de") == 0 ? "Partitionsgröße ändern (in kB):" : "Change partition size (in kB)";
     // get the fastboot-command
     auto_free char *device_command = fastboot_command();   
+    
+    // get the info of the partitions
+	int info_ab_rs = ab_partition_info();
+    
 	// for a/b-devices
-	if (info == AB_DEVICE) 
+	if (info_ab_rs == AB_DEVICE) 
 	{
     	LOG_INFO("a/b-device");
     	// dialog with entry
     	show_dialog_with_entry(dialog_entry_title, dialog_entry, get_number_partition_rs);
-    	LOG_INFO("Change partition size to: %s (in kB)", number_partition_rs);
+    	LOG_INFO("Change partition size to: %d", number_partition_rs);
     	
     	// create the command
-    	snprintf(partition_command_rs, sizeof(partition_command_rs), "%s resize-logical-partition %s_a %s && %s resize-logical-partition %s_b %s", device_command, partition, number_partition, device_command, partition, number_partition_rs);
+    	snprintf(partition_command_rs, sizeof(partition_command_rs), "%s resize-logical-partition %s_a %d && %s resize-logical-partition %s_b %d", device_command, partition, number_partition_rs, device_command, partition, number_partition_rs);
     	
     	// run the command
     	LOG_INFO("Run: %s", partition_command_rs);
@@ -69,15 +73,15 @@ void resize_partition(const char *partition)
 	}
 	 
 	// only-a-devices
-	else if (info == NOT_AB_DEVICE) 
+	else if (info_ab_rs == NOT_AB_DEVICE) 
 	{
     	LOG_INFO("only-a-device");
     	// dialog with entry
     	show_dialog_with_entry(dialog_entry_title, dialog_entry, get_number_partition_rs);
-    	LOG_INFO("Change partition size to: %s (in kB)", number_partition_rs);
+    	LOG_INFO("Change partition size to: %d", number_partition_rs);
     	
     	// create the command
-    	snprintf(partition_command_rs, sizeof(partition_command_rs), "%s delete-logical-partition %s %s", device_command, partition, number_partition_rs);
+    	snprintf(partition_command_rs, sizeof(partition_command_rs), "%s delete-logical-partition %s %d", device_command, partition, number_partition_rs);
     	
     	// run the command
     	LOG_INFO("Run: %s", partition_command_rs);
@@ -85,7 +89,7 @@ void resize_partition(const char *partition)
 	}
 	
 	// errors with getting the device info
-	else if (info == AB_DEVICE_ERROR) 
+	else if (info_ab_rs == AB_DEVICE_ERROR) 
 	{
     	LOG_ERROR("Error recognizing the slot/device.");
 	}

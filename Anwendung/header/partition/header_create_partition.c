@@ -51,17 +51,21 @@ void create_partition(const char *partition)
     const char *dialog_entry_title = strcmp(language, "de") == 0 ? "Neue Partitionsgröße" : "New Partition Size";
     const char *dialog_entry = strcmp(language, "de") == 0 ? "Partitionsgröße (in kB):" : "Partition Size (in kB)";
     // get the fastboot-command
-    auto_free char *device_command = fastboot_command();   
+    auto_free char *device_command = fastboot_command(); 
+    
+    // get the info of the partitions
+	int info_ab_c = ab_partition_info();
+      
 	// for a/b-devices
-	if (info == AB_DEVICE) 
+	if (info_ab_c == AB_DEVICE) 
 	{
     	LOG_INFO("a/b-device");
     	// dialog with entry
     	show_dialog_with_entry(dialog_entry_title, dialog_entry, get_number_partition_c);
-    	LOG_INFO("Change partition size to: %s (in kB)", number_partition_c);
+    	LOG_INFO("Change partition size to: %d", number_partition_c);
     	
     	// create the command
-    	snprintf(partition_command_c, sizeof(partition_command_c), "%s create-logical-partition %s_a %s && %s create-logical-partition %s_b %s", device_command, partition, number_partition, device_command, partition, number_partition_c);
+    	snprintf(partition_command_c, sizeof(partition_command_c), "%s create-logical-partition %s_a %d && %s create-logical-partition %s_b %d", device_command, partition, number_partition_c, device_command, partition, number_partition_c);
     	
     	// run the command
     	LOG_INFO("Run: %s", partition_command_c);
@@ -69,15 +73,15 @@ void create_partition(const char *partition)
 	}
 	 
 	// only-a-devices
-	else if (info == NOT_AB_DEVICE) 
+	else if (info_ab_c == NOT_AB_DEVICE) 
 	{
     	LOG_INFO("only-a-device");
     	// dialog with entry
     	show_dialog_with_entry(dialog_entry_title, dialog_entry, get_number_partition_c);
-    	LOG_INFO("Change partition size to: %s (in kB)", number_partition_c);
+    	LOG_INFO("Change partition size to: %d", number_partition_c);
     	
     	// create the command
-    	snprintf(partition_command_c, sizeof(partition_command_c), "%s create-logical-partition %s %s", device_command, partition, number_partition_c);
+    	snprintf(partition_command_c, sizeof(partition_command_c), "%s create-logical-partition %s %d", device_command, partition, number_partition_c);
     	
     	// run the command
     	LOG_INFO("Run: %s", partition_command_c);
@@ -85,7 +89,7 @@ void create_partition(const char *partition)
 	}
 	
 	// errors with getting the device info
-	else if (info == AB_DEVICE_ERROR) 
+	else if (info_ab_c == AB_DEVICE_ERROR) 
 	{
     	LOG_ERROR("Error recognizing the slot/device.");
 	}

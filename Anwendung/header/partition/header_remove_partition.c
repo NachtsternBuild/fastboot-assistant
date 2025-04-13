@@ -27,9 +27,6 @@
 
 char partition_command_rm[2048];
 
-// get the info of the partitions
-int info_ab = ab_partition_info();
-
 // function that remove a partition
 void remove_partition(const char *partition)
 {
@@ -41,12 +38,16 @@ void remove_partition(const char *partition)
     // show message
     show_message(message);
     // get the fastboot-command
-    auto_free char *device_command = fastboot_command();   
+    auto_free char *device_command = fastboot_command();  
+    
+    // get the info of the partitions
+	int info_ab = ab_partition_info();
+     
 	// for a/b-devices
 	if (info_ab == AB_DEVICE) 
 	{
     	LOG_INFO("a/b-device");
-    	snprinapply_languagetf(partition_command_rm, sizeof(partition_command_rm), "%s delete-logical-partition %s_a && %s delete-logical-partition %s_b", device_command, partition, device_command, partition);
+    	snprintf(partition_command_rm, sizeof(partition_command_rm), "%s delete-logical-partition %s_a && %s delete-logical-partition %s_b", device_command, partition, device_command, partition);
     	
     	// run the command
     	LOG_INFO("Run: %s", partition_command_rm);
