@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include "language_check.h"
+#include "function_header.h"
 #include "program_functions.h"
 #include "instruction_header.h"
 
