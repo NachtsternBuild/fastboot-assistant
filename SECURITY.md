@@ -20,14 +20,14 @@
 
 | Version     | Supported          | Informations                 | Status            | Release Code                 | For the operating systems (OS)                             | Packages                   |
 | ----------- | ------------------ | ---------------------------- | ----------------- | ---------------------------- | ---------------------------------------------------------- | -------------------------- |
-| 0.8.2       | :x:                | *future version*             | :x:               | *Glitschiges GNOME*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
-| 0.8.1       | :x:                | **build version**            | **dev**           | **Glitschiges GNOME**        | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Snap, Zip*           |
-| 0.8.x       | :x:                | *build version*              | *dev*             | *Glitschiges GNOME*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Zip*           |
+| 0.8.2       | :x:                | *future version*             | :x:               | *Glitschiges GNOME 48*       | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
+| 0.8.1       | :white_check_mark: | **build version**            | **beta**          | **Glitschiges GNOME 40**     | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Snap, Zip*           |
+| 0.8.x       | :white_check_mark: | **build version**            | **beta**          | **Glitschiges GNOME**        | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Snap, Zip*           |
 | 0.7.2.1     | :white_check_mark: | **active version**           | **stable**        | **Mutiges Mint 22**          | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Zip, Snap*           |
-| 0.7.2       | :white_check_mark: | **active version**           | **stable**        | **Mutiges Mint 21.3**        | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Zip, Snap*           |
+| 0.7.2       | :x:                | *old version*                | *stable*          | *Mutiges Mint 21.3*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip, Snap*           |
 | 0.7.1       | :x:                | *old version*                | *beta*            | *Mutiges Mint 20.3*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip, exp. Snap*      |
 | 0.7.x       | :white_check_mark: | ***active version***         | **stable**        | **Mutiges Mint**             | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Zip, Snap*           |
-| 0.6.2.2     | :white_check_mark: | **active version**           | **stable**        | **Rostiges Red Hat 9**       | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Zip*                 |
+| 0.6.2.2     | :x:                | *old version*                | *stable*          | *Rostiges Red Hat 9*         | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip*                 |
 | 0.6.2.1     | :x:                | *old version*                | *stable*          | *Rostiges Red Hat 9*         | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip*                 |
 | 0.6.2       | :x:                | *old version*                | **stable**        | *Rostiges Red Hat 9*         | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip*                 |
 | 0.6.2       | :x:, not longer    | *active version (RPM)*       | *beta*            | *Rostiges Red Hat 9*         | *Linux (Fedora/RHEL)*                                      | *RPM*                      |
