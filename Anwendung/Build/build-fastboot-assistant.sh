@@ -209,8 +209,6 @@ debian_package_build() {
 	echo "Set authorisations..."
 	chmod a+x deb/usr/bin/fastboot-assistant
 	chmod 755 deb/DEBIAN
-	chmod 755 deb/postinst
-	chmod 755 deb/postrm
 	
 	# Estimate the installed size by summing the sizes of all files in the deb directory
 	SIZE=$(du -s deb | cut -f1)
