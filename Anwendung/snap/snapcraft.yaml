@@ -1,6 +1,6 @@
 name: fastboot-assistant
 base: core24
-version: '0.7.2.1'
+version: '0.8.1'
 summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
 description: |
   The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
@@ -38,6 +38,11 @@ apps:
     environment:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
       GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
+      GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
+      GTK_THEME: Adwaita
+      LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0
+
 
 plugs:
   gtk-3-themes:
@@ -134,8 +139,10 @@ parts:
       - libdbus-glib-1-dev
       - libglib2.0-bin
       - dconf-gsettings-backend
+      - libadwaita-1-0
     build-packages:
       - libglib2.0-bin
+      - libadwaita-1-dev
     override-build: |
       snapcraftctl build
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
