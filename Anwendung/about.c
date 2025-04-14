@@ -82,30 +82,33 @@ void about(GtkWidget *widget, gpointer stack)
     apply_language();
     
     GtkWidget *page1, *page2, *page3;
-    GtkWidget *label_about2;
-    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about_6, *button_about2_1, *button_about2_2, *button_about2_3, *button_about2_4, *button_about2_5, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6, *button_about3_7;
+    GtkWidget *label_about1, *label_about2, *label_about3, *label_about4, *label_about5, *label_about6, *label_about7, *label_about8;
+    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about_6, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6, *button_about3_7;
     
     /* page 1 */
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 	
 	// button and label    
-    button_about_1 = gtk_button_new_with_label("Fastboot Assistant");
-    button_about_2 = gtk_button_new_with_label("Version 0.8.1.dev");
-    button_about_3 = gtk_button_new_with_label("Glitschiges GNOME 40");
-    button_about_4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Programm um das installieren von Custom-ROM \nund GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM \nand GSIs on Android devices.");
-    button_about_5 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Aktualisierungen" : "Updates");
-    button_about_6 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    label_about1 = gtk_label_new("Fastboot Assistant");
+    label_about2 = gtk_label_new("Version 0.8.1.beta");
+    label_about3 = gtk_label_new("Glitschiges GNOME 40");
+    label_about4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Programm um das installieren von Custom-ROM \nund GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM \nand GSIs on Android devices.");
+    button_about_1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Aktualisierungen" : "Updates");
+    button_about_2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    button_about_3 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Verlassen" : "Exit"); 
     
     // add everything to the page
+    gtk_box_append(GTK_BOX(page1), label_about1);
+    gtk_box_append(GTK_BOX(page1), label_about2);
+    gtk_box_append(GTK_BOX(page1), label_about3);
+    gtk_box_append(GTK_BOX(page1), label_about4);
     gtk_box_append(GTK_BOX(page1), button_about_1);
     gtk_box_append(GTK_BOX(page1), button_about_2);
     gtk_box_append(GTK_BOX(page1), button_about_3);
-    gtk_box_append(GTK_BOX(page1), button_about_4);
-    gtk_box_append(GTK_BOX(page1), button_about_5);
-    gtk_box_append(GTK_BOX(page1), button_about_6);
+    
 
     // connect everything
-    g_signal_connect(button_about_5, "clicked", G_CALLBACK(updater), stack);
+    g_signal_connect(button_about_1, "clicked", G_CALLBACK(updater), stack);
     
     // add page to the stack
 	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "about_assistant")) 
@@ -115,30 +118,36 @@ void about(GtkWidget *widget, gpointer stack)
 	gtk_stack_set_visible_child_name(GTK_STACK(stack), "about_assistant");
 	
 	// set stack reference for the button function
-	g_object_set_data(G_OBJECT(button_about_6), "stack", stack);
-	g_signal_connect(button_about_6, "clicked", G_CALLBACK(switch_page), "program");
+	g_object_set_data(G_OBJECT(button_about_2), "stack", stack);
+	g_signal_connect(button_about_2, "clicked", G_CALLBACK(switch_page), "program");
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_about_3), "stack", stack);
+	g_signal_connect(button_about_3, "clicked", G_CALLBACK(show_home_page), stack);
 	
 	/* page 2 */
     page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    button_about2_1 = gtk_button_new_with_label("(C) Copyright 2025 Elias Mörz");
-    button_about2_2 = gtk_button_new_with_label("Apache License, Version 2.0");
-    button_about2_3 = gtk_button_new_with_label("https://github.com/NachtsternBuild/fastboot-assistant");
-    label_about2 = gtk_button_new_with_label("thanks to:\n@mrrfv → Open Android Backup\n@Jean28518 → my build-fastboot-assistant.sh \nbased on his build-scripts for DEB.");
-    button_about2_4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "System- und Paketinformationen" : "System and package information");
-    button_about2_5 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    label_about5 = gtk_label_new("(C) Copyright 2025 Elias Mörz");
+    label_about6 = gtk_label_new("Apache License, Version 2.0");
+    label_about7 = gtk_label_new("https://github.com/NachtsternBuild/fastboot-assistant");
+    label_about8 = gtk_label_new("thanks to:\n@mrrfv → Open Android Backup\n@Jean28518 → my build-fastboot-assistant.sh \nbased on his build-scripts for DEB.");
+    button_about_4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "System- und Paketinformationen" : "System and package information");
+    button_about_5 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    button_about_6 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Zurück" : "Back");
     
     // add everything to the page
-    gtk_box_append(GTK_BOX(page2), button_about2_1);
-    gtk_box_append(GTK_BOX(page2), button_about2_2);
-    gtk_box_append(GTK_BOX(page2), button_about2_3);
-    gtk_box_append(GTK_BOX(page2), label_about2);
-    gtk_box_append(GTK_BOX(page2), button_about2_4);
-    gtk_box_append(GTK_BOX(page2), button_about2_5);
+    gtk_box_append(GTK_BOX(page2), label_about5);
+    gtk_box_append(GTK_BOX(page2), label_about6);
+    gtk_box_append(GTK_BOX(page2), label_about7);
+    gtk_box_append(GTK_BOX(page2), label_about8);
+    gtk_box_append(GTK_BOX(page2), button_about_4);
+    gtk_box_append(GTK_BOX(page2), button_about_5);
+    gtk_box_append(GTK_BOX(page2), button_about_6);
 
     // connect everything
-    g_signal_connect(button_about2_4, "clicked", G_CALLBACK(info_tools), stack);
+    g_signal_connect(button_about_4, "clicked", G_CALLBACK(info_tools), stack);
     
     // add page to the stack
 	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "program")) 
@@ -147,8 +156,12 @@ void about(GtkWidget *widget, gpointer stack)
 	}
 	
 	// set stack reference for the button function
-	g_object_set_data(G_OBJECT(button_about2_5), "stack", stack);
-	g_signal_connect(button_about2_5, "clicked", G_CALLBACK(switch_page), "program_notes");
+	g_object_set_data(G_OBJECT(button_about_5), "stack", stack);
+	g_signal_connect(button_about_5, "clicked", G_CALLBACK(switch_page), "program_notes");
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_about_6), "stack", stack);
+	g_signal_connect(button_about_6, "clicked", G_CALLBACK(switch_page), "about_assistant");
 	
 	/* page 3 */
     page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -161,6 +174,7 @@ void about(GtkWidget *widget, gpointer stack)
 	button_about3_5 = gtk_button_new_with_label("Open Android Backup");
 	button_about3_6 = gtk_button_new_with_label("Jean28518 GitHub");
 	button_about3_7 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Verlassen" : "Exit");
+	button_about3_8 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Zurück" : "Back");
     
     // add everything to the page
     gtk_box_append(GTK_BOX(page3), button_about3_1);
@@ -170,6 +184,7 @@ void about(GtkWidget *widget, gpointer stack)
     gtk_box_append(GTK_BOX(page3), button_about3_5);
     gtk_box_append(GTK_BOX(page3), button_about3_6);
     gtk_box_append(GTK_BOX(page3), button_about3_7);
+    gtk_box_append(GTK_BOX(page3), button_about3_8);
     
     // connect everything
     g_signal_connect(button_about3_1, "clicked", G_CALLBACK(fastboot_assistant), stack);
@@ -189,6 +204,10 @@ void about(GtkWidget *widget, gpointer stack)
 	// set stack reference for the button function
 	g_object_set_data(G_OBJECT(button_about3_7), "stack", stack);
 	g_signal_connect(button_about3_7, "clicked", G_CALLBACK(show_home_page), stack);
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_about3_8), "stack", stack);
+	g_signal_connect(button_about3_8, "clicked", G_CALLBACK(switch_page), "program");
 
     LOG_INFO("end about");
 }
