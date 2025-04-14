@@ -83,7 +83,7 @@ void about(GtkWidget *widget, gpointer stack)
     
     GtkWidget *page1, *page2, *page3;
     GtkWidget *label_about1, *label_about2, *label_about3, *label_about4, *label_about5, *label_about6, *label_about7, *label_about8;
-    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about_6, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6, *button_about3_7;
+    GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about_6, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6, *button_about3_7, *button_about3_8;
     
     /* page 1 */
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
