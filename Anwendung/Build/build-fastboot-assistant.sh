@@ -258,6 +258,8 @@ debian_package_build_debuild() {
 	echo "[⧗] Start Debian package build..."
 	echo "[⧗] Build mode: debuild"
 	echo "[⧗] Define vars for the DEB..."
+	# debian dir
+	debian_dir="${source_dir}/debian"
 	# vars for deb debuild
 	PKG_NAME="fastboot-assistant"
 	MAINTAINER="Elias Mörz <elias.moerz@mail.de>"
@@ -273,7 +275,7 @@ debian_package_build_debuild() {
 	DESKTOP="fastboot-assistant"
 	
 	echo "[⧗] Create /debian structure..."
-	mkdir -p debian
+	mkdir -p "$debian_dir"
 	echo "[⧗] Create control..."
 	# control file
 	# depends of the control
@@ -281,7 +283,7 @@ debian_package_build_debuild() {
 	BUILD_DEPENDS="debhelper-compat (= 13) , rsync, make, libgtk-4-dev (>= 4.10), libadwaita-1-dev, libsecret-1-dev, pkg-config, gcc"
 
 # control
-cat > debian/control <<EOF
+cat > "${debian_dir}/control" <<EOF
 Source: $PKG_NAME
 Section: $SECTION
 Priority: $PRIORITY
@@ -300,12 +302,12 @@ EOF
 	URGENCY="medium"
 
 # changelog
-cat > debian/changelog <<EOF
+cat > "${debian_dir}/changelog" <<EOF
 $PKG_NAME (${VERSION}ubuntu${PATCH}) $BRANCH; urgency=$URGENCY
 
-* $CONTENT
+  * $CONTENT
 
--- $MAINTAINER  $DATE
+ -- $MAINTAINER  $DATE
 EOF
 	
 	echo "[⧗] Create copyright..."
@@ -314,7 +316,7 @@ EOF
 	LICENSE="Apache 2.0"
 
 # copyright
-cat > debian/copyright <<EOF
+cat > "${debian_dir}/copyright" <<EOF
 Copyright (C) $(date +%Y) $MAINTAINER_NAME
 
 License: $LICENSE
@@ -331,7 +333,7 @@ EOF
 
 	echo "[⧗] Create rules..."
 # rules file
-cat > debian/rules <<'EOF'
+cat > "${debian_dir}/rules" <<'EOF'
 #!/usr/bin/make -f
 
 %:
