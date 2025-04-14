@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Fastboot-Assistant
+Comment=Program to facilitate the installation of custom ROMs and GSIs on Android devices
+Comment[de]=Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern
+Exec=/usr/bin/fastboot-assistant/fastboot-assistant
+Icon=/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
+MimeType=image/svg+xml;
+Terminal=false
+StartupNotify=true
+Categories=System;Utility
+X-Desktop-File-Install-Version=0.26
+
