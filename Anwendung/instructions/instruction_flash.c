@@ -66,7 +66,7 @@ void instruction_flash(GtkWidget *widget, gpointer stack)
 	   
     apply_language();
     
-    char button_labels[7][30];  // labels for the button 
+    char labels[7][30];  // labels for the button 
     set_button_labels_instruction_flash(labels);  // for both languages
     
     GtkWidget *instruction_flash = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
