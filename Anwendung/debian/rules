@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+	
+override_dh_auto_build:
+	export CCACHE_DISABLE=1 
+	rm -rf build_project
+	mkdir -p build_project
+	for dir in header Build config_projekt reboot flash preflash instructions updater \
+	           header/flash header/UI header/commands header/config header/directory \
+	           header/message header/spinner header/theme  header/partition flash/others main \
+	           preflash/backup preflash/prepare; do \
+		rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$$dir/" build_project/ ; \
+	done
+	$(MAKE) -C build_project
+

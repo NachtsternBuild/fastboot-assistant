@@ -1,0 +1,4 @@
+build_project/fastboot-assistant usr/bin/fastboot-assistant/
+desktop/fastboot-assistant.desktop usr/share/applications/
+icons/sweet_unix.png usr/share/icons/hicolor/256x256/apps/
+
