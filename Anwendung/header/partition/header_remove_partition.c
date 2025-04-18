@@ -33,18 +33,16 @@ void remove_partition(const char *partition)
 	LOG_INFO("Remove partition: %s", partition);
 	
 	apply_language();
+	apply_device();
 	
 	const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
     // show message
     show_message(message);
     // get the fastboot-command
     auto_free char *device_command = fastboot_command();  
-    
-    // get the info of the partitions
-	int info_ab = ab_partition_info();
-     
+        
 	// for a/b-devices
-	if (info_ab == AB_DEVICE) 
+	if (g_strcmp0(detected_device, "ab_device") == 0) 
 	{
     	LOG_INFO("a/b-device");
     	snprintf(partition_command_rm, sizeof(partition_command_rm), "%s delete-logical-partition %s_a && %s delete-logical-partition %s_b", device_command, partition, device_command, partition);
@@ -54,7 +52,7 @@ void remove_partition(const char *partition)
     	command_with_spinner(partition_command_rm);
 	} 
 	// only-a-devices
-	else if (info_ab == NOT_AB_DEVICE) 
+	else if (g_strcmp0(detected_device, "only_a") == 0)  
 	{
     	LOG_INFO("only-a-device");
     	snprintf(partition_command_rm, sizeof(partition_command_rm), "%s delete-logical-partition %s", device_command, partition);
@@ -65,7 +63,7 @@ void remove_partition(const char *partition)
 	}
 	
 	// errors with getting the device info
-	else if (info_ab == AB_DEVICE_ERROR) 
+	else
 	{
     	LOG_ERROR("Error recognizing the slot/device.");
 	}

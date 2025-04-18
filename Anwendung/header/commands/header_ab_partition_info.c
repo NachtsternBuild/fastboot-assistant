@@ -25,7 +25,7 @@
 #include "program_functions.h"
 
 // function that check the device for a/b partition or not
-int ab_partition_info(void) 
+void ab_partition_info() 
 {
     auto_free char *device_command = fastboot_command();
     char output_command[256];
@@ -38,30 +38,28 @@ int ab_partition_info(void)
     {
         LOG_ERROR("Error when executing the command.");
         LOG_ERROR("Command: %s", output_command);
-        // return as only-a-device
-        return AB_DEVICE_ERROR;
+        LOG_ERROR("Device type not detected.");
     }
 
     // remove the \n 
     output[strcspn(output, "\n")] = 0;
 	
 	// Comparison a/b - only-a
-    int result;
     // a/b device
     if (strcmp(output, "_b") == 0 || strcmp(output, "_a") == 0 || strcmp(output, "a") == 0 || strcmp(output, "b") == 0) 
     {
         LOG_INFO("a/b-device found.");
-        result = AB_DEVICE;   
+        write_ab_file();
     } 
     // only-a-device 
     else 
     {
         LOG_INFO("Only-a device found.");
-        result = NOT_AB_DEVICE;
+		check_ab_file_light();
     }
 
 	// free the memory
+	LOG_INFO("Freeing ouput.");
     free(output); 
-    return result;
 }
 

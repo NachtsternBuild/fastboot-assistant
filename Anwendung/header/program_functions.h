@@ -86,33 +86,6 @@ void free_wrapper(void *p);
 * g_print("%s", output);
 */
 
-
-/*
-* makro for the a/b device info
-*/
-#define NOT_AB_DEVICE 0
-#define AB_DEVICE 1
-#define AB_DEVICE_ERROR 2
-
-// function for a/b device info
-int ab_partition_info(void);
-/*
-* Usage:
-* int status = ab_partition_info();
-* if (status == AB_DEVICE) 
-* {
-*     g_print("a/b-device");
-* } 
-* else if (status == NOT_AB_DEVICE) 
-* {
-*     g_print("only-a-device");
-* } 
-* else if (status == AB_DEVICE_ERROR) 
-* {
-*     g_print("Error");
-* }
-*/
-
 /* 
 * global variables that are used in each file *
 */
@@ -140,6 +113,9 @@ extern GtkWidget *bootctl_status_label;
 
 // for the main window of the program
 extern GtkWindow *main_window;
+
+// for globals use of detected device
+extern const char *detected_device;
 
 /* 
 * function from the header *
@@ -253,6 +229,13 @@ int get_slot_of_device();
 void check_active_slot();
 // this get the active slot via adb
 char *get_inactive_slot(); 
+// functions to detect the device typ
+void ab_partition_info();
+void apply_device();
+void write_ab_file();
+void delete_ab_file();
+void check_ab_file();
+void check_ab_file_light();
 
 // get devices
 void get_info();

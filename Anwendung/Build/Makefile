@@ -2,8 +2,8 @@
 # Sweet Unix
 
 # compiler
-#CC = ccache gcc
-CC = gcc
+CC = ccache gcc
+#CC = gcc
 
 # compiler flags
 CFLAGS = -Wall `pkg-config --cflags gtk4 libsecret-1  libadwaita-1`
@@ -76,6 +76,7 @@ SRCS = \
 	header_remove_partition.c \
 	header_resize_partition.c \
 	header_create_partition.c \
+	header_ab_detect.c \
 	toggle_theme.c \
 	treble_updater.c \
 	get_devices.c \
