@@ -23,13 +23,13 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-**Please complete the following information:**
+**Information:**
  - **OS:** e.g. Ubuntu
  - **OS version:** e.g. 24.10.
  - **Browser:** e.g. firefox
- - **Browser version:** e.g. 136
- - **Program version:** <= *v.0.7.2*
- - **To be fixed in:** >= *v.0.8.1*
+ - **Browser version:** e.g. 137
+ - **Program version:** <= *v.0.8.1*
+ - **To be fixed in:** >= *v.0.8.2*
  - **Operating mode:** e.g. native / WSL / VM
  - **package type:** e.g. object file / DEB / Snap / Flatpak / Zip 
  - **Location of error:** e.g. source code error / build (compiler) / build (linker) / on run
