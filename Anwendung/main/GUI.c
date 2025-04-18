@@ -244,10 +244,14 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     	g_main_loop_unref(main_loop);
     	main_loop = NULL;
 	}
+	
+	// delete the old if it exsits ab_device.txt
+	check_ab_file_light();
+	
 	LOG_INFO("end activate_fastboot_assistant");
 }
 
-/* main function - GUI */
+/* main function - GUI */ //background-color: #000000;
 int main(int argc, char *argv[]) 
 {
 	// start writing the log
