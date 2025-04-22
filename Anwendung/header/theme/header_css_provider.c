@@ -50,7 +50,7 @@ void unload_css_provider(GtkCssProvider *provider)
         g_object_unref(provider);
     }
 }
-    
+      
 // function for load css
 void load_css(const char *theme) 
 {
@@ -60,115 +60,43 @@ void load_css(const char *theme)
     }
     provider = create_css_provider();
 
-    // CSS für das helle und dunkle Theme definieren
-    const char *light_css =
-        "window {"
-        "    background-color: #f0f0f0;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #000000;"
-        "    font-size: 16px;"
-        "}"
-        "headerbar {"
-        "    background-color: #f0f0f0;"
-        "    font-weight: bold;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #ffffff;"
-        "    font-size: 16px;"
-        "}"
-        "button {"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "    padding: 24px 48px;"
-        "    color: #FFFFFF;"
-        "    font-size: 16px;"
-        "}"
-        "button:hover {"
-        "    background-color: #A52A2A;"
-        "    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);"
-        "}"
-        "label {"
-        "    color: #000000;"
-        "    font-size: 16px;"
-        "    font-weight: bold;"
-        "}"
-        "notebook {"
-        "    background-color: #f0f0f0;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "}"
-        "notebook tab {"
-        "    background-color: #f0f0f0;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "}"
-        "notebook tab:selected {"
-        "    background-color: #FF0000;"
-        "    color: black;"
-        "}";
-
-    const char *dark_css =
-        "window {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #FFFFFF;"
-        "    font-size: 16px;"
-        "}"
-        "headerbar {"
-        "    background-color: #2e3436;"
-        "    font-weight: bold;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "    padding: 12px 24px;"
-        "    color: #FFFFFF;"
-        "    font-size: 16px;"
-        "}"
-        "button {"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "    padding: 24px 48px;"
-        "    color: #FFFFFF;"
-        "    font-size: 16px;"
-        "}"
-        "button:hover {"
-        "    background-color: #A52A2A;"
-        "    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);"
-        "}"
-        "label {"
-        "    color: #FFFFFF;"
-        "    font-size: 16px;"
-        "    font-weight: bold;"
-        "}"
-        "notebook {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "}"
-        "notebook tab {"
-        "    background-color: #2e3436;"
-        "    border: 2px solid #8B0000;"
-        "    border-radius: 35px;"
-        "}"
-        "notebook tab:selected {"
-        "    background-color: #FF0000;"
-        "    color: white;"
-        "}";
-
-    // load css for the theme
-    if (strcmp(theme, "dark") == 0) 
+    // CSS for light and dark theme
+    // for dark theme
+    if (strcmp(theme, "dark") == 0)
     {
-        gtk_css_provider_load_from_string(provider, dark_css);
-    } 
-    else 
-    {
-        gtk_css_provider_load_from_string(provider, light_css);
-    }
+    	const char *css_paths[] = {
+    		"./style_dark.css",
+    		"/usr/share/fastboot-assistant/style_dark.css"
+		};
 
+		for (int i = 0; i < 2; ++i) 
+		{
+            if (g_file_test(css_paths[i], G_FILE_TEST_EXISTS)) 
+            {
+                gtk_css_provider_load_from_path(provider, css_paths[i]);
+                break;
+            }
+        }
+	}
+	
+	// for light theme
+	else
+	{
+		const char *css_paths[] = {
+    		"./style_light.css",
+    		"/usr/share/fastboot-assistant/style_light.css"
+		};
+
+		for (int i = 0; i < 2; ++i) 
+		{
+    		if (g_file_test(css_paths[i], G_FILE_TEST_EXISTS)) 
+    		{
+        		gtk_css_provider_load_from_path(provider, css_paths[i]);
+        		break;
+    		}
+		}
+	}
+	
     // run css for gtk4
     gtk_style_context_add_provider_for_display(
         gdk_display_get_default(),
