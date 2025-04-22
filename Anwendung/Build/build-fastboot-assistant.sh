@@ -88,6 +88,7 @@ updater_dir="${source_dir}/updater"
 target_dir="${source_dir}/build_project"
 output_dir="${source_dir}/output"
 main_dir="${source_dir}/main"
+style_dir="${source_dir}/style"
 
 # for WSL
 windows_dir="${source_dir}/Windows"
@@ -177,10 +178,17 @@ building() {
     
     echo "[✓] Build completed."
     echo "[⧗] Starting postbuild..."
-
+	echo "[⧗] Remove old builds..."
     rm -rf "$output_dir"
     mkdir -p "$output_dir"
+    echo "[⧗] Coping new builds..."
     cp fastboot-assistant "$output_dir"
+    echo "[⧗] Style files..."
+    cp style_dark.css "$output_dir"
+    cp style_light.css "$output_dir"
+    cp style_dark.css "$style_dir"
+    cp style_light.css "$style_dir"
+    echo "[⧗] Set authorisations..."
     chmod a+x "$output_dir"
     echo "[✓] Application are at $output_dir."
 
@@ -228,14 +236,22 @@ debian_package_build_simple() {
 	mkdir -p deb/usr/bin/fastboot-assistant
 	mkdir -p deb/usr/share/icons/hicolor/256x256/apps/
 	mkdir -p deb/usr/share/applications/
+	mkdir -p deb/usr/share/fastboot-assistant/
 	echo "[⧗] Copy all files to deb/usr/bin..."
-	cp -r  "$output_dir/fastboot-assistant" deb/usr/bin/fastboot-assistant/
+	cp -r "$output_dir/fastboot-assistant" deb/usr/bin/fastboot-assistant/
+	echo "[⧗] Copy all files to deb/usr/share/icons/hicolor/256x256/apps/..."
 	cp "$build_dir/sweet_unix.png" deb/usr/share/icons/hicolor/256x256/apps/
+	echo "[⧗] Copy all files to deb/usr/share/applications/..."
 	cp "$build_dir/fastboot-assistant.desktop" deb/usr/share/applications/
+	echo "[⧗] Copy all files to deb/usr/share/fastboot-assistant/..."
+	cp -r "$output_dir/style_dark.css" deb/usr/share/fastboot-assistant/
+	cp -r "$output_dir/style_light.css" deb/usr/share/fastboot-assistant/
 
 	# set authorisations with 'chmod'
 	echo "[⧗] Set authorisations..."
 	chmod a+x deb/usr/bin/fastboot-assistant
+	chmod 755 deb/usr/share/fastboot-assistant/style_dark.css
+	chmod 755 deb/usr/share/fastboot-assistant/style_light.css
 	chmod 755 deb/DEBIAN
 	
 	# Estimate the installed size by summing the sizes of all files in the deb directory
@@ -328,6 +344,8 @@ cat > debian/install <<EOF
 build_project/fastboot-assistant usr/bin/fastboot-assistant/
 desktop/fastboot-assistant.desktop usr/share/applications/
 icons/sweet_unix.png usr/share/icons/hicolor/256x256/apps/
+style/style_dark.css usr/share/fastboot-assistant/style_dark.css
+style/style_light.css usr/share/fastboot-assistant/style_light.css
 
 EOF
 
