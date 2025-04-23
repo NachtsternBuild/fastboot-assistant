@@ -42,6 +42,7 @@
 /* 
 * makros for the logging *
 */
+
 // the makro for infos
 #define LOG_INFO(msg, ...) { \
     time_t now = time(NULL); \
@@ -68,6 +69,21 @@
 * LOG_INFO("This are a message for the program.");
 * LOG_ERROR("This shows a error from the program.");
 */
+
+// function that get the log filepath
+void get_log_filepath(char *log_file, size_t size);
+// function that write the log msg to the textview
+void write_to_textview(GtkWidget *text_view, const char *str);
+// update the textview
+gboolean update_text_view_from_log(gpointer user_data);
+// after destroying the log viewer
+void log_viewer_destroyed(GtkWidget *widget, gpointer user_data);
+// function that shows the log 
+void log_viewer(GtkButton *button, gpointer user_data);
+// function that kill the fastboot-assistant
+void kill_fastboot_assistant(GtkButton *button, gpointer user_data);
+// header that create the popover menu
+GtkWidget* create_custom_headerbar(gpointer stack);
 
 /* 
 * makro for autofree the memory *
@@ -125,6 +141,8 @@ extern const char *detected_device;
 */
 // create button
 GtkWidget *create_nav_button(const char *label, GCallback callback, gpointer data);
+// create button with a icon
+GtkWidget* create_icon_nav_button(const char *icon_name, const char *label_text, GCallback callback, gpointer data); 
 // show home page
 void show_home_page(GtkWidget *widget, gpointer stack);
 

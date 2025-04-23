@@ -101,7 +101,7 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     // get theme and language
     apply_theme();
     apply_language();
-
+	
 	// run post update function
 	post_update();
 	
@@ -154,24 +154,34 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     // create the main window
     main_window = GTK_WINDOW(gtk_window_new());
     gtk_window_set_title(GTK_WINDOW(main_window), "Fastboot-Assistant");
-    gtk_window_set_default_size(GTK_WINDOW(main_window),  WINDOW_WIDTH, WINDOW_HEIGHT);
+    gtk_window_set_default_size(GTK_WINDOW(main_window), WINDOW_WIDTH, WINDOW_HEIGHT);
 	
     // signal to close the application
     g_signal_connect(main_window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
 	char labels[9][30];  // labels for the button 
     set_button_labels(labels);  // for both languages
-    
+       
     // create a box container for the main content
     GtkWidget *content_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_window_set_child(GTK_WINDOW(main_window), content_box);
     gtk_widget_set_halign(content_box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(content_box, GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand(content_box, TRUE);
+	gtk_widget_set_vexpand(content_box, TRUE);
 
     // create the stack for navigation
     GtkWidget *stack = gtk_stack_new();
     gtk_stack_set_transition_type(GTK_STACK(stack), GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT);
     gtk_stack_set_transition_duration(GTK_STACK(stack), 300);
+    gtk_widget_set_hexpand(stack, TRUE);
+	gtk_widget_set_vexpand(stack, TRUE);
+        
+    // add the headerbar
+    GtkWidget *headerbar = create_custom_headerbar(stack);
+    gtk_box_append(GTK_BOX(content_box), headerbar);
+    
+    // add the stack to the box
     gtk_box_append(GTK_BOX(content_box), stack);
 
     // create the home page
@@ -180,6 +190,8 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     gtk_grid_set_column_homogeneous(GTK_GRID(home_page), TRUE);
     gtk_widget_set_halign(home_page, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(home_page, GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand(home_page, TRUE);
+	gtk_widget_set_vexpand(home_page, TRUE);
     
     // create the button with the labels
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(get_devices), stack);

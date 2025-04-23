@@ -358,9 +358,9 @@ void updater_stable(void)
         gtk_window_set_child(GTK_WINDOW(confirmation_window), vbox);
         
         GtkCssProvider *provider_up = gtk_css_provider_new();
-        gtk_css_provider_load_from_data(provider_up,
-    	".highlight { text-decoration: underline; font-weight: bold; }",
-    	-1);
+        gtk_css_provider_load_from_string(provider_up,
+    	".highlight { text-decoration: underline; font-weight: bold; }"
+    	);
 		        
         // widget for update 
 	    GtkWidget *icon_update = gtk_image_new_from_icon_name("software-update-available-symbolic"); // software-update-available / software-update-available-symbolic

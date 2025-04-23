@@ -77,6 +77,7 @@ SRCS = \
 	header_resize_partition.c \
 	header_create_partition.c \
 	header_ab_detect.c \
+	header_write_log_text.c \
 	toggle_theme.c \
 	treble_updater.c \
 	get_devices.c \

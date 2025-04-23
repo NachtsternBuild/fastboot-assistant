@@ -41,29 +41,43 @@ void write_log()
     snprintf(log_file, sizeof(log_file), "%s/log/log.txt", log_dir);
     LOG_INFO("Log-file: %s", log_file);
 
-    // create log_dir
-    // only if it not exsists
+    // create log_dir if it doesn't exist
     if (access(log_dir, F_OK) == -1) 
     {
         create_directory(create_log_dir);
     }
 
-    // open log file or create it
+    // open log file or create it if it doesn't exist
     int log_fd = open(log_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (log_fd == -1) 
     {
-        LOG_ERROR("Error when opening the log file.");
-        exit(1);
+        perror("Error when opening the log file");
+        return;
     }
 
-    // write info or errors to the file using dup2
-    dup2(log_fd, STDOUT_FILENO);
-    dup2(log_fd, STDERR_FILENO);
+    // redirect STDOUT and STDERR to the log file
+    if (dup2(log_fd, STDOUT_FILENO) == -1) 
+    {
+        perror("Failed to redirect STDOUT");
+        close(log_fd);
+        return;
+    }
+    
+    if (dup2(log_fd, STDERR_FILENO) == -1) 
+    {
+        perror("Failed to redirect STDERR");
+        close(log_fd);
+        return;
+    }
 
-    // close the log file
-    close(log_fd);
-    LOG_INFO("Close Log.");
+    // write log information
+    LOG_INFO("Logging started.");
+
+    close(log_fd); // This closes the file descriptor, but since dup2() is used, the redirection of the output is not terminated.
+
+    LOG_INFO("Log closed.");
 }
+
 /*
 * Usage:
 int main(int argc, char *argv[]) 

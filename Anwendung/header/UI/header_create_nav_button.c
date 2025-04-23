@@ -33,3 +33,20 @@ GtkWidget *create_nav_button(const char *label, GCallback callback, gpointer dat
     return button;
 }
 
+GtkWidget* create_icon_nav_button(const char *icon_name, const char *label_text, GCallback callback, gpointer data) 
+{
+    GtkWidget *button = gtk_button_new();
+    GtkWidget *box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+
+    GtkWidget *image = gtk_image_new_from_icon_name(icon_name);
+    GtkWidget *label = gtk_label_new(label_text);
+
+    gtk_box_append(GTK_BOX(box), image);
+    gtk_box_append(GTK_BOX(box), label);
+    gtk_button_set_child(GTK_BUTTON(button), box);
+    g_signal_connect(button, "clicked", callback, data);
+
+    return button;
+}
+
+
