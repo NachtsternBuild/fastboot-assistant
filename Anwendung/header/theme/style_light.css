@@ -53,3 +53,21 @@ notebook tab:selected {
     color: black;
 }
 
+.label-title {
+	color: #000000;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.frame-style {
+    border: 2px solid #8B0000;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.underline {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #000000;
+}

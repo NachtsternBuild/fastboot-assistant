@@ -68,10 +68,15 @@ void updater(GtkWidget *widget, gpointer stack)
     GtkWidget *updater = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_widget_set_halign(updater, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(updater, GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand(updater, TRUE);
+	gtk_widget_set_vexpand(updater, TRUE);
+
 
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_widget_set_hexpand(grid, TRUE);
+	gtk_widget_set_vexpand(grid, TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_updater_stable), stack);

@@ -131,8 +131,23 @@ void load_css_adw()
         "    padding: 12px 24px;"
         "    color: %s;" // text / fg color - 17
         "    font-size: 16px;"
-        "}",
-        bg_color_str, accent_color_str, fg_color_str, accent_color_str, bg_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str, bg_color_str, accent_color_str, fg_color_str
+        "}"
+        ".label-title {"
+    	"	font-size: 20px;" //"	color: %s;" // text / fg color - 18
+    	"	font-weight: 600;"
+    	"	letter-spacing: 1px;"
+		"}"
+		".frame-style {"
+    	"	border: 2px solid %s;" // accent color - 19
+    	"	border-radius: 8px;"
+    	"	padding: 10px;"
+		"}"
+		".underline {"
+    	"	text-decoration: underline;"
+    	"	font-weight: bold;" //"	color: %s;" // text / fg color - 20
+		"}",
+        
+        bg_color_str, accent_color_str, fg_color_str, accent_color_str, bg_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str, bg_color_str, accent_color_str, fg_color_str, fg_color_str, accent_color_str, fg_color_str
     );
 
     // load css
