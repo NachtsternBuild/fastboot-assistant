@@ -27,10 +27,31 @@
 #define MAX_BUFFER_SIZE 256
 
 // include all functions
+/*
+old UI
 extern void instruction_adb(GtkWidget *widget, gpointer stack);
 extern void instruction_flash(GtkWidget *widget, gpointer stack);
 extern void instruction_prepare_flash(GtkWidget *widget, gpointer stack);
 extern void instruction_info(GtkWidget *widget, gpointer stack);
+*/
+extern void instruction_flash();
+extern void instruction_prepare_flash(GtkWidget *widget, gpointer stack);
+extern void instruction_adb();
+extern void instruction_info();
+
+// Callback functions for each button
+// start instruction_adb-function
+static void start_instruction_adb(GtkWidget *widget, gpointer data) 
+{
+    instruction_adb();
+}
+
+// start instruction_info-function
+static void start_instruction_info(GtkWidget *widget, gpointer data) 
+{
+    instruction_info();
+}
+
 
 // function to set up button labels based on the language
 void set_button_labels_instruction_GUI(char labels[][30]) 
@@ -73,10 +94,17 @@ void instruction_GUI(GtkWidget *widget, gpointer stack)
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 	
 	// create button
+	/*
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(instruction_adb), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_flash), stack);
     GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(instruction_prepare_flash), stack);
     GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(instruction_info), stack);
+    GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(show_home_page), stack);
+    */
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_instruction_adb), NULL);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_flash), stack);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(instruction_prepare_flash), stack);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(start_instruction_info), NULL);
     GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(show_home_page), stack);
 
     // add the button to the grid

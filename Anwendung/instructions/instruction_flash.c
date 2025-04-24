@@ -25,13 +25,58 @@
 #include "instruction_header.h"
 
 #define MAX_BUFFER_SIZE 256
-
+/*
+old UI
 extern void instruction_root(GtkWidget *widget, gpointer stack);
 extern void instruction_vendor(GtkWidget *widget, gpointer stack);
 extern void instruction_gsi(GtkWidget *widget, gpointer stack);
 extern void instruction_custom_rom(GtkWidget *widget, gpointer stack);
 extern void instruction_recovery(GtkWidget *widget, gpointer stack);
 extern void instruction_others(GtkWidget *widget, gpointer stack);
+*/
+extern void instruction_root();
+extern void instruction_vendor();
+extern void instruction_gsi();
+extern void instruction_custom_rom();
+extern void instruction_recovery();
+extern void instruction_others();
+
+// button 1 - inst. for root
+static void inst_root(GtkWidget *widget, gpointer data)
+{
+    instruction_root();
+}
+
+// button 2 - inst. for vendor
+static void inst_vendor(GtkWidget *widget, gpointer data)
+{
+	instruction_vendor();
+}
+
+// button 3 - inst. for GSI
+static void inst_gsi(GtkWidget *widget, gpointer data)
+{
+    instruction_gsi();
+}
+
+// button 4 - inst. for custom ROMs
+static void inst_custom_rom(GtkWidget *widget, gpointer data)
+{
+	instruction_custom_rom();
+}
+
+// button 5 - inst. for recovery
+static void inst_recovery(GtkWidget *widget, gpointer data)
+{
+	instruction_recovery();
+}
+
+// button 6 - inst. for other images
+static void inst_others(GtkWidget *widget, gpointer data)
+{
+	instruction_others();
+}
+
 
 // function to set up button labels based on the language
 void set_button_labels_instruction_flash(char labels[][30]) 
@@ -78,12 +123,21 @@ void instruction_flash(GtkWidget *widget, gpointer stack)
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 	
 	// create button
+	/*
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(instruction_root), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_vendor), stack);
     GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(instruction_gsi), stack);
     GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(instruction_custom_rom), stack);
     GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(instruction_recovery), stack);
     GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(instruction_others), stack);
+    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(instruction_GUI), stack);
+    */
+    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(inst_root), NULL);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(inst_vendor), NULL);
+    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(inst_gsi), NULL);
+    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(inst_custom_rom), NULL);
+    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(inst_recovery), NULL);
+    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(inst_others), NULL);
     GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(instruction_GUI), stack);
 
     // add the button to the grid
@@ -97,9 +151,9 @@ void instruction_flash(GtkWidget *widget, gpointer stack)
     gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
 
     // pack the grid to the box
-    gtk_box_append(GTK_BOX(preflash_GUI), grid);
+    gtk_box_append(GTK_BOX(instruction_flash), grid);
     // add the back button under the grid
-    gtk_box_append(GTK_BOX(preflash_GUI), btn_back); 
+    gtk_box_append(GTK_BOX(instruction_flash), btn_back); 
 
 	// is needed to prevent it from being stacked again when called again
     if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "instruction_flash")) 

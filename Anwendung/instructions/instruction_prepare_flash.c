@@ -27,9 +27,25 @@
 #include "instruction_header.h"
 
 #define MAX_BUFFER_SIZE 256
-
+/*
+old UI
 extern void instruction_backup(GtkWidget *widget, gpointer stack);
 extern void instruction_preflash(GtkWidget *widget, gpointer stack);
+*/
+extern void instruction_backup();
+extern void instruction_preflash();
+
+// button 1 - inst. for root
+static void inst_backup(GtkWidget *widget, gpointer data)
+{
+    instruction_backup();
+}
+
+// button 2 - inst. for vendor
+static void inst_preflash(GtkWidget *widget, gpointer data)
+{
+	instruction_preflash();
+}
 
 // function to set up button labels based on the language
 void set_button_labels_instruction_prepare_flash(char labels[][30]) 
@@ -68,10 +84,15 @@ void instruction_prepare_flash(GtkWidget *widget, gpointer stack)
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
 	
 	// create button
+	/*
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(instruction_backup), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_preflash), stack);
     GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(instruction_GUI), stack);
-
+	*/
+	GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(inst_backup), NULL);
+    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(inst_preflash), NULL);
+    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(instruction_GUI), stack);
+    
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
