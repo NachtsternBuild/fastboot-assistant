@@ -38,7 +38,7 @@ void delete_config_file()
     get_config_dir(dir_path, sizeof(dir_path));
 
     char path[512];
-    snprintf(path, sizeof(path), "%s/%s", dir_path, CONFIG_SETUP_FILE);
+    snprintf(path, sizeof(path), "%s/config/%s", dir_path, CONFIG_SETUP_FILE);
 
     // try to remove the file
     if (remove(path) == 0) 
