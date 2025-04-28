@@ -84,7 +84,7 @@ void set_button_labels_reboot(char labels[][30])
     }
 } 
 
-/* main function - reboot*/
+/* main function - reboot */
 void reboot(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("reboot");
@@ -101,11 +101,14 @@ void reboot(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(reboot_system), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(boot_to_image), stack);
-    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(reboot_GUI), stack);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[2], G_CALLBACK(reboot_GUI), stack, GTK_ALIGN_CENTER);
+
 
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
