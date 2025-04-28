@@ -53,6 +53,14 @@ notebook tab:selected {
     color: black;
 }
 
+frame {
+    border-width: 5px;
+    border-radius: 35px;
+    border-color: #8B0000;
+    border-style: solid;
+    padding: 10px;
+}
+
 .label-title {
 	color: #000000;
     font-size: 20px;

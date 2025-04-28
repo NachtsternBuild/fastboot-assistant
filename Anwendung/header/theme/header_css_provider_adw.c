@@ -82,7 +82,7 @@ void load_css_adw()
     char *accent_color_str = rgba_to_hex(accent_color);
              
     // create css and add colors from libadwaita
-    char css[2048];
+    char css[4096];
     snprintf(css, sizeof(css),
         "window {"
         "    background-color: %s;" // bg color - 1
@@ -132,22 +132,15 @@ void load_css_adw()
         "    color: %s;" // text / fg color - 17
         "    font-size: 16px;"
         "}"
-        ".label-title {"
-    	"	font-size: 20px;" //"	color: %s;" // text / fg color - 18
-    	"	font-weight: 600;"
-    	"	letter-spacing: 1px;"
-		"}"
-		".frame-style {"
-    	"	border: 2px solid %s;" // accent color - 19
-    	"	border-radius: 8px;"
+        "frame {"
+    	"	border-width: 5px;"
+    	"	border-radius: 35px;"
+		"   border-color: %s;" // accent color - 18
+    	"	border-style: solid;"
     	"	padding: 10px;"
-		"}"
-		".underline {"
-    	"	text-decoration: underline;"
-    	"	font-weight: bold;" //"	color: %s;" // text / fg color - 20
 		"}",
         
-        bg_color_str, accent_color_str, fg_color_str, accent_color_str, bg_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str, bg_color_str, accent_color_str, fg_color_str, fg_color_str, accent_color_str, fg_color_str
+        bg_color_str, accent_color_str, fg_color_str, accent_color_str, bg_color_str, fg_color_str, fg_color_str, fg_color_str, bg_color_str, accent_color_str, bg_color_str, accent_color_str, bg_color_str, fg_color_str, bg_color_str, accent_color_str, fg_color_str, accent_color_str
     );
 
     // load css

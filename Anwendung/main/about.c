@@ -82,26 +82,35 @@ void about(GtkWidget *widget, gpointer stack)
     apply_language();
     
     GtkWidget *page1, *page2, *page3;
+    GtkWidget *label_l_1, *label_l_2, *label_l_3, *label_l_4, *label_l_5;
     GtkWidget *label_about1, *label_about2, *label_about3, *label_about4, *label_about5, *label_about6, *label_about7, *label_about8;
     GtkWidget *button_about_1, *button_about_2, *button_about_3, *button_about_4, *button_about_5, *button_about_6, *button_about3_1, *button_about3_2, *button_about3_3, *button_about3_4, *button_about3_5, *button_about3_6, *button_about3_7, *button_about3_8;
     
     /* page 1 */
     page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 	
-	// button and label    
+	// button and label
+	label_l_1 = gtk_label_new("\n \n");  
     label_about1 = gtk_label_new("Fastboot Assistant");
     label_about2 = gtk_label_new("Version 0.8.1.beta");
+    label_l_2 = gtk_label_new("\n ");
     label_about3 = gtk_label_new("Glitschiges GNOME 40");
+    label_l_3 = gtk_label_new("\n \n");
     label_about4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Programm um das installieren von Custom-ROM \nund GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM \nand GSIs on Android devices.");
+    label_l_4 = gtk_label_new("\n ");
     button_about_1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Aktualisierungen" : "Updates");
     button_about_2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
     button_about_3 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Verlassen" : "Exit"); 
     
     // add everything to the page
+    gtk_box_append(GTK_BOX(page1), label_l_1);
     gtk_box_append(GTK_BOX(page1), label_about1);
     gtk_box_append(GTK_BOX(page1), label_about2);
+    gtk_box_append(GTK_BOX(page1), label_l_2);
     gtk_box_append(GTK_BOX(page1), label_about3);
+    gtk_box_append(GTK_BOX(page1), label_l_3);
     gtk_box_append(GTK_BOX(page1), label_about4);
+    gtk_box_append(GTK_BOX(page1), label_l_4);
     gtk_box_append(GTK_BOX(page1), button_about_1);
     gtk_box_append(GTK_BOX(page1), button_about_2);
     gtk_box_append(GTK_BOX(page1), button_about_3);

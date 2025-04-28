@@ -252,7 +252,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
 	/* item 4 */
 	// function: show computer info
     GtkWidget *item4 = gtk_list_box_row_new();
-    GtkWidget *icon4 = gtk_image_new_from_icon_name("computer");
+    GtkWidget *icon4 = gtk_image_new_from_icon_name("start-here-symbolic");
     GtkWidget *label4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "System Info" : "System Info");
     
     // box for the icon and the label
