@@ -213,9 +213,9 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     GtkWidget *label_2_2 = gtk_label_new(" ");
     // button
     const char *toggle_language_char = strcmp(language, "de") == 0 ? "Sprache wechseln/Switch Language (Deutsch/Englisch)" : "Switch Language/Sprache wechseln (English/German)";    
-    GtkWidget *button_toggle_language = create_icon_nav_button("preferences-desktop-locale", toggle_language_char, G_CALLBACK(toggle_language_setup), stack);
+    GtkWidget *button_toggle_language = create_icon_nav_button("font-x-generic-symbolic", toggle_language_char, G_CALLBACK(toggle_language_setup), stack);
     const char *setup_dir_char = strcmp(language, "de") == 0 ? "Ordner für den Flash-Vorgang auswählen" : "Choose folder for flashing files";
-    GtkWidget *button_setup_dir = create_icon_nav_button("folder-new", setup_dir_char, G_CALLBACK(show_folder_chooser), stack);
+    GtkWidget *button_setup_dir = create_icon_nav_button("folder-open-symbolic", setup_dir_char, G_CALLBACK(show_folder_chooser), stack);
     const char *toggle_theme_char = strcmp(language, "de") == 0 ? "Thema wechseln (Hell/Dunkel)" : "Toggle theme (Light/Dark)";
     GtkWidget *button_toggle_theme = create_icon_nav_button("applications-system-symbolic", toggle_theme_char, G_CALLBACK(toggle_theme_css), stack);
     GtkWidget *button_welcome_2 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);

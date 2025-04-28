@@ -180,7 +180,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
     /* item 1 */
     // function: show log window
    	GtkWidget *item1 = gtk_list_box_row_new();
-	GtkWidget *icon1 = gtk_image_new_from_icon_name("utilities-terminal"); // utilities-terminal - utilities-terminal-symbolic
+	GtkWidget *icon1 = gtk_image_new_from_icon_name("utilities-system-monitor-symbolic"); // utilities-terminal - utilities-terminal-symbolic - utilities-system-monitor-symbolic
 	GtkWidget *label1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Log ansehen" : "Show Log");
 
 	// box for the icon and the label
@@ -204,7 +204,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
 	/* item 2 */   
 	// function: show connected devices
 	GtkWidget *item2 = gtk_list_box_row_new();
-	GtkWidget *icon2 = gtk_image_new_from_icon_name("network-wired"); // dialog-information help-about-symbolic network-wired
+	GtkWidget *icon2 = gtk_image_new_from_icon_name("media-optical-symbolic"); // dialog-information help-about-symbolic network-wired media-optical-symbolic
 	GtkWidget *label2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Geräte" : "Devices");
 	
 	// box for the icon and the label
@@ -228,7 +228,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
 	/* item 3 */
 	// function: show info
     GtkWidget *item3 = gtk_list_box_row_new();
-    GtkWidget *icon3 = gtk_image_new_from_icon_name("phone");
+    GtkWidget *icon3 = gtk_image_new_from_icon_name("multimedia-player-apple-ipod-touch-symbolic");
     GtkWidget *label3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Geräte Info" : "Device Info");
     
     // box for the icon and the label
