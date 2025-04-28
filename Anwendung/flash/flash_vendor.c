@@ -103,6 +103,8 @@ void flash_vendor(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(vendor_on_a), stack);
@@ -111,7 +113,7 @@ void flash_vendor(GtkWidget *widget, gpointer stack)
     GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(vendor_boot_on_a), stack);
     GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(vendor_boot_on_ab), stack);
     GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(vendor_boot_heimdall), stack);
-    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(flash_GUI), stack);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[6], G_CALLBACK(flash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1

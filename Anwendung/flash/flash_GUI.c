@@ -89,6 +89,8 @@ void flash_GUI(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(flash_recovery), stack);
@@ -100,7 +102,7 @@ void flash_GUI(GtkWidget *widget, gpointer stack)
     GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(flash_preloader_super), stack);
     GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(flash_data), stack);
     GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(flash_others), stack);
-    GtkWidget *btn_back = create_nav_button(labels[9], G_CALLBACK(show_home_page), stack);
+	GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[9], G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1
