@@ -142,7 +142,13 @@ extern const char *detected_device;
 // create button
 GtkWidget *create_nav_button(const char *label, GCallback callback, gpointer data);
 // create button with a icon
-GtkWidget* create_icon_nav_button(const char *icon_name, const char *label_text, GCallback callback, gpointer data); 
+GtkWidget* create_icon_nav_button(const char *icon_name, const char *label_text, GCallback callback, gpointer data);
+// create button with icon, but without callback
+GtkWidget* create_icon_nav_button_no_callback(const char *icon_name, const char *label_text);
+// create button with two icons
+GtkWidget* create_icon_nav_button_with_header(const char *main_icon, const char *header_icon, const char *label_text, GCallback callback, gpointer data); // you can use it, for only one icon too →  create_icon_nav_button_with_header("main_icon", NULL, "text", G_CALLBACK(callback), data);
+// create a button with an icon and set special position
+GtkWidget* create_icon_nav_button_with_position(const char *icon_name, const char *label_text, GCallback callback, gpointer data, GtkAlign alignment); 
 // show home page
 void show_home_page(GtkWidget *widget, gpointer stack);
 
