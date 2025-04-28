@@ -192,12 +192,14 @@ void config_projekt_GUI(GtkWidget *widget, gpointer stack)
     set_button_labels_config_projekt(labels);  // for both languages
     
     GtkWidget *config_projekt_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    gtk_widget_set_halign(config_projekt_GUI, GTK_ALIGN_CENTER);
+        gtk_widget_set_halign(config_projekt_GUI, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(config_projekt_GUI, GTK_ALIGN_CENTER);
 
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_make_dir_function), stack);
@@ -209,7 +211,7 @@ void config_projekt_GUI(GtkWidget *widget, gpointer stack)
     GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(new_setup_dir), stack);
     GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(run_post_update), stack);
     GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(run_setup), stack);
-    GtkWidget *btn_back = create_nav_button(labels[9], G_CALLBACK(show_home_page), stack);
+	GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[9], G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1

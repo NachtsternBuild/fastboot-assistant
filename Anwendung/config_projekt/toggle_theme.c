@@ -254,9 +254,9 @@ void toggle_theme(GtkWidget *widget, gpointer stack)
     set_current_switch();
     
     // function to show the home page
-	back_to_home = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Zurück zur Startseite" : "Back to Home");
+	const char *back_to_home_char = strcmp(language, "de") == 0 ? "Zurück zur Startseite" : "Back to Home";
+	back_to_home = create_icon_nav_button_with_position("pan-start-symbolic", back_to_home_char, G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 	gtk_box_append(GTK_BOX(toggle_theme), back_to_home);
-	g_signal_connect(back_to_home, "clicked", G_CALLBACK(show_home_page), stack);
     
 	// is needed to prevent it from being stacked again when called again
     if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "toggle_theme")) 

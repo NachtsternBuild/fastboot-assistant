@@ -143,12 +143,14 @@ void remove_old(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(remove_rom_install), stack);
     GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(remove_old_files), stack);
     GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(remove_backups), stack);
-    GtkWidget *btn_back = create_nav_button(labels[3], G_CALLBACK(config_projekt_GUI), stack);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[3], G_CALLBACK(config_projekt_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);

@@ -22,7 +22,6 @@
 #include "function_header.h"
 #include "program_functions.h"
 #include "language_check.h"
-#include "icon_update.h"
 
 GtkWidget *window;
 
