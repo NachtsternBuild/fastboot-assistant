@@ -188,6 +188,7 @@ building() {
     cp style_light.css "$output_dir"
     cp style_dark.css "$style_dir"
     cp style_light.css "$style_dir"
+    cp sweet_unix.png "$output_dir"
     echo "[⧗] Set authorisations..."
     chmod a+x "$output_dir"
     echo "[✓] Application are at $output_dir."
@@ -246,6 +247,7 @@ debian_package_build_simple() {
 	echo "[⧗] Copy all files to deb/usr/share/fastboot-assistant/..."
 	cp -r "$output_dir/style_dark.css" deb/usr/share/fastboot-assistant/
 	cp -r "$output_dir/style_light.css" deb/usr/share/fastboot-assistant/
+	cp -r "$build_dir/sweet_unix.png" deb/usr/share/fastboot-assistant/
 
 	# set authorisations with 'chmod'
 	echo "[⧗] Set authorisations..."
@@ -344,8 +346,9 @@ cat > debian/install <<EOF
 build_project/fastboot-assistant usr/bin/fastboot-assistant/
 desktop/fastboot-assistant.desktop usr/share/applications/
 icons/sweet_unix.png usr/share/icons/hicolor/256x256/apps/
-style/style_dark.css usr/share/fastboot-assistant/style_dark.css
-style/style_light.css usr/share/fastboot-assistant/style_light.css
+style/style_dark.css usr/share/fastboot-assistant/
+style/style_light.css usr/share/fastboot-assistant/
+icons/sweet_unix.png usr/share/fastboot-assistant/
 
 EOF
 
