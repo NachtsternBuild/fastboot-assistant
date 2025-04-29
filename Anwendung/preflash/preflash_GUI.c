@@ -93,7 +93,7 @@ void preflash_GUI(GtkWidget *widget, gpointer stack)
     GtkWidget *btn3 = create_icon_nav_button_with_position("user-trash-symbolic", labels[2], G_CALLBACK(start_erase_data), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn4 = create_icon_nav_button_with_position("object-flip-horizontal-symbolic", labels[3], G_CALLBACK(set_active_slot), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn5 = create_icon_nav_button_with_position("rotation-locked-symbolic", labels[4], G_CALLBACK(lock_unlock_bootloader), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn6 = create_icon_nav_button_with_position("drive-harddisk-symbolic", labels[5], G_CALLBACK(partitions), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_icon_nav_button_with_position("drive-harddisk-system-symbolic", labels[5], G_CALLBACK(partitions), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[6], G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
