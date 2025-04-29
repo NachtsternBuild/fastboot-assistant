@@ -52,6 +52,7 @@ extern void post_update();
 
 // for the main window
 GtkWindow *main_window = NULL;
+GMainLoop *main_loop = NULL; 
 
 // start info-function
 static void start_info(GtkWidget *widget, gpointer stack) 
@@ -194,15 +195,15 @@ static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 	gtk_widget_set_vexpand(home_page, TRUE);
     
     // create the button with the labels
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(get_devices), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(reboot_GUI), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(config_projekt_GUI), stack);
-    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(preflash_GUI), stack);
-    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(flash_GUI), stack);
-    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(instruction_GUI), stack);
-    GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(start_info), stack);
-    GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(treble_updater), stack);
-    GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(about), stack);
+    GtkWidget *btn1 = create_icon_nav_button_with_position("folder-publicshare-symbolic", labels[0], G_CALLBACK(get_devices), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("system-reboot-symbolic", labels[1], G_CALLBACK(reboot_GUI), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_icon_nav_button_with_position("applications-system-symbolic", labels[2], G_CALLBACK(config_projekt_GUI), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_icon_nav_button_with_position("applications-engineering-symbolic", labels[3], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_icon_nav_button_with_position("drive-multidisk-symbolic", labels[4], G_CALLBACK(flash_GUI), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_icon_nav_button_with_position("system-help-symbolic", labels[5], G_CALLBACK(instruction_GUI), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn7 = create_icon_nav_button_with_position("phone-apple-iphone-symbolic", labels[6], G_CALLBACK(start_info), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn8 = create_icon_nav_button_with_position("drive-harddisk-system-symbolic", labels[7], G_CALLBACK(treble_updater), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn9 = create_icon_nav_button_with_position("help-about-symbolic", labels[8], G_CALLBACK(about), stack, GTK_ALIGN_CENTER);
     // add the button to the grid 
     // line 1 (0)
     gtk_grid_attach(GTK_GRID(home_page), btn1, 0, 0, 1, 1);
