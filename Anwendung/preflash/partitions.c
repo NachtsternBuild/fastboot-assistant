@@ -149,6 +149,8 @@ void partitions(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(remove_boot), stack);
@@ -160,7 +162,7 @@ void partitions(GtkWidget *widget, gpointer stack)
     GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(create_boot), stack);
     GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(create_vendor), stack);
     GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(create_system), stack);
-    GtkWidget *btn_back = create_nav_button(labels[9], G_CALLBACK(preflash_GUI), stack);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[9], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1

@@ -160,12 +160,14 @@ void backup_noroot(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(install_depends_function), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(download_backup), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(open_backup), stack);
-    GtkWidget *btn_back = create_nav_button(labels[3], G_CALLBACK(preflash_GUI), stack);
+    GtkWidget *btn1 = create_icon_nav_button_with_position("applications-engineering-symbolic", labels[0], G_CALLBACK(install_depends_function), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("folder-download-symbolic", labels[1], G_CALLBACK(download_backup), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_icon_nav_button_with_position("utilities-terminal-symbolic", labels[2], G_CALLBACK(open_backup), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[3], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);

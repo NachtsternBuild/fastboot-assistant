@@ -83,11 +83,13 @@ void backup_function(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_backup_root), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(backup_noroot), stack);
-    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(preflash_GUI), stack);
+    GtkWidget *btn1 = create_icon_nav_button_with_position("security-high-symbolic", labels[0], G_CALLBACK(start_backup_root), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("avatar-default-symbolic", labels[1], G_CALLBACK(backup_noroot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[2], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);

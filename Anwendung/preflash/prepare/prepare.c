@@ -69,6 +69,8 @@ void prepare(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
     GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(show_file_chooser), (gpointer)rename_boot);
@@ -77,7 +79,7 @@ void prepare(GtkWidget *widget, gpointer stack)
     GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(show_file_chooser), (gpointer)rename_system);
     GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(show_file_chooser), (gpointer)rename_payload);
     GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(show_file_chooser), (gpointer)unxz_files);
-    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(preflash_GUI), stack);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[6], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1

@@ -84,15 +84,17 @@ void preflash_GUI(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(backup_function), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(prepare), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(start_erase_data), stack);
-    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(set_active_slot), stack);
-    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(lock_unlock_bootloader), stack);
-    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(partitions), stack);
-    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(show_home_page), stack);
+    GtkWidget *btn1 = create_icon_nav_button_with_position("folder-remote-symbolic", labels[0], G_CALLBACK(backup_function), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("system-file-manager-symbolic", labels[1], G_CALLBACK(prepare), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_icon_nav_button_with_position("user-trash-symbolic", labels[2], G_CALLBACK(start_erase_data), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_icon_nav_button_with_position("object-flip-horizontal-symbolic", labels[3], G_CALLBACK(set_active_slot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_icon_nav_button_with_position("rotation-locked-symbolic", labels[4], G_CALLBACK(lock_unlock_bootloader), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_icon_nav_button_with_position("drive-harddisk-symbolic", labels[5], G_CALLBACK(partitions), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[6], G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1
