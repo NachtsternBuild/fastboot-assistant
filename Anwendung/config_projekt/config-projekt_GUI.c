@@ -70,6 +70,7 @@ static void run_setup(GtkWidget *widget, gpointer stack)
 	char restart_setup[2048];
 	char restart_setup_file_dark[2048];
 	char restart_setup_file_path[2048];
+	char restart_setup_file_config[2048];
 	
 	// get config dir
     get_config_dir(restart_setup, sizeof(restart_setup));
@@ -77,10 +78,12 @@ static void run_setup(GtkWidget *widget, gpointer stack)
     // config files
     snprintf(restart_setup_file_dark, sizeof(restart_setup_file_dark), "%s/dark.txt", restart_setup);
     snprintf(restart_setup_file_path, sizeof(restart_setup_file_path), "%s/path_config.txt", restart_setup);
+    snprintf(restart_setup_file_config, sizeof(restart_setup_file_config), "%s/config/config.txt", restart_setup);
 	
 	// delete config files
 	delete_config_files(restart_setup_file_dark);
 	delete_config_files(restart_setup_file_path);
+	delete_config_files(restart_setup_file_config);
 	
 	// start first setup
 	run_first_run_setup(stack);
@@ -192,7 +195,7 @@ void config_projekt_GUI(GtkWidget *widget, gpointer stack)
     set_button_labels_config_projekt(labels);  // for both languages
     
     GtkWidget *config_projekt_GUI = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-        gtk_widget_set_halign(config_projekt_GUI, GTK_ALIGN_CENTER);
+    gtk_widget_set_halign(config_projekt_GUI, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(config_projekt_GUI, GTK_ALIGN_CENTER);
 
     GtkWidget *grid = gtk_grid_new();
@@ -202,15 +205,15 @@ void config_projekt_GUI(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_make_dir_function), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(remove_old), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(start_wsl_config), stack);
-    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(toggle_language), stack);
-    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(toggle_theme), stack);
-    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(clean_log), stack);
-    GtkWidget *btn7 = create_nav_button(labels[6], G_CALLBACK(new_setup_dir), stack);
-    GtkWidget *btn8 = create_nav_button(labels[7], G_CALLBACK(run_post_update), stack);
-    GtkWidget *btn9 = create_nav_button(labels[8], G_CALLBACK(run_setup), stack);
+    GtkWidget *btn1 = create_icon_nav_button_with_position("folder-new-symbolic", labels[0], G_CALLBACK(start_make_dir_function), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("user-trash-full-symbolic", labels[1], G_CALLBACK(remove_old), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_icon_nav_button_with_position("applications-engineering-symbolic", labels[2], G_CALLBACK(start_wsl_config), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_icon_nav_button_with_position("font-x-generic-symbolic", labels[3], G_CALLBACK(toggle_language), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_icon_nav_button_with_position("applications-graphics-symbolic", labels[4], G_CALLBACK(toggle_theme), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_icon_nav_button_with_position("folder-documents-symbolic", labels[5], G_CALLBACK(clean_log), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn7 = create_icon_nav_button_with_position("folder-open-symbolic", labels[6], G_CALLBACK(new_setup_dir), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn8 = create_icon_nav_button_with_position("system-software-update-symbolic", labels[7], G_CALLBACK(run_post_update), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn9 = create_icon_nav_button_with_position("start-here-symbolic", labels[8], G_CALLBACK(run_setup), stack, GTK_ALIGN_CENTER);
 	GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[9], G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

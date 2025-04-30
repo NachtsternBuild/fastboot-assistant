@@ -217,7 +217,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     const char *setup_dir_char = strcmp(language, "de") == 0 ? "Ordner für den Flash-Vorgang auswählen" : "Choose folder for flashing files";
     GtkWidget *button_setup_dir = create_icon_nav_button("folder-open-symbolic", setup_dir_char, G_CALLBACK(show_folder_chooser), stack);
     const char *toggle_theme_char = strcmp(language, "de") == 0 ? "Thema wechseln (Hell/Dunkel)" : "Toggle theme (Light/Dark)";
-    GtkWidget *button_toggle_theme = create_icon_nav_button("applications-system-symbolic", toggle_theme_char, G_CALLBACK(toggle_theme_css), stack);
+    GtkWidget *button_toggle_theme = create_icon_nav_button("applications-graphics-symbolic", toggle_theme_char, G_CALLBACK(toggle_theme_css), stack);
     GtkWidget *button_welcome_2 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
 	
 	// check if theme is auto or css only
