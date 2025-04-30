@@ -41,13 +41,13 @@ extern void instruction_info();
 
 // Callback functions for each button
 // start instruction_adb-function
-static void start_instruction_adb(GtkWidget *widget, gpointer data) 
+static void start_instruction_adb(GtkWidget *widget, gpointer stack) 
 {
     instruction_adb();
 }
 
 // start instruction_info-function
-static void start_instruction_info(GtkWidget *widget, gpointer data) 
+static void start_instruction_info(GtkWidget *widget, gpointer stack) 
 {
     instruction_info();
 }
@@ -92,20 +92,15 @@ void instruction_GUI(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-	/*
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(instruction_adb), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_flash), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(instruction_prepare_flash), stack);
-    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(instruction_info), stack);
-    GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(show_home_page), stack);
-    */
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(start_instruction_adb), NULL);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_flash), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(instruction_prepare_flash), stack);
-    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(start_instruction_info), NULL);
-    GtkWidget *btn_back = create_nav_button(labels[4], G_CALLBACK(show_home_page), stack);
+	GtkWidget *btn1 = create_icon_nav_button_with_position("phone-apple-iphone-symbolic", labels[0], G_CALLBACK(start_instruction_adb), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("drive-multidisk-symbolic", labels[1], G_CALLBACK(instruction_flash), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_icon_nav_button_with_position("applications-engineering-symbolic", labels[2], G_CALLBACK(instruction_prepare_flash), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_icon_nav_button_with_position("help-about-symbolic", labels[3], G_CALLBACK(start_instruction_info), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[4], G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1

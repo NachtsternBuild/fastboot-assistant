@@ -36,13 +36,13 @@ extern void instruction_backup();
 extern void instruction_preflash();
 
 // button 1 - inst. for root
-static void inst_backup(GtkWidget *widget, gpointer data)
+static void inst_backup(GtkWidget *widget, gpointer stack)
 {
     instruction_backup();
 }
 
 // button 2 - inst. for vendor
-static void inst_preflash(GtkWidget *widget, gpointer data)
+static void inst_preflash(GtkWidget *widget, gpointer stack)
 {
 	instruction_preflash();
 }
@@ -82,16 +82,13 @@ void instruction_prepare_flash(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-	/*
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(instruction_backup), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_preflash), stack);
-    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(instruction_GUI), stack);
-	*/
-	GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(inst_backup), NULL);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(inst_preflash), NULL);
-    GtkWidget *btn_back = create_nav_button(labels[2], G_CALLBACK(instruction_GUI), stack);
+	GtkWidget *btn1 = create_icon_nav_button_with_position("folder-remote-symbolic", labels[0], G_CALLBACK(inst_backup), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("applications-engineering-symbolic", labels[1], G_CALLBACK(inst_preflash), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[2], G_CALLBACK(instruction_GUI), stack, GTK_ALIGN_CENTER);
     
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);

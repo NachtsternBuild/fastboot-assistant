@@ -42,37 +42,37 @@ extern void instruction_recovery();
 extern void instruction_others();
 
 // button 1 - inst. for root
-static void inst_root(GtkWidget *widget, gpointer data)
+static void inst_root(GtkWidget *widget, gpointer stack)
 {
     instruction_root();
 }
 
 // button 2 - inst. for vendor
-static void inst_vendor(GtkWidget *widget, gpointer data)
+static void inst_vendor(GtkWidget *widget, gpointer stack)
 {
 	instruction_vendor();
 }
 
 // button 3 - inst. for GSI
-static void inst_gsi(GtkWidget *widget, gpointer data)
+static void inst_gsi(GtkWidget *widget, gpointer stack)
 {
     instruction_gsi();
 }
 
 // button 4 - inst. for custom ROMs
-static void inst_custom_rom(GtkWidget *widget, gpointer data)
+static void inst_custom_rom(GtkWidget *widget, gpointer stack)
 {
 	instruction_custom_rom();
 }
 
 // button 5 - inst. for recovery
-static void inst_recovery(GtkWidget *widget, gpointer data)
+static void inst_recovery(GtkWidget *widget, gpointer stack)
 {
 	instruction_recovery();
 }
 
 // button 6 - inst. for other images
-static void inst_others(GtkWidget *widget, gpointer data)
+static void inst_others(GtkWidget *widget, gpointer stack)
 {
 	instruction_others();
 }
@@ -121,24 +121,17 @@ void instruction_flash(GtkWidget *widget, gpointer stack)
     GtkWidget *grid = gtk_grid_new();
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-	/*
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(instruction_root), stack);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(instruction_vendor), stack);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(instruction_gsi), stack);
-    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(instruction_custom_rom), stack);
-    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(instruction_recovery), stack);
-    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(instruction_others), stack);
-    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(instruction_GUI), stack);
-    */
-    GtkWidget *btn1 = create_nav_button(labels[0], G_CALLBACK(inst_root), NULL);
-    GtkWidget *btn2 = create_nav_button(labels[1], G_CALLBACK(inst_vendor), NULL);
-    GtkWidget *btn3 = create_nav_button(labels[2], G_CALLBACK(inst_gsi), NULL);
-    GtkWidget *btn4 = create_nav_button(labels[3], G_CALLBACK(inst_custom_rom), NULL);
-    GtkWidget *btn5 = create_nav_button(labels[4], G_CALLBACK(inst_recovery), NULL);
-    GtkWidget *btn6 = create_nav_button(labels[5], G_CALLBACK(inst_others), NULL);
-    GtkWidget *btn_back = create_nav_button(labels[6], G_CALLBACK(instruction_GUI), stack);
+	GtkWidget *btn1 = create_icon_nav_button_with_position("security-high-symbolic", labels[0], G_CALLBACK(inst_root), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("media-optical-dvd-symbolic", labels[1], G_CALLBACK(inst_vendor), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_icon_nav_button_with_position("media-optical-dvd-symbolic", labels[2], G_CALLBACK(inst_gsi), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_icon_nav_button_with_position("media-zip-symbolic", labels[3], G_CALLBACK(inst_custom_rom), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_icon_nav_button_with_position("applications-utilities-symbolic", labels[4], G_CALLBACK(inst_recovery), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_icon_nav_button_with_position("emblem-documents-symbolic", labels[5], G_CALLBACK(inst_others), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[6], G_CALLBACK(instruction_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     // line 1
