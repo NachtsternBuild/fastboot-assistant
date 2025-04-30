@@ -80,5 +80,5 @@ void instruction_backup(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_backup2), "stack", stack);
 	g_signal_connect(button_backup2, "clicked", G_CALLBACK(switch_page), "instruction_prepare_flash");
     
-    
+    LOG_INFO("end instruction_backup");
 }

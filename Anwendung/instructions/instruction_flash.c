@@ -99,7 +99,7 @@ void set_button_labels_instruction_flash(char labels[][30])
         strcpy(labels[2], "Generic System Image (GSI)");
         strcpy(labels[3], "Custom ROMs");
         strcpy(labels[4], "Recovery");
-        strcpy(labels[5], "Anderes");
+        strcpy(labels[5], "Andere");
         strcpy(labels[6], "Zurück");
     }
 }

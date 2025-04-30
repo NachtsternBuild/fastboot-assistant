@@ -253,4 +253,5 @@ void instruction_adb(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_adb_8), "stack", stack);
 	g_signal_connect(button_adb_8, "clicked", G_CALLBACK(switch_page), "instruction_GUI");
     
+    LOG_INFO("end instruction_adb");
 }

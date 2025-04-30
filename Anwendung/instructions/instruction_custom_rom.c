@@ -142,4 +142,5 @@ void instruction_custom_rom(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_rom6), "stack", stack);
 	g_signal_connect(button_rom6, "clicked", G_CALLBACK(switch_page), "instruction_flash");
 	
+	LOG_INFO("end instruction_custom_rom");
 }

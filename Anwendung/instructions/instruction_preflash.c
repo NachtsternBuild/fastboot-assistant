@@ -165,7 +165,7 @@ void instruction_preflash(GtkWidget *widget, gpointer stack)
     GtkWidget *button_preflash6 = create_icon_nav_button_no_callback("application-exit-symbolic", exit_page_char);
     
     // add everything to the page
-    gtk_box_append(GTK_BOX(page2), button_preflash3);
+    gtk_box_append(GTK_BOX(page2), button_preflash4);
     gtk_box_append(GTK_BOX(page2), button_preflash2_1);
     gtk_box_append(GTK_BOX(page2), button_preflash2_2);
     gtk_box_append(GTK_BOX(page2), button_preflash2_3);
@@ -197,4 +197,5 @@ void instruction_preflash(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_preflash6), "stack", stack);
 	g_signal_connect(button_preflash6, "clicked", G_CALLBACK(switch_page), "instruction_prepare_flash");
     
+    LOG_INFO("end instruction_preflash");
 }

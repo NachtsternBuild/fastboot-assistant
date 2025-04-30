@@ -220,4 +220,6 @@ void instruction_gsi(GtkWidget *widget, gpointer stack)
 	// set stack reference for the button function
 	g_object_set_data(G_OBJECT(button_gsi_8), "stack", stack);
 	g_signal_connect(button_gsi_8, "clicked", G_CALLBACK(switch_page), "instruction_flash");
+	
+	LOG_INFO("end instruction_gsi");
 }	
