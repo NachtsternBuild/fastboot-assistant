@@ -25,58 +25,13 @@
 #include "instruction_header.h"
 
 #define MAX_BUFFER_SIZE 256
-/*
-old UI
+
 extern void instruction_root(GtkWidget *widget, gpointer stack);
 extern void instruction_vendor(GtkWidget *widget, gpointer stack);
 extern void instruction_gsi(GtkWidget *widget, gpointer stack);
 extern void instruction_custom_rom(GtkWidget *widget, gpointer stack);
 extern void instruction_recovery(GtkWidget *widget, gpointer stack);
 extern void instruction_others(GtkWidget *widget, gpointer stack);
-*/
-extern void instruction_root();
-extern void instruction_vendor();
-extern void instruction_gsi();
-extern void instruction_custom_rom();
-extern void instruction_recovery();
-extern void instruction_others();
-
-// button 1 - inst. for root
-static void inst_root(GtkWidget *widget, gpointer stack)
-{
-    instruction_root();
-}
-
-// button 2 - inst. for vendor
-static void inst_vendor(GtkWidget *widget, gpointer stack)
-{
-	instruction_vendor();
-}
-
-// button 3 - inst. for GSI
-static void inst_gsi(GtkWidget *widget, gpointer stack)
-{
-    instruction_gsi();
-}
-
-// button 4 - inst. for custom ROMs
-static void inst_custom_rom(GtkWidget *widget, gpointer stack)
-{
-	instruction_custom_rom();
-}
-
-// button 5 - inst. for recovery
-static void inst_recovery(GtkWidget *widget, gpointer stack)
-{
-	instruction_recovery();
-}
-
-// button 6 - inst. for other images
-static void inst_others(GtkWidget *widget, gpointer stack)
-{
-	instruction_others();
-}
-
 
 // function to set up button labels based on the language
 void set_button_labels_instruction_flash(char labels[][30]) 
@@ -125,12 +80,12 @@ void instruction_flash(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-	GtkWidget *btn1 = create_icon_nav_button_with_position("security-high-symbolic", labels[0], G_CALLBACK(inst_root), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn2 = create_icon_nav_button_with_position("media-optical-dvd-symbolic", labels[1], G_CALLBACK(inst_vendor), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn3 = create_icon_nav_button_with_position("media-optical-dvd-symbolic", labels[2], G_CALLBACK(inst_gsi), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn4 = create_icon_nav_button_with_position("media-zip-symbolic", labels[3], G_CALLBACK(inst_custom_rom), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn5 = create_icon_nav_button_with_position("applications-utilities-symbolic", labels[4], G_CALLBACK(inst_recovery), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn6 = create_icon_nav_button_with_position("emblem-documents-symbolic", labels[5], G_CALLBACK(inst_others), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn1 = create_icon_nav_button_with_position("security-high-symbolic", labels[0], G_CALLBACK(instruction_root), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("media-optical-dvd-symbolic", labels[1], G_CALLBACK(instruction_vendor), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_icon_nav_button_with_position("media-optical-dvd-symbolic", labels[2], G_CALLBACK(instruction_gsi), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_icon_nav_button_with_position("media-zip-symbolic", labels[3], G_CALLBACK(instruction_custom_rom), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_icon_nav_button_with_position("applications-utilities-symbolic", labels[4], G_CALLBACK(instruction_recovery), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_icon_nav_button_with_position("emblem-documents-symbolic", labels[5], G_CALLBACK(instruction_others), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[6], G_CALLBACK(instruction_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

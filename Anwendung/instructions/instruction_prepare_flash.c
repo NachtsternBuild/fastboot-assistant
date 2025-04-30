@@ -27,25 +27,9 @@
 #include "instruction_header.h"
 
 #define MAX_BUFFER_SIZE 256
-/*
-old UI
+
 extern void instruction_backup(GtkWidget *widget, gpointer stack);
 extern void instruction_preflash(GtkWidget *widget, gpointer stack);
-*/
-extern void instruction_backup();
-extern void instruction_preflash();
-
-// button 1 - inst. for root
-static void inst_backup(GtkWidget *widget, gpointer stack)
-{
-    instruction_backup();
-}
-
-// button 2 - inst. for vendor
-static void inst_preflash(GtkWidget *widget, gpointer stack)
-{
-	instruction_preflash();
-}
 
 // function to set up button labels based on the language
 void set_button_labels_instruction_prepare_flash(char labels[][30]) 
@@ -86,8 +70,8 @@ void instruction_prepare_flash(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-	GtkWidget *btn1 = create_icon_nav_button_with_position("folder-remote-symbolic", labels[0], G_CALLBACK(inst_backup), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn2 = create_icon_nav_button_with_position("applications-engineering-symbolic", labels[1], G_CALLBACK(inst_preflash), stack, GTK_ALIGN_CENTER);
+	GtkWidget *btn1 = create_icon_nav_button_with_position("folder-remote-symbolic", labels[0], G_CALLBACK(instruction_backup), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_icon_nav_button_with_position("applications-engineering-symbolic", labels[1], G_CALLBACK(instruction_preflash), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_icon_nav_button_with_position("pan-start-symbolic", labels[2], G_CALLBACK(instruction_GUI), stack, GTK_ALIGN_CENTER);
     
     // add the button to the grid
