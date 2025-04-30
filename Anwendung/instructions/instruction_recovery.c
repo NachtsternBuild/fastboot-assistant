@@ -25,88 +25,121 @@
 /* main function */
 void instruction_recovery(GtkWidget *widget, gpointer stack) 
 {
-    LOG_INFO("instruction_recovery");
-    
-    // GTK init
-    gtk_init();
-	main_loop = g_main_loop_new(NULL, FALSE);
-    apply_theme();
+    LOG_INFO("instruction_recovery");  
     apply_language();
-
-    GtkWidget *window, *notebook;
-    GtkWidget *page1, *page2;
-    GtkWidget *label_reco1_1, *label_reco1_2, *label_reco1_3, *label_reco2_1, *label_reco2_2, *label_reco2_3;
-    GtkWidget *button_reco1, *button_reco2, *button_reco3;
-    
-    // create the main window
-    window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Recovery");
-    gtk_window_set_default_size(GTK_WINDOW(window), WINDOW_WIDTH, WINDOW_HEIGHT);
-	g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
-
-    // create the notebook
-    notebook = gtk_notebook_new();
-    gtk_window_set_child(GTK_WINDOW(window), notebook);
-
+	
+	// char for the next page button
+	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
+	const char *back_page_char = strcmp(language, "de") == 0 ? "Zurück" : "Back";
+	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	
     // page 1
-    page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
     // button and label
-    button_reco1 = gtk_button_new_with_label("Recovery");
-    label_reco1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Recovery-Modus ist ein spezielles Boot-Menü auf Android-Geräten, \ndas zur Wartung und Wiederherstellung des Systems dient." : "Recovery mode is a special boot menu on Android devices \nthat is used to maintain and restore the system.");
-    label_reco1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dieser ermöglicht Funktionen wie das Zurücksetzen auf Werkseinstellungen, \ndas Installieren von Updates, und einige andere Grundfunktionen \num das System wiederherzustellen." : "This enables functions such as resetting to factory settings, installing updates \nand some other basic functions to restore the system.");
-    label_reco1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Custom-Recoverys bringen viel mehr Funktionen mit, als die Stock-Recoverys \ndes Herstellers. Diese haben meist nur Grundausstattung an Bord." : "Custom coverys have many more functions than the stock recoverys from \nthe same manufacturer. These usually only have basic features on board.");
-    button_reco2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Weiter" : "Next");
+    GtkWidget *button_reco1 = gtk_button_new_with_label("Recovery");
+    // label 1
+    GtkWidget *label_reco1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Recovery-Modus ist ein spezielles Boot-Menü auf Android-Geräten, das zur Wartung und Wiederherstellung des Systems dient." : "Recovery mode is a special boot menu on Android devices that is used to maintain and restore the system.");
+    gtk_label_set_wrap(GTK_LABEL(label_reco1_1), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_reco1_1), PANGO_WRAP_WORD_CHAR);	
+    // label 2
+    GtkWidget *label_reco1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dieser ermöglicht Funktionen wie das Zurücksetzen auf Werkseinstellungen, das Installieren von Updates, und einige andere Grundfunktionen um das System wiederherzustellen." : "This enables functions such as resetting to factory settings, installing updates and some other basic functions to restore the system.");
+    gtk_label_set_wrap(GTK_LABEL(label_reco1_2), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_reco1_2), PANGO_WRAP_WORD_CHAR);	
+    // label 3
+    GtkWidget *label_reco1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Custom-Recoverys bringen viel mehr Funktionen mit, als die Stock-Recoverys des Herstellers. Diese haben meist nur Grundausstattung an Bord." : "Custom coverys have many more functions than the stock recoverys from the same manufacturer. These usually only have basic features on board.");
+    gtk_label_set_wrap(GTK_LABEL(label_reco1_3), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_reco1_3), PANGO_WRAP_WORD_CHAR);	
+    
+    // new button
+    GtkWidget *button_reco_1 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
+    GtkWidget *button_reco_2 = create_icon_nav_button_no_callback("application-exit-symbolic", exit_page_char);
     
     // add everything to the page
     gtk_box_append(GTK_BOX(page1), button_reco1);
     gtk_box_append(GTK_BOX(page1), label_reco1_1);
     gtk_box_append(GTK_BOX(page1), label_reco1_2);
     gtk_box_append(GTK_BOX(page1), label_reco1_3);
-    gtk_box_append(GTK_BOX(page1), button_reco2);
-
-    // connect everything
-    g_signal_connect(button_reco2, "clicked", G_CALLBACK(next_page), notebook);
-
-    // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page1, gtk_label_new("Recovery"));
+    gtk_box_append(GTK_BOX(page1), button_reco_1);
+    gtk_box_append(GTK_BOX(page1), button_reco_2);
     
-    // page 2
-    page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    // position left of the labels
+    gtk_widget_set_halign(label_reco1_1, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_reco1_2, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_reco1_3, GTK_ALIGN_START);
+    
+    // same start of the labels
+    gtk_widget_set_margin_start(label_reco1_1, 15);
+    gtk_widget_set_margin_start(label_reco1_2, 15);
+    gtk_widget_set_margin_start(label_reco1_3, 15);
+
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "inst_reco_1")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page1, "inst_reco_1");
+	}
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "inst_reco_1");
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_reco_1), "stack", stack);
+	g_signal_connect(button_reco_1, "clicked", G_CALLBACK(switch_page), "inst_reco_2");
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_reco_2), "stack", stack);
+	g_signal_connect(button_reco_2, "clicked", G_CALLBACK(switch_page), "instruction_flash");
+    
+    /* page 2 */
+    GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    button_reco3 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashen des Recoverys" :"Flashing the recovery");
-    label_reco2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Prüfen Sie, ob es für Ihr Gerät einen Custom-Recovery gibt. \n2. Laden Sie einen entsprechenden Recovery herunter. \n3. Bereiten Sie die Images für den Flash vor." : "1. Check whether there is a custom recovery for your device. \n2. Download a corresponding recovery. \n3. Prepare the images for the flash.");
-    label_reco2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Booten Sie Ihr Gerät in den Fastboot-Modus. \n5. Öffnen Sie den Bootloader. \nManche Geräte unterstützen nicht die Methode über Fastboot." : "4. Boot your device into fastboot mode. \n5. Open the bootloader. \nSome devices do not support the fastboot method.");
-    label_reco2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Informieren Sie sich genauer über Ihren Chipsatz und das Gerät. \n6. Flashen Sie das Recovery-Image mit dieser Anwendung. \n7. Lassen Sie Ihr Gerät in den Recovery booten." : "Find out more about your chipset and the device. \n6. Flash the recovery image with this application. \n7. Boot your device into the recovery.");
+    GtkWidget *button_reco2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashen des Recoverys" :"Flashing the recovery");
+    // label 1
+    GtkWidget *label_reco2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Prüfen Sie, ob es für Ihr Gerät einen Custom-Recovery gibt. \n2. Laden Sie einen entsprechenden Recovery herunter. \n3. Bereiten Sie die Images für den Flash vor." : "1. Check whether there is a custom recovery for your device. \n2. Download a corresponding recovery. \n3. Prepare the images for the flash.");
+    gtk_label_set_wrap(GTK_LABEL(label_reco2_1), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_reco2_1), PANGO_WRAP_WORD_CHAR);	
+    // label 2
+    GtkWidget *label_reco2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Booten Sie Ihr Gerät in den Fastboot-Modus. \n5. Öffnen Sie den Bootloader. Manche Geräte unterstützen nicht die Methode über Fastboot." : "4. Boot your device into fastboot mode. \n5. Open the bootloader. Some devices do not support the fastboot method.");
+    gtk_label_set_wrap(GTK_LABEL(label_reco2_2), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_reco2_2), PANGO_WRAP_WORD_CHAR);	
+    // label 3
+    GtkWidget *label_reco2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Informieren Sie sich genauer über Ihren Chipsatz und das Gerät. \n6. Flashen Sie das Recovery-Image mit dieser Anwendung. \n7. Lassen Sie Ihr Gerät in den Recovery booten." : "Find out more about your chipset and the device. \n6. Flash the recovery image with this application. \n7. Boot your device into the recovery.");
+    gtk_label_set_wrap(GTK_LABEL(label_reco2_3), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_reco2_3), PANGO_WRAP_WORD_CHAR);	
+    // new button
+    GtkWidget *button_reco_3 = create_icon_nav_button_no_callback("pan-start-symbolic", back_page_char);
+    GtkWidget *button_reco_4 = create_icon_nav_button_no_callback("application-exit-symbolic", exit_page_char);
     
     // add everything to the page
-    gtk_box_append(GTK_BOX(page2), button_reco3);
+    gtk_box_append(GTK_BOX(page2), button_reco2);
     gtk_box_append(GTK_BOX(page2), label_reco2_1);
     gtk_box_append(GTK_BOX(page2), label_reco2_2);
     gtk_box_append(GTK_BOX(page2), label_reco2_3);
-
-    // add page to the notebook
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), page2, gtk_label_new(g_strcmp0(language, "de") == 0 ? "Flashen" : "Flashing"));
+    gtk_box_append(GTK_BOX(page2), button_reco_3);
+    gtk_box_append(GTK_BOX(page2), button_reco_4);
     
-    // show all widgets
-    gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
-
-     // run GTK main loop
-    g_main_loop_run(main_loop); 
+    // position left of the labels
+    gtk_widget_set_halign(label_reco2_1, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_reco2_2, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_reco2_3, GTK_ALIGN_START);
     
-    // free the provider
-    if (provider != NULL) 
+    // same start of the labels
+    gtk_widget_set_margin_start(label_reco2_1, 15);
+    gtk_widget_set_margin_start(label_reco2_2, 15);
+    gtk_widget_set_margin_start(label_reco2_3, 15);
+    
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "inst_reco_2")) 
     {
-    	g_object_unref(provider);
-    	provider = NULL;
+        gtk_stack_add_named(GTK_STACK(stack), page2, "inst_reco_2");
 	}
-    
-    if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_reco_3), "stack", stack);
+	g_signal_connect(button_reco_3, "clicked", G_CALLBACK(switch_page), "inst_reco_1");
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_reco_4), "stack", stack);
+	g_signal_connect(button_reco_4, "clicked", G_CALLBACK(switch_page), "instruction_flash");
     
     LOG_INFO("end instruction_recovery");
 }
