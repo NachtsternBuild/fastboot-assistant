@@ -139,6 +139,10 @@ void instruction_root(GtkWidget *widget, gpointer stack)
     gtk_box_append(GTK_BOX(page2), button_root4);
     gtk_box_append(GTK_BOX(page2), button_root_3);
     gtk_box_append(GTK_BOX(page2), button_root_4);
+    
+    // connect the button to a callback
+    g_signal_connect(button_root3, "clicked", G_CALLBACK(magisk), stack);
+    g_signal_connect(button_root4, "clicked", G_CALLBACK(magisk_apk), stack);
 	
 	// position left of the labels
     gtk_widget_set_halign(label_root2_1, GTK_ALIGN_START);
