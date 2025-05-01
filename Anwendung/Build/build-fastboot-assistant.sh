@@ -298,7 +298,7 @@ debian_package_build_debuild() {
 	# control file
 	# depends of the control
 	DEPENDS="adb, fastboot, xz-utils, unzip, zip, wget, curl, pkexec, libgtk-4-1 (>= 4.10), heimdall-flash, heimdall-flash-frontend, coreutils, libc6 (>= 2.15), xdg-desktop-portal, xdg-desktop-portal-gtk, xdg-utils, libadwaita-1-0 (>= 1.6)"
-	BUILD_DEPENDS="debhelper-compat (= 13) , rsync, make, libgtk-4-dev (>= 4.10), libadwaita-1-dev, libsecret-1-dev, pkg-config, gcc"
+	BUILD_DEPENDS="debhelper-compat (= 13), rsync, make, libgtk-4-dev (>= 4.10), libadwaita-1-dev, libsecret-1-dev, pkg-config, gcc"
 
 # control
 cat > "${debian_dir}/control" <<EOF

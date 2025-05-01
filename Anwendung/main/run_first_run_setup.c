@@ -125,7 +125,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     // add the fastboot-assistant logo  
     const char *main_icon[] = {
     		"./sweet_unix.png",
-    		"/usr/share/fastboot-assistant/icons/sweet_unix.png"
+    		"/usr/share/fastboot-assistant/sweet_unix.png"
 	};
 
 	for (int i = 0; i < 2; ++i) 

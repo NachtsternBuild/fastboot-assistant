@@ -115,7 +115,7 @@ void about(GtkWidget *widget, gpointer stack)
     // add the fastboot-assistant logo  
     const char *main_icon[] = {
     		"./sweet_unix.png",
-    		"/usr/share/fastboot-assistant/icons/sweet_unix.png"
+    		"/usr/share/fastboot-assistant/sweet_unix.png"
 	};
 
 	for (int i = 0; i < 2; ++i) 
@@ -156,7 +156,7 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *label_about_3 = gtk_label_new(" ");
     
     // new label
-    GtkWidget *label_about4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Programm um das installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM and GSIs on Android devices.");
+    GtkWidget *label_about4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Programm um das Installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM and GSIs on Android devices.");
     gtk_label_set_wrap(GTK_LABEL(label_about4), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_about4), PANGO_WRAP_WORD_CHAR);	
 	gtk_widget_add_css_class(label_about4, "about2");
@@ -246,9 +246,9 @@ void about(GtkWidget *widget, gpointer stack)
     
     // new button
     const char *update_char = strcmp(language, "de") == 0 ? "Aktualisierungen" : "Updates";
-    GtkWidget *button_update = create_icon_nav_button("software-update-available-symbolic", update_char, G_CALLBACK(updater), stack);
+    GtkWidget *button_update = create_icon_nav_button_with_position("software-update-available-symbolic", update_char, G_CALLBACK(updater), stack, GTK_ALIGN_CENTER);
     const char *system_info_char = strcmp(language, "de") == 0 ? "System- und Paketinformationen" : "System and package information";
-    GtkWidget *button_system_info = create_icon_nav_button("start-here-symbolic", system_info_char, G_CALLBACK(run_tools_info), stack);
+    GtkWidget *button_system_info = create_icon_nav_button_with_position("start-here-symbolic", system_info_char, G_CALLBACK(run_tools_info), stack, GTK_ALIGN_CENTER);
     GtkWidget *button_about_3 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
     GtkWidget *button_about_4 = create_icon_nav_button_no_callback("pan-start-symbolic", back_page_char);
 	
