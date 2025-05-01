@@ -24,7 +24,7 @@
 #include <gtk/gtk.h>
 #include "program_functions.h"
 
-GMainLoop *main_loop = NULL; 
+//GMainLoop *main_loop = NULL; 
 
 // function to end the gtk mainloop
 void on_window_destroy(GtkWidget *widget, gpointer data) 
