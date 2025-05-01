@@ -26,8 +26,8 @@ If applicable, add screenshots to help explain your problem.
 **Information:**
  - **OS:** e.g. Ubuntu
  - **OS version:** e.g. 24.10.
- - **Browser:** e.g. firefox
- - **Browser version:** e.g. 137
+ - **Browser:** e.g. Firefox
+ - **Browser version:** e.g. 138
  - **Program version:** <= *v.0.8.1*
  - **To be fixed in:** >= *v.0.8.2*
  - **Operating mode:** e.g. native / WSL / VM
