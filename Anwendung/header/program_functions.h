@@ -149,6 +149,11 @@ GtkWidget* create_icon_nav_button_no_callback(const char *icon_name, const char 
 GtkWidget* create_icon_nav_button_with_header(const char *main_icon, const char *header_icon, const char *label_text, GCallback callback, gpointer data); // you can use it, for only one icon too →  create_icon_nav_button_with_header("main_icon", NULL, "text", G_CALLBACK(callback), data);
 // create a button with an icon and set special position
 GtkWidget* create_icon_nav_button_with_position(const char *icon_name, const char *label_text, GCallback callback, gpointer data, GtkAlign alignment); 
+// create a label with icon
+GtkWidget *create_label_with_icon(const char *icon_name, const char *label_text);
+// create a label with icon and position
+GtkWidget *create_label_with_icon_and_position(const char *icon_name, const char *label_text, GtkAlign alignment);
+
 // show home page
 void show_home_page(GtkWidget *widget, gpointer stack);
 
@@ -269,9 +274,11 @@ void get_android_info();
 
 // check root access
 void check_root_access();
+char *check_root_access_char();
 
 // detect the android bootctl
 void get_bootctl();
+char *get_bootctl_char();
 
 // show file chooser
 void show_file_chooser(GtkWidget *widget, gpointer data);

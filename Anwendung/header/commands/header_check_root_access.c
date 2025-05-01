@@ -59,3 +59,13 @@ void check_root_access(GtkWidget *root_status_label)
     // set status label
     gtk_label_set_text(GTK_LABEL(root_status_label), (status == 0) ? root_access : no_root_access);
 }
+
+// header that check for root access as char
+char *check_root_access_char()
+{
+    auto_free char *root_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s shell su -c id -u", root_command);
+    int status = system(command);
+    return (status == 0) ? "root" : "no_root";
+}

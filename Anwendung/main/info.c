@@ -25,6 +25,8 @@
 #include "language_check.h"
 #include "program_functions.h"
 
+GtkWidget *root_status_label;
+
 // check if device are connected
 int is_android_device_connected() 
 {

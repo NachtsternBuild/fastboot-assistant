@@ -50,7 +50,7 @@ void get_bootctl(GtkWidget *bootctl_status_label)
         not_detected_bootctl = "❌ Bootctl not detected.";
     }
 
-    // check for root
+    // check for bootctl
     auto_free char *bootctl_command = adb_command();
     char command[256];
     snprintf(command, sizeof(command), "%s shell su -c command -v bootctl", bootctl_command);
@@ -58,4 +58,15 @@ void get_bootctl(GtkWidget *bootctl_status_label)
 
     // set status label
     gtk_label_set_text(GTK_LABEL(bootctl_status_label), (status == 0) ? detected_bootctl : not_detected_bootctl);
+}
+
+// function detect the android bootctl as char
+char *get_bootctl_char()
+{
+    // check for bootctl
+    auto_free char *bootctl_command = adb_command();
+    char command[256];
+    snprintf(command, sizeof(command), "%s shell su -c command -v bootctl", bootctl_command);
+    int status = system(command);
+    return (status == 0) ? "bootctl" : "no_bootctl";
 }
