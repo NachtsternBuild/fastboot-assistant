@@ -1,6 +1,6 @@
 name: fastboot-assistant
 base: core24
-version: '0.8.1'
+version: '0.8.1.2'
 summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
 description: |
   The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
@@ -33,6 +33,10 @@ apps:
       - adb-support
       - gsettings
       - cups
+      - gtk-themes
+      - icon-themes
+      - uhid
+    extensions: [gnome]
 
     desktop: usr/share/applications/fastboot-assistant.desktop
     environment:
@@ -42,6 +46,7 @@ apps:
       GTK_THEME: Adwaita
       LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
       GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0
+      GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
 
 
 plugs:
@@ -51,7 +56,7 @@ plugs:
     default-provider: gtk-common-themes
   gtk-themes:
     interface: content
-    target: $SNAP/data-dir/themes
+    target: $SNAP/data-dir/themes- uhid
     default-provider: gtk-common-themes
   icon-themes:
     interface: content
@@ -114,16 +119,16 @@ parts:
       fastboot-assistant.desktop: usr/share/applications/fastboot-assistant.desktop
       fastboot-assistant: usr/bin/fastboot-assistant
       sweet_unix.png: usr/share/icons/hicolor/256x256/apps/sweet_unix.png
+      icons/sweet_unix.png: usr/share/fastboot-assistant/sweet_unix.png
+      style_dark.css: usr/share/fastboot-assistant/style_dark.css
+      style_light.css: usr/share/fastboot-assistant/style_light.css
     stage-packages:
-      #- adb
-      #- fastboot
       - xz-utils
       - unzip
       - zip
       - wget
       - curl
       - pkexec
-      # - heimdall-flash
       - coreutils
       - libc6
       - libgtk-4-1
@@ -139,10 +144,14 @@ parts:
       - libdbus-glib-1-dev
       - libglib2.0-bin
       - dconf-gsettings-backend
-      - libadwaita-1-0
-    build-packages:
-      - libglib2.0-bin
-      - libadwaita-1-dev
+      - adwaita-icon-theme
+      - gnome-themes-extra
+      - libproxy1-plugin-gsettings
+      - libproxy1-plugin-networkmanager
+      - libproxy1-plugin-webkit
+      - libproxy1v5
+    #build-packages:
+      #- libglib2.0-bin
     override-build: |
       snapcraftctl build
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
