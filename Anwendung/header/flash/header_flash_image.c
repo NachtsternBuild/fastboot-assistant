@@ -193,13 +193,13 @@ char *build_flash_command(const char *device_command, const char *partition1, co
 
     if (partition2)  // for a/b devices
     {
-        snprintf(command, 8192, "%s flash %s %s %s && %s flash %s %s %s && exit",
+        snprintf(command, 8192, "%s flash %s %s %s && %s flash %s %s %s",
                  device_command, partition1, image_info, optional_flags ? optional_flags : "",
                  device_command, partition2, image_info, optional_flags ? optional_flags : "");
     }
     else  // for only-a devices
     {
-        snprintf(command, 8192, "%s flash %s %s %s && exit",
+        snprintf(command, 8192, "%s flash %s %s %s",
                  device_command, partition1, image_info, optional_flags ? optional_flags : "");
     }
 
@@ -333,4 +333,3 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     	g_free((gpointer)image_path); // free the info (because g_file_get_contents was used)
 	}
 }
-

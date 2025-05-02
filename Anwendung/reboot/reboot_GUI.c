@@ -95,11 +95,11 @@ void reboot_GUI(GtkWidget *widget, gpointer stack)
     gtk_box_append(GTK_BOX(reboot_GUI), btn_back); 
 
 	// is needed to prevent it from being stacked again when called again
-    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "reboot_fastboot")) 
+    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "reboot_GUI")) 
     {
-        gtk_stack_add_named(GTK_STACK(stack), reboot_GUI, "reboot_fastboot");
+        gtk_stack_add_named(GTK_STACK(stack), reboot_GUI, "reboot_GUI");
     }
-	gtk_stack_set_visible_child_name(GTK_STACK(stack), "reboot_fastboot");
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "reboot_GUI");
     
     LOG_INFO("end reboot_GUI");
 }

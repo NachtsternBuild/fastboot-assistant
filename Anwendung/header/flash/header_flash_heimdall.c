@@ -81,7 +81,7 @@ void flash_heimdall(GtkWidget *widget, GtkWindow *parent_window, const char *par
 
     // Create the command
     char *function_command = malloc(4096);  // Erhöhen des Puffers für längere Kommandos
-    snprintf(function_command, 4096, "heimdall flash --%s %s --no-reboot && exit", partition, image_info);
+    snprintf(function_command, 4096, "heimdall flash --%s %s --no-reboot", partition, image_info);
 
     // Create new window
     spinner_window_heimdall = gtk_window_new();
