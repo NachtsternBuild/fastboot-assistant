@@ -141,7 +141,7 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 
     // create the label
-    GtkWidget *label_about2 = gtk_label_new("Version 0.8.1.beta");
+    GtkWidget *label_about2 = gtk_label_new("Version 0.8.1.5");
     gtk_widget_add_css_class(label_about2, "about2");
     GtkWidget *label_about3 = gtk_label_new("Glitschiges GNOME 40");
     gtk_widget_add_css_class(label_about3, "about2");

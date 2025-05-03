@@ -1,5 +1,5 @@
-fastboot-assistant (0.8.1ubuntu3) oracular; urgency=medium
+fastboot-assistant (0.8.1ubuntu5) oracular; urgency=medium
 
-  * Initial release.
+  * Main release for active version.
 
- -- Elias Mörz <elias.moerz@mail.de>  Mon, 14 Apr 2025 16:11:55 +0200
+ -- Elias Mörz <elias.moerz@mail.de>  Sat, 03 May 2025 11:34:37 +0200

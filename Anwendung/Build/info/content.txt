@@ -1,1 +1,1 @@
-Initial release.
+Main release for active version.

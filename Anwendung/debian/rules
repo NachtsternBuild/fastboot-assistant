@@ -2,7 +2,7 @@
 
 %:
 	dh $@
-	
+
 override_dh_auto_build:
 	export CCACHE_DISABLE=1 
 	rm -rf build_project
@@ -14,4 +14,3 @@ override_dh_auto_build:
 		rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$$dir/" build_project/ ; \
 	done
 	$(MAKE) -C build_project
-
