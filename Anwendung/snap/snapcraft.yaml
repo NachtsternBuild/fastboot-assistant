@@ -1,6 +1,6 @@
 name: fastboot-assistant
 base: core24
-version: '0.8.1.2'
+version: '0.8.1.5'
 summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
 description: |
   The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
