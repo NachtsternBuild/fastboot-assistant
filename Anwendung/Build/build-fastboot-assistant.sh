@@ -113,7 +113,7 @@ flatpak_manifest="${flatpak_dir}/io.github.nachtsternbuild.Fastboot-Assistant.ym
 # define the name of the zip-file for windows
 zip_name="fastboot-assistant.zip"
 unused_files=("backup_noroot.c" "header_set_main_dir_with_wsl.c" "header_get_config_dir.c" "header_get_config_file_path.c" "updater_stable.c")
-zip_files=("WSL_install.bat" "Enable_WSL.bat" "README.md" "fastboot-assistant.deb")
+zip_files=("WSL_install.bat" "Enable_WSL.bat" "README.md" "fastboot-assistant_${VERSION}_${ARCHITECTURE}.deb")
 
 # function that have output with color
 prompt_user() {
@@ -537,7 +537,7 @@ build_snap() {
         	rsync -av --update --exclude '.git/' "$dir/" "$build_dir_snap/"
     	done
 		echo "[✓] Copied all files to $build_dir_snap."
-	desktop_snap_dir
+
 	rm -f "$build_dir_snap/fastboot-assistant.desktop"
 	cp -r "$desktop_snap_dir/fastboot-assistant.desktop" "$build_dir_snap/"
 	chmod a+x "$build_dir_snap"
@@ -594,7 +594,7 @@ windows_zip_build() {
 	echo "[⧗] Changing to $windows_dir..."
 	cd "$windows_dir"
 	echo "[⧗] Copy files..."
-	cp "$source_dir/fastboot-assistant.deb" "$windows_dir"
+	cp "$source_dir/fastboot-assistant_${VERSION}_${ARCHITECTURE}.deb" "$windows_dir"
 	# create zip-file
 	echo "[⧗] Build zip-file..."
 	zip -r "$zip_name" "${zip_files[@]}"
@@ -703,7 +703,7 @@ build_program_windows() {
  	read -n1 -s answer
  	if [ "$answer" == "j" ] || [ "$answer" == "J" ] || [ "$answer" == "y" ] || [ "$answer" == "Y" ]; 
  	then
-  		debian_package_build
+  		debian_package_build_simple
 		echo "[✓] Build finished."
   		prompt_user "[✓] The package are at the $source_dir"
   		windows_zip_build
