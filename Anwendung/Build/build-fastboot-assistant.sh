@@ -102,6 +102,7 @@ snapcraft_dir="${source_dir}/snap"
 build_dir_snap="${source_dir}/build_snap"
 snap_name="fastboot-assistant"
 snapcraft_file="${snapcraft_dir}/snapcraft.yaml"
+desktop_snap_dir="${source_dir}/desktop_snap"
 
 # Flatpak build info
 flatpak_dir="${source_dir}/flatpak"
@@ -536,6 +537,9 @@ build_snap() {
         	rsync -av --update --exclude '.git/' "$dir/" "$build_dir_snap/"
     	done
 		echo "[✓] Copied all files to $build_dir_snap."
+	desktop_snap_dir
+	rm -f "$build_dir_snap/fastboot-assistant.desktop"
+	cp -r "$desktop_snap_dir/fastboot-assistant.desktop" "$build_dir_snap/"
 	chmod a+x "$build_dir_snap"
 	
     if [ ! -f "$snapcraft_file" ]; then
