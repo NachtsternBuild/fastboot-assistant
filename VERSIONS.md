@@ -3,6 +3,10 @@
 - ***see [CHANGELOG](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/CHANGELOG) for all changes.***
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
 - ***see the [BUILDLOG.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/BUILDLOG.md)***
+
+### Glitschiges GNOME v.0.8.x
+- **[fastboot-assistant v.0.8.1.5](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.8.1.5)** → Linux (Ubuntu/Debian) / Linux (Snap) / Windows via WSL
+
   
 ### Mutiges Mint v.0.7.x
 - **[fastboot-assistant v.0.7.2.1](https://github.com/NachtsternBuild/fastboot-assistant/releases/tag/v.0.7.2.1)** → Linux (Ubuntu/Debian) / Linux (Snap) / Windows via WSL
