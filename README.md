@@ -2,7 +2,10 @@
 ## Description
 Program to facilitate the installation of custom ROMs and GSIs on Android devices. Based on GTK and Shell.
 
-![sweet_unix](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/sweet_unix.png)
+<p align="center">
+  <img src="https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/sweet_unix.png" alt="sweet_unix"/>
+</p>
+
 
 ## Functions
 - Check the `ADB`/`Fastboot` connection
@@ -48,10 +51,19 @@ Program to facilitate the installation of custom ROMs and GSIs on Android device
 - The programme is currently in the **test phase**. *Errors may occur in the programme.*
 
 ## Examples Images
-![fastboot-assistant](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/fastboot-assistant.png)
-![Flashen](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/Flashen.png)
-![Vorbereitungen](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/Vorbereitungen.png)
-![Neustart](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/info.png)
+<table>
+  <tr>
+    <td><img src="https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/fastboot-assistant.png"/></td>
+    <td><img src="https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/Flashen.png"/></td>
+    <td><img src="https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/Neustart.png"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/Vorbereitungen.png"/></td>
+    <td><img src="https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/info.png"/></td>
+    <td><img src="https://github.com/NachtsternBuild/fastboot-assistant/blob/main/images/Einrichtung1.png"/></td>
+  </tr>
+</table>
+
 
 ---
 
