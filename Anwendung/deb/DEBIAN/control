@@ -1,5 +1,5 @@
 Package: fastboot-assistant
-Version: 0.8.1.5
+Version: 0.8.1.6
 Depends: adb, fastboot, xz-utils, unzip, zip, wget, curl, pkexec, libgtk-4-1 (>= 4.0.0), heimdall-flash, heimdall-flash-frontend, coreutils, libc6 (>= 2.15), xdg-desktop-portal, xdg-desktop-portal-gtk, xdg-utils, libadwaita-1-0 (>= 1.6)
 Maintainer: Elias Moerz <elias.moerz@mail.de>
 Architecture: amd64
