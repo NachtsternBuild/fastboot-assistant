@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#include <adwaita.h>  
 
 #ifndef PROGRAM_FUNCTIONS_H
 #define PROGRAM_FUNCTIONS_H
@@ -118,6 +119,9 @@ extern const char *language;
 // and the auto theme function
 extern const char *auto_theme;
 
+// and the adw_css theme function
+extern const char *adw_css_theme;
+
 // for GTK main loop
 extern GMainLoop *main_loop;
 
@@ -199,6 +203,7 @@ void show_folder_chooser(GtkWidget *widget, gpointer data);
 gboolean file_exists_theme(const char *filename);
 char *config_path_theme();
 char *auto_path_theme();
+char *adw_path_theme();
 char *dark_path_theme();
 
 /* 
@@ -331,16 +336,22 @@ void check_dark_file();
 void check_dark_file_light();
 // config for auto theme
 void write_auto_theme_file();
+void write_adw_css_theme_file();
 void check_auto_theme();
+void check_adw_css_theme();
 void set_mode_by_libadwaita();
 // load the provider
 void add_css_provider(GtkWidget *widget, GtkCssProvider *provider);
+void load_adw_provider(void);
 void load_css();
 void load_css_adw();
+// reload the adw provider
+void adw_theme_changed(AdwStyleManager *style_manager, GParamSpec *pspec, gpointer user_data);
 // apply to the provider
+void apply_adw_provider();
 void apply_theme_css_adw();
 void apply_theme_css_only();
-// apply the theme → css_only / css_adw
+// apply the theme → css_only / css_adw / adw
 void apply_theme();
 // functions to switch themes
 void toggle_theme();

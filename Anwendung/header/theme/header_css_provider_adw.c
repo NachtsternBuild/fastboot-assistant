@@ -29,11 +29,11 @@
 #include <sys/types.h> 
 #include "program_functions.h"
 
-GtkCssProvider *provider_adw = NULL;
+GtkCssProvider *provider_adw_css = NULL;
 
 char* rgba_to_hex(const GdkRGBA *color) 
 {
-    static char hex_color[8];  // 7 Zeichen für #RRGGBB + Nullterminierung
+    static char hex_color[8];  // 7 strings for hex type and 0
     snprintf(hex_color, sizeof(hex_color), "#%02X%02X%02X",
              (int)(color->red * 255),
              (int)(color->green * 255),
@@ -45,11 +45,11 @@ char* rgba_to_hex(const GdkRGBA *color)
 // function to load the css provider with adw themes
 void load_css_adw() 
 {
-    if (provider_adw) 
+    if (provider_adw_css) 
     {
-        g_object_unref(provider_adw);
+        g_object_unref(provider_adw_css);
     }
-    provider_adw = create_css_provider();
+    provider_adw_css = create_css_provider();
 	
     // get the adw styl manager
 	AdwStyleManager *style_manager = adw_style_manager_get_default();
@@ -144,12 +144,12 @@ void load_css_adw()
     );
 
     // load css
-    gtk_css_provider_load_from_string(provider_adw, css);
+    gtk_css_provider_load_from_string(provider_adw_css, css);
 
     // run css provider
     gtk_style_context_add_provider_for_display(
         gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider_adw),
+        GTK_STYLE_PROVIDER(provider_adw_css),
         GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
     );
 }
