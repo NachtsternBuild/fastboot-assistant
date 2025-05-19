@@ -40,28 +40,36 @@ apps:
 
     desktop: usr/share/applications/fastboot-assistant.desktop
     environment:
-      XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
-      GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
-      GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
-      GTK_THEME: Adwaita
-      LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
-      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0
-      GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
-
+       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
+       GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
+       GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
+       LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
+       GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0
+       GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
+       GTK_USE_PORTAL: "1"
 
 plugs:
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
     default-provider: gtk-common-themes
+
   gtk-themes:
     interface: content
-    target: $SNAP/data-dir/themes- uhid
+    target: $SNAP/data-dir/themes
     default-provider: gtk-common-themes
+
   icon-themes:
     interface: content
     target: $SNAP/data-dir/icons
     default-provider: gtk-common-themes
+
+  dbus:
+    interface: dbus
+    bus: session
+    name: org.freedesktop.portal.Desktop
+
+
 
 parts:
   adb-fastboot:
@@ -150,8 +158,6 @@ parts:
       - libproxy1-plugin-networkmanager
       - libproxy1-plugin-webkit
       - libproxy1v5
-    #build-packages:
-      #- libglib2.0-bin
     override-build: |
       snapcraftctl build
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
