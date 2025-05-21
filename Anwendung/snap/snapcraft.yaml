@@ -127,7 +127,6 @@ parts:
       fastboot-assistant.desktop: usr/share/applications/fastboot-assistant.desktop
       fastboot-assistant: usr/bin/fastboot-assistant
       sweet_unix.png: usr/share/icons/hicolor/256x256/apps/sweet_unix.png
-      icons/sweet_unix.png: usr/share/fastboot-assistant/sweet_unix.png
       style_dark.css: usr/share/fastboot-assistant/style_dark.css
       style_light.css: usr/share/fastboot-assistant/style_light.css
     stage-packages:
@@ -161,7 +160,9 @@ parts:
     override-build: |
       snapcraftctl build
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
-
+    override-prime: |
+      snapcraftctl prime
+      cp usr/share/icons/hicolor/256x256/apps/sweet_unix.png usr/share/fastboot-assistant/sweet_unix.png
 
 slots:
   fastboot-assistant:
