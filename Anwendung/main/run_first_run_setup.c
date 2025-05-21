@@ -24,6 +24,7 @@
 #include "language_check.h"
 
 GtkWidget *window;
+GtkCssProvider *provider_setup = NULL;
 
 // function that start the config of the fastboot-assistant
 static void start_config_setup(GtkButton *button, gpointer user_data) 
@@ -78,6 +79,15 @@ void toggle_language_setup(GtkWidget *button, gpointer user_data)
     g_timeout_add(2000, (GSourceFunc)quit_application, NULL); // After 5 seconds
 }
 
+void load_setup_provider(void) 
+{
+	gtk_css_provider_load_from_string(provider_setup,
+		".welcome { text-decoration: underline; font-weight: bold; font-size: 32px;}\n"
+		".welcome2 { text-decoration: underline; font-weight: bold; font-size: 24px;}\n"
+		".welcome3 { font-weight: bold; font-size: 24px;}\n"
+	);
+}
+
 /* the setup wizard */
 void run_first_run_setup(GtkWidget *widget, gpointer stack) 
 {
@@ -86,33 +96,26 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	apply_theme();
 	apply_language();
 	
+	// extra provider for about
+    // check for the adw provider
+    if (provider_setup) 
+    {
+        g_object_unref(provider_setup);
+    }
+    // create a new adw provider
+    provider_setup = create_css_provider();
+    
+    // load the provider
+    load_setup_provider();
+    
+    // add the provider to the app
+    gtk_style_context_add_provider_for_display(
+        gdk_display_get_default(),
+        GTK_STYLE_PROVIDER(provider_setup),
+        GTK_STYLE_PROVIDER_PRIORITY_USER);
+	
+	// get the auto theme path
 	char *auto_theme = auto_path_theme();
-	
-	// style provider for the setup
-	// with underline
-	GtkCssProvider *provider_welcome_1 = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider_welcome_1,
-    	".welcome { text-decoration: underline; font-weight: bold; font-size: 32px;}"
-    	);
-    	/*
-    // without underline
-    GtkCssProvider *provider_welcome_1 = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider_welcome_1,
-    	".highlight { font-weight: bold; font-size: 32px;}"
-    	);
-	*/
-	// second css provider
-	GtkCssProvider *provider_welcome_2 = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider_welcome_2,
-    	".welcome2 { text-decoration: underline; font-weight: bold; font-size: 24px;}"
-    	);
-	
-	// 3. provider
-	GtkCssProvider *provider_welcome_3 = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider_welcome_3,
-    	".welcome3 { font-weight: bold; font-size: 24px;}"
-    	);
-	
 	// char for the next page button
 	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
 		
@@ -121,7 +124,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	
     // button and label
     GtkWidget *label_welcome_1 = gtk_label_new(" ");
-    GtkWidget *logo;
+    GtkWidget *logo = gtk_image_new();
     // add the fastboot-assistant logo  
     const char *main_icon[] = {
     		"./sweet_unix.png",
@@ -171,27 +174,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	
 	// set stack reference for the button function
 	g_object_set_data(G_OBJECT(button_welcome_1), "stack", stack);
-	g_signal_connect(button_welcome_1, "clicked", G_CALLBACK(switch_page), "config_1");
-	
-	// run css for gtk4
-    gtk_style_context_add_provider_for_display(
-        gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider_welcome_1),
-        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
-    // run css for gtk4
-    gtk_style_context_add_provider_for_display(
-        gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider_welcome_2),
-        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
-    // run css for gtk4
-    gtk_style_context_add_provider_for_display(
-        gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider_welcome_3),
-        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
-    
+	g_signal_connect(button_welcome_1, "clicked", G_CALLBACK(switch_page), "config_1");  
 	
 	/* page 2 */
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -414,7 +397,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     
     // button and label
     GtkWidget *label_end_1 = gtk_label_new(" ");
-    GtkWidget *logo_end;
+    GtkWidget *logo_end = gtk_image_new();
 
 	for (int i = 0; i < 2; ++i) 
 	{

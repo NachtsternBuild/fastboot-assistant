@@ -25,6 +25,7 @@
 #include "program_functions.h"
 
 #define MAX_BUFFER_SIZE 256
+GtkCssProvider *provider_about = NULL;
 
 // function to open the GitHub website from the fastboot-assistant
 void fastboot_assistant(GtkWidget *widget, gpointer stack)
@@ -75,31 +76,38 @@ void run_tools_info(GtkWidget *widget, gpointer stack)
 	info_tools();
 }
 
+void load_about_provider(void) 
+{
+	gtk_css_provider_load_from_string(provider_about,
+		 ".about { text-decoration: underline; font-weight: bold; font-size: 22px; }\n"
+		 ".about2 { font-weight: bold; font-size: 22px; }\n"
+		 ".about3 { text-decoration: underline; font-weight: bold; font-size: 32px; }\n"
+	);
+} 
+
 /* main function - about */
 void about(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("about");
     apply_language();
     
-       
-    // style provider for the setup
-	// 1. css provider
-	GtkCssProvider *provider_about_1 = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider_about_1,
-    	".about { text-decoration: underline; font-weight: bold; font-size: 22px;}"
-    	);
-	
-	// 2. provider
-	GtkCssProvider *provider_about_2 = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider_about_2,
-    	".about2 { font-weight: bold; font-size: 22px;}"
-    	);
-    	
-    // with underline
-	GtkCssProvider *provider_about_3 = gtk_css_provider_new();
-        gtk_css_provider_load_from_string(provider_about_3,
-    	".about3 { text-decoration: underline; font-weight: bold; font-size: 32px;}"
-    	);
+    // extra provider for about
+    // check for the adw provider
+    if (provider_about) 
+    {
+        g_object_unref(provider_about);
+    }
+    // create a new adw provider
+    provider_about = create_css_provider();
+    
+    // load the provider
+    load_about_provider();
+    
+    // add the provider to the app
+    gtk_style_context_add_provider_for_display(
+        gdk_display_get_default(),
+        GTK_STYLE_PROVIDER(provider_about),
+        GTK_STYLE_PROVIDER_PRIORITY_USER);
     
     // char for the next page button
 	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
@@ -111,7 +119,7 @@ void about(GtkWidget *widget, gpointer stack)
 	
     // button and label
     GtkWidget *label_about_1 = gtk_label_new(" ");
-    GtkWidget *logo_about;
+    GtkWidget *logo_about = gtk_image_new();
     // add the fastboot-assistant logo  
     const char *main_icon[] = {
     		"./sweet_unix.png",
@@ -141,7 +149,7 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 
     // create the label
-    GtkWidget *label_about2 = gtk_label_new("Version 0.8.1.6");
+    GtkWidget *label_about2 = gtk_label_new("Version 0.8.1.8");
     gtk_widget_add_css_class(label_about2, "about2");
     GtkWidget *label_about3 = gtk_label_new("Glitschiges GNOME 42");
     gtk_widget_add_css_class(label_about3, "about2");
@@ -194,25 +202,6 @@ void about(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_about_2), "stack", stack);
 	g_signal_connect(button_about_2, "clicked", G_CALLBACK(show_home_page), stack);
 	
-	// run css for gtk4
-    gtk_style_context_add_provider_for_display(
-        gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider_about_1),
-        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
-    // run css for gtk4
-    gtk_style_context_add_provider_for_display(
-        gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider_about_2),
-        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
-    // run css for gtk4
-    gtk_style_context_add_provider_for_display(
-        gdk_display_get_default(),
-        GTK_STYLE_PROVIDER(provider_about_3),
-        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
-    );
-    	
 	/* page 2 */
 	GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 	
