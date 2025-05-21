@@ -88,7 +88,7 @@ static void download_backup(GtkWidget *widget, gpointer stack)
         LOG_INFO("Loaded path: %s", path_file_load);
     }
     snprintf(main_path_build, sizeof(main_path_build), "%s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip", path_file_load);
-    snprintf(wget_command, sizeof(wget_command), "wget -O %s https://github.com/mrrfv/open-android-backup/releases/download/v1.0.18/Open_Android_Backup_v1.0.18_Bundle.zip && unzip %s -d %s", main_path_build, main_path_build, main_path_build);
+    snprintf(wget_command, sizeof(wget_command), "wget -O %s https://github.com/mrrfv/open-android-backup/releases/download/v1.1.0/Open_Android_Backup_v1.1.0_Bundle.zip && unzip %s -d %s", main_path_build, main_path_build, main_path_build);
 	
     LOG_INFO("Run: %s", wget_command);
     command_with_spinner(wget_command);
