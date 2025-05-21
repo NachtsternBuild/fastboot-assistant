@@ -25,10 +25,10 @@ If applicable, add screenshots to help explain your problem.
 
 **Information:**
  - **OS:** e.g. Ubuntu
- - **OS version:** e.g. 24.10.
+ - **OS version:** e.g. 25.04
  - **Browser:** e.g. Firefox
  - **Browser version:** e.g. 138
- - **Program version:** <= *v.0.8.1*
+ - **Program version:** <= *v.0.8.1.8*
  - **To be fixed in:** >= *v.0.8.2*
  - **Operating mode:** e.g. native / WSL / VM
  - **package type:** e.g. object file / DEB / Snap / Flatpak / Zip 
