@@ -1,3 +1,3 @@
-fastboot-assistant-dbgsym_0.8.1ubuntu6_amd64.ddeb debug optional automatic=yes
-fastboot-assistant_0.8.1ubuntu6_amd64.buildinfo utils optional
-fastboot-assistant_0.8.1ubuntu6_amd64.deb utils optional
+fastboot-assistant-dbgsym_0.8.1ubuntu8_amd64.ddeb debug optional automatic=yes
+fastboot-assistant_0.8.1ubuntu8_amd64.buildinfo utils optional
+fastboot-assistant_0.8.1ubuntu8_amd64.deb utils optional

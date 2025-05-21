@@ -151,7 +151,7 @@ void about(GtkWidget *widget, gpointer stack)
     // create the label
     GtkWidget *label_about2 = gtk_label_new("Version 0.8.1.8");
     gtk_widget_add_css_class(label_about2, "about2");
-    GtkWidget *label_about3 = gtk_label_new("Glitschiges GNOME 42");
+    GtkWidget *label_about3 = gtk_label_new("Glitschiges GNOME 44");
     gtk_widget_add_css_class(label_about3, "about2");
     
     // add the label to the box
