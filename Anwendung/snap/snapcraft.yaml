@@ -1,6 +1,6 @@
 name: fastboot-assistant
 base: core24
-version: '0.8.1.8'
+version: '0.8.1.8-2'
 summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
 description: |
   The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
@@ -18,6 +18,8 @@ platforms:
 apps:
   fastboot-assistant:
     command: usr/bin/fastboot-assistant
+    desktop: usr/share/applications/fastboot-assistant.desktop
+    extensions: [gnome]
     plugs:
       - home
       - removable-media
@@ -36,17 +38,16 @@ apps:
       - gtk-themes
       - icon-themes
       - uhid
-    extensions: [gnome]
-
-    desktop: usr/share/applications/fastboot-assistant.desktop
+    slots:
+      - fastboot-assistant
     environment:
-       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
-       GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
-       GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
-       LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
-       GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0
-       GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
-       GTK_USE_PORTAL: "1"
+      XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
+      GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
+      GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
+      LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0
+      GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
+      GTK_USE_PORTAL: "1"
 
 plugs:
   gtk-3-themes:
@@ -69,7 +70,16 @@ plugs:
     bus: session
     name: org.freedesktop.portal.Desktop
 
+slots:
+  fastboot-assistant:
+    interface: dbus
+    bus: session
+    name: io.github.nachtsternbuild.Fastboot-Assistant
 
+environment:
+  LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+  LIBGL_DEBUG: verbose
+  MESA_LOADER_DRIVER_OVERRIDE: swrast
 
 parts:
   adb-fastboot:
@@ -88,7 +98,7 @@ parts:
       - curl
     stage-packages:
       - libusb-1.0-0
-      
+
   heimdall:
     plugin: nil
     source: https://github.com/Benjamin-Dobell/Heimdall/archive/refs/tags/v1.4.2.zip
@@ -118,7 +128,7 @@ parts:
       - qt5-qmake
       - libqt5gui5
       - libqt5core5a
-      
+
   fastboot-assistant:
     source: .
     plugin: dump
@@ -150,7 +160,6 @@ parts:
       - libvulkan1
       - libdbus-glib-1-dev
       - libglib2.0-bin
-      - dconf-gsettings-backend
       - adwaita-icon-theme
       - gnome-themes-extra
       - libproxy1-plugin-gsettings
@@ -163,15 +172,4 @@ parts:
     override-prime: |
       snapcraftctl prime
       cp usr/share/icons/hicolor/256x256/apps/sweet_unix.png usr/share/fastboot-assistant/sweet_unix.png
-
-slots:
-  fastboot-assistant:
-    interface: dbus
-    bus: session
-    name: io.github.nachtsternbuild.fastboot-assistant
-
-environment:
-  LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
-  LIBGL_DEBUG: verbose
-  MESA_LOADER_DRIVER_OVERRIDE: swrast
 
