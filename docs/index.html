@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="de">
+<!-- Head and Metadata -->
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Fastboot Assistant</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	
+<!-- Body --> 
+	<body>
+<!-- Header of the -->
+		<header class="hero">
+			<div class="hero-content">
+				<!-- logo and headline --> 
+				<img src="assets/logo.png" alt="Fastboot Assistant Logo" />
+				<h1>Fastboot Assistant</h1>
+				<p>The Tool for installing Custom-ROMs and GSIs on Android devices.</p>
+				<!-- some buttona -->
+				<div class="header-buttons">
+					<p>
+      					<a href="documentation.html" class="btn">Documentation</a>
+      					<a href="#features" class="btn">Read more</a>
+      					<a href="#join" class="btn">Join the Project</a>
+      				</p>
+				</div>
+				<div class="header-buttons">
+   					<p>
+   						<a href="#downloads" class="btn">&#129095;  Download Latest Release</a>
+   					</p>
+      			</div>
+      		</div>
+      	</header>
+      	
+<!-- Funktions of the Fastboot-Assistant -->
+		<section id="features" class="features">
+			<!-- 0. Entry text -->
+			<div class="feature-item reverse fade-in">
+				<img src="assets/flash.png" alt="Start" />
+				<div class="features-text">
+					<h3>The Fastboot-Assistant</h3>
+					<p>The Fastboot-Assistant is a user-friendly GTK tool that simplifies the complex processes surrounding ADB and Fastboot. With an intuitive interface, it enables both beginners and experienced users to safely and efficiently flash Custom-ROMs and Generic System Images (GSIs) on Android devices.</p>
+				</div>
+			</div>
+							
+			<!-- 1. Connections -->
+			<div class="feature-item fade-in">
+      			<img src="assets/flash.png" alt="Devices" />
+      			<div class="features-text">
+      				<h3>Seamless connection detection</h3>
+      				<p>Make sure your device is recognized correctly via ADB or Fastboot - with just one click.</p>
+    			</div>
+    		</div>
+    			
+			<!-- 2. Reboot -->
+    		<div class="feature-item reverse fade-in">
+      			<img src="assets/info.png" alt="Reboot" />
+      			<div class="features-text">
+      				<h3>Start in any mode</h3>
+      				<p>Whether fastboot, download or recovery - you can switch modes at lightning speed and without a terminal.</p>
+      			</div>
+    		</div>
+    			
+			<!-- 3. Userdata -->
+    		<div class="feature-item fade-in">
+      			<img src="assets/commands.png" alt="Userdata" />
+      			<div class="features-text">
+      				<h3>Quick reset</h3>
+      				<p>Delete user or system data at the touch of a button - perfect for clean setups.</p>
+    			</div>
+    		</div>
+    			
+			<!-- 4. Backup -->
+    		<div class="feature-item reverse fade-in">
+      			<img src="assets/cross.png" alt="Backup" />
+      			<div class="features-text">
+      				<h3>System backup for professionals</h3>
+      				<p>Back up your device via root access or via <a href="https://github.com/mrrfv/open-android-backup">Open Android Backup</a></p>
+    			</div>
+    		</div>
+    			
+    		<!-- 5. Image handling -->
+			<div class="feature-item fade-in">
+      			<img src="assets/flash.png" alt="Image" />
+      			<div class="features-text">
+      				<h3>Intelligent image handling</h3>
+      				<p>Automatically rename your .img files correctly - no more typos.</p>
+    			</div>
+    		</div>
+    			
+			<!-- 6. Flash -->
+    		<div class="feature-item reverse fade-in">
+      			<img src="assets/info.png" alt="Flash" />
+      			<div class="features-text">
+      				<h3>Complete flash in one step</h3>
+      				<p>Select a folder - Fastboot Assistant automatically flashes all contained images or a selected image is flashed.</p>
+    			</div>
+    		</div>
+    			
+			<!-- 7. Info -->
+    		<div class="feature-item fade-in">
+      			<img src="assets/commands.png" alt="Info" />
+      			<div class="features-text">
+      				<h3>Everything at a glance</h3>
+      				<p>Display detailed device information directly in the app.</p>
+    			</div>
+    		</div>
+    			
+			<!-- 8. Help -->
+    		<div class="feature-item reverse fade-in">
+      			<img src="assets/cross.png" alt="Help" />
+      			<div class="features-text">
+      				<h3>Built-in help</h3>
+      				<p>Step-by-step instructions guide you through every process - directly in the application.</p>
+    			</div>
+    		</div>
+    			
+    		<!-- 9. Slot -->
+    		<div class="feature-item fade-in">
+      			<img src="assets/commands.png" alt="Slot" />
+      			<div class="features-text">
+      				<h3>Systematic slot change</h3>
+      				<p>Change the active boot slot of your device safely and systematically.</p>
+    			</div>
+    		</div>
+    			
+			<!-- 10. Backup -->
+    		<div class="feature-item reverse fade-in">
+      			<img src="assets/cross.png" alt="Plattformübergreifend" />
+      			<div class="features-text">
+      				<h3>Partition control for experts</h3>
+      				<p>Create, remove or change partitions such as boot, system or vendor conveniently via the graphical user interface.</p>
+    			</div>
+    		</div>  			
+		</section>
+
+<!-- Download -->
+		<!--<section class="downloads features feature-item fade-in-up" id="downloads">-->
+		<section class="downloads feature-item features" id="downloads">
+  			<div class="features-text">
+    			<h3>Downloads</h3>
+			
+    			<div class="download-buttons">
+      				<a href="https://github.com/NachtsternBuild/fastboot-assistant/releases/download/v.0.8.1.8/fastboot-assistant_0.8.1ubuntu8_amd64.deb" class="btn">
+        			<img src="assets/icons/debian.svg" alt="Debian" class="icon" />Download for Debian/Ubuntu (.deb)</a>
+      				<a href="https://snapcraft.io/fastboot-assistant" class="btn">
+        			<img src="assets/icons/snapcraft.svg" alt="Snap" class="icon" />Install from Snap Store</a>
+    			</div>
+
+    			<div class="supported-icons">
+      				<h3>Supported distributions:</h3>
+      				<div class="distro-icons features-text feature-item">
+      					<div class="distro-icon">
+        					<img src="assets/icons/ubuntu.svg" alt="Ubuntu" />
+        				</div>
+        				<p>Ubuntu<br></p>
+        				<div class="distro-icon">
+        					<img src="assets/icons/debian.svg" alt="Debian" />
+        				</div>
+        				<p>Debian</p>
+        				<div class="distro-icon">
+        					<img src="assets/icons/linuxmint.svg" alt="Linux Mint" />
+        				</div>
+        				<p>Linux Mint</p>
+        				<div class="distro-icon">
+        					<img src="assets/icons/snapcraft.svg" alt="Snap" />
+        				</div>
+        				<p>Snap supporting distributions</p>
+        				<!--<div class="distro-icon">
+        					<img src="assets/icons/flathub.svg" alt="Flatpak" />
+        				</div>
+        				<p>Flatpak supporting distributions</p>
+        				-->
+      				</div>
+    			</div>
+  			</div>
+		</section>
+		
+<!-- join the project -->
+		<section class="contribute-section features feature-item" id="join">
+  			<div class="features-text">
+    			<h3>Join the project!</h3>
+    			<p>
+      			The Fastboot Assistant is an open source project - and lives from the community!<br>
+      			You can help with testing, translating, designing or coding.
+    			</p>
+    			<a href="https://github.com/NachtsternBuild/fastboot-assistant" class="btn contribute-btn" target="_blank">
+      			<img src="assets/icons/github.svg" alt="GitHub" class="icon" />Go to the GitHub project</a>
+  			</div>
+		</section>
+
+<!-- footer -->		
+		<footer>
+        	<div class="footer-overlay features-text feature-item">
+            	<p>&copy; 2025 NachtsternBuild. All rights reserved.</p>
+        	</div>
+   		</footer>
+   		
+<!-- Animations with JS -->
+	<!-- Scroll Animation -->
+	<script>
+		window.addEventListener('scroll', () => {
+			const elements = document.querySelectorAll('.scroll-animation');
+			elements.forEach(element => {
+	    	    if (element.getBoundingClientRect().top < window.innerHeight) {
+	    	        element.classList.add('visible');
+	    	    }
+	    	});
+		});
+   </script>
+   <!-- Animation for text -->
+   <script>
+   	const faders = document.querySelectorAll('.fade-in');
+
+  	const appearOptions = {
+    	threshold: 1,
+    	rootMargin: "0px 0px -50px 0px"
+  	};
+
+  	const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+    	entries.forEach(entry => {
+    		if (!entry.isIntersecting) return;
+    		entry.target.classList.add("visible");
+    		observer.unobserve(entry.target);
+    	});
+  	}, appearOptions);
+
+  	faders.forEach(fader => {
+    	appearOnScroll.observe(fader);
+  	});
+	</script>
+	<!-- -->
+	<script>
+  	const observer = new IntersectionObserver(entries => {
+    	entries.forEach(entry => {
+      		if (entry.isIntersecting) {
+        	entry.target.classList.add('visible');
+      		}
+    	});
+  	});
+
+  	document.querySelectorAll('.fade-in-up').forEach(section => {
+    	observer.observe(section);
+  	});
+	</script>
+
+	</body>
+</html>

@@ -1,0 +1,374 @@
+/* Basiclayout */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #1a1a1a;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+footer {
+    background-color: linear-gradient(to top, #330000, #1a1a1a);
+    color: #fff;
+    text-align: center;
+    margin: 0;
+}
+
+/* extra fonts */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 2000;
+  src: url('assets/fonts/montserrat-v29-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat-small';
+  font-style: normal;
+  font-weight: 900;
+  src: url('assets/fonts/montserrat-v29-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat-Alternates';
+  font-style: normal;
+  font-weight: 2000;
+  src: url('assets/fonts/montserrat-alternates-v17-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat-Underline';
+  font-style: normal;
+  font-weight: 2000;
+  src: url('assets/fonts/montserrat-underline-v2-latin-regular.woff2') format('woff2');
+}
+
+/* Other style */
+/* Hero/Header */
+.hero {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #330000, #1a1a1a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.hero-content img {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-size: 5.5rem;
+  color: #ff4444;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+/* Button */
+.btn {
+  display: inline-block;
+  padding: 15px 24px;
+  background: #8b0000;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: transform 0.2s;
+}
+
+.btn:hover {
+  background: #a00000;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Functions/Features */
+.features {
+  padding: 60px 20px;
+  /*background: linear-gradient(to bottom, #1a1a1a, #2b0000);*/
+  background: linear-gradient(to top right, #330000, #1a1a1a);
+  /*background: linear-gradient(to bottom, #2b0000, #1a1a1a);*/
+  text-align: center;
+}
+
+.features h2 {
+  color: #ffdddd;
+  font-size: 3.5rem;
+  margin-bottom: 40px;
+  padding-bottom: 4px;
+}
+
+.features h3 {
+  font-family: 'Montserrat', sans-serif;
+  color: #ffdddd;
+  font-size: 3rem;
+  margin-bottom: 40px;
+}
+
+.features-text {
+  font-family: 'Montserrat-small', sans-serif;
+  color: #ffdddd;
+  font-size: 3rem;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.feature-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  gap: 60px;
+  margin: 60px 0;
+  padding: 0 20px;
+}
+
+.feature-item p {
+  flex: 1;
+  max-width: 600px;
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+
+.feature-item img {
+  width: 40vw;
+  max-width: 600px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
+}
+
+.feature-item.reverse {
+  flex-direction: row-reverse;
+}
+
+/* Download section */
+.downloads {
+  padding: 80px 20px;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(to bottom right, #330000, #1a1a1a);
+  margin: 0;
+}
+
+.center-downloads p {
+  font-family: 'Montserrat-small', sans-serif;
+  color: #ffdddd;
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.download-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin: 30px 0;
+}
+
+.download-buttons .btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 15px 24px;
+  background-color: #8b0000;
+  color: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.download-buttons .btn:hover {
+  background-color: #a30000;
+  transform: scale(1.03);
+}
+
+.download-buttons .icon {
+  height: 24px;
+  width: 24px;
+  margin-right: 8px;
+}
+
+.supported-icons {
+  margin-top: 40px;
+}
+
+.supported-icons p {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+.distro-icons img {
+  height: 40px;
+  width: auto;
+  filter: brightness(1.2);
+  opacity: 0.9;
+  transition: transform 0.2s;
+}
+
+.distro-icons img:hover {
+  transform: scale(1.1);
+}
+
+.distro-icons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.distro-icon {
+  background-color: white;
+  padding: 3px;
+  border-radius: 12px;
+  transition: transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.distro-icon img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.distro-icon:hover {
+  transform: scale(1.05);
+}
+
+.distro-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+
+.distro-list li {
+  display: inline-block;
+  margin: 10px 20px;
+}
+
+
+/* Contribute */
+.contribute-section {
+  padding: 80px 20px;
+  color: #fff;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(to top right, #330000, #1a1a1a);
+  margin: 0;
+}
+
+.contribute-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #ffcccc;
+}
+
+.contribute-section p {
+  font-size: 1.1rem;
+  color: #ddd;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contribute-btn {
+  background-color: #8b0000;
+  padding: 15px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.contribute-btn:hover {
+  background-color: #a30000;
+  transform: scale(1.05);
+}
+
+.contribute-btn .icon {
+  height: 24px;
+  width: 24px;
+}
+
+/* Animation: Fade-in Up */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* footer */
+.footer-overlay {
+  background: linear-gradient(to bottom right, #330000, #1a1a1a);
+  text-align: center;
+  margin: 0;
+}
+
+/* Animation style */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .feature-item {
+    flex-direction: column !important;
+  }
+
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .btn {
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,41 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Format: 1.8
+Date: Sat, 03 May 2025 11:34:37 +0200
+Source: fastboot-assistant
+Built-For-Profiles: noudeb
+Architecture: source
+Version: 0.8.1ubuntu5
+Distribution: oracular
+Urgency: medium
+Maintainer: Elias Mörz <elias.moerz@mail.de>
+Changed-By: Elias Mörz <elias.moerz@mail.de>
+Changes:
+ fastboot-assistant (0.8.1ubuntu5) oracular; urgency=medium
+ .
+   * Main release for active version.
+Checksums-Sha1:
+ cb1cb63ccf81b72b11731bbb8dc5fa50fb5526a6 1308 fastboot-assistant_0.8.1ubuntu5.dsc
+ 8141fc0a74e2a70099319362c8f51a43e7584af6 152623 fastboot-assistant_0.8.1ubuntu5.tar.gz
+ a18fb5642a0747eeabea93fb0cc2cee3284fef0a 16605 fastboot-assistant_0.8.1ubuntu5_source.buildinfo
+Checksums-Sha256:
+ ba451f00d60b0a8f25a0af21e1bde840c0f012c337099daffdb8264d8f5b5195 1308 fastboot-assistant_0.8.1ubuntu5.dsc
+ 36b705a0817b0d526eea43c13f3db93079e96b1e987480328b3af116d24c3656 152623 fastboot-assistant_0.8.1ubuntu5.tar.gz
+ 1e29d2370f8a196d359cc914c137f7cca82e26910d3bee96bc0c98a6d05a063d 16605 fastboot-assistant_0.8.1ubuntu5_source.buildinfo
+Files:
+ fe16eabbd60058a58e631d3fcf221e2c 1308 utils optional fastboot-assistant_0.8.1ubuntu5.dsc
+ 4a1b15be93d288b50cf77a45860c642a 152623 utils optional fastboot-assistant_0.8.1ubuntu5.tar.gz
+ eb750bf20a4ecb8d43cea54994169b03 16605 utils optional fastboot-assistant_0.8.1ubuntu5_source.buildinfo
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEcfyNsF0yY/8QTL7Ggnvwf1vFzGAFAmgWMBYACgkQgnvwf1vF
+zGDS9ggA5ZsyijAFtwqGuVvBrShEHrEo9l4wUqUvtyDckPvu+fTNmBtoDBZARHo6
+VEtO1DC1f32PF7wc3DcdNwqEUOn+VtnC9BL6XjxDdYwm4LtgkSsOhw6cZPXo5CzC
+1YuyYSO/b+Nf//FUEwShe8ldcirl1iiYi9hcl6mMivH6uwXa8ov+CoDNZPgOzBDB
+cDxgR7wnyuY7C0J7hRKYZFXZC3Rzub8P7ktlrYT0SErvJr1sGKAJPhQJbSknaU+3
+hh3C4pDmGPtzIJlaGKgGxsjYhuBhy9lLO/6p7hcGY8lC+WWX/J0BS0spZd05Xgme
+6nj0W5hnhB6xqnsTZZMUqU9hCEWUOQ==
+=CjwT
+-----END PGP SIGNATURE-----

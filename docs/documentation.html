@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Fastboot Assistant – Documentation</title>
+	<style>
+	body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+      background: #1a1a1a;
+      color: #333;
+    }
+    nav {
+      width: 250px;
+      background: #330000;
+      color: #8b0000;
+      padding: 1em;
+      overflow-y: auto;
+    }
+    nav h2 {
+      font-size: 1.2em;
+      margin-top: 0;
+    }
+    nav a {
+      color: #8b0000;
+      text-decoration: none;
+      display: block;
+      margin: 0.5em 0;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main {
+      flex: 1;
+      padding: 2em;
+      overflow-y: auto;
+    }
+    section {
+      margin-bottom: 3em;
+    }
+    h1, h2, h3 {
+      color: #8b0000;
+    }
+    pre {
+      background: #eee;
+      padding: 1em;
+      overflow-x: auto;
+    }
+    code {
+      font-family: monospace;
+    }
+    ul {
+      padding-left: 1.2em;
+    }
+    img {
+  	  max-width: 25%;
+  	  height: auto;
+  	  border-radius: 12px;
+  	  display: block;
+  	  margin: 0 auto;
+	}
+    </style>
+</head>
+<body>
+	<nav>
+    	<h2>Inhalt</h2>
+    	<a href="#introduction">Introduction</a>
+    	<a href="#installation">Installation</a>
+    	<a href="#uninstallation">Uninstallation</a>
+    	<a href="#notes">Notes</a>
+    	<a href="#setup">Setup</a>
+    	<a href="#updates">Updates</a>
+    	<a href="#usage">Usage</a>
+    	<a href="#build">Build for Linux</a>
+	</nav>
+	
+	<main>
+    	<section id="introduction">
+    		<img src="assets/logo.png" alt="Fastboot Assistant Logo" />
+    		<h1>Fastboot Assistant – Documentation</h1>
+      		<p>Fastboot-Assistant is the tool that facilitates the flashing of GSIs, Custom ROMs and other system images on Android devices. This is an application for Android enthusiasts and developers, power users, IT support and repair services, community-based developers and users with an interest in Custom ROMs or GSIs.</p>
+      		<h3>The Fastboot Assistant is intended for the following purposes:</h3>
+			<ul>
+				<li>Firmware and custom ROM installation</li>
+				<li>System management and recovery</li>
+				<li>Data and system backup</li>
+				<li>Device repair and recovery after system failures</li>
+			</ul>
+			<h3>With the following functions:</h3>
+			<ul>
+				<li>Checking the ADB/fastboot connection</li>
+				<li>Check whether the bootloader of the device is unlocked.</li>
+				<li>Booting in fastboot mode.</li>
+				<li>Reboot from fastboot mode.</li>
+				<li>Reboot into download mode.</li>
+				<li>Reboot into recovery mode.</li>
+				<li>Locking and unlocking the bootloader.</li>
+				<li>Deleting the user data.</li>
+				<li>Backing up the entire system (only for users with root access to the system) or Open Android Backup to back up the user data.</li>
+				<li>Renaming files and unpacking images (recovery.img, boot.img, vendor.img, system.img, payload.zip) and unpacking (only with xz compressed files)</li>
+				<li>Flashing recovery.img, boot.img, init_boot.img, vendor_boot.img, vendor.img, system.img, vbmeta.img, dtbo.img, userdata.img, metadata.img, preloader.img,
+preloader.bin, super.img and many others.</li>
+				<li>Flashing the system.img into the inactive slot.</li>
+				<li>Flashing of all images in a folder.</li>
+				<li>Retrieving device information.</li>
+				<li>Some instructions for the fastboot and flashing images.</li>
+				<li>Setting the active slot (a/b devices only).</li>
+				<li>Changing/removing and creating the boot/vendor/system partition</li>
+			</ul>
+    	</section>
+    	
+    	<section id="installation">
+      		<h2>Installation</h2>
+      		<h3>Linux (Debian/Ubuntu)</h3>
+      		<p>Install the .deb package as follows:</p>
+      		<pre><code>sudo apt install /path/to/fastboot-assistant.deb</code></pre>
+			
+			<h3>Linux (Ubuntu)</h3>
+			<p><strong>This method only works for the following OS:</strong></p>
+			<ul>
+				<li>Ubuntu 24.04 Noble Numbat</li>
+				<li>Ubuntu 24.10 Oracular Oriole</li>
+				<li>Ubuntu 25.04 Plucky Puffin</li>
+			</ul> 
+			<p>Add the PPA to your device:
+			<pre><code>sudo add-apt-repository ppa:nachtstern12/fastboot-assistant</code></pre>
+			<pre><code>sudo apt update</code></pre>
+			</p>
+			<p>Now install the package via APT:
+			<pre><code>sudo apt install fastboot-assistant</code></pre>
+			</p>
+			
+			<h3>Other Linux</h3>
+			<p>Install it from the Snap Store or with:
+			<pre><code>sudo snap install fastboot-assistant</code></pre>
+			</p>
+
+      		<h3>Windows (WSL)</h3>
+      		<ol>
+        		<li>Install ADB and Fastboot (e.g. from Google or SDK Platform Tools).</li>
+        		<li>Unzip the <code>fastboot-assistant.zip</code> into a directory of your choice.</li>
+        		<li>Execute <code>Enable_WSL.bat</code> with administrator rights.</li>
+        		<li>Restart the PC and execute <code>WSL_install.bat</code>.</li>
+        		<li>Set up the Ubuntu subsystem (note the user name).</li>
+        		<li>Update the subsystem with:
+        		<pre><code>sudo apt update && sudo apt distro-upgrade</code></pre></li>
+        		<li>Install the package via WSL:
+          		<pre><code>sudo apt install /mnt/c/Path/to/fastboot-assistant.deb</code></pre></li>
+      		</ol>
+    	</section>
+
+    	<section id="uninstallation">
+      		<h2>Uninstallation</h2>
+      			<p>To remove the Fastboot Assistant:</p>
+      			<pre><code>sudo apt remove fastboot-assistant && sudo apt autoremove</code></pre>
+      			<pre><code>sudo snap remove fastboot-assistant</code></pre>
+      			<pre><code>sudo dpkg -r --force-all fastboot-assistant</code></pre>
+    	</section>
+    	
+    	<section id="notes">
+      		<h2>Notes</h2>
+      		<ul>
+        		<li>Use at your own risk.</li>
+        		<li>Back up all important data before each flash process.</li>
+        		<li>Samsung devices: Use <strong>Odin/Heimdall</strong>, not Fastboot.</li>
+        		<li>Mainly developed for Debian/Ubuntu. Other systems require customization.</li>
+        		<li>Only suitable for devices with an open bootloader.</li>
+      		</ul>
+    	</section>
+
+    	<section id="setup">
+      		<h2>Setup</h2>
+      		<p>A setup wizard appears the first time you start the program:</p>
+      		<ul>
+        		<li>Design selection: light or dark</li>
+        		<li>Language selection (German/English)</li>
+        		<li>After setting the language, the application must be restarted.</li>
+        		<li>Other setup processes</li>
+      		</ul>
+    	</section>
+
+    	<section id="updates">
+      		<h2>Updates</h2>
+      		<h3>Automatic updates</h3>
+      		<p>Automatic updates are provided by:</p>
+      		<ol>
+      			<li>APT/PPA</li>
+      			<li>Snap</li>
+      			<li>Internal updater</li>
+      		</ol>
+      		<p>Internal updater:</p>
+      		<ol>
+        		<li>Click on "Updater" in the program</li>
+        		<li>If a new version is detected, select "Install".</li>
+        		<li>Enter password (root rights required)</li>
+      		</ol>
+
+      		<h3>Manual updates</h3>
+      		<pre><code>sudo apt install /path/to/fastboot-assistant.deb</code></pre>
+      		<pre><code>sudo snap install /path/to/fastboot-assistant.snap</code></pre>
+    	</section>
+
+    	<section id="usage">
+      		<h2>Usage</h2>
+      		<h3>1. Connect device & Activate debugging</h3>
+      		<ul>
+        		<li>Enable USB debugging in the developer options.</li>
+        		<li>Connect device via USB</li>
+        		<li>Fastboot Assistant automatically recognizes ADB connection.</li>
+      		</ul>
+
+      		<h3>2. Flash from Custom-ROM or GSI</h3>
+      		<ul>
+        		<li>Boot in fastboot, unlock bootloader if necessary.</li>
+        		<li>Recovery (z. B. TWRP) flashen</li>
+        		<li>Install ROM or GSI via ADB sideload mode.</li>
+      		</ul>
+
+      		<h3>3. Flash Images</h3>
+      		<p>Fastboot Assistant can automatically flash all images from a folder, e.g:</p>
+      		<ul>
+        		<li><code>system.img</code>, <code>boot.img</code>, <code>vendor.img</code>, etc.</li>
+      		</ul>
+
+      		<h3>4. Root with Magisk</h3>
+      		<ol>
+        		<li>Install Magisk-APK on the device.</li>
+        		<li>Patch a <code>boot.img</code> from Magisk.</li>
+        		<li>Flash the patched image with Fastboot Assistant.</li>
+      		</ol>
+    	</section>
+
+    	<section id="build">
+      		<h2>Build on Linux</h2>
+      		<ol>
+        		<li>Install dependencies:
+          		<pre><code>sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper ccache libsecret-1-dev build-essential libadwaita-1-dev rsync git</code></pre></li>
+        		<li>Download the source code:
+          		<pre><code>git clone https://github.com/NachtsternBuild/fastboot-assistant.git</code></pre></li>
+          		<li>For the Snap build you need this tools: <code>qtbase5-dev, qtchooser, qt5-qmake, qtbase5-dev-tools, snapcraft, lxd</code>
+          		<pre><code>sudo apt update && sudo apt install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools</code></pre>
+          		<pre><code>sudo snap install snapcraft --classic</code></pre>
+          		<pre><code>sudo snap install lxd</code></pre>
+          		<pre><code>sudo usermod -a -G lxd $USER</code></pre>
+          		<pre><code>sudo reboot</code></pre>
+          		<pre><code>lxd init --minimal</pre></code>
+          		</li>
+          		<li>Edit the source code with an editor of your choice according to your requirements. <strong>Note that the Makefile must also be changed if you change the name.</strong></li>
+        		<li>Change to the directory Applications:
+          		<pre><code>cd ~/fastboot-assistant/Anwendung</code></pre></li>
+        		<li>Start the Build-Skript:
+          		<pre><code>bash Build/build-fastboot-assistant.sh</code></pre></li>
+      		</ol>
+      		<p>The project can be built for the following operating systems:</p>
+      		<ul>
+      			<li>Linux</li>
+      			<li>Windows (WSL)</li>
+			</ul>
+			<p>The following package types are available for Linux:</p>
+			<ul>
+				<li>Debian package</li>
+				<li>Snap</li>
+			</ul>
+			<p>For Windows, a zip file is packed which contains the Debian package included for the WSL.</p>
+			<p><strong>Note:</strong> Building the WSL package only works on Debian/Ubuntu systems, as the build script automatically builds a Debian package.</p>
+      		
+    	</section>
+	</main>
+</body>
+</html>
+
