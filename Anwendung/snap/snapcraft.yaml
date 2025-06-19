@@ -44,10 +44,12 @@ apps:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
       GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
       GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
-      LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/x86_64-linux-gnu
-      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0
+      #LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0
       GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
       GTK_USE_PORTAL: "1"
+      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy
+
 
 plugs:
   gtk-3-themes:
@@ -162,14 +164,17 @@ parts:
       - libglib2.0-bin
       - adwaita-icon-theme
       - gnome-themes-extra
+      - libproxy1v5
       - libproxy1-plugin-gsettings
       - libproxy1-plugin-networkmanager
-      - libproxy1-plugin-webkit
-      - libproxy1v5
+
     override-build: |
       snapcraftctl build
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
+      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
     override-prime: |
       snapcraftctl prime
-      cp usr/share/icons/hicolor/256x256/apps/sweet_unix.png usr/share/fastboot-assistant/sweet_unix.png
-
+      if [ -f "$SNAPCRAFT_PRIME/usr/share/icons/hicolor/256x256/apps/sweet_unix.png" ]; then
+        mkdir -p $SNAPCRAFT_PRIME/usr/share/fastboot-assistant
+        cp $SNAPCRAFT_PRIME/usr/share/icons/hicolor/256x256/apps/sweet_unix.png $SNAPCRAFT_PRIME/usr/share/fastboot-assistant/
+      fi
