@@ -48,8 +48,6 @@ void *run_command_spinner(void *command)
 // function to start the spinner and the command
 void command_with_spinner(const gchar *command) 
 {
-    setenv("GSK_RENDERER", "cairo", 1);
-    gtk_init();  // Initialize GTK without command-line arguments
     apply_theme();
 
     gchar *full_command = g_strdup_printf("%s", command);

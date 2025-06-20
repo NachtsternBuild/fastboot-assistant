@@ -94,6 +94,8 @@ void set_button_labels(char labels[][30])
 static void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 {
 	LOG_INFO("activate_fastboot_assistant");
+    // force software rendering
+    g_setenv("GSK_RENDERER", "cairo", TRUE);
     
     // init GTK
     gtk_init();
