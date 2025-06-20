@@ -37,6 +37,52 @@ LIGHT_YELLOW='\033[1;33m'
 WHITE='\033[0;37m'
 NC='\033[0m' # No Color
 
+# detecte the language
+LANGUAGE=$(echo "${LANG:-en}" | cut -d_ -f1)
+[[ "$LANGUAGE" != "de" ]] && LANGUAGE="en"
+
+# texts
+declare -A TEXTS
+
+# all texts for the choices
+# German
+TEXTS[create_target]="[?] Muss der Ordner 'build-project' erstellt werden? (j/n): "
+TEXTS[cleanup_prompt]="[?] Möchten Sie alte Dateien bereinigen? (j/n): "
+TEXTS[build_debuild]="[?] Soll ein Debian-Paket mit 'debuild -us -uc' gebaut werden?"
+TEXTS[build_deb_which]="[?] Auf welche Art soll das Debian-Paket gebaut werden?"
+TEXTS[build_wsl_info]="[⚠] Warnung: Dies ist keine native Windows-Version, sondern läuft nur über WSL."
+TEXTS[package_wsl]="[?] Soll eine Paket für die WSL gebaut werden? (j/n): "
+TEXTS[build_which_os]="[?] Für welches OS soll der Fastboot-Assistant gebaut werden?"
+TEXTS[build_package]="[?] Welches Paket soll gebaut werden?"
+
+TEXTS[compile]="[?] Kompilieren des Programmes? (j/n): "
+TEXTS[select_os]="OS-Auswahl"
+TEXTS[invalid_input]="[⚠] Ungültige Eingabe! Bitte 'l', 'w', 'b' oder 'n' verwenden."
+TEXTS[select_exit]="(b/n) Beenden"
+
+# English
+TEXTS[create_target_en]="[?] Should the 'build-project' folder be created? (y/n): "
+TEXTS[cleanup_prompt_en]="[?] Do you want to clean old files? (y/n): "
+TEXTS[build_debuild_en]="[?] Should a Debian package be built using 'debuild -us -uc'? "
+TEXTS[build_deb_which_en]="[?] How should the Debian package be built?"
+TEXTS[build_wsl_info_en]="[⚠] Warning: This is not a native Windows version – it runs under WSL only."
+TEXTS[package_wsl_en]="[?] Should a package for WSL be built? (y/n): "
+TEXTS[build_which_os_en]="[?] Which OS should Fastboot Assistant be built for?"
+TEXTS[build_package_en]="[?] Which package format should be built?"
+
+TEXTS[compile_en]="[?] Compile the program? (y/n): "
+TEXTS[select_os_en]="OS Selection"
+TEXTS[invalid_input_en]="[⚠] Invalid input! Please use 'l', 'w', 'b', or 'n'."
+TEXTS[select_exit_en]="(b/n) Exit"
+
+
+# function for language choice
+tr() {
+    local key="$1"
+    [[ "$LANGUAGE" == "de" ]] && echo "${TEXTS[$key]}" || echo "${TEXTS[${key}_en]}"
+}
+
+
 # main dirs
 home_dir="$HOME"
 source_dir="$(pwd)"
@@ -141,7 +187,7 @@ error_msg() {
 
 # function that create the build-dir
 create_target_dir() {
-    prompt_user "[?] Muss der Ordner 'build-project' erstellt werden? (j/n) (y/n): "
+    prompt_user "$(tr create_target)"
     while true; do
         read -n1 -s answer
         case "$answer" in 
@@ -202,7 +248,7 @@ building() {
 # function for clean after build
 clean_build() {
 	while true; do
-        prompt_user "[?] Möchten Sie alte Dateien bereinigen? (j/n) (y/n): "
+        prompt_user "$(tr cleanup_prompt)"
         read -n1 -s answer
         case "$answer" in
             j|J|y|Y )
@@ -469,7 +515,7 @@ EOF
 	chmod +x "${debian_dir}/rules"
 	echo "[✓] All files are created."
 
-	prompt_user "[?] Bauen des Debian-Package mit 'debuild -us -uc'? (j/n): "
+	prompt_user "$(tr build_debuild)"
 	read -p " " answer
 	if [[ "$answer" =~ ^[jJyY]$ ]]; then
     	echo "[⧗] Start build..."
@@ -491,12 +537,12 @@ debian_package_build() {
 	echo "[⧗] Start Debian package build..."
 	echo "[⧗] Select package Debian build mode..."
 	while true; do
-		prompt_user "[?] Auf welche Art soll das Debian-Paket gebaut werden? (j/n): "
+		prompt_user "$(tr build_deb_which)"
 		echo ""
 		prompt_user "╭──────────── Debian-Package ────────────╮"
 		echo -e "${CYAN}│       (s) Simple                       │${NC}"
 	    echo -e "${GREEN}│      (d) Debuild                       │${NC}"
-	    echo -e "${RED}│       (b) Beenden                      │${NC}"
+	    echo -e "${RED}│       $(tr select_exit)                      │${NC}"
 	    prompt_user "╰────────────────────────────────────────╯"
 		echo ""
     	read -n1 -s answer
@@ -516,7 +562,7 @@ debian_package_build() {
     	        break
     	        ;;
     	    * )
-    	        build_info "[⚠] Ungültige Eingabe! Bitte 'l', 'w', 'b' oder 'n' verwenden."
+    	        build_info "$(tr invalid_input)"
     	        ;;
     	esac
 	done
@@ -604,7 +650,7 @@ windows_zip_build() {
 # build the program for linux
 build_program_linux() {
 	echo "[⧗] Build for Linux..."
-	prompt_user "[?] Kompilieren des Programmes? (j/n): "
+	prompt_user "$(tr compile)"
 	read -p " " answer
 	if [ "$answer" == "j" ] || [ "$answer" == "J" ] || [ "$answer" == "y" ] || [ "$answer" == "Y" ]; 
  	then
@@ -623,13 +669,13 @@ build_program_linux() {
     
     # loop for package build
     while true; do
-    	prompt_user "[?] Für welches Betriebssystem soll der Fastboot-Assistant gebaut werden?"
+    	prompt_user "$(tr build_package)"
     	echo ""
-    	prompt_user "╭────────────── OS-Auswahl ──────────────╮"
+    	prompt_user "╭────────────── $(tr select_os) ──────────────╮"
     	echo -e "${RED}│            (d) Debian                  │${NC}"
     	echo -e "${CYAN}|            (s) Snap                    |${NC}"
     	echo -e "${GREEN}|            (f) Flatpak                 |${NC}"
-    	echo -e "${RED}|            (b/n) Beenden               |${NC}"
+    	echo -e "${RED}|               $(tr select_exit)               |${NC}"
     	prompt_user "╰────────────────────────────────────────╯"
     	read -n1 -s answer
    		echo ""
@@ -651,7 +697,7 @@ build_program_linux() {
         	    break
         	    ;;
         	* )
-        	    build_info "[⚠] Bitte 'l', 'w', 'b' oder 'n' verwenden."
+        	    build_info "$(tr invalid_input)"
         	    ;;
     	esac
 	done
@@ -660,7 +706,7 @@ build_program_linux() {
 # build the program for Windows
 build_program_windows() {
     echo "[⧗] Build für Windows (WSL)..."
-    build_info "[⚠] Warnung: Dies ist keine native Windows-Version, sondern läuft nur über WSL."
+    build_info "$(tr build_wsl_info)"
     echo "[⧗] Start Build for Windows (WSL)..."
     echo "[⧗] Copy all files to $target_dir..."
     for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$h_partition_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir" "$main_dir"; do
@@ -682,7 +728,7 @@ build_program_windows() {
         fi
     done
     
-    prompt_user "[?]Kompilieren des Programmes? (j/n): "
+    prompt_user "$(tr compile)"
 	read -p " " answer
 	if [ "$answer" == "j" ] || [ "$answer" == "J" ] || [ "$answer" == "y" ] || [ "$answer" == "Y" ]; 
  	then
@@ -699,7 +745,7 @@ build_program_windows() {
     	echo "[x] No compilation."
     fi
  	
- 	prompt_user "[?] Soll eine Paket für die WSL gebaut werden? (j/n): "
+ 	prompt_user "$(tr package_wsl)"
  	read -n1 -s answer
  	if [ "$answer" == "j" ] || [ "$answer" == "J" ] || [ "$answer" == "y" ] || [ "$answer" == "Y" ]; 
  	then
@@ -718,7 +764,7 @@ build_program_windows() {
 # start of the build script
 start_info "╔═══════════════════════════════════════════════╗"
 start_info "║                                               ║"
-start_info "║   Fastboot-Assistant Build Script gestartet   ║"
+start_info "║   Fastboot-Assistant Build script started     ║"
 start_info "║                                               ║"
 start_info "╚═══════════════════════════════════════════════╝"
 echo ""
@@ -727,12 +773,12 @@ create_target_dir
 
 # get build target
 while true; do
-    prompt_user "[?] Für welches Betriebssystem soll der Fastboot-Assistant gebaut werden?"
+    prompt_user "$(tr build_which_os)"
     echo ""
-    prompt_user "╭────────────── OS-Auswahl ──────────────╮"
+    prompt_user "╭────────────── $(tr select_os) ──────────────╮"
     echo -e "${CYAN}│         (l) Linux                      │${NC}"
     echo -e "${GREEN}│         (w) Windows via WSL            │${NC}"
-    echo -e "${RED}│          (b) Beenden                   │${NC}"
+    echo -e "${RED}│          $(tr select_exit)                   │${NC}"
     prompt_user "╰────────────────────────────────────────╯"
     echo ""
     read -n1 -s answer
@@ -743,7 +789,7 @@ while true; do
             echo -e "${GREEN}[✓] Build for Linux completed.${NC}"
             ;;
         w|W)
-            echo "[⧗] Start Build foe Windows..."
+            echo "[⧗] Start Build for Windows..."
             build_program_windows
             echo -e "${GREEN}[✓] Build for Windows completed.${NC}"
             ;;
@@ -752,7 +798,7 @@ while true; do
             break
             ;;
         * )
-            build_info "[⚠] Ungültige Eingabe! Bitte 'l', 'w', 'b' oder 'n' verwenden."
+            build_info "$(tr invalid_input)"
             ;;
     esac
 done
@@ -760,7 +806,7 @@ done
 echo ""
 start_info "╔═════════════════════════════════════════════════════════╗"
 start_info "║                                                         ║"
-start_info "║  [✓] Build Script des Fastboot-Assistant abgeschlossen! ║"
+start_info "║  [✓] Build script of the Fastboot-Assistant completed!  ║"
 start_info "║                                                         ║"
 start_info "╚═════════════════════════════════════════════════════════╝"
 echo ""
