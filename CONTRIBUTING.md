@@ -1,5 +1,9 @@
 # Contributing
 ## How to contribut?
+### Dev Branch
+- Suggestions and improvements can be submitted to the Dev branch and will be published there immediately. I will then see if these are then also published.
+
+### E-Mail
 1. Please send me an email with your code suggestions. 
     - Please include your GitHub name in the email.
     - Please include where in the project the source code should be inserted.
