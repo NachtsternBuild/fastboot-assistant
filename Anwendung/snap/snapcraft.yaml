@@ -1,6 +1,6 @@
 name: fastboot-assistant
 base: core24
-version: '0.8.1.8-2'
+version: '0.8.1.8-3'
 summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
 description: |
   The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
@@ -38,18 +38,21 @@ apps:
       - gtk-themes
       - icon-themes
       - uhid
+      - gnome
     slots:
       - fastboot-assistant
     environment:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
       GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
       GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
-      #LD_LIBRARY_PATH: $SNAP/usr/lib:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH
       GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0
       GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
       GTK_USE_PORTAL: "1"
-      LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy
-
+      #LD_LIBRARY_PATH: $LD_LIBRARY_PATH:$SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/libproxy
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET"
+      GDK_DISABLE_MEDIA: "1"
+      GSK_RENDERER: "cairo"
+      GTK_MEDIA_BACKEND: "none"
 
 plugs:
   gtk-3-themes:
@@ -61,6 +64,11 @@ plugs:
     interface: content
     target: $SNAP/data-dir/themes
     default-provider: gtk-common-themes
+  
+  gnome:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
 
   icon-themes:
     interface: content
@@ -71,6 +79,9 @@ plugs:
     interface: dbus
     bus: session
     name: org.freedesktop.portal.Desktop
+  
+  opengl:
+    interface: opengl
 
 slots:
   fastboot-assistant:
@@ -167,6 +178,10 @@ parts:
       - libproxy1v5
       - libproxy1-plugin-gsettings
       - libproxy1-plugin-networkmanager
+      - libgl1
+      - libegl1
+      - libgles2
+      - libgdk-pixbuf-2.0-0
 
     override-build: |
       snapcraftctl build
