@@ -37,7 +37,15 @@ static void bootloader_new(GtkWidget *widget, gpointer stack)
     auto_free const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way. \nStart procedure to open the bootloader.";
     show_message(message);
     
-    char *device_command = fastboot_command();
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
+    auto_free char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s flashing unlock", device_command);
     LOG_INFO("Run: %s", bootloader_lock_command);
     command_with_spinner(bootloader_lock_command);
@@ -50,6 +58,14 @@ static void bootloader_old(GtkWidget *widget, gpointer stack)
     LOG_INFO("bootloader_old");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way.\n\nStart the process to open the bootloader.";
     show_message(message);
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
     auto_free char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s oem unlock", device_command);
@@ -64,6 +80,14 @@ static void bootloader_lock(GtkWidget *widget, gpointer stack)
     LOG_INFO("bootloader_lock");
     const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu schließen." : "Some chipsets do not support this process in this way.\n\nStart the process to close the bootloader.";
     show_message(message);
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
     auto_free char *device_command = fastboot_command();
     snprintf(bootloader_lock_command, sizeof(bootloader_lock_command), "%s flashing lock", device_command);
