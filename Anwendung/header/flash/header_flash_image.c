@@ -33,10 +33,10 @@ GtkWidget *spinner_flash;
 
 // Usage:
 /*
-// Flashen der Boot-Partitionen für ein A/B-Gerät (ohne zusätzliche Flags)
+// Flashing the boot partitions for an A/B device (without additional flags)
 flash_image(widget, parent_window, "boot_a", "boot_b", "boot.img", NULL);
 
-// Flashen von vbmeta mit spezifischen Flags für Verity und Verification
+// Flashing vbmeta with specific flags for Verity and Verification
 flash_image(widget, parent_window, "vbmeta", NULL, "vbmeta.img", "--disable-verity --disable-verification");
 
 */
@@ -191,13 +191,16 @@ char *build_flash_command(const char *device_command, const char *partition1, co
 {
     char *command = malloc(8192);  
 
-    if (partition2)  // for a/b devices
+	// for a/b devices
+    if (partition2) 
     {
         snprintf(command, 8192, "%s flash %s %s %s && %s flash %s %s %s",
                  device_command, partition1, image_info, optional_flags ? optional_flags : "",
                  device_command, partition2, image_info, optional_flags ? optional_flags : "");
     }
-    else  // for only-a devices
+    
+    // for only-a devices
+    else  
     {
         snprintf(command, 8192, "%s flash %s %s %s",
                  device_command, partition1, image_info, optional_flags ? optional_flags : "");
@@ -219,6 +222,7 @@ void *run_flash_command(void *command)
     pipe = popen(function_command, "r");
     if (!pipe)
     {
+        // errors with fastboot
         const char *handle_flash_error_text = strcmp(language, "de") == 0 ? "Fehler: Fastboot konnte nicht gestartet werden." : "Error: Fastboot could not be started.";
         handle_flash_error(GTK_WINDOW(spinner_window_flash), handle_flash_error_text);
         LOG_ERROR("Fastboot could not be started.");
@@ -237,6 +241,7 @@ void *run_flash_command(void *command)
         const char *error_message = check_fastboot_error(buffer);
         if (error_message)
         {
+            // errors in the flash process
             handle_flash_error(GTK_WINDOW(spinner_window_flash), error_message);
             LOG_ERROR("%s", error_message);
             pclose(pipe); // close the pipe
@@ -252,6 +257,7 @@ void *run_flash_command(void *command)
 
     if (ret != 0)
     {
+        // text for errors in flash
         const char *handle_error_text = strcmp(language, "de") == 0 ? "Das Flashen wurde nicht erfolgreich abgeschlossen." : "The flashing was not completed successfully.";
         handle_flash_error(GTK_WINDOW(spinner_window_flash), handle_error_text);
         LOG_ERROR("%s", handle_error_text);
@@ -290,6 +296,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
         LOG_INFO("Loaded path: %s", image_path);
     }
 	
+	// create the image path
 	snprintf(image_info, sizeof(image_info), "%s/%s", image_path, image_name);
 	
     // check if the image not exists
@@ -300,7 +307,15 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
         LOG_ERROR("%s", error_message);
         return;
     }
-
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
     // create the command
     auto_free const char *device_command = fastboot_command();
     char *function_command = build_flash_command(device_command, partition1, partition2, image_info, optional_flags);
