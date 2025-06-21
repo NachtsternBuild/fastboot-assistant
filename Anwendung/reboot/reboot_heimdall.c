@@ -32,8 +32,14 @@
 static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_from_adb_heimdall");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!" : "Please note that USB debugging is activated in the developer options!";
-    show_message(message);
+    
+    // prevention of crashes
+    if (!is_android_device_connected()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
     auto_free char *device_command = adb_command();
     char command[256];

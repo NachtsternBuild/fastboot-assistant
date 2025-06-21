@@ -32,7 +32,7 @@ char command[256];
 int is_android_device_connected() 
 {
     // check for adb device
-    char *adb_cmd = adb_command(); 
+    auto_free char *adb_cmd = adb_command(); 
     char adb_check[256];
     snprintf(adb_check, sizeof(adb_check), "%s devices | grep -w 'device'", adb_cmd);
     
@@ -44,7 +44,7 @@ int is_android_device_connected()
     }
 
     // check for fastboot device
-    char *fastboot_cmd = fastboot_command();
+    auto_free char *fastboot_cmd = fastboot_command();
     char fastboot_check[256];
     snprintf(fastboot_check, sizeof(fastboot_check), "%s devices | grep -w 'fastboot'", fastboot_cmd);
     char *fastboot_output = execute_command(fastboot_check);
@@ -55,16 +55,12 @@ int is_android_device_connected()
     }
 
     return 0;  // no device
-    
-    // free the commands
-    free(adb_cmd);
-    free(fastboot_cmd);
 }
 
 // check for device in fastboot
 int is_android_device_connected_fastboot()
 {
-	char *info_command = fastboot_command();
+	auto_free char *info_command = fastboot_command();
 	char fastboot_check[256];
     snprintf(fastboot_check, sizeof(fastboot_check), "%s devices | grep -w 'fastboot'", info_command);
     char *fastboot_output = execute_command(fastboot_check);
@@ -75,8 +71,6 @@ int is_android_device_connected_fastboot()
     }
 
     return 0;  // no device
-    // free the command
-    free(info_command);
 }
 
 

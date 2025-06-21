@@ -31,11 +31,10 @@
 static void get_adb(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("get_adb");
-    char *device_command = adb_command();
+    auto_free char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Geräte (ADB)");
-    free(device_command);
     LOG_INFO("end get_adb");
 }
 
@@ -43,11 +42,10 @@ static void get_adb(GtkWidget *widget, gpointer stack)
 static void get_fastboot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("get_fastboot");
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     char command[MAX_BUFFER_SIZE];
     snprintf(command, MAX_BUFFER_SIZE, "%s devices", device_command);
     connected_devices(command, "Geräte (fastboot)");
-    free(device_command);
     LOG_INFO("end get_fastboot");
 }
 
@@ -55,7 +53,7 @@ static void get_fastboot(GtkWidget *widget, gpointer stack)
 static void bootloader_status_adb(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("bootloader_status_adb");
-	char *device_command = adb_command();
+	auto_free char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
     
     // prevention of crashes
@@ -68,7 +66,6 @@ static void bootloader_status_adb(GtkWidget *widget, gpointer stack)
 
     snprintf(command, MAX_BUFFER_SIZE, "%s shell getprop ro.boot.flash.locked", device_command);
     connected_devices(command, "Bootloader Status (ADB)");
-    free(device_command);
     LOG_INFO("end bootloader_status_adb");
 }
 
@@ -76,7 +73,7 @@ static void bootloader_status_adb(GtkWidget *widget, gpointer stack)
 static void bootloader_status_fastboot(GtkWidget *widget, gpointer stack)
 {
 	LOG_INFO("bootloader_status_fastboot");
-	char *device_command = fastboot_command();
+	auto_free char *device_command = fastboot_command();
     char command[MAX_BUFFER_SIZE];
     
     // prevention of crashes
@@ -89,7 +86,6 @@ static void bootloader_status_fastboot(GtkWidget *widget, gpointer stack)
 	
     snprintf(command, MAX_BUFFER_SIZE, "%s getvar unlocked", device_command);
     connected_devices(command, "Bootloader Status (fastboot)");
-    free(device_command);
     LOG_INFO("bootloader_status_fastboot");
 }
 

@@ -33,8 +33,14 @@
 static void start_recovery_adb(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("start_recovery_adb");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!" : "Please note that USB debugging is activated in the developer options!";    
-    show_message(message);
+    
+    // prevention of crashes
+    if (!is_android_device_connected()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
     auto_free char *device_command = adb_command();
     char command[256];
@@ -47,8 +53,14 @@ static void start_recovery_adb(GtkWidget *widget, gpointer stack)
 static void start_recovery_fastboot(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("start_recovery_fastboot");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
-    show_message(message);
+        
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
     auto_free char *device_command = fastboot_command();
     char command[256];
