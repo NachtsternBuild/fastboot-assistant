@@ -57,7 +57,7 @@ GMainLoop *main_loop = NULL;
 // start info-function
 static void start_info(GtkWidget *widget, gpointer stack) 
 {
-    info();
+    info(main_window);
 }
 
 // labels
