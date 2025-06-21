@@ -26,22 +26,59 @@
 #include "program_functions.h"
 
 GtkWidget *root_status_label;
+char command[256];
 
 // check if device are connected
 int is_android_device_connected() 
 {
-    auto_free char *info_command = adb_command();
-    char command[256];
-    snprintf(command, sizeof(command), "%s devices | grep -w 'device'", info_command);
+    // check for adb device
+    char *adb_cmd = adb_command(); 
+    char adb_check[256];
+    snprintf(adb_check, sizeof(adb_check), "%s devices | grep -w 'device'", adb_cmd);
     
-    char *output = execute_command(command);
+    char *adb_output = execute_command(adb_check);
 
-    if (output == NULL || strlen(output) == 0) 
+    if (adb_output != NULL && strlen(adb_output) > 0) 
     {
-        return 0;  // no device
+        return 1;  // adb device 
     }
-    return 1;  // device detected
+
+    // check for fastboot device
+    char *fastboot_cmd = fastboot_command();
+    char fastboot_check[256];
+    snprintf(fastboot_check, sizeof(fastboot_check), "%s devices | grep -w 'fastboot'", fastboot_cmd);
+    char *fastboot_output = execute_command(fastboot_check);
+
+    if (fastboot_output != NULL && strlen(fastboot_output) > 0) 
+    {
+        return 1;  // fastboot device
+    }
+
+    return 0;  // no device
+    
+    // free the commands
+    free(adb_cmd);
+    free(fastboot_cmd);
 }
+
+// check for device in fastboot
+int is_android_device_connected_fastboot()
+{
+	char *info_command = fastboot_command();
+	char fastboot_check[256];
+    snprintf(fastboot_check, sizeof(fastboot_check), "%s devices | grep -w 'fastboot'", info_command);
+    char *fastboot_output = execute_command(fastboot_check);
+
+    if (fastboot_output != NULL && strlen(fastboot_output) > 0) 
+    {
+        return 1;  // fastboot device
+    }
+
+    return 0;  // no device
+    // free the command
+    free(info_command);
+}
+
 
 // create function to show info windows
 void get_android_info(char *android_version, char *kernel_version, char *device_name, char *project_treble, char *active_slot, char *get_soc, char *get_distro, char *get_version, char *get_desktop, char *get_language, char *get_session_type) 

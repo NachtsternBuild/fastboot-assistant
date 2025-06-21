@@ -57,6 +57,15 @@ static void bootloader_status_adb(GtkWidget *widget, gpointer stack)
 	LOG_INFO("bootloader_status_adb");
 	char *device_command = adb_command();
     char command[MAX_BUFFER_SIZE];
+    
+    // prevention of crashes
+    if (!is_android_device_connected()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+
     snprintf(command, MAX_BUFFER_SIZE, "%s shell getprop ro.boot.flash.locked", device_command);
     connected_devices(command, "Bootloader Status (ADB)");
     free(device_command);
@@ -69,6 +78,15 @@ static void bootloader_status_fastboot(GtkWidget *widget, gpointer stack)
 	LOG_INFO("bootloader_status_fastboot");
 	char *device_command = fastboot_command();
     char command[MAX_BUFFER_SIZE];
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+	
     snprintf(command, MAX_BUFFER_SIZE, "%s getvar unlocked", device_command);
     connected_devices(command, "Bootloader Status (fastboot)");
     free(device_command);
