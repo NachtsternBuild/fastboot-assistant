@@ -163,8 +163,17 @@ void flash_images()
     {
         LOG_INFO("Loaded path: %s", directory);
     }
-
+	
     LOG_INFO("Start flashing Images from the %s directory.", directory);
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
     // start flash from directory
     flash_dir(directory);
     

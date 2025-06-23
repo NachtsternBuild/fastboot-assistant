@@ -146,7 +146,17 @@ void flash_list_images()
     {
         LOG_INFO("Loaded path: %s", other_dir);
     }
+    // create the path
     snprintf(directory, sizeof(directory), "%s/Images", other_dir);
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
     flash_images_in_directory(directory);
     
     if (other_dir != NULL) 
@@ -154,9 +164,5 @@ void flash_list_images()
     	g_free((gpointer)other_dir); // free the info (because g_file_get_contents was used)
 	}
 	
-    if (directory != NULL) 
-    {
-    	g_free((gpointer)directory); 
-	}
     LOG_INFO("end flash_other");
 }

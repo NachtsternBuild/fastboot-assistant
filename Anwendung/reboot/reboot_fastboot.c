@@ -34,7 +34,7 @@ static void reboot_from_adb(GtkWidget *widget, gpointer stack)
     LOG_INFO("reboot_from_adb");
     
     // prevention of crashes
-    if (!is_android_device_connected()) 
+    if (!is_android_device_connected_adb()) 
     {      
         const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
         show_error_message(GTK_WIDGET(main_window), error_message);

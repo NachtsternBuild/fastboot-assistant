@@ -275,6 +275,7 @@ void check_ab_file_light();
 void get_info();
 int is_android_device_connected();
 int is_android_device_connected_fastboot();
+int is_android_device_connected_adb();
 void connected_devices();
 void get_android_info();
 

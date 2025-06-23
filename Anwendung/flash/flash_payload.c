@@ -56,6 +56,14 @@ void flash_payload(GtkWidget *widget, gpointer data)
         return;
     }
     
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
     // first dialog
     const char *message = strcmp(language, "de") == 0 ? "Der Prozess zum flashen des payload.zip geht davon aus, \ndass sie sich im Recovery befinden und 'Updates über ADB erlauben' aktiviert haben." : "The process for flashing the payload.zip assumes that \nyou are in Recovery and have activated 'Allow updates via ADB'.";
     show_message(message);

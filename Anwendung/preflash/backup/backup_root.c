@@ -56,7 +56,7 @@ void backup_root()
     
 	// wait for a device
     snprintf(command, sizeof(command), "%s wait-for-device", adb);
-    if (!is_android_device_connected()) 
+    if (!is_android_device_connected_adb()) 
     {      
         const char *message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt. Prüfen sie ob ihr Gerät verbunden ist." : "No device recognized. Check whether your device is connected.";
         show_message(message);
