@@ -32,16 +32,20 @@
 static void reboot_from_adb(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_from_adb");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass USB-Debugging aktiviert ist in den Entwickleroptionen!": "Please note that USB debugging is activated in the developer options!";
-    show_message(message);
     
-    char *device_command = adb_command();
+    // prevention of crashes
+    if (!is_android_device_connected_adb()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
+    auto_free char *device_command = adb_command();
     char command[256];
     snprintf(command, sizeof(command), "%s -d reboot bootloader", device_command);
     command_with_spinner(command);
-    free(device_command);
-    // this is the old command
-    // system("adb reboot bootloader");
+
     LOG_INFO("end reboot_from_adb");
 }
 
@@ -49,14 +53,20 @@ static void reboot_from_adb(GtkWidget *widget, gpointer stack)
 static void reboot_from_fastboot(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_from_fastboot");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
-    show_message(message);
+   
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     char command[256];
     snprintf(command, sizeof(command), "%s reboot bootloader", device_command);
     command_with_spinner(command);
-    free(device_command);
+
     LOG_INFO("end reboot_from_fastboot");
 }
 	
@@ -64,14 +74,11 @@ static void reboot_from_fastboot(GtkWidget *widget, gpointer stack)
 static void fastboot_help(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("fastboot_help");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
-    show_message(message);
     
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     char command[256];
     snprintf(command, sizeof(command), "%s help", device_command);
     open_terminal_by_desktop(command);
-    free(device_command);
     LOG_INFO("end fastboot_help");
 }
 
@@ -79,14 +86,19 @@ static void fastboot_help(GtkWidget *widget, gpointer stack)
 static void list_bootloader_var(GtkWidget *widget, gpointer stack) 
 {
     LOG_INFO("list_bootloader_var");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Fastboot-Modus befindet!" : "Please note that your device is in fastboot mode!";
-    show_message(message);
+   
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
-    char *device_command = fastboot_command();
+    auto_free char *device_command = fastboot_command();
     char command[256];
     snprintf(command, sizeof(command), "%s getvar all", device_command);
     open_terminal_by_desktop(command);
-    free(device_command);
     LOG_INFO("end list_bootloader_var");
 }
 

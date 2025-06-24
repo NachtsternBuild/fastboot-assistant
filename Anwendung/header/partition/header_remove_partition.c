@@ -35,9 +35,14 @@ void remove_partition(const char *partition)
 	apply_language();
 	apply_device();
 	
-	const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise." : "Some chipsets do not support this process in this way.";
-    // show message
-    show_message(message);
+	// prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
     // get the fastboot-command
     auto_free char *device_command = fastboot_command();  
         

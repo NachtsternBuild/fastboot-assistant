@@ -81,7 +81,7 @@ void *flash_thread_func(void *arg)
     // get the inactive slot
     char *inactive_slot = get_inactive_slot();
     // get the adb command
-    auto_free char *device_command = adb_command();
+    char *device_command = adb_command();
     // get the config file
     get_config_file_path(config_file, sizeof(config_file));
     // load the path
@@ -95,7 +95,7 @@ void *flash_thread_func(void *arg)
 	// create the path from the images
 	snprintf(boot_image, sizeof(boot_image), "%s/%s", image_path, boot_image_name);
 	snprintf(system_image, sizeof(system_image), "%s/%s", image_path, system_image_name);
-    
+        
     // wait for a device
     snprintf(command_build, sizeof(command_build), "%s wait-for-device", device_command);
     char *command = execute_command(command_build);
@@ -162,8 +162,8 @@ void *flash_thread_func(void *arg)
     if (image_path != NULL) 
 	{
     	g_free((gpointer)image_path); // free this (because g_file_get_contents was used)
-    	// I'll try to create a autofree for g_free and this to
 	}
+    free(device_command);
     
     return NULL;
 }

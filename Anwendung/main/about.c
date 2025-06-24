@@ -73,7 +73,7 @@ void brownie_jean(GtkWidget *widget, gpointer stack)
 // function that output version infos about the system and installed packages
 void run_tools_info(GtkWidget *widget, gpointer stack)
 {
-	info_tools();
+	info_tools(main_window);
 }
 
 void load_about_provider(void) 
