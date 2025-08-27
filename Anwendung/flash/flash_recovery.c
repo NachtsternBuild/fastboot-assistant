@@ -40,19 +40,9 @@ void recovery_heimdall(GtkWidget *widget, gpointer stack)
 // Function to set up button labels based on the language
 void set_button_labels_flash_recovery(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Recovery");
-        strcpy(labels[1], "Recovery (heimdall)");
-        strcpy(labels[2], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Recovery");
-        strcpy(labels[1], "Recovery (heimdall)");
-        strcpy(labels[2], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Recovery"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Recovery (heimdall)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Back"), sizeof(labels[2]));
 }
 
 /* main function - flash_recovery */

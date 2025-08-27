@@ -64,27 +64,13 @@ void init_boot_heimdall(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_flash_boot(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Boot (only-a)");
-        strcpy(labels[1], "Boot (a/b)");
-        strcpy(labels[2], "Boot (heimdall)");
-        strcpy(labels[3], "init_boot (only-a)");
-        strcpy(labels[4], "init_boot (a/b)");
-        strcpy(labels[5], "init_boot (heimdall)");
-        strcpy(labels[6], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Boot (only-a)");
-        strcpy(labels[1], "Boot (a/b)");
-        strcpy(labels[2], "Boot (heimdall)");
-        strcpy(labels[3], "init_boot (only-a)");
-        strcpy(labels[4], "init_boot (a/b)");
-        strcpy(labels[5], "init_boot (heimdall)");
-        strcpy(labels[6], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Boot (only-a)"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Boot (a/b)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Boot (heimdall)"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("init_boot (only-a)"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("init_boot (a/b)"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("init_boot (heimdall)"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Back"), sizeof(labels[6]));
 }
 
 /* main function - flash_boot */

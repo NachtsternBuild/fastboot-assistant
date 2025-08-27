@@ -1,6 +1,10 @@
 # Makefile - fastboot-assistant
 # Sweet Unix
 
+#------------------------
+# build main programm
+#------------------------
+
 # compiler
 CC = ccache gcc
 #CC = gcc
@@ -159,7 +163,52 @@ $(TARGET): $(OBJS)
 %.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# clean
+# cleanup
 clean:
 	rm -f $(OBJS) $(TARGET)
 
+#------------------------
+# build language files
+#------------------------
+
+# standard .pot file
+POT_FILE = po/fastboot-assistant.pot
+
+# languages
+LANGS = de en es pt ru fr
+
+# .po files in /po
+PO_FILES = $(addprefix po/,$(addsuffix .po,$(LANGS)))
+
+# create the .pot file
+i18n: $(POT_FILE)
+
+$(POT_FILE): $(SRCS) $(HEADERS)
+	mkdir -p po
+	xgettext --keyword=_ --language=C --from-code=UTF-8 \
+		--add-comments --sort-output \
+		--output=$(POT_FILE) $(SRCS)
+
+# create new .po files for the languages
+define INIT_PO
+po/$1.po:
+	mkdir -p po
+	msginit --no-translator --input=$(POT_FILE) --locale=$1 --output-file=po/$1.po
+endef
+$(foreach lang,$(LANGS),$(eval $(call INIT_PO,$(lang))))
+
+# create .po files for all languages
+po-all: $(PO_FILES)
+
+# create .po file for only on language
+po-%: po/%.po
+
+# compile the .mo files
+OUTDIR ?= .
+MO_FILES = $(addprefix $(OUTDIR)/locale/,$(addsuffix /LC_MESSAGES/$(TARGET).mo,$(LANGS)))
+
+$(OUTDIR)/locale/%/LC_MESSAGES/$(TARGET).mo: po/%.po
+	mkdir -p $(dir $@)
+	msgfmt $< -o $@
+
+mo-all: $(MO_FILES)

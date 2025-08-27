@@ -106,7 +106,7 @@ void log_viewer(GtkButton *button, gpointer user_data)
 	
 	// create the log window
     GtkWidget *window_log = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window_log), "Log Viewer");
+    gtk_window_set_title(GTK_WINDOW(window_log), _("Log Viewer"));
     gtk_window_set_default_size(GTK_WINDOW(window_log), WINDOW_WIDTH, WINDOW_HEIGHT);
     g_signal_connect(window_log, "destroy", G_CALLBACK(log_viewer_destroyed), NULL);
 	
@@ -181,7 +181,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
     // function: show log window
    	GtkWidget *item1 = gtk_list_box_row_new();
 	GtkWidget *icon1 = gtk_image_new_from_icon_name("utilities-system-monitor-symbolic"); // utilities-terminal - utilities-terminal-symbolic - utilities-system-monitor-symbolic
-	GtkWidget *label1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Log ansehen" : "Show Log");
+	GtkWidget *label1 = gtk_label_new(_("Show Log"));
 
 	// box for the icon and the label
 	GtkWidget *hbox1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6); // 6 px distance
@@ -205,7 +205,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
 	// function: show connected devices
 	GtkWidget *item2 = gtk_list_box_row_new();
 	GtkWidget *icon2 = gtk_image_new_from_icon_name("media-optical-symbolic"); // dialog-information help-about-symbolic network-wired media-optical-symbolic
-	GtkWidget *label2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Geräte" : "Devices");
+	GtkWidget *label2 = gtk_label_new(_("Devices"));
 	
 	// box for the icon and the label
 	GtkWidget *hbox2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
@@ -229,7 +229,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
 	// function: show info
     GtkWidget *item3 = gtk_list_box_row_new();
     GtkWidget *icon3 = gtk_image_new_from_icon_name("multimedia-player-apple-ipod-touch-symbolic");
-    GtkWidget *label3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Geräte Info" : "Device Info");
+    GtkWidget *label3 = gtk_label_new(_("Device Info"));
     
     // box for the icon and the label
 	GtkWidget *hbox3 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
@@ -253,7 +253,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
 	// function: show computer info
     GtkWidget *item4 = gtk_list_box_row_new();
     GtkWidget *icon4 = gtk_image_new_from_icon_name("start-here-symbolic");
-    GtkWidget *label4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "System Info" : "System Info");
+    GtkWidget *label4 = gtk_label_new(_("System Info"));
     
     // box for the icon and the label
 	GtkWidget *hbox4 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
@@ -277,7 +277,7 @@ GtkWidget* create_custom_headerbar(gpointer stack)
 	// function: kill the fastboot-asssistant
     GtkWidget *item5 = gtk_list_box_row_new();
     GtkWidget *icon5 = gtk_image_new_from_icon_name("process-stop"); // process-stop / application-exit
-    GtkWidget *label5 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Beenden" : "Exit");
+    GtkWidget *label5 = gtk_label_new(_("Exit"));
     
     // box for the icon and the label
 	GtkWidget *hbox5 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);

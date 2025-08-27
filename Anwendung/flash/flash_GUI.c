@@ -41,33 +41,16 @@ extern void flash_others(GtkWidget *widget, gpointer stack);
 // function to set up button labels based on the language
 void set_button_labels_flash_GUI(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Flash Recovery");
-        strcpy(labels[1], "Flash Boot");
-        strcpy(labels[2], "Flash Vendor");
-        strcpy(labels[3], "Flash payload.zip");
-        strcpy(labels[4], "Flash System");
-        strcpy(labels[5], "Flash vbmeta/dtbo");
-        strcpy(labels[6], "Flash Preloader");
-        strcpy(labels[7], "Flash Nutzerdaten");
-        strcpy(labels[8], "Flash Other Images");
-        strcpy(labels[9], "Back to Home");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Flash Recovery");
-        strcpy(labels[1], "Flash Boot");
-        strcpy(labels[2], "Flash Vendor");
-        strcpy(labels[3], "Flash payload.zip");
-        strcpy(labels[4], "Flash System");
-        strcpy(labels[5], "Flash vbmeta/dtbo");
-        strcpy(labels[6], "Flash Preloader");
-        strcpy(labels[7], "Flash Nutzerdaten");
-        strcpy(labels[8], "Flash Andere Images");
-        strcpy(labels[9], "Zurück zur Startseite");
-    }
+    g_strlcpy(labels[0], _("Flash Recovery"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Flash Boot"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Flash Vendor"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Flash payload.zip"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Flash System"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("Flash vbmeta/dtbo"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Flash Preloader"), sizeof(labels[6]));
+    g_strlcpy(labels[7], _("Flash Nutzerdaten"), sizeof(labels[7]));
+    g_strlcpy(labels[8], _("Flash Other Images"), sizeof(labels[8]));
+    g_strlcpy(labels[9], _("Back to Home"), sizeof(labels[9]));
 }
 
 

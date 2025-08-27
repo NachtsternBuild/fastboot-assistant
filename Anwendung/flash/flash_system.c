@@ -110,7 +110,7 @@ void system_to_inactiv(GtkWidget *widget, gpointer stack)
 	// check if the image not exists
     if (access(image_info, F_OK) == -1)
     {      
-        const char *error_message = g_strcmp0(language, "de") == 0 ? "Image nicht gefunden." : "Image file not found.";
+        const char *error_message = _("Image file not found.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         LOG_ERROR("%s", error_message);
         return;
@@ -119,7 +119,7 @@ void system_to_inactiv(GtkWidget *widget, gpointer stack)
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -165,7 +165,7 @@ void system_to_activ(GtkWidget *widget, gpointer stack)
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -190,21 +190,10 @@ void system_to_activ_heimdall(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_flash_system(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "System");
-        strcpy(labels[1], "System (heimdall)");
-        strcpy(labels[2], "System (inactive)");
-        strcpy(labels[3], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "System");
-        strcpy(labels[1], "System (heimdall)");
-        strcpy(labels[2], "System (inactive)");
-        strcpy(labels[3], "Zurück");
-    }
+    g_strlcpy(labels[0], _("System"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("System (heimdall)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("System (inactive)"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Back"), sizeof(labels[3]));
 }
 
 /* main function - flash_system */

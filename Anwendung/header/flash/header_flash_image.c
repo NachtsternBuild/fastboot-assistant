@@ -50,128 +50,92 @@ const char* check_fastboot_error(const char *fastboot_output)
 
     if (strstr(fastboot_output, "target didn't report max-download-size"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Das Zielgerät hat keine maximale Download-Größe gemeldet."
-            : "Error: Target did not report max-download-size.";
+        return _("Error: Target did not report max-download-size.");
     }
     
     if (strstr(fastboot_output, "FAILED"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Ein allgemeiner Fehler ist aufgetreten. Siehe Log für Details."
-            : "Error: A general error occurred. Check the log for details.";
+        return _("Error: A general error occurred. Check the log for details.");
     }
     
     if (strstr(fastboot_output, "Invalid sparse file format at header magic"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Ungültiges Sparse-Dateiformat. Überprüfen Sie das Image."
-            : "Error: Invalid sparse file format. Please check the image.";
+        return _("Error: Invalid sparse file format. Please check the image.");
     }
     
     if (strstr(fastboot_output, "Writing 'system' FAILED"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Schreiben der Partition 'system' fehlgeschlagen. Gerät und Verbindung prüfen."
-            : "Error: Writing to partition 'system' failed. Check the device and connection.";
+        return _("Error: Writing to partition 'system' failed. Check the device and connection.");
     }
     
     if (strstr(fastboot_output, "Writing 'system_a' FAILED"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Schreiben der Partition 'system' fehlgeschlagen. Gerät und Verbindung prüfen."
-            : "Error: Writing to partition 'system' failed. Check the device and connection.";
+        return _("Error: Writing to partition 'system' failed. Check the device and connection.");
     }
     
     if (strstr(fastboot_output, "Writing 'system_b' FAILED"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Schreiben der Partition 'system' fehlgeschlagen. Gerät und Verbindung prüfen."
-            : "Error: Writing to partition 'system' failed. Check the device and connection.";
+        return _("Error: Writing to partition 'system' failed. Check the device and connection.");
     }
     
     if (strstr(fastboot_output, "Resizing 'system' FAILED"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Vergrößern der Partition 'system_a' fehlgeschlagen."
-            : "Error: Resizing partition 'system_a' failed.";
+        return _("Error: Resizing partition 'system' failed.");
     }
     
     if (strstr(fastboot_output, "Resizing 'system_a' FAILED"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Vergrößern der Partition 'system_a' fehlgeschlagen."
-            : "Error: Resizing partition 'system_a' failed.";
+        return _("Error: Resizing partition 'system_a' failed.");
     }
     
     if (strstr(fastboot_output, "Resizing 'system_b' FAILED"))
     {
-        return g_strcmp0(language, "de") == 0
-            ? "Fehler: Vergrößern der Partition 'system_a' fehlgeschlagen."
-            : "Error: Resizing partition 'system_a' failed.";
+        return _("Error: Resizing partition 'system_a' failed.");
     }
     
     if (strstr(fastboot_output, "Partition not found"))
     {
-    	return g_strcmp0(language, "de") == 0
-    		? "Fehler: Die angegebene Partition wurde nicht gefunden. Bitte Partition überprüfen."
-    		: "Error: The specified partition was not found. Please check the partition.";
+    	return _("Error: The specified partition was not found. Please check the partition.");
     }
     
     if (strstr(fastboot_output, "timeout"))
     {
-    	return g_strcmp0(language, "de") == 0
-    		? "Fehler: Die Verbindung zu Fastboot ist abgelaufen. Bitte Gerät und USB-Verbindung prüfen."
-    		: "Error: The connection to Fastboot has expired. Please check the device and USB connection.";
+    	return _("Error: The connection to Fastboot has expired. Please check the device and USB connection.");
     }
     
     if (strstr(fastboot_output, "Permission denied"))
     {
-    	return g_strcmp0(language, "de") == 0
-    		? "Fehler: Keine Berechtigung, Fastboot-Befehl auszuführen. Bitte als root versuchen."
-    		: "Error: No authorization to execute fastboot command. Please try as root.";
+    	return _("Error: No authorization to execute fastboot command. Please try as root.");
     }
     
     if (strstr(fastboot_output, "device is locked"))
     {
-    	return g_strcmp0(language, "de") == 0
-    		? "Fehler: Das Gerät ist gesperrt. Bitte Bootloader entsperren und erneut versuchen."
-    		: "Error: The device is locked. Please unlock the bootloader and try again.";
+    	return _("Error: The device is locked. Please unlock the bootloader and try again.");
     }
     
     if (strstr(fastboot_output, "remote: Operation not permitted"))
     {
-        return g_strcmp0(language, "de") == 0
-        	? "Fehler: Die Operation ist nicht zugelassen. Bitte Gerät prüfen."
-        	: "Error: The operation is not permitted. Please check the device.";
+        return _("Error: The operation is not permitted. Please check the device.");
     }
     
     if (strstr(fastboot_output, "Command not allowed"))
     {
-        return g_strcmp0(language, "de") == 0
-        	? "Fehler: Der Befehl ist nicht erlaubt."
-        	: "Error: The command is not allowed.";
+        return _("Error: The command is not allowed.");
     }
     
     if (strstr(fastboot_output, "No such file or directory"))
     {
-        return g_strcmp0(language, "de") == 0
-        	? "Fehler: Datei oder Verzeichnis nicht gefunden. Bitte Pfad und Datei prüfen."
-        	: "Error: File or directory not found. Please check path and file.";
+        return _("Error: File or directory not found. Please check path and file.");
     }
     
     if (strstr(fastboot_output, "cannot load"))
     {
-        return g_strcmp0(language, "de") == 0
-        	? "Fehler: Image konnte nicht geladen werden. Bitte die Datei überprüfen."
-        	: "Error: Image could not be loaded. Please check the file.";
+        return _("Error: Image could not be loaded. Please check the file.");
     }
     
     if (strstr(fastboot_output, "Unknown partition"))
     {
-        return g_strcmp0(language, "de") == 0
-        	? "Fehler: Unbekannte Partition. Bitte Partition prüfen."
-        	: "Error: Unknown partition. Please check partition.";
+        return _("Error: Unknown partition. Please check partition.");
     }
 
     return NULL; // unknown error
@@ -181,7 +145,7 @@ const char* check_fastboot_error(const char *fastboot_output)
 void handle_flash_error(GtkWindow *parent_window, const char *error_details)
 {
     char error_message[4096];
-    snprintf(error_message, sizeof(error_message), g_strcmp0(language, "de") == 0 ? "Fehler: %s\n" : "Error: %s\n", error_details);
+    snprintf(error_message, sizeof(error_message), _("Error: %s\n"), error_details);
     LOG_ERROR("%s", error_details); 
     show_error_message(GTK_WIDGET(parent_window), error_message);
 }
@@ -223,7 +187,7 @@ void *run_flash_command(void *command)
     if (!pipe)
     {
         // errors with fastboot
-        const char *handle_flash_error_text = strcmp(language, "de") == 0 ? "Fehler: Fastboot konnte nicht gestartet werden." : "Error: Fastboot could not be started.";
+        const char *handle_flash_error_text = _("Error: Fastboot could not be started.");
         handle_flash_error(GTK_WINDOW(spinner_window_flash), handle_flash_error_text);
         LOG_ERROR("Fastboot could not be started.");
         gtk_spinner_stop(GTK_SPINNER(spinner_flash));
@@ -258,7 +222,7 @@ void *run_flash_command(void *command)
     if (ret != 0)
     {
         // text for errors in flash
-        const char *handle_error_text = strcmp(language, "de") == 0 ? "Das Flashen wurde nicht erfolgreich abgeschlossen." : "The flashing was not completed successfully.";
+        const char *handle_error_text = _("The flashing was not completed successfully.");
         handle_flash_error(GTK_WINDOW(spinner_window_flash), handle_error_text);
         LOG_ERROR("%s", handle_error_text);
     }
@@ -302,7 +266,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     // check if the image not exists
     if (access(image_info, F_OK) == -1)
     {      
-        const char *error_message = g_strcmp0(language, "de") == 0 ? "Image nicht gefunden." : "Image file not found.";
+        const char *error_message = _("Image file not found.");
         show_error_message(GTK_WIDGET(parent_window), error_message);
         LOG_ERROR("%s", error_message);
         return;
@@ -311,7 +275,7 @@ void flash_image(GtkWidget *widget, GtkWindow *parent_window, const char *partit
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }

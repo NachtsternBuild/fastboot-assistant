@@ -51,7 +51,7 @@ void flash_payload(GtkWidget *widget, gpointer data)
     {
         // no payload.zip found
         char error_message[4096];
-        snprintf(error_message, sizeof(error_message), g_strcmp0(language, "de") == 0 ? "Image in '%s' nicht gefunden.\n" : "Image file '%s' not found.\n", payload_info);
+        snprintf(error_message, sizeof(error_message), _("Image file '%s' not found.\n"), payload_info);
         show_message(error_message);
         return;
     }
@@ -59,13 +59,14 @@ void flash_payload(GtkWidget *widget, gpointer data)
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
+
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
     
     // first dialog
-    const char *message = strcmp(language, "de") == 0 ? "Der Prozess zum flashen des payload.zip geht davon aus, \ndass sie sich im Recovery befinden und 'Updates über ADB erlauben' aktiviert haben." : "The process for flashing the payload.zip assumes that \nyou are in Recovery and have activated 'Allow updates via ADB'.";
+    const char *message = _("The process for flashing the payload.zip assumes that \nyou are in Recovery and have activated 'Allow updates via ADB'.");
     show_message(message);
     
 	// create the flash command

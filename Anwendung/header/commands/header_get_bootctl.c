@@ -34,21 +34,13 @@ void get_bootctl(GtkWidget *bootctl_status_label)
     
     if (!is_android_device_connected()) 
     {      
-        const char *no_device = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *no_device = _("No device detected.");
         gtk_label_set_text(GTK_LABEL(bootctl_status_label), no_device);
         return;
     }
     
-    if (strcmp(language, "de") == 0) 
-    {
-        detected_bootctl = "✅ Bootctl erkannt.";
-        not_detected_bootctl = "❌ Bootctl nicht erkannt.";
-    } 
-    else 
-    {
-        detected_bootctl = "✅ Bootctl detected.";
-        not_detected_bootctl = "❌ Bootctl not detected.";
-    }
+    detected_bootctl = _("✅ Bootctl detected.");
+    not_detected_bootctl = _("❌ Bootctl not detected.");
 
     // check for bootctl
     auto_free char *bootctl_command = adb_command();

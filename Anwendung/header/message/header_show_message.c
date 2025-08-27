@@ -38,7 +38,7 @@ void show_message(const char *message)
 
     // Create dialog window
     dialog = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(dialog), "Information");
+    gtk_window_set_title(GTK_WINDOW(dialog), _("Information"));
     gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 
     // Vertical container for the contents of the dialog

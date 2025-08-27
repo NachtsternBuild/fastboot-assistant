@@ -46,3 +46,4 @@ void connected_devices(const char *command, const char *label)
     // Close the process
     pclose(fp);
 }
+

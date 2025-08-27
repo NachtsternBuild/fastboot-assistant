@@ -112,7 +112,7 @@ void post_update()
         const char *new_version = "v.0.8.1.8"; 
         char version_message[4096];
         // user information
-        snprintf(version_message, sizeof(version_message), g_strcmp0(language, "de") == 0 ? "Alte Version: %s\n\nNeue Version: %s\n\n" : "Old version: %s\n\nNew Version %s\n\n", current_version, new_version);
+        snprintf(version_message, sizeof(version_message), _("Old version: %s\n\nNew Version %s\n\n"), current_version, new_version);
         
 		show_message(version_message);
 		

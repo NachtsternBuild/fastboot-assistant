@@ -140,24 +140,24 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     apply_language();
 
     // Define labels based on the selected language
-    const char *android_info_title = strcmp(language, "de") == 0 ? "Android-Info:" : "Android Info:";
-    const char *android_version_label = strcmp(language, "de") == 0 ? "Android-Version: " : "Android Version: ";
-    const char *kernel_version_label = strcmp(language, "de") == 0 ? "Kernel-Version: " : "Kernel Version: ";
-    const char *device_name_label = strcmp(language, "de") == 0 ? "Gerätename: " : "Device Name: ";
-    const char *project_treble_label = strcmp(language, "de") == 0 ? "Project Treble: " : "Project Treble: ";
-    const char *active_slot_label = strcmp(language, "de") == 0 ? "Aktiver Slot: " : "Active Slot: ";
-    const char *root_access_label = strcmp(language, "de") == 0 ? "Root-Rechte: " : "Root Access: ";
-    const char *soc_label = strcmp(language, "de") == 0 ? "System-on-Chip: " : "System-on-Chip: ";
-    const char *computer_info_title = strcmp(language, "de") == 0 ? "Computer-Info:" : "Computer Info:";
-    const char *distro_label = strcmp(language, "de") == 0 ? "Distribution: " : "Distribution: ";
-    const char *version_label = strcmp(language, "de") == 0 ? "Version: " : "Version: ";
-    const char *desktop_label = strcmp(language, "de") == 0 ? "Desktop: " : "Desktop: ";
-    const char *language_label = strcmp(language, "de") == 0 ? "Sprache: " : "Language: ";
-    const char *session_type_label = strcmp(language, "de") == 0 ? "Session Typ: " : "Session Type: ";
+    const char *android_info_title = _("Android Info:");
+    const char *android_version_label = _("Android Version: ");
+    const char *kernel_version_label = _("Kernel Version: ");
+    const char *device_name_label = _("Device Name: ");
+    const char *project_treble_label = _("Project Treble: ");
+    const char *active_slot_label = _("Active Slot: ");
+    const char *root_access_label = _("Root Access: ");
+    const char *soc_label = _("System-on-Chip: ");
+    const char *computer_info_title = _("Computer Info:");
+    const char *distro_label = _("Distribution: ");
+    const char *version_label = _("Version: ");
+    const char *desktop_label = _("Desktop: ");
+    const char *language_label = _("Language: ");
+    const char *session_type_label = _("Session Type: ");
     
     if (!is_android_device_connected_adb()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(parent_window), error_message);
         return;
     }
@@ -181,7 +181,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
 
     // create a window
     GtkWidget *window = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(window), "Info");
+    gtk_window_set_title(GTK_WINDOW(window), _("Info"));
     gtk_window_set_default_size(GTK_WINDOW(window), 700, 600);
     g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
 
@@ -222,7 +222,7 @@ void info(int argc, char *argv[], GtkWindow *parent_window)
     
     // get info for root
     GtkWidget *root_label = gtk_label_new(g_strdup_printf("%s", root_access_label));
-    root_status_label = gtk_label_new("Check for root permissions...");
+    root_status_label = gtk_label_new(_("Check for root permissions..."));
     gtk_box_append(GTK_BOX(box), root_label);
     gtk_box_append(GTK_BOX(box), root_status_label);
 

@@ -53,23 +53,11 @@ void userdata_img_heimdall(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_flash_data(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Metadata");
-        strcpy(labels[1], "Metadata (heimdall)");
-        strcpy(labels[2], "Userdata");
-        strcpy(labels[3], "Userdata (heimdall)");
-        strcpy(labels[4], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Metadata");
-        strcpy(labels[1], "Metadata (heimdall");
-        strcpy(labels[2], "Userdata");
-        strcpy(labels[3], "Userdata (heimdall)");
-        strcpy(labels[4], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Metadata"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Metadata (heimdall)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Userdata"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Userdata (heimdall)"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Back"), sizeof(labels[4]));
 }
 
 /* main function - flash_data */

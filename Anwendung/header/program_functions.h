@@ -26,7 +26,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include <adwaita.h>  
+#include <adwaita.h>
+#include "language_check.h"  
 
 #ifndef PROGRAM_FUNCTIONS_H
 #define PROGRAM_FUNCTIONS_H

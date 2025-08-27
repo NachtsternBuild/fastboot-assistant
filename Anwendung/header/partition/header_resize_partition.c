@@ -83,14 +83,14 @@ void resize_partition(const char *partition)
 	// prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
     
     // text for the entry
-    const char *dialog_entry_title = strcmp(language, "de") == 0 ? "Neue Partitionsgröße" : "New Partition Size";
-    const char *dialog_entry = strcmp(language, "de") == 0 ? "Partitionsgröße (in kB):" : "Partition Size (in kB)";
+    const char *dialog_entry_title = _("New Partition Size");
+    const char *dialog_entry = _("Partition Size (in kB)");
          
    	show_dialog_with_entry(dialog_entry_title, dialog_entry, get_number_partition_rs);
 	
