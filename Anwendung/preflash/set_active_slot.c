@@ -34,10 +34,22 @@ char slot_command[2048];
 static void set_slot_a(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("set_slot_a");
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+    
     auto_free char *device_command = fastboot_command();
 	snprintf(slot_command, sizeof(slot_command), "%s set_active a && %s getvar current-slot", device_command, device_command);
 	LOG_INFO("Run: %s", slot_command);
     command_with_spinner(slot_command);
+    
+    free(device_command);
+    
     LOG_INFO("end set_slot_a");
 }
 
@@ -45,11 +57,19 @@ static void set_slot_a(GtkWidget *widget, gpointer stack)
 static void set_slot_b(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("set_slot_b");
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
+   
     auto_free char *device_command = fastboot_command();
 	snprintf(slot_command, sizeof(slot_command), "%s set_active b && %s getvar current-slot", device_command, device_command);
 	LOG_INFO("Run: %s", slot_command);
     command_with_spinner(slot_command);
-    free(device_command);
     LOG_INFO("end set_slot_b");
 }
 

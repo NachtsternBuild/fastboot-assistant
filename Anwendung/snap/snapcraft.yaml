@@ -1,6 +1,6 @@
 name: fastboot-assistant
 base: core24
-version: '0.8.1.8-3'
+version: '0.8.1.9'
 summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
 description: |
   The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
@@ -35,8 +35,8 @@ apps:
       - adb-support
       - gsettings
       - cups
-      - gtk-themes
-      - icon-themes
+      #- gtk-themes
+      #- icon-themes
       - uhid
       - gnome
     slots:
@@ -55,25 +55,25 @@ apps:
       GTK_MEDIA_BACKEND: "none"
 
 plugs:
-  gtk-3-themes:
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes
+  #gtk-3-themes:
+    #interface: content
+    #target: $SNAP/data-dir/themes
+    #default-provider: gtk-common-themes
 
-  gtk-themes:
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes
+  #gtk-themes:
+    #interface: content
+    #target: $SNAP/data-dir/themes
+    #default-provider: gtk-common-themes
   
   gnome:
     interface: content
     target: $SNAP/gnome-platform
     default-provider: gnome-46-2404
 
-  icon-themes:
-    interface: content
-    target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes
+  #icon-themes:
+    #interface: content
+    #target: $SNAP/data-dir/icons
+    #default-provider: gtk-common-themes
 
   dbus:
     interface: dbus
@@ -161,8 +161,8 @@ parts:
       - pkexec
       - coreutils
       - libc6
-      - libgtk-4-1
-      - libgtk-3-0
+      #- libgtk-4-1
+      #- libgtk-3-0
       - libglib2.0-0
       - dconf-gsettings-backend
       - xdg-desktop-portal

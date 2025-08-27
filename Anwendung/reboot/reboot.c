@@ -31,8 +31,14 @@
 static void reboot_system(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("reboot_system");
-    const char *message = strcmp(language, "de") == 0 ? "Neustart wird durchgeführt." : "Restart is performed.";    
-    show_message(message);
+        
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
+    }
     
     // reboot from fastboot
     auto_free char *device_command = fastboot_command();
@@ -55,6 +61,14 @@ static void boot_to_image(const gchar *i_filename)
     if (boot_image_path) 
     {
         LOG_INFO("Loaded path: %s", boot_image_path);
+    }
+    
+    // prevention of crashes
+    if (!is_android_device_connected_fastboot()) 
+    {      
+        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        show_error_message(GTK_WIDGET(main_window), error_message);
+        return;
     }
 
     // create fastboot command

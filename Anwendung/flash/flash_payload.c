@@ -60,6 +60,7 @@ void flash_payload(GtkWidget *widget, gpointer data)
     if (!is_android_device_connected_fastboot()) 
     {      
         const char *error_message = _("No device detected.");
+
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
