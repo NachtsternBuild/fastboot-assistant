@@ -50,7 +50,7 @@ void updater_devmode(void)
     apply_theme();
     apply_language();
 	   
-    const char *confirmation = strcmp(language, "de") == 0 ? "Updater (Dev)" : "Updater (Dev)";
+    const char *confirmation = _("Updater (Dev)");
     GtkWidget *confirmation_window = gtk_window_new();  
     gtk_window_set_title(GTK_WINDOW(confirmation_window), confirmation);
 
@@ -60,20 +60,20 @@ void updater_devmode(void)
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     gtk_window_set_child(GTK_WINDOW(confirmation_window), vbox);
 
-    GtkWidget *message_label = gtk_label_new(g_strcmp0(language, "de") == 0 ? "\n\nDen Fastboot-Assistant bauen?\n\n" : "\n\nBuild the Fastboot Assistant from source?\n\n");
+    GtkWidget *message_label = gtk_label_new(_("\n\nBuild the Fastboot Assistant from source?\n\n"));
     gtk_box_append(GTK_BOX(vbox), message_label);
     
-    GtkWidget *prepare_build_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Build vorbereiten" : "Prepare Build");
+    GtkWidget *prepare_build_button = gtk_button_new_with_label(_("Prepare Build"));
     gtk_box_append(GTK_BOX(vbox), prepare_build_button);
     
     g_signal_connect(prepare_build_button, "clicked", G_CALLBACK(prepare_build), confirmation_window);
         
-    GtkWidget *confirm_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Projekt bauen" : "Build Project");
+    GtkWidget *confirm_button = gtk_button_new_with_label(_("Build Project"));
     gtk_box_append(GTK_BOX(vbox), confirm_button);
 
     g_signal_connect(confirm_button, "clicked", G_CALLBACK(build_from_source), confirmation_window);
 			
-    GtkWidget *cancel_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Später Installieren" : "Install later");
+    GtkWidget *cancel_button = gtk_button_new_with_label(_("Build later"));
     gtk_box_append(GTK_BOX(vbox), cancel_button);
     g_signal_connect(cancel_button, "clicked", G_CALLBACK(close_window_mainloop), confirmation_window);
 

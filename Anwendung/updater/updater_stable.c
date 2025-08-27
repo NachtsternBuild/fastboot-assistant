@@ -347,7 +347,7 @@ void updater_stable(void)
     		update_info = "old_repo";
 		}
 
-        const char *confirmation = strcmp(language, "de") == 0 ? "Updater" : "Updater";
+        const char *confirmation = _("Updater");
         GtkWidget *confirmation_window = gtk_window_new();  
         gtk_window_set_title(GTK_WINDOW(confirmation_window), confirmation);
 
@@ -369,7 +369,7 @@ void updater_stable(void)
 		gtk_widget_set_valign(icon_update, GTK_ALIGN_CENTER);
 		gtk_widget_set_margin_top(icon_update, 12);
 		gtk_widget_set_margin_bottom(icon_update, 6);
-	    GtkWidget *label_update = gtk_label_new(g_strcmp0(language, "de") == 0 ? "\nUpdate Verfügbar\n": "\nUpdate Available\n");
+	    GtkWidget *label_update = gtk_label_new(_("\nUpdate Available\n"));
 	    // hightlight the message
 	    gtk_widget_add_css_class(label_update, "highlight");
 	    gtk_box_append(GTK_BOX(vbox), icon_update);
@@ -382,7 +382,7 @@ void updater_stable(void)
 		gtk_widget_set_valign(icon_uptodate, GTK_ALIGN_CENTER);
 		gtk_widget_set_margin_top(icon_uptodate, 12);
 		gtk_widget_set_margin_bottom(icon_uptodate, 6);
-	    GtkWidget *label_uptodate = gtk_label_new(g_strcmp0(language, "de") == 0 ? "\nFastboot-Assistant aktuell\n": "\nFastboot-Assistant up to date\n");
+	    GtkWidget *label_uptodate = gtk_label_new(_("\nFastboot-Assistant up to date\n"));
 	    // hightlight the message
 	    gtk_widget_add_css_class(label_uptodate, "highlight");
 	    gtk_box_append(GTK_BOX(vbox), icon_uptodate);
@@ -409,22 +409,22 @@ void updater_stable(void)
     	 
         // message with current and new version
         char version_message[256];
-		snprintf(version_message, sizeof(version_message), g_strcmp0(language, "de") == 0 ? "Installierte Version: %s\n\nGefundene Version: %s\n\n" : "Installed Version: %s\n\nFound version: %s\n\n", current_version_updater, version);
+		snprintf(version_message, sizeof(version_message), _("Installed Version: %s\n\nFound version: %s\n\n"), current_version_updater, version);
 		GtkWidget *version_label = gtk_label_new(version_message);
 		gtk_box_append(GTK_BOX(vbox), version_label);
 		
 		// install button
-        GtkWidget *confirm_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
+        GtkWidget *confirm_button = gtk_button_new_with_label(_("Install"));
         gtk_box_append(GTK_BOX(vbox), confirm_button);
         g_signal_connect(confirm_button, "clicked", G_CALLBACK(create_and_run_bash_script), package_url);
 		
 		// install later button
-        GtkWidget *install_later_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Später Installieren" : "Install later");
+        GtkWidget *install_later_button = gtk_button_new_with_label(_("Install later"));
         gtk_box_append(GTK_BOX(vbox), install_later_button);
         g_signal_connect(install_later_button, "clicked", G_CALLBACK(close_window_mainloop), confirmation_window);
         
         // cancel button
-        GtkWidget *cancel_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Schließen" : "Close");
+        GtkWidget *cancel_button = gtk_button_new_with_label(_("Close"));
         gtk_box_append(GTK_BOX(vbox), cancel_button);
         g_signal_connect(cancel_button, "clicked", G_CALLBACK(close_window_mainloop), confirmation_window);
 		
