@@ -66,19 +66,9 @@ static void start_flash_list(GtkWidget *widget, gpointer stack)
 // Function to set up button labels based on the language
 void set_button_labels_flash_others(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Predefined images");
-        strcpy(labels[1], "Images in the directory");
-        strcpy(labels[2], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Vorbestimmte Images");
-        strcpy(labels[1], "Images im Verzeichnis");
-        strcpy(labels[2], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Predefined images"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Images in the directory")), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Back"), sizeof(labels[2]));
 }
 
 /* main function - flash_others */

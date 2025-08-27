@@ -64,27 +64,13 @@ void vendor_boot_heimdall(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_flash_vendor(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Vendor (only-a)");
-        strcpy(labels[1], "Vendor (a/b");
-        strcpy(labels[2], "Vendor (heimdall)");
-        strcpy(labels[3], "vendor_boot (only-a)");
-        strcpy(labels[4], "vendor_boot (a/b)");
-        strcpy(labels[5], "vendor_boot (heimdall)");
-        strcpy(labels[6], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Vendor (only-a)");
-        strcpy(labels[1], "Vendor (a/b");
-        strcpy(labels[2], "Vendor (heimdall)");
-        strcpy(labels[3], "vendor_boot (only-a)");
-        strcpy(labels[4], "vendor_boot (a/b)");
-        strcpy(labels[5], "vendor_boot (heimdall)");
-        strcpy(labels[6], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Vendor (only-a)"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Vendor (a/b"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Vendor (heimdall)"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("vendor_boot (only-a)"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("vendor_boot (a/b)"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("vendor_boot (heimdall)"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Back"), sizeof(labels[6]));
 }
 
 // main function

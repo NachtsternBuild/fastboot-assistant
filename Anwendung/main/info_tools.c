@@ -65,9 +65,9 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     gboolean is_installed[12] = {FALSE};
 
     // define labels 
-    const char *version_info_title = strcmp(language, "de") == 0 ? "System- und Paket-Informationen" : "System and Package Informations";
-    const char *system_infos = strcmp(language, "de") == 0 ? "System-Informationen:" : "System and Package Informations:";
-    const char *version_package = strcmp(language, "de") == 0 ? "Paket-Informationen:" : "Package Informations:";
+    const char *version_info_title = _("System and Package Informations");
+    const char *system_infos = _("System and Package Informations:");
+    const char *version_package = _("Package Informations:");
 	
 	// commands for system informations
     const char *commands_system[] = {
@@ -83,14 +83,14 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     
 	// labels for system informations
     const char *labels_system[] = {
-        strcmp(language, "de") == 0 ? "Distribution: " : "Distribution: ",
-        strcmp(language, "de") == 0 ? "Version: " : "Version: ",
-        strcmp(language, "de") == 0 ? "Kernel-Version: " : "Kernel-Version: ",
-        strcmp(language, "de") == 0 ? "Prozessor: " : "Processor: ",
-        strcmp(language, "de") == 0 ? "Grafikkarte: " : "Graphics card: ",
-        strcmp(language, "de") == 0 ? "Desktop: " : "Desktop: ",
-        strcmp(language, "de") == 0 ? "Sprache: " : "Language: ",
-        strcmp(language, "de") == 0 ? "Session: " : "Session: ",
+        _("Distribution: "),
+        _("Version: "),
+        _("Kernel-Version: "),
+        _("Processor: "),
+        _("Graphics card: "),
+        _("Desktop: "),
+        _("Language: "),
+        _("Session: "),
     };
 
     // commands for the packages
@@ -110,20 +110,20 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
     };
 	
 	// lables for the packages
-    const char *labels_packages[] = {
-        strcmp(language, "de") == 0 ? "ADB: " : "ADB: ",
-        strcmp(language, "de") == 0 ? "Fastboot: " : "Fastboot: ",
-        strcmp(language, "de") == 0 ? "XZ-Utils: " : "XZ Utils: ",
-        strcmp(language, "de") == 0 ? "Unzip: " : "Unzip: ",
-        strcmp(language, "de") == 0 ? "Zip: " : "Zip: ",
-        strcmp(language, "de") == 0 ? "Wget: " : "Wget: ",
-        strcmp(language, "de") == 0 ? "Curl: " : "Curl: ",
-        strcmp(language, "de") == 0 ? "Pkexec: " : "Pkexec: ",
-        strcmp(language, "de") == 0 ? "Heimdall: " : "Heimdall: ",
-        strcmp(language, "de") == 0 ? "GTK+: " : "GTK+: ",
-        strcmp(language, "de") == 0 ? "Coreutils: " : "Coreutils: ",
-        strcmp(language, "de") == 0 ? "Libc6: " : "Libc6: ",
-    };
+	const char *labels_packages[] = {
+	    _("ADB: "),
+	    _("Fastboot: "),
+	    _("XZ-Utils: "),
+	    _("Unzip: "),
+	    _("Zip: "),
+	    _("Wget: "),
+	    _("Curl: "),
+	    _("Pkexec: "),
+	    _("Heimdall: "),
+	    _("GTK+: "),
+	    _("Coreutils: "),
+	    _("Libc6: "),
+	};
     
     // function to get the infos
     for (int i = 0; i < 8; i++) 
@@ -154,7 +154,7 @@ void info_tools(int argc, char *argv[], GtkWindow *parent_window)
 	GtkWidget *system_info_title_label = gtk_button_new_with_label(system_infos);
     gtk_box_append(GTK_BOX(box), system_info_title_label);
     
-    GtkWidget *assistant_version_label = gtk_button_new_with_label("Fastboot-Assistant: v.0.7.2");
+    GtkWidget *assistant_version_label = gtk_button_new_with_label(_("Fastboot-Assistant: v.0.8.2.dev"));
     gtk_box_append(GTK_BOX(box), assistant_version_label);
 
     // add system info labels to the window

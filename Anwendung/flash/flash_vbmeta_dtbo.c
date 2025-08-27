@@ -64,27 +64,13 @@ void dtbo_heimdall(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_flash_vbmeta_dtbo(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "vbmeta (only-a)");
-        strcpy(labels[1], "vbmeta (a/b)");
-        strcpy(labels[2], "vbmeta (heimdall)");
-        strcpy(labels[3], "dtbo (only-a)");
-        strcpy(labels[4], "dtbo (a/b)");
-        strcpy(labels[5], "dtbo (heimdall)");
-        strcpy(labels[6], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "vbmeta (only-a)");
-        strcpy(labels[1], "vbmeta (a/b)");
-        strcpy(labels[2], "vbmeta (heimdall)");
-        strcpy(labels[3], "dtbo (only-a)");
-        strcpy(labels[4], "dtbo (a/b)");
-        strcpy(labels[5], "dtbo (heimdall)");
-        strcpy(labels[6], "Zurück");
-    }
+    g_strlcpy(labels[0], _("vbmeta (only-a)"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("vbmeta (a/b)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("vbmeta (heimdall)"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("dtbo (only-a)"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("dtbo (a/b)"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("dtbo (heimdall)"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Back"), sizeof(labels[6]));
 }
 
 /* main function - flash_vbmeta_dtbo */

@@ -31,7 +31,7 @@ void show_error_message(GtkWindow *parent_window, const char *message)
     
     // Create a new dialog window
     GtkWidget *dialog = gtk_window_new();
-    gtk_window_set_title(GTK_WINDOW(dialog), "Error");
+    gtk_window_set_title(GTK_WINDOW(dialog), _("Error"));
     gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
     if (parent_window) 
     {

@@ -76,31 +76,15 @@ void super_img_heimdall(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_flash_preloader_super(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "preloader.bin (only-a)");
-        strcpy(labels[1], "preloader.bin (a/b)");
-        strcpy(labels[2], "preloader.img (only-a)");
-        strcpy(labels[3], "preloader.img (a/b)");
-        strcpy(labels[4], "preloader.bin (heimdall)");
-        strcpy(labels[5], "preloader.img (heimdall)");
-        strcpy(labels[6], "super.img");
-        strcpy(labels[7], "super.img (heimdall)");
-        strcpy(labels[8], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "preloader.bin (only-a)");
-        strcpy(labels[1], "preloader.bin (a/b)");
-        strcpy(labels[2], "preloader.img (only-a)");
-        strcpy(labels[3], "preloader.img (a/b)");
-        strcpy(labels[4], "preloader.bin (heimdall)");
-        strcpy(labels[5], "preloader.img (heimdall)");
-        strcpy(labels[6], "super.img");
-        strcpy(labels[7], "super.img (heimdall)");
-        strcpy(labels[8], "Zurück");
-    }
+    g_strlcpy(labels[0], _("preloader.bin (only-a)"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("preloader.bin (a/b)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("preloader.img (only-a)"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("preloader.img (a/b)"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("preloader.bin (heimdall)"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("preloader.img (heimdall)"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("super.img"), sizeof(labels[6]));
+    g_strlcpy(labels[7], _("super.img (heimdall)"), sizeof(labels[7]));
+    g_strlcpy(labels[8], _("Back"), sizeof(labels[8]));
 }
 
 /* main function - flash_preloader_super */

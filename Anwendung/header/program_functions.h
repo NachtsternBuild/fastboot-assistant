@@ -26,7 +26,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include <adwaita.h>  
+#include <adwaita.h>
+#include "language_check.h"  
 
 #ifndef PROGRAM_FUNCTIONS_H
 #define PROGRAM_FUNCTIONS_H
@@ -275,6 +276,7 @@ void check_ab_file_light();
 void get_info();
 int is_android_device_connected();
 int is_android_device_connected_fastboot();
+int is_android_device_connected_adb();
 void connected_devices();
 void get_android_info();
 

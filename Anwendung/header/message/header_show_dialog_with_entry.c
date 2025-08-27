@@ -74,7 +74,7 @@ void show_dialog_with_entry(const char *title, const char *placeholder, NumberCa
     gtk_box_append(GTK_BOX(box), entry);
 	
 	// create the ok-button
-    ok_button = gtk_button_new_with_label("OK");
+    ok_button = gtk_button_new_with_label(_("OK"));
     gtk_box_append(GTK_BOX(box), ok_button);
 	
 	// connect the button and the entry

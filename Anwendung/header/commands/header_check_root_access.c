@@ -34,21 +34,13 @@ void check_root_access(GtkWidget *root_status_label)
     
     if (!is_android_device_connected()) 
     {      
-        const char *no_device = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *no_device = _("No device detected.");
         gtk_label_set_text(GTK_LABEL(root_status_label), no_device);
         return;
     }
 
-    if (strcmp(language, "de") == 0) 
-    {
-        root_access = "✅ Root-Rechte verfügbar.";
-        no_root_access = "❌ Keine Root-Rechte verfügbar.";
-    } 
-    else 
-    {
-        root_access = "✅ Root permissions available.";
-        no_root_access = "❌ No root permissions available.";
-    }
+    root_access = _("✅ Root permissions available.");
+    no_root_access = _("❌ No root permissions available.");
 
     // check for root
     auto_free char *root_command = adb_command();

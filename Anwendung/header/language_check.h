@@ -28,8 +28,17 @@
 #include <unistd.h>  
 #include <sys/stat.h> 
 #include <sys/types.h> 
+#include <libintl.h>
+#include <locale.h>
 #include "program_functions.h"
 
+// define gettext macros and the domain
+#define _(STRING) gettext(STRING)
+#define LOCALE_DOMAIN "fastboot-assistant"
+
+// TODO: replace the old langauge system with the new
+// old langauge function, only as backup
+// remain in the program until everything has been completely replaced
 void create_directory_if_not_exists_lang(const char *path);
 void write_language_file();
 void delete_language_file();
@@ -38,6 +47,14 @@ void check_language_file_light();
 void apply_language();
 void toggle_language(GtkWidget *button, gpointer user_data);
 void toggle_language_setup(GtkWidget *button, gpointer user_data);
+
+// new function that init the language
+// this usage the system language or fallback to english
+void init_language(void);
+// function that set the language manuell
+// use: 
+// set_language("de");
+void set_language(const char *lang);
 
 #endif // LANGUAGE_CHECK_H
 

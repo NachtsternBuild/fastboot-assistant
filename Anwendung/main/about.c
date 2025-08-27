@@ -73,7 +73,7 @@ void brownie_jean(GtkWidget *widget, gpointer stack)
 // function that output version infos about the system and installed packages
 void run_tools_info(GtkWidget *widget, gpointer stack)
 {
-	info_tools();
+	info_tools(main_window);
 }
 
 void load_about_provider(void) 
@@ -110,9 +110,10 @@ void about(GtkWidget *widget, gpointer stack)
         GTK_STYLE_PROVIDER_PRIORITY_USER);
     
     // char for the next page button
-	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
-	const char *back_page_char = strcmp(language, "de") == 0 ? "Zurück" : "Back";
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *next_page_char = _("Next"); 
+	const char *back_page_char = _("Back");
+	const char *exit_page_char = _("Exit");
+
 	
 	/* page 1 */
 	GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -139,7 +140,7 @@ void about(GtkWidget *widget, gpointer stack)
 	//gtk_image_set_pixel_size(GTK_IMAGE(logo), 64);
 	
 	GtkWidget *label_about_2 = gtk_label_new(" ");
-	GtkWidget *label_about1 = gtk_label_new("Fastboot Assistant");
+	GtkWidget *label_about1 = gtk_label_new(_("Fastboot Assistant"));
 	gtk_widget_add_css_class(label_about1, "about3");
 	
 	// create a frame
@@ -149,9 +150,9 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 
     // create the label
-    GtkWidget *label_about2 = gtk_label_new("Version 0.8.1.8");
+    GtkWidget *label_about2 = gtk_label_new(_("Version 0.8.2.dev"));
     gtk_widget_add_css_class(label_about2, "about2");
-    GtkWidget *label_about3 = gtk_label_new("Glitschiges GNOME 44");
+    GtkWidget *label_about3 = gtk_label_new(_("Glitschiges GNOME 46"));
     gtk_widget_add_css_class(label_about3, "about2");
     
     // add the label to the box
@@ -164,7 +165,7 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *label_about_3 = gtk_label_new(" ");
     
     // new label
-    GtkWidget *label_about4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Programm um das Installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM and GSIs on Android devices.");
+    GtkWidget *label_about4 = gtk_label_new(_("Programm um das Installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM and GSIs on Android devices."));
     gtk_label_set_wrap(GTK_LABEL(label_about4), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_about4), PANGO_WRAP_WORD_CHAR);	
 	gtk_widget_add_css_class(label_about4, "about2");
@@ -216,9 +217,9 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *vbox2_1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
 	
 	// button and label
-    GtkWidget *label_about6 = gtk_label_new("(C) Copyright 2025 Elias Mörz\n");
+    GtkWidget *label_about6 = gtk_label_new("(C) Copyright 2025 Elias Mörz");
     gtk_widget_add_css_class(label_about6, "about2");
-    GtkWidget *label_about7 = gtk_label_new("Apache License, Version 2.0");
+    GtkWidget *label_about7 = gtk_label_new(_("Apache License, Version 2.0"));
     gtk_widget_add_css_class(label_about7, "about2");
     GtkWidget *label_about8 = gtk_label_new("https://github.com/NachtsternBuild/fastboot-assistant");
     gtk_label_set_wrap(GTK_LABEL(label_about8), TRUE);
@@ -234,9 +235,9 @@ void about(GtkWidget *widget, gpointer stack)
     gtk_frame_set_child(GTK_FRAME(frame2), vbox2_1);
     
     // new button
-    const char *update_char = strcmp(language, "de") == 0 ? "Aktualisierungen" : "Updates";
+    const char *update_char = _("Updates");
     GtkWidget *button_update = create_icon_nav_button_with_position("software-update-available-symbolic", update_char, G_CALLBACK(updater), stack, GTK_ALIGN_CENTER);
-    const char *system_info_char = strcmp(language, "de") == 0 ? "System- und Paketinformationen" : "System and package information";
+    const char *system_info_char = _("System and package information");
     GtkWidget *button_system_info = create_icon_nav_button_with_position("start-here-symbolic", system_info_char, G_CALLBACK(run_tools_info), stack, GTK_ALIGN_CENTER);
     GtkWidget *button_about_3 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
     GtkWidget *button_about_4 = create_icon_nav_button_no_callback("pan-start-symbolic", back_page_char);
@@ -268,11 +269,11 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_about3_1 = gtk_button_new_with_label("GitHub Seite");
-	GtkWidget *button_about3_2 = gtk_button_new_with_label("Versionen");
-	GtkWidget *button_about3_3 = gtk_button_new_with_label("Feedback");
-	GtkWidget *button_about3_4 = gtk_button_new_with_label("Dokumentation");
-	GtkWidget *button_about3_5 = gtk_button_new_with_label("Open Android Backup");
+    GtkWidget *button_about3_1 = gtk_button_new_with_label(_("GitHub Site"));
+	GtkWidget *button_about3_2 = gtk_button_new_with_label(_("Versionen"));
+	GtkWidget *button_about3_3 = gtk_button_new_with_label(_("Feedback"));
+	GtkWidget *button_about3_4 = gtk_button_new_with_label(_("Dokumentation"));
+	GtkWidget *button_about3_5 = gtk_button_new_with_label(_("Open Android Backup"));
 	GtkWidget *button_about3_6 = gtk_button_new_with_label("Jean28518 GitHub");
 	GtkWidget *button_about3_7 = create_icon_nav_button_no_callback("application-exit-symbolic", exit_page_char);
     GtkWidget *button_about3_8 = create_icon_nav_button_no_callback("pan-start-symbolic", back_page_char);

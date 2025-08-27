@@ -81,7 +81,7 @@ void *flash_thread_func(void *arg)
     // get the inactive slot
     char *inactive_slot = get_inactive_slot();
     // get the adb command
-    auto_free char *device_command = adb_command();
+    char *device_command = adb_command();
     // get the config file
     get_config_file_path(config_file, sizeof(config_file));
     // load the path
@@ -95,7 +95,7 @@ void *flash_thread_func(void *arg)
 	// create the path from the images
 	snprintf(boot_image, sizeof(boot_image), "%s/%s", image_path, boot_image_name);
 	snprintf(system_image, sizeof(system_image), "%s/%s", image_path, system_image_name);
-    
+        
     // wait for a device
     snprintf(command_build, sizeof(command_build), "%s wait-for-device", device_command);
     char *command = execute_command(command_build);
@@ -162,8 +162,8 @@ void *flash_thread_func(void *arg)
     if (image_path != NULL) 
 	{
     	g_free((gpointer)image_path); // free this (because g_file_get_contents was used)
-    	// I'll try to create a autofree for g_free and this to
 	}
+    free(device_command);
     
     return NULL;
 }
@@ -222,47 +222,47 @@ void treble_updater(GtkWidget *widget, gpointer stack)
     GtkWidget *free_space1 = gtk_label_new(" ");
     
     // some informations
-    GtkWidget *info_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Treble Updater funktioniert nur mit a/b-Geräten. Es müssen Root-Rechte bereitgestellt werden." : "The Treble Updater only works with a/b devices. Root rights must be provided.");
+    GtkWidget *info_treble = gtk_label_new(_("The Treble Updater only works with a/b devices. Root rights must be provided."));
 	gtk_label_set_wrap(GTK_LABEL(info_treble), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(info_treble), PANGO_WRAP_WORD_CHAR);
     
     
-    GtkWidget *info2_treble = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Treble Updater hat die Aufgabe ein neues Boot/System-Image in den inaktiven Slot zu flashen und diesen aktiv zusetzen." : "The Treble Updater has the task of flashing a new boot/system image into the inactive slot and making it active.");
+    GtkWidget *info2_treble = gtk_label_new(_("The Treble Updater has the task of flashing a new boot/system image into the inactive slot and making it active."));
 	gtk_label_set_wrap(GTK_LABEL(info2_treble), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(info2_treble), PANGO_WRAP_WORD_CHAR);
       
     // root info label
-    GtkWidget *root_status_info = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Root-Rechte:" : "Root permission:");
+    GtkWidget *root_status_info = gtk_label_new(_("Root permission:"));
 
     // root status label
     root_status_label = gtk_label_new("Check Root permission...");
     
     // bootctl info label
-    GtkWidget *bootctl_status_info = gtk_label_new("Bootctl:");
+    GtkWidget *bootctl_status_info = gtk_label_new(_("Bootctl:"));
 
     // bootctl status label
     bootctl_status_label = gtk_label_new("Search for bootctl...");
 	
 	/* the button for the action */		
     // checkbox for boot.img
-    boot_checkbox = gtk_check_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashe neues Boot-Image" : "Flash new boot image");
+    boot_checkbox = gtk_check_button_new_with_label(_("Flash new boot image"));
 	
 	// checkbox for system.img
-    system_checkbox = gtk_check_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashe neues System-Image" : "Flash new system image");
+    system_checkbox = gtk_check_button_new_with_label(_("Flash new system image"));
 	
 	// use option to set active slot with setprop
-    set_active_slot_checkbox = gtk_check_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Alternative für Slotwechsel (nicht empfohlen)" : "Alternative for slot change (not recommended)");
+    set_active_slot_checkbox = gtk_check_button_new_with_label(_("Alternative for slot change (not recommended)"));
 	
 	// Start the flash
-    const char *start_button_char = strcmp(language, "de") == 0 ? "Starte Flash" : "Start Flash";
+    const char *start_button_char = _("Start Flash");
     GtkWidget *start_button = create_icon_nav_button_with_position("drive-multidisk-symbolic", start_button_char, G_CALLBACK(update_device), stack, GTK_ALIGN_CENTER);
 	
 	// restart the system
-	const char *restarting_system_char = strcmp(language, "de") == 0 ? "Neustarten" : "Reboot Device";
+	const char *restarting_system_char = _("Reboot Device");
 	GtkWidget *restarting_system = create_icon_nav_button_with_position("system-reboot-symbolic", restarting_system_char, G_CALLBACK(restart_system), stack, GTK_ALIGN_CENTER);
 	
 	// function to show the home page
-	const char *back_to_home_char = strcmp(language, "de") == 0 ? "Zurück zur Startseite" : "Back to Home";
+	const char *back_to_home_char = _("Back to Home");
 	GtkWidget *back_to_home = create_icon_nav_button_with_position("pan-start-symbolic", back_to_home_char, G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 	  
     
