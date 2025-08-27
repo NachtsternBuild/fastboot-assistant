@@ -39,16 +39,9 @@ char success_message[4096];
 // function that start make_dir
 static void start_make_dir_function(GtkWidget *widget, gpointer stack) 
 {
-    const char *message = strcmp(language, "de") == 0 ? "Fertig!": "Ready!";
+    const char *message = _("Ready!");
     make_dir();
     show_message(message);
-}
-
-// function that start remove_old
-// will replaced
-static void start_remove_old(GtkWidget *widget, gpointer stack) 
-{
-    remove_old();
 }
 
 // function that start wsl_config
@@ -123,7 +116,7 @@ static void clean_log(GtkWidget *widget, gpointer stack)
     }
     close(log_fd);
     
-    snprintf(success_message, sizeof(success_message), g_strcmp0(language, "de") == 0 ? "Beendet" : "Completed");
+    snprintf(success_message, sizeof(success_message), _("Completed"));
     show_message(success_message);
     
     LOG_INFO("end clean_log");
@@ -154,33 +147,22 @@ static void new_setup_dir(GtkWidget *widget, gpointer stack)
 // Function to set up button labels based on the language
 void set_button_labels_config_projekt(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Create folder");
-        strcpy(labels[1], "Clean up");
-        strcpy(labels[2], "Configure");
-        strcpy(labels[3], "Change language");
-        strcpy(labels[4], "Change theme");
-        strcpy(labels[5], "Clean log");
-        strcpy(labels[6], "Define new directory");
-        strcpy(labels[7], "Post update");
-        strcpy(labels[8], "Restart Setup");
-        strcpy(labels[9], "Back to Home");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Anlegen Ordner");
-        strcpy(labels[1], "Aufräumen");
-        strcpy(labels[2], "Konfigurieren");
-        strcpy(labels[3], "Sprache wechseln");
-        strcpy(labels[4], "Thema wechseln");
-        strcpy(labels[5], "Log löschen");
-        strcpy(labels[6], "Neues Verzeichnis festlegen");
-        strcpy(labels[7], "Update Nachbearbeitung");
-        strcpy(labels[8], "Erneutes Setup");
-        strcpy(labels[9], "Zurück zur Startseite");
-    }
+    g_strlcpy(labels[0], _("Create folder"), sizeof(labels[0]));
+	g_strlcpy(labels[1], _("Clean up"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Configure"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Change language"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Change theme"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("Clean log"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Define new directory"), sizeof(labels[6]));
+    g_strlcpy(labels[7], _("Post update"), sizeof(labels[7]));
+    g_strlcpy(labels[8], _("Restart Setup"), sizeof(labels[8]));
+    g_strlcpy(labels[9], _("Back to Home"), sizeof(labels[9]));
+}
+
+// dummy function → no function
+void toogle_language(GtkWidget *widget, gpointer stack)
+{
+	LOG_INFO("Will replaced later.");
 }
 
 /* main function - config-projekt_GUI*/

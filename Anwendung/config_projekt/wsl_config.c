@@ -89,7 +89,7 @@ void wsl_config()
     GtkWidget *config_adb_button;
 
     gtk_init();
-    GMainLoop *main_loop = g_main_loop_new(NULL, FALSE);
+
     apply_theme();
     apply_language();
     
@@ -118,7 +118,7 @@ void wsl_config()
     {
         // create the window
         window = gtk_window_new();
-        const char *config_window = strcmp(language, "de") == 0 ? "Konfiguriatioen" : "Configurations";
+        const char *config_window = _("Configurations");
         gtk_window_set_title(GTK_WINDOW(window), config_window);
         gtk_window_set_default_size(GTK_WINDOW(window), 500, 200);
         g_signal_connect(window, "destroy", G_CALLBACK(on_window_destroy), main_loop);
@@ -128,37 +128,21 @@ void wsl_config()
         gtk_window_set_child(GTK_WINDOW(window), vbox);
 
         // install button
-        config_adb_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
+        config_adb_button = gtk_button_new_with_label(_("Install"));
         g_signal_connect(config_adb_button, "clicked", G_CALLBACK(config_adb), NULL);
         gtk_box_append(GTK_BOX(vbox), config_adb_button);
 
         // show window
     	gtk_window_present(GTK_WINDOW(window)); // gtk_window_present instead of gtk_widget_show
 
-        const char *message = strcmp(language, "de") == 0 ? "Fertig!" : "Ready!";
+        const char *message = _("Ready!");
         show_message(message);
     }
     
     // no WSL system
     else 
     {
-        LOG_INFO("Log: No WSL system");
+        LOG_INFO("No WSL system");
     }
-
-    // run GTK main loop
-    g_main_loop_run(main_loop); 
-	
-	// free the provider
-    if (provider != NULL) 
-    {
-    	g_object_unref(provider);
-    	provider = NULL;
-	}
-	
-	if (main_loop != NULL) 
-	{
-    	g_main_loop_unref(main_loop);
-    	main_loop = NULL;
-	}
 }
 

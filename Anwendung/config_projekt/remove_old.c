@@ -61,7 +61,7 @@ void rm_rom_install()
 static void remove_rom_install(GtkWidget *widget, gpointer stack) 
 {
     rm_rom_install();
-    const char *message = "Ready.\n";
+    const char *message = _("Ready.\n");
     show_message(message);
 }
 
@@ -72,7 +72,7 @@ static void remove_old_files(GtkWidget *widget, gpointer stack)
 	rm_rom_install();
 	make_dir();
 	
-    const char *message = "Ready.\n";
+    const char *message = _("Ready.\n");
     show_message(message);
     LOG_INFO("end remove_old_files");
 }
@@ -102,7 +102,7 @@ static void remove_backups(GtkWidget *widget, gpointer stack)
     	g_free((gpointer)backup_rm); // free the info (because g_file_get_contents was used)
 	}
 	
-    const char *message = "Ready.\n";
+    const char *message = _("Ready.\n");
     show_message(message);
     LOG_INFO("end remove_backups");
 }
@@ -110,21 +110,10 @@ static void remove_backups(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_remove(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "ROM-Install");
-        strcpy(labels[1], "Old files");
-        strcpy(labels[2], "Backups");
-        strcpy(labels[3], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "ROM-Install");
-        strcpy(labels[1], "Alte Dateien");
-        strcpy(labels[2], "Backups");
-        strcpy(labels[3], "Zurück");
-    }
+    g_strlcpy(labels[0], _("ROM-Install"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Old files"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Backups"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Back"), sizeof(labels[3]));
 }
 /* main function - remove_old */
 void remove_old(GtkWidget *widget, gpointer stack) 
