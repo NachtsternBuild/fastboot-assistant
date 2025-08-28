@@ -37,7 +37,7 @@ static void start_recovery_adb(GtkWidget *widget, gpointer stack)
     // prevention of crashes
     if (!is_android_device_connected_adb()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -57,7 +57,7 @@ static void start_recovery_fastboot(GtkWidget *widget, gpointer stack)
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -72,19 +72,9 @@ static void start_recovery_fastboot(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_reboot_recovery(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Restart ADB");
-        strcpy(labels[1], "Restarting Fastboot");
-        strcpy(labels[2], "Back");
-    }
-    
-    else
-    {
-    	strcpy(labels[0], "Neustart von ADB");
-    	strcpy(labels[1], "Neustart von Fastboot");
-    	strcpy(labels[2], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Restart ADB"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Restarting Fastboot"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Back"), sizeof(labels[2]));
 } 
 
 
