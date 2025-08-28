@@ -56,5 +56,14 @@ void init_language(void);
 // set_language("de");
 void set_language(const char *lang);
 
+// additional functions for the language managment
+// // function that reads the language from the file
+int read_language_file(char *langbuf, size_t size);
+// function that writes the language to the file
+void write_language_file(const char *lang);
+// try to bind local dir and .mo files
+void bind_language(const char *lang);
+
+
 #endif // LANGUAGE_CHECK_H
 
