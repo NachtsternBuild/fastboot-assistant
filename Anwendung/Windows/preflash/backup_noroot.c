@@ -48,12 +48,12 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
 {
     GtkWidget *vbox, *install_depends_button;
 
-    const char *message = strcmp(language, "de") == 0 ? "Die Installation der benötigten \nAbhängigkeiten erfordert Root-Rechte." : "The installation of the required \ndependencies requires root rights.";
+    const char *message = _("The installation of the required \ndependencies requires root rights.");
     show_message(message);
 
     // create window
     backup_window = gtk_window_new();
-    const char * backup_noroot_window = strcmp(language, "de") == 0 ? "Abhängigkeiten installieren" : "Install dependencies";
+    const char *backup_noroot_window = _("Install dependencies");
     gtk_window_set_title(GTK_WINDOW(backup_window), backup_noroot_window);
     gtk_window_set_default_size(GTK_WINDOW(backup_window), 500, 200);
     g_signal_connect(backup_window, "destroy", G_CALLBACK(gtk_window_destroy), NULL);
@@ -62,7 +62,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
     gtk_window_set_child(GTK_WINDOW(backup_window), vbox);
 
     // install button
-    install_depends_button = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Installieren" : "Install");
+    install_depends_button = gtk_button_new_with_label(_("Install"));
     g_signal_connect(install_depends_button, "clicked", G_CALLBACK(install_depends), NULL);
     gtk_box_append(GTK_BOX(vbox), install_depends_button);
 
@@ -72,7 +72,7 @@ static void install_depends_function(GtkWidget *widget, gpointer data)
 // download the backup
 static void download_backup(GtkWidget *widget, gpointer data) 
 {
-    const char *message1 = strcmp(language, "de") == 0 ? "Das Tool 'Open Android Backup' wird heruntergeladen und entpackt." : "The 'Open Android Backup' tool is downloaded and unpacked.";
+    const char *message1 = _("The 'Open Android Backup' tool is downloaded and unpacked.");
     show_message(message1);
 	char path_file[4096];
     char main_path_build[4096];
@@ -125,19 +125,9 @@ static void open_backup(GtkWidget *widget, gpointer data)
 // Function to set up button labels based on the language
 void set_button_labels_backup_noroot(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Prepare");
-        strcpy(labels[1], "Download");
-        strcpy(labels[2], "Start");
-    }
-    
-    else
-    {
-    	strcpy(labels[0], "Vorbereiten");
-    	strcpy(labels[1], "Download");
-    	strcpy(labels[2], "Starten");
-    }
+    g_strlcpy(labels[0], _("Prepare"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Download"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Start"), sizeof(labels[2]));
 } 
 
 /* main function - backup_noroot */
