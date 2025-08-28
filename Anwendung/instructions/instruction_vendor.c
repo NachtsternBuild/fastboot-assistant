@@ -29,7 +29,7 @@ void instruction_vendor(GtkWidget *widget, gpointer stack)
     apply_language();
 	
 	// char for the next page button
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *exit_page_char = _("Exit");
 	
 	/* page 1 */
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -37,15 +37,15 @@ void instruction_vendor(GtkWidget *widget, gpointer stack)
     // button and label
     GtkWidget *button_vndk1 = gtk_button_new_with_label("VNDK");
     // label 1
-    GtkWidget *label_vndk1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Alles was mit 'Vendor' bezeichnet wird, sind hersteller- oder gerätspezifische Komponenten des Betriebssystems. Änderungen daran können zu Problemen führen." : "Everything labeled 'Vendor' are manufacturer- or device-specific components of the operating system. Changes to these can lead to problems.");
+    GtkWidget *label_vndk1_1 = gtk_label_new(_("Everything labeled 'Vendor' are manufacturer- or device-specific components of the operating system. Changes to these can lead to problems."));
     gtk_label_set_wrap(GTK_LABEL(label_vndk1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_vndk1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_vndk1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Die VNDK-Version (Vendor Native Development Kit) ist eine Sammlung von Bibliotheken und Richtlinien, durch die den hardwarespezifische Teil von Rest des Androids trennt." : "The VNDK version (Vendor Native Development Kit) is a collection of libraries and guidelines that separates the hardware-specific part from the rest of Android.");
+    GtkWidget *label_vndk1_2 = gtk_label_new(_("The VNDK version (Vendor Native Development Kit) is a collection of libraries and guidelines that separates the hardware-specific part from the rest of Android."));
     gtk_label_set_wrap(GTK_LABEL(label_vndk1_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_vndk1_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_vndk1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dadurch lassen sich Updates und Wartung erleichtern, weil herstellerspezifische Anpassungen nicht die Kompatibilität und Stabilität des Android-Systems beeinträchtigen." : "This makes updates and maintenance easier because manufacturer-specific adjustments do not affect the compatibility and stability of the Android system.");
+    GtkWidget *label_vndk1_3 = gtk_label_new(_("This makes updates and maintenance easier because manufacturer-specific adjustments do not affect the compatibility and stability of the Android system."));
     gtk_label_set_wrap(GTK_LABEL(label_vndk1_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_vndk1_3), PANGO_WRAP_WORD_CHAR);	
 	

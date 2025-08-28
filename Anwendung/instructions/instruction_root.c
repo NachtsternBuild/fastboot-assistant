@@ -46,25 +46,25 @@ void instruction_root(GtkWidget *widget, gpointer stack)
 	apply_language();
 	
 	// char for the next page button
-	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
-	const char *back_page_char = strcmp(language, "de") == 0 ? "Zurück" : "Back";
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *next_page_char = _("Next");
+	const char *back_page_char = _("Back");
+	const char *exit_page_char = _("Exit");
 	
 	/* page 1 */
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
     // button and label
-    GtkWidget *button_root1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Hinweise" : "Notes");
+    GtkWidget *button_root1 = gtk_button_new_with_label(_("Notes"));
     // label 1
-    GtkWidget *label_root1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Beim Rooten von Android-Geräten werden dem Nutzer Superuser-Rechte eingeräumt, die ihm vollen Zugriff auf Android. Damit die Möglichkeit weitreichende Änderungen vorzunehmen." : "When rooting Android devices, the user is granted superuser rights that give them full access to Android. This gives them the possibility to make far-reaching changes.");
+    GtkWidget *label_root1_1 = gtk_label_new(_("When rooting Android devices, the user is granted superuser rights that give them full access to Android. This gives them the possibility to make far-reaching changes."));
     gtk_label_set_wrap(GTK_LABEL(label_root1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_root1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dies ermöglicht das Entfernen vorinstallierter Anwendungen, das Ändern von Systemeinstellungen und Installieren spezieller Anwendungen, die erweiterte Berechtigungen erfordern." : "This allows you to remove pre-installed applications, change system settings and install special applications that require extended permissions.");
+    GtkWidget *label_root1_2 = gtk_label_new(_("This allows you to remove pre-installed applications, change system settings and install special applications that require extended permissions."));
     gtk_label_set_wrap(GTK_LABEL(label_root1_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root1_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_root1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Mit den umfangreichen Rechten bestehen auch große Gefahren, da Nutzer und Software große Schäden an der Software verursachen können." : "With the extensive rights, there are also great dangers while users and software can cause great damage to the software.");
+    GtkWidget *label_root1_3 = gtk_label_new(_("With the extensive rights, there are also great dangers while users and software can cause great damage to the software."));
     gtk_label_set_wrap(GTK_LABEL(label_root1_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root1_3), PANGO_WRAP_WORD_CHAR);	
     // new button
@@ -108,23 +108,23 @@ void instruction_root(GtkWidget *widget, gpointer stack)
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_root2 = gtk_button_new_with_label("Magisk");
+    GtkWidget *button_root2 = gtk_button_new_with_label(_("Magisk"));
     // label 1
-    GtkWidget *label_root2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Magisk ist ein Paket von Open-Source-Software für die Anpassung von Android. Mit folgenden Bestandteilen:" : "Magisk is a package of open source software for Android customization. With the following components:");
+    GtkWidget *label_root2_1 = gtk_label_new(_("Magisk is a package of open source software for Android customization. With the following components:"));
     gtk_label_set_wrap(GTK_LABEL(label_root2_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root2_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_root2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. MagiskSU: Bereitstellung von Root-Zugriff für Anwendungen. \n2. Magisk Modules: Ändern von schreibgeschützten Partitionen durch Installation von Modulen." : "1. MagiskSU: Provision of root access for applications. \n2. Magisk Modules: Change read-only partitions by installing modules.");
+    GtkWidget *label_root2_2 = gtk_label_new(_("1. MagiskSU: Provision of root access for applications. \n2. Magisk Modules: Change read-only partitions by installing modules."));
     gtk_label_set_wrap(GTK_LABEL(label_root2_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root2_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_root2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. MagiskBoot: Das umfassendste Tool zum Entpacken und Neuverpacken von Android-Boot-Images. \n4. Zygisk: Code in allen Prozessen von Android-Anwendungen ausführen." : "3. MagiskBoot: The most comprehensive tool for unpacking and repacking Android boot images. \n4. Zygisk: Execute code in all processes of Android applications.");
+    GtkWidget *label_root2_3 = gtk_label_new(_("3. MagiskBoot: The most comprehensive tool for unpacking and repacking Android boot images. \n4. Zygisk: Execute code in all processes of Android applications."));
     gtk_label_set_wrap(GTK_LABEL(label_root2_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root2_3), PANGO_WRAP_WORD_CHAR);	
     
     // other button
-    GtkWidget *button_root3 = gtk_button_new_with_label("Magisk");
-    GtkWidget *button_root4 = gtk_button_new_with_label("Magisk-APK");
+    GtkWidget *button_root3 = gtk_button_new_with_label(_("Magisk"));
+    GtkWidget *button_root4 = gtk_button_new_with_label(_("Magisk-APK"));
 	
 	// new button
     GtkWidget *button_root_3 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
@@ -172,21 +172,21 @@ void instruction_root(GtkWidget *widget, gpointer stack)
     GtkWidget *page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_root5 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Rooten via Magisk" : "Rooting via Magisk");
+    GtkWidget *button_root5 = gtk_button_new_with_label(_("Rooting via Magisk"));
     // label 1
-    GtkWidget *label_root3_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Installieren Sie die Magisk-APK auf Ihrem Gerät. \n2. Starten Sie Magisk auf Ihrem Gerät und wählen Sie Magisk installieren." : "1. Install the Magisk APK on your device. \n2. Start Magisk on your device and select Install Magisk.");
+    GtkWidget *label_root3_1 = gtk_label_new(_("1. Install the Magisk APK on your device. \n2. Start Magisk on your device and select Install Magisk."));
     gtk_label_set_wrap(GTK_LABEL(label_root3_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root3_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_root3_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. Wählen Sie ein Boot-Image für Ihr Gerät und lassen Sie es von Magisk patchen (Meist finden sich die Boot-Images im Internet. Hier ist Vorsicht geboten.)" : "3. Select a boot image for your device and have it patched by Magisk (Usually the boot images can be found on the Internet. Caution is advised here).");
+    GtkWidget *label_root3_2 = gtk_label_new(_("3. Select a boot image for your device and have it patched by Magisk (Usually the boot images can be found on the Internet. Caution is advised here)."));
     gtk_label_set_wrap(GTK_LABEL(label_root3_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root3_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_root3_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Kopieren Sie das von Magisk gepatchte Boot-Image auf Ihren Computer. \n5. Benennen Sie das Image in um 'boot.img' um oder lassen Sie es von der Anwendung vorbereiten." : "4. Copy the boot image patched by Magisk to your computer. \n5. Rename the image to boot.img or let the application prepare it.");
+    GtkWidget *label_root3_3 = gtk_label_new(_("4. Copy the boot image patched by Magisk to your computer. \n5. Rename the image to boot.img or let the application prepare it."));
     gtk_label_set_wrap(GTK_LABEL(label_root3_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root3_3), PANGO_WRAP_WORD_CHAR);	
     // label 4
-    GtkWidget *label_root3_4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "6. Starten sie ihr Gerät in Fastboot \n7. Flashen sie das Boot-Image für Ihren Gerätetyp. \n8. Starten Sie Ihr Gerät neu. Nun sollte Magisk Root-Rechte bereitstehen." : "6. Start your device to Fastboot. \n7. Flash the boot image for your device type. \n8. Reboot your device. Now Magisk should provide root privileges.");
+    GtkWidget *label_root3_4 = gtk_label_new(_("6. Start your device to Fastboot. \n7. Flash the boot image for your device type. \n8. Reboot your device. Now Magisk should provide root privileges."));
     gtk_label_set_wrap(GTK_LABEL(label_root3_4), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_root3_4), PANGO_WRAP_WORD_CHAR);	
 	

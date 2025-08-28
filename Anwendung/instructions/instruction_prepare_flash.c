@@ -34,19 +34,9 @@ extern void instruction_preflash(GtkWidget *widget, gpointer stack);
 // function to set up button labels based on the language
 void set_button_labels_instruction_prepare_flash(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Backup");
-        strcpy(labels[1], "Prepare images");
-        strcpy(labels[2], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Backup");
-        strcpy(labels[1], "Systemabbilder vorbereiten");
-        strcpy(labels[2], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Backup"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Prepare images"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Back"), sizeof(labels[2]));
 }
 
 /* main function - instruction_prepare_flash */

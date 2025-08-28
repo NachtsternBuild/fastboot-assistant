@@ -82,29 +82,29 @@ void instruction_preflash(GtkWidget *widget, gpointer stack)
     apply_language();
 	
 	// char for the next page button
-	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
-	const char *back_page_char = strcmp(language, "de") == 0 ? "Zurück" : "Back";
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *next_page_char = _("Next");
+	const char *back_page_char = _("Back");
+	const char *exit_page_char = _("Exit");
 	
 	/* page 1 */
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
     // button and label
-    GtkWidget *button_preflash1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Vorbereitung Flash" : "Preparation Flash");
+    GtkWidget *button_preflash1 = gtk_button_new_with_label(_("Preparation Flash"));
     // label 1
-    GtkWidget *label_preflash1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Informieren sie genauer über ihr Gerät und den Chipsatz des Gerätes. \n2. Suchen sie nach entsprechenden Custom-ROMs, Custom-Recoverys oder GSIs." : "1. Provide more detailed information about your device and the chipset of the device. \n2. Search for corresponding custom ROMs, custom recoverys or GSIs.");
+    GtkWidget *label_preflash1_1 = gtk_label_new(g_("1. Provide more detailed information about your device and the chipset of the device. \n2. Search for corresponding custom ROMs, custom recoverys or GSIs."));
     gtk_label_set_wrap(GTK_LABEL(label_preflash1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_preflash1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_preflash1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "3. Prüfen sie die Verfügbarkeit von Project Treble für ihr Gerät. \n4. Prüfen sie welches Partitionierungsschema auf ihrem Gerät vorliegt (a/b-devices oder only-a-devices)." : "3. Check the availability of Project Treble for your device. \n4. Check which partitioning scheme is available on your device (a/b-devices or only-a-devices).");
+    GtkWidget *label_preflash1_2 = gtk_label_new(_("3. Check the availability of Project Treble for your device. \n4. Check which partitioning scheme is available on your device (a/b-devices or only-a-devices)."));
     gtk_label_set_wrap(GTK_LABEL(label_preflash1_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_preflash1_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_preflash1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "5. Sichern sie ihre Daten lokal und wenn sie wollen in einer Cloud. \n6. Laden sie alle Dateien herunter die sie für den flash brauchen." : "5. Back up your data locally and, if you wish, in a cloud. \n6. Download all the files you need for the flash.");
+    GtkWidget *label_preflash1_3 = gtk_label_new(_("5. Back up your data locally and, if you wish, in a cloud. \n6. Download all the files you need for the flash."));
     gtk_label_set_wrap(GTK_LABEL(label_preflash1_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_preflash1_3), PANGO_WRAP_WORD_CHAR);	
     // label 4
-    GtkWidget *label_preflash1_4 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "7. Lesen sie die Anleitungen der Entwickler vor dem Flash. \n8. Kopieren sie alle Dateien die geflasht werden, nach: '~/Downloads/ROM-Install/'" : "7. Read the developer's instructions before using Flash. \n8. Copy all files that are flashed to: '~/Downloads/ROM-Install/'");
+    GtkWidget *label_preflash1_4 = gtk_label_new(_("7. Read the developer's instructions before using Flash. \n8. Copy all files that are flashed to: '~/Downloads/ROM-Install/'"));
     gtk_label_set_wrap(GTK_LABEL(label_preflash1_4), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_preflash1_4), PANGO_WRAP_WORD_CHAR);	
 	
@@ -152,13 +152,13 @@ void instruction_preflash(GtkWidget *widget, gpointer stack)
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_preflash4 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Einige Custom ROMs" : "Some custom ROMs");
-    GtkWidget *button_preflash2_1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "TWRP (ein Recovery)" : "TWRP (a recovery)");
-    GtkWidget *button_preflash2_2 = gtk_button_new_with_label("/e/ OS");
-    GtkWidget *button_preflash2_3 = gtk_button_new_with_label("LineageOS");
-    GtkWidget *button_preflash2_4 = gtk_button_new_with_label("Project Elixir");
-    GtkWidget *button_preflash2_5 = gtk_button_new_with_label("CrDroid");
-    GtkWidget *button_preflash2_6 = gtk_button_new_with_label("Evolution X");
+    GtkWidget *button_preflash4 = gtk_button_new_with_label(_("Some custom ROMs"));
+    GtkWidget *button_preflash2_1 = gtk_button_new_with_label(_("TWRP (a recovery)"));
+    GtkWidget *button_preflash2_2 = gtk_button_new_with_label(_("/e/ OS"));
+    GtkWidget *button_preflash2_3 = gtk_button_new_with_label(_("LineageOS"));
+    GtkWidget *button_preflash2_4 = gtk_button_new_with_label(_("Project Elixir"));
+    GtkWidget *button_preflash2_5 = gtk_button_new_with_label(_("CrDroid"));
+    GtkWidget *button_preflash2_6 = gtk_button_new_with_label(_("Evolution X"));
     
     // new button
     GtkWidget *button_preflash5 = create_icon_nav_button_no_callback("pan-start-symbolic", back_page_char);

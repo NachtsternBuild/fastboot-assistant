@@ -36,27 +36,13 @@ extern void instruction_others(GtkWidget *widget, gpointer stack);
 // function to set up button labels based on the language
 void set_button_labels_instruction_flash(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Rooting");
-        strcpy(labels[1], "Vendor (VNDK)");
-        strcpy(labels[2], "Generic System Image (GSI)");
-        strcpy(labels[3], "Custom ROMs");
-        strcpy(labels[4], "Recovery");
-        strcpy(labels[5], "Others");
-        strcpy(labels[6], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Rooten");
-        strcpy(labels[1], "Vendor (VNDK)");
-        strcpy(labels[2], "Generic System Image (GSI)");
-        strcpy(labels[3], "Custom ROMs");
-        strcpy(labels[4], "Recovery");
-        strcpy(labels[5], "Andere");
-        strcpy(labels[6], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Rooting"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Vendor (VNDK)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Generic System Image (GSI)"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Custom ROMs"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Recovery"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("Others"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Back"), sizeof(labels[6]));
 }
 
 /* main function - instruction_flash */
