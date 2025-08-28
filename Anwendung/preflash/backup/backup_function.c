@@ -51,19 +51,9 @@ static void start_backup_root(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_backup(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Backup with root");
-        strcpy(labels[1], "Backup without root");
-        strcpy(labels[2], "Back");
-    }
-    
-    else
-    {
-    	strcpy(labels[0], "Backup mit Root");
-    	strcpy(labels[1], "Backup ohne Root");
-    	strcpy(labels[2], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Backup with root"), sizeof(labels[0]));
+    g_strlcpy(labels[0], _("Backup without root"), sizeof(labels[1]));
+    g_strlcpy(labels[0], _("Back"), sizeof(labels[2]));
 } 
 
 /* main function - backup_function */

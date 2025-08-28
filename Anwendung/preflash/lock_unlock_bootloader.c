@@ -34,13 +34,13 @@ char bootloader_lock_command[2048];
 static void bootloader_new(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("bootloader_new");
-    auto_free const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way. \nStart procedure to open the bootloader.";
+    auto_free const char *message = _("Some chipsets do not support this process in this way.\n\nStart procedure to open the bootloader.");
     show_message(message);
     
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -56,13 +56,13 @@ static void bootloader_new(GtkWidget *widget, gpointer stack)
 static void bootloader_old(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("bootloader_old");
-    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu öffnen." : "Some chipsets do not support this process in this way.\n\nStart the process to open the bootloader.";
+    const char *message = _("Some chipsets do not support this process in this way.\n\nStart the process to open the bootloader.");
     show_message(message);
     
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -78,13 +78,13 @@ static void bootloader_old(GtkWidget *widget, gpointer stack)
 static void bootloader_lock(GtkWidget *widget, gpointer stack)
 {
     LOG_INFO("bootloader_lock");
-    const char *message = strcmp(language, "de") == 0 ? "Manche Chipsätze unterstützen diesen Vorgang nicht in dieser Weise.\n\nStarte Vorgang um den Bootloader zu schließen." : "Some chipsets do not support this process in this way.\n\nStart the process to close the bootloader.";
+    const char *message = _("Some chipsets do not support this process in this way.\n\nStart the process to close the bootloader.");
     show_message(message);
     
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -99,21 +99,10 @@ static void bootloader_lock(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_bootloader(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Unlock (new)");
-        strcpy(labels[1], "Unlock (old)");
-        strcpy(labels[2], "Lock");
-        strcpy(labels[3], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Öffnen (neu)");
-        strcpy(labels[1], "Öffnen (alt)");
-        strcpy(labels[2], "Schließen");
-        strcpy(labels[3], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Unlock (new)"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Unlock (old)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Lock"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Back"), sizeof(labels[3]));
 }
 
 /* main programm - lock_unlock_bootloader*/

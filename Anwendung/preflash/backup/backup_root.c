@@ -58,7 +58,7 @@ void backup_root()
     snprintf(command, sizeof(command), "%s wait-for-device", adb);
     if (!is_android_device_connected_adb()) 
     {      
-        const char *message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt. Prüfen sie ob ihr Gerät verbunden ist." : "No device recognized. Check whether your device is connected.";
+        const char *message = _("No device recognized. Check whether your device is connected.");
         show_message(message);
         LOG_INFO("No device recognized.");
     }
@@ -121,7 +121,7 @@ void backup_root()
 	// close the file
     fclose(file);
     
-    const char *message1 = strcmp(language, "de") == 0 ? "Backup beendet." : "Backup completed.";
+    const char *message1 = _("Backup completed.");
     show_message(message1);
     LOG_INFO("Backup completed. Files are located in %s.", backup_dir);
     

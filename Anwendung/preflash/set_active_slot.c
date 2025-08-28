@@ -38,7 +38,7 @@ static void set_slot_a(GtkWidget *widget, gpointer stack)
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -61,7 +61,7 @@ static void set_slot_b(GtkWidget *widget, gpointer stack)
     // prevention of crashes
     if (!is_android_device_connected_fastboot()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -117,21 +117,10 @@ static void set_slot_auto(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_slot(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Set 'a'");
-        strcpy(labels[1], "Set 'b'");
-        strcpy(labels[2], "Set slot auto");
-        strcpy(labels[3], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Setze 'a'");
-        strcpy(labels[1], "Setze 'b'");
-        strcpy(labels[2], "Setze Slot automatisch");
-        strcpy(labels[3], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Set 'a'"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Set 'b'"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Set slot auto"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Back"), sizeof(labels[3]));
 }
 
 /* start main programm */

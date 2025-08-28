@@ -103,33 +103,16 @@ static void create_system(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_partitions(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Delete Boot");
-        strcpy(labels[1], "Delete Vendor");
-        strcpy(labels[2], "Delete System");
-        strcpy(labels[3], "Resize Boot");
-        strcpy(labels[4], "Resize Vendor");
-        strcpy(labels[5], "Resize System");
-        strcpy(labels[6], "Create Boot");
-        strcpy(labels[7], "Create Vendor");
-        strcpy(labels[8], "Create System");
-        strcpy(labels[9], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Lösche Boot");
-        strcpy(labels[1], "Lösche Vendor");
-        strcpy(labels[2], "Lösche System");
-        strcpy(labels[3], "Resize Boot");
-        strcpy(labels[4], "Resize Vendor");
-        strcpy(labels[5], "Resize System");
-        strcpy(labels[6], "Erstelle Boot");
-        strcpy(labels[7], "Erstelle Vendor");
-        strcpy(labels[8], "Erstelle System");
-        strcpy(labels[9], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Delete Boot"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Delete Vendor"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Delete System"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Resize Boot"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Resize Vendor"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("Resize System"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Create Boot"), sizeof(labels[6]));
+    g_strlcpy(labels[7], _("Create Vendor"), sizeof(labels[7]));
+    g_strlcpy(labels[8], _("Create System"), sizeof(labels[8]));
+    g_strlcpy(labels[9], _("Back"), sizeof(labels[9]));
 }
 
 /* main function - partitions*/
