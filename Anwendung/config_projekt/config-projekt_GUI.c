@@ -159,11 +159,6 @@ void set_button_labels_config_projekt(char labels[][30])
     g_strlcpy(labels[9], _("Back to Home"), sizeof(labels[9]));
 }
 
-// dummy function → no function
-void toogle_language(GtkWidget *widget, gpointer stack)
-{
-	LOG_INFO("Will replaced later.");
-}
 
 /* main function - config-projekt_GUI*/
 void config_projekt_GUI(GtkWidget *widget, gpointer stack) 

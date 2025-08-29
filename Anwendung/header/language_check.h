@@ -45,7 +45,7 @@ void delete_language_file();
 void check_language_file();
 void check_language_file_light();
 void apply_language();
-void toggle_language(GtkWidget *button, gpointer user_data);
+//void toggle_language(GtkWidget *button, gpointer user_data);
 void toggle_language_setup(GtkWidget *button, gpointer user_data);
 
 // new function that init the language
@@ -63,7 +63,8 @@ int read_language_file(char *langbuf, size_t size);
 void write_language_file(const char *lang);
 // try to bind local dir and .mo files
 void bind_language(const char *lang);
-
+// function that switch the language
+void toggle_language(GtkWidget *widget, gpointer stack);
 
 #endif // LANGUAGE_CHECK_H
 
