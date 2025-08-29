@@ -108,5 +108,3 @@ GtkWidget* create_icon_nav_button_with_position(const char *icon_name, const cha
 
     return button;
 }
-
-

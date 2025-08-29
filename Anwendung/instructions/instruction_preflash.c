@@ -92,7 +92,7 @@ void instruction_preflash(GtkWidget *widget, gpointer stack)
     // button and label
     GtkWidget *button_preflash1 = gtk_button_new_with_label(_("Preparation Flash"));
     // label 1
-    GtkWidget *label_preflash1_1 = gtk_label_new(g_("1. Provide more detailed information about your device and the chipset of the device. \n2. Search for corresponding custom ROMs, custom recoverys or GSIs."));
+    GtkWidget *label_preflash1_1 = gtk_label_new(_("1. Provide more detailed information about your device and the chipset of the device. \n2. Search for corresponding custom ROMs, custom recoverys or GSIs."));
     gtk_label_set_wrap(GTK_LABEL(label_preflash1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_preflash1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2

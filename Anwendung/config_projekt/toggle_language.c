@@ -84,7 +84,7 @@ static void set_current_switch_language()
             current_lang = "ru";
             gtk_switch_set_active(GTK_SWITCH(ru_switch), TRUE);
         } 
-        void toggle_language(GtkWidget *widget, gpointer stack)
+
         // es
         else if (g_strcmp0(content, "es") == 0) 
         {

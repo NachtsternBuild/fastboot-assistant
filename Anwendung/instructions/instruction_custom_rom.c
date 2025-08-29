@@ -85,7 +85,7 @@ void instruction_custom_rom(GtkWidget *widget, gpointer stack)
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_rom4 = gtk_button_new_with_label(_("Custom ROM flashing");
+    GtkWidget *button_rom4 = gtk_button_new_with_label(_("Custom ROM flashing"));
     // label 1
     GtkWidget *label_rom2_1 = gtk_label_new(_("1. Download a custom ROM for your device. \n2. Boot your device into fastboot mode. \n3. Unlock the bootloader."));
     gtk_label_set_wrap(GTK_LABEL(label_rom2_1), TRUE);

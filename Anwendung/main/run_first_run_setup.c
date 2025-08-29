@@ -36,6 +36,11 @@ static const char *language_codes[] = { "en", "de", "ru", "es", "pt", "fr" };
 static const char *language_labels[] = { "English", "Deutsch", "Русский", "Español", "Português", "Français" };
 static const int language_count = sizeof(language_codes)/sizeof(language_codes[0]);
 
+// dummy 
+void apply_language()
+{
+	LOG_INFO("Will removed later.");
+}
 
 // function that start the config of the fastboot-assistant
 static void start_config_setup(GtkButton *button, gpointer user_data) 

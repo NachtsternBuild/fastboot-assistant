@@ -67,7 +67,7 @@ static void start_flash_list(GtkWidget *widget, gpointer stack)
 void set_button_labels_flash_others(char labels[][30]) 
 {
     g_strlcpy(labels[0], _("Predefined images"), sizeof(labels[0]));
-    g_strlcpy(labels[1], _("Images in the directory")), sizeof(labels[1]));
+    g_strlcpy(labels[1], _("Images in the directory"), sizeof(labels[1]));
     g_strlcpy(labels[2], _("Back"), sizeof(labels[2]));
 }
 

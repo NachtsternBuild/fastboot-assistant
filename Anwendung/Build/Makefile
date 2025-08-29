@@ -84,7 +84,9 @@ SRCS = \
 	header_ab_detect.c \
 	header_write_log_text.c \
 	header_create_label_icon.c \
+	header_dynamic_language.c \
 	toggle_theme.c \
+	toggle_language.c \
 	treble_updater.c \
 	get_devices.c \
 	wsl_config.c \
@@ -174,49 +176,49 @@ clean:
 # standard .pot file
 POT_FILE = po/fastboot-assistant.pot
 
-# languages
+# supported languages
 LANGS = de en es pt ru fr
 
-# .po files in /po
+# po files
 PO_FILES = $(addprefix po/,$(addsuffix .po,$(LANGS)))
 
-# create the .pot file
-i18n: $(POT_FILE)
+# mo files
+MO_DIR = po/LC_MESSAGES
+MO_FILES = $(addprefix $(MO_DIR)/,$(addsuffix .mo,$(LANGS)))
 
+# 1) create the .pot file
 $(POT_FILE): $(SRCS) $(HEADERS)
 	mkdir -p po
 	xgettext --keyword=_ --language=C --from-code=UTF-8 \
 		--add-comments --sort-output \
 		--output=$(POT_FILE) $(SRCS)
 
-# create new .po files for the languages
+# 2) create .po files
+init-po: $(PO_FILES)
+
 define INIT_PO
-po/$1.po:
-	mkdir -p po
-	msginit --no-translator --input=$(POT_FILE) --locale=$1 --output-file=po/$1.po
+po/$1.po: $(POT_FILE)
+	@if [ ! -f po/$1.po ]; then \
+		mkdir -p po; \
+		msginit --no-translator --input=$(POT_FILE) --locale=$1 --output-file=po/$1.po; \
+	else \
+		echo "po/$1.po already exists, init is skipped."; \
+	fi
 endef
 $(foreach lang,$(LANGS),$(eval $(call INIT_PO,$(lang))))
 
-# create .po files for all languages
-po-all: $(PO_FILES)
+# 3) update .po files
+update-po:
+	@for lang in $(LANGS); do \
+		if [ -f po/$$lang.po ]; then \
+			msgmerge --update po/$$lang.po $(POT_FILE); \
+			echo "po/$$lang.po updated."; \
+		else \
+			echo "po/$$lang.po does not exist, please run init-po first."; \
+		fi \
+	done
 
-# create .po file for only on language
-po-%: po/%.po
-
-# update single .po file
-define UPDATE_PO
-po/$1.po: po/$1.po $(POT_FILE)
-	msgmerge --update po/$1.po $(POT_FILE)
-endef
-$(foreach lang,$(LANGS),$(eval $(call UPDATE_PO,$(lang))))
-
-# update all .po files
-update-po-all: $(PO_FILES)
-
-# compile the .mo files
-MO_DIR = po/LC_MESSAGES
-MO_FILES = $(addprefix $(MO_DIR)/,$(addsuffix .mo,$(LANGS)))
-
+# 4) compile .po files to .mo 
 $(MO_DIR)/%.mo: po/%.po
 	mkdir -p $(MO_DIR)
 	msgfmt $< -o $@
