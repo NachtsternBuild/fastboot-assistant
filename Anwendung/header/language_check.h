@@ -65,6 +65,11 @@ void write_language_file(const char *lang);
 void bind_language(const char *lang);
 // function that switch the language
 void toggle_language(GtkWidget *widget, gpointer stack);
+// function that get the path of the language file
+char *get_lang_path();
+// function that get the current language
+gchar *get_current_language();
+
 
 #endif // LANGUAGE_CHECK_H
 

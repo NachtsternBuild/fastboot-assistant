@@ -25,6 +25,17 @@
 
 GtkWidget *window;
 GtkCssProvider *provider_setup = NULL;
+// global widgets for page 2
+static GtkWidget *label_page_info2;
+static GtkWidget *button_setup_dir;
+static GtkWidget *button_toggle_theme;
+static GtkWidget *combo_language;
+
+// list of all languages
+static const char *language_codes[] = { "en", "de", "ru", "es", "pt", "fr" };
+static const char *language_labels[] = { "English", "Deutsch", "Русский", "Español", "Português", "Français" };
+static const int language_count = sizeof(language_codes)/sizeof(language_codes[0]);
+
 
 // function that start the config of the fastboot-assistant
 static void start_config_setup(GtkButton *button, gpointer user_data) 
@@ -60,6 +71,40 @@ void load_setup_provider(void)
 		".welcome3 { font-weight: bold; font-size: 24px;}\n"
 	);
 }
+
+// function that reload the theme of page 2
+void refresh_ui(GtkWidget *stack) 
+{
+    gtk_label_set_text(GTK_LABEL(label_page_info2),_("Here you can set important preferences for your Fastboot Assistant."));
+    gtk_button_set_label(GTK_BUTTON(button_setup_dir), _("Choose folder for flashing files"));
+    gtk_button_set_label(GTK_BUTTON(button_toggle_theme), _("Toggle theme (Light/Dark)"));
+
+    // select the current language in the combo box
+    gchar *current_lang = get_current_language();
+    for (int i = 0; i < language_count; i++) 
+    {
+        if (strcmp(current_lang, language_codes[i]) == 0) 
+        {
+            gtk_combo_box_set_active(GTK_COMBO_BOX(combo_language), i);
+            break;
+        }
+    }
+    // free because get_current_language used g_file_get_contents
+    g_free(current_lang);
+}
+
+// callback for language change
+static void toggle_language_setup(GtkComboBox *combo, gpointer user_data) 
+{
+    GtkWidget *stack = GTK_WIDGET(user_data);
+    int idx = gtk_combo_box_get_active(combo);
+    if (idx >= 0 && idx < language_count) 
+    {
+        set_language(language_codes[idx]);  // write the language to the config file
+        refresh_ui(stack);                  // reload the UI
+    }
+}
+
 
 /* the setup wizard */
 void run_first_run_setup(GtkWidget *widget, gpointer stack) 
@@ -149,6 +194,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_welcome_1), "stack", stack);
 	g_signal_connect(button_welcome_1, "clicked", G_CALLBACK(switch_page), "config_1");  
 	
+
 	/* page 2 */
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
@@ -157,7 +203,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     // main label
     GtkWidget *hbox2_1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
     GtkWidget *icon_info2 = gtk_image_new_from_icon_name("help-about");
-    GtkWidget *label_page_info2 = gtk_label_new(_("Here you can set important preferences for your Fastboot Assistant."));
+    label_page_info2 = gtk_label_new(_("Here you can set important preferences for your Fastboot Assistant."));
     // automatic linebreak
     gtk_label_set_wrap(GTK_LABEL(label_page_info2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_page_info2), PANGO_WRAP_WORD_CHAR);	// wrap at word boundary + character
@@ -167,14 +213,21 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	gtk_box_append(GTK_BOX(hbox2_1), label_page_info2);
     
     GtkWidget *label_2_2 = gtk_label_new(" ");
-    // button
+
+    // create the language combobox
+    combo_language = gtk_combo_box_text_new();
+    for (int i = 0; i < language_count; i++) 
+    {
+        gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(combo_language), language_codes[i], language_labels[i]);
+    }
+    
     const char *setup_dir_char = _("Choose folder for flashing files");
-    GtkWidget *button_setup_dir = create_icon_nav_button("folder-open-symbolic", setup_dir_char, G_CALLBACK(show_folder_chooser), stack);
+    button_setup_dir = create_icon_nav_button("folder-open-symbolic", setup_dir_char, G_CALLBACK(show_folder_chooser), stack);
     const char *toggle_theme_char = _("Toggle theme (Light/Dark)");
-    GtkWidget *button_toggle_theme = create_icon_nav_button("applications-graphics-symbolic", toggle_theme_char, G_CALLBACK(toggle_theme_css), stack);
+    button_toggle_theme = create_icon_nav_button("applications-graphics-symbolic", toggle_theme_char, G_CALLBACK(toggle_theme_css), stack);
     GtkWidget *button_welcome_2 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
-	
-	// check if theme is auto or css only
+    
+    // check if theme is auto or css only
 	// theme = auto (css + libadwaita)
 	if (file_exists_theme(auto_theme))
 	{
@@ -192,13 +245,32 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
     gtk_box_append(GTK_BOX(page2), label_2_1);
     gtk_box_append(GTK_BOX(page2), hbox2_1);
     gtk_box_append(GTK_BOX(page2), label_2_2);
-    gtk_box_append(GTK_BOX(page2), button_toggle_language);
+    gtk_box_append(GTK_BOX(page2), combo_language);
     gtk_box_append(GTK_BOX(page2), button_setup_dir);
     gtk_box_append(GTK_BOX(page2), button_toggle_theme);
     gtk_box_append(GTK_BOX(page2), button_welcome_2);
     
+    // center the icon
     gtk_widget_set_halign(hbox2_1, GTK_ALIGN_CENTER);
     
+    // get the current language
+    gchar *current_lang = get_current_language();
+    for (int i = 0; i < language_count; i++) 
+    {
+        if (strcmp(current_lang, language_codes[i]) == 0) 
+        {
+            gtk_combo_box_set_active(GTK_COMBO_BOX(combo_language), i);
+            break;
+        }
+    }
+    // free because get_current_language used g_file_get_contents
+    g_free(current_lang);
+    
+	// connect the combobox
+    g_signal_connect(combo_language, "changed", G_CALLBACK(toggle_language_setup), stack);
+    g_signal_connect(combo_language, "changed", G_CALLBACK(toggle_language_setup), stack);
+
+       
     // add page to the stack
 	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "config_1")) 
     {
@@ -209,6 +281,7 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_welcome_2), "stack", stack);
 	g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(switch_page), "config_2");
     
+      
     /* page 3 */
     GtkWidget *page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     

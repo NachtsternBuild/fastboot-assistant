@@ -31,6 +31,31 @@ GtkWidget *en_switch, *de_switch, *ru_switch, *es_switch, *pt_switch, *fr_switch
 static char *current_lang = NULL;
 static char lang_path[1024];
 
+// get the path of the language file
+char *get_lang_path()
+{
+    get_config_dir(lang_path, sizeof(lang_path));
+    snprintf(lang_path, sizeof(lang_path), "%s/%s", lang_path, LANGUAGE_FILE);
+    return lang_path;
+}
+
+// function that get the current language
+gchar *get_current_language()
+{
+    gchar *content = NULL;
+    if (!g_file_get_contents(get_lang_path(), &content, NULL, NULL) || !content) 
+    {
+        // fallback to english
+        content = g_strdup("en");
+    }
+    // trim newline
+    if (content) 
+    {
+        content[strcspn(content, "\n")] = '\0';
+    }
+    return content;
+}
+
 // read the content from the language file and set based on this the active switch
 static void set_current_switch_language()
 {
