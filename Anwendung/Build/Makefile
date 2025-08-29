@@ -203,12 +203,22 @@ po-all: $(PO_FILES)
 # create .po file for only on language
 po-%: po/%.po
 
-# compile the .mo files
-OUTDIR ?= .
-MO_FILES = $(addprefix $(OUTDIR)/locale/,$(addsuffix /LC_MESSAGES/$(TARGET).mo,$(LANGS)))
+# update single .po file
+define UPDATE_PO
+po/$1.po: po/$1.po $(POT_FILE)
+	msgmerge --update po/$1.po $(POT_FILE)
+endef
+$(foreach lang,$(LANGS),$(eval $(call UPDATE_PO,$(lang))))
 
-$(OUTDIR)/locale/%/LC_MESSAGES/$(TARGET).mo: po/%.po
-	mkdir -p $(dir $@)
+# update all .po files
+update-po-all: $(PO_FILES)
+
+# compile the .mo files
+MO_DIR = po/LC_MESSAGES
+MO_FILES = $(addprefix $(MO_DIR)/,$(addsuffix .mo,$(LANGS)))
+
+$(MO_DIR)/%.mo: po/%.po
+	mkdir -p $(MO_DIR)
 	msgfmt $< -o $@
 
 mo-all: $(MO_FILES)

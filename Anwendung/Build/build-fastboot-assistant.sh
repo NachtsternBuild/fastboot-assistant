@@ -46,6 +46,9 @@ declare -A TEXTS
 
 # all texts for the choices
 # German
+TEXTS[create_po]="[?] Müssen neue Übersetzungsdateien erstellt werden? (j/n)"
+TEXTS[manuell_po]="[?] Soll Dateien manuell gebaut werden? (j/n)"
+TEXTS[use_po]="[?] Für welche Übersetzungsdateien sollen gebaut werden?"
 TEXTS[create_target]="[?] Muss der Ordner 'build-project' erstellt werden? (j/n): "
 TEXTS[cleanup_prompt]="[?] Möchten Sie alte Dateien bereinigen? (j/n): "
 TEXTS[build_debuild]="[?] Soll ein Debian-Paket mit 'debuild -us -uc' gebaut werden?"
@@ -61,6 +64,9 @@ TEXTS[invalid_input]="[⚠] Ungültige Eingabe! Bitte 'l', 'w', 'b' oder 'n' ver
 TEXTS[select_exit]="(b/n) Beenden"
 
 # English
+TEXTS[create_po]="[?] Do new translation files need to be created? (y/n)"
+TEXTS[manuell_po]="[?] Should files be built manually? (y/n)"
+TEXTS[use_po]="[?] Which translation files should be built?"
 TEXTS[create_target_en]="[?] Should the 'build-project' folder be created? (y/n): "
 TEXTS[cleanup_prompt_en]="[?] Do you want to clean old files? (y/n): "
 TEXTS[build_debuild_en]="[?] Should a Debian package be built using 'debuild -us -uc'? "
@@ -117,6 +123,7 @@ h_message_dir="${header_dir}/message"
 h_spinner_dir="${header_dir}/spinner"
 h_theme_dir="${header_dir}/theme"
 h_partition_dir="${header_dir}/partition"
+h_language_dir="${header_dir}/language"
 
 config_dir="${source_dir}/config_projekt"
 reboot_dir="${source_dir}/reboot"
@@ -136,6 +143,17 @@ target_dir="${source_dir}/build_project"
 output_dir="${source_dir}/output"
 main_dir="${source_dir}/main"
 style_dir="${source_dir}/style"
+
+# for the po files
+po_dir="${source_dir}/po"
+
+
+# for the new language logic
+MAKEFILE_DIR="${build_dir}"
+PO_FILE_DIR="$MAKEFILE_DIR/po"
+TARGET="fastboot-assistant"
+OUTPUT_DIR_PO="${output_dir}/local"
+SUPPORTED_LANGS=("de" "en" "es" "pt" "ru" "fr")
 
 # for WSL
 windows_dir="${source_dir}/Windows"
@@ -185,6 +203,178 @@ error_msg() {
     echo -e "${RED}[x][⚠]Error: $error_msg${NC}"
 }
 
+# generate .pot file
+generate_pot() {
+    echo "[⧗] Generating POT file via Makefile..."
+    make i18n
+    echo "[✓] POT file created at $PO_FILE_DIR/${lang}.pot"
+    #cp "$PO_FILE_DIR/*" "$OUTPUT_DIR_PO"
+    #cp "$PO_FILE_DIR/*" "${po_dir}"
+    echo "[✓] POT file created at $OUTPUT_DIR_PO/${lang}.pot"
+}
+
+# generate .po files
+generate_po() {
+	 if [ -n "$1" ]; then
+	 	echo "[⧗] Creating PO files for $1..."
+        make po-$1
+        echo "[✓] PO file is ready."
+        cp "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO"
+        cp "$PO_FILE_DIR"/* "${po_dir}"
+    	echo "[✓] PO file ready at $OUTPUT_DIR_PO and ${po_dir}."
+    else
+        echo "[⧗] Creating PO files for all languages..."
+        make po-all
+        echo "[✓] All PO files are ready."
+        cp "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO"
+        cp "$PO_FILE_DIR"/* "${po_dir}"
+    	echo "[✓] All PO files ready at $OUTPUT_DIR_PO and ${po_dir}."
+    fi
+}
+
+# update the .po files for all languages or a single on
+update_po() {
+    if [ -n "$1" ]; then
+        echo "[⧗] Updating PO file for $1..."
+        make update-po-$1
+        echo "[✓] PO file is ready."
+        cp "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO"
+        cp "$PO_FILE_DIR"/* "${po_dir}"
+    	echo "[✓] PO file ready at $OUTPUT_DIR_PO and ${po_dir}."
+    else
+        echo "[⧗] Updating PO files for all languages..."
+        make update-po-all
+        echo "[✓] All PO files are ready."
+        cp "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO"
+        cp "$PO_FILE_DIR"/* "${po_dir}"
+    	echo "[✓] All PO files ready at $OUTPUT_DIR_PO and ${po_dir}."
+    fi
+}
+
+# compile the .po files to .mo files
+compile_mo() {
+    if [ -n "$1" ]; then
+        langs=("$1")
+    else
+        langs=("${SUPPORTED_LANGS[@]}")
+    fi
+
+    echo "[⧗] Compiling MO files..."
+    for lang in "${langs[@]}"; do
+        make mo-all
+        cp "$PO_FILE_DIR/LC_MESSAGES"/* "$OUTPUT_DIR_PO/locale/$lang/LC_MESSAGES/"
+        echo "[✓] Compiled $OUTPUT_DIR_PO/locale/$lang/LC_MESSAGES/$lang.mo"
+    done
+}
+
+# build the language files
+build_translations() {
+    mkdir -p "$OUTPUT_DIR_PO"
+    generate_pot    # generate a new .pot file, needed for the update
+    update_po       # update all languages
+    compile_mo      # compile all languages
+    echo "[✓] All translations built in $OUTPUT_DIR_PO"
+}
+
+# build a single language file
+build_translation_single() {
+	mkdir -p "$OUTPUT_DIR_PO"
+	generate_pot   
+   	update_po $1      
+    compile_mo $1
+    echo "[✓] Translation built at $OUTPUT_DIR_PO"
+}
+
+language_build() {
+	echo "[⧗] Starting building the language files..."
+	prompt_user "$(tr create_po)"
+	while true; do
+    	read -n1 -s answer_po
+    	case "$answer_po" in
+       		j|J|y|Y)
+       			echo "[⧗] Creating po files..."
+       			generate_po
+       			echo "[⧗] Building language files..."
+				build_translations
+				break
+				;;
+			n|N)
+				echo "[⧗] Build language files..."
+				prompt_user "$(tr manuell_po)"
+				while true; do
+    				read -n1 -s answer_manuell_po
+    				case "$answer_manuell_po" in
+						j|J|y|Y)
+							echo "[⧗] Manuell building of language files..."
+							prompt_user "$(tr use_po)"
+							prompt_user "╭────────────── Language  ──────────────╮"
+    						echo -e "${GREEN}│         (d) Deutsch            |${NC}"
+    						echo -e "${GREEN}│         (e) English            │${NC}"
+    						echo -e "${GREEN}│         (r) Русский            │${NC}"
+    						echo -e "${GREEN}│         (s) Español            │${NC}"
+			    			echo -e "${GREEN}│         (p) Português            │${NC}"
+			    			echo -e "${GREEN}│         (f) Français            │${NC}"
+			    			echo -e "${RED}│          $(tr select_exit)            │${NC}"
+			    			prompt_user "╰────────────────────────────────────────╯"
+							while true; do
+								read -n1 -s answer_use_po
+								case "$answer_use_po" in
+									d|D|de|De|DE|g|G)
+										echo "[⧗] Build language file for German..."
+										build_translation_single de
+			    						break
+			    						;;
+			    					e|E|en|EN)
+			    						echo "[⧗] Build language file for English..."
+										build_translation_single en
+			    						break
+			    						;;
+			    					r|R|ru|RU)
+										echo "[⧗] Build language file for Russian..."
+										build_translation_single ru
+			    						break
+			    						;;
+			    					s|S|es|ES)
+										echo "[⧗] Build language file for Spanish..."
+										build_translation_single es
+			    						break
+			    						;;
+			    					p|P|pt|PT)
+										echo "[⧗] Build language file for Portuguese..."
+										build_translation_single pt
+			    						break
+			    						;;
+			    					f|F|fr|FR)
+			    						echo "[⧗] Build language file for French..."
+										build_translation_single fr
+			    						break
+			    						;;
+			    					* )
+			    						build_info "$(tr invalid_input)"
+			    						;;
+    							esac
+    						done
+    						break
+    						;;
+    					n|N)
+    						echo "[⧗] Build language files..."
+    						build_translations
+    						break
+    						;;
+    					* )
+    						build_info "$(tr invalid_input)"
+    						;;
+    				esac
+    			done
+    			break
+    			;;		
+    		* )
+    			 build_info "$(tr invalid_input)"
+    			 ;;
+    	esac
+	done
+}
+
 # function that create the build-dir
 create_target_dir() {
     prompt_user "$(tr create_target)"
@@ -205,7 +395,7 @@ create_target_dir() {
                 break
                 ;;
             * )
-                build_info "[⚠] Bitte 'j', 'y' oder 'n' verwenden."
+                build_info "$(tr invalid_input)"
                 ;;
         esac
     done
@@ -240,9 +430,13 @@ building() {
     echo "[⧗] Set authorisations..."
     chmod a+x "$output_dir"
     echo "[✓] Application are at $output_dir."
+    # building the .po files to .mo files
+	echo "[⧗] Building language files..."
+	language_build
 
     # cleaning after the build
     clean_build
+    
 }
 	
 # function for clean after build
@@ -263,7 +457,7 @@ clean_build() {
                 break
                 ;;
             * )
-                build_info "[⚠] Bitte 'j', 'y' oder 'n' verwenden."
+                build_info "$(tr invalid_input)"
                 ;;
         esac
     done
@@ -286,6 +480,13 @@ debian_package_build_simple() {
 	mkdir -p deb/usr/share/icons/hicolor/256x256/apps/
 	mkdir -p deb/usr/share/applications/
 	mkdir -p deb/usr/share/fastboot-assistant/
+	
+	echo "[⧗] Adding language files..."
+	for lang in "${SUPPORTED_LANGS[@]}"; do
+    	mkdir -p "deb/usr/share/locale/$lang/LC_MESSAGES"
+    	cp "$OUTPUT_DIR_PO/$lang/LC_MESSAGES/$lang.mo" "deb/usr/share/locale/$lang/LC_MESSAGES/"
+	done
+
 	echo "[⧗] Copy all files to deb/usr/bin..."
 	cp -r "$output_dir/fastboot-assistant" deb/usr/bin/fastboot-assistant/
 	echo "[⧗] Copy all files to deb/usr/share/icons/hicolor/256x256/apps/..."
@@ -302,6 +503,9 @@ debian_package_build_simple() {
 	chmod a+x deb/usr/bin/fastboot-assistant
 	chmod 755 deb/usr/share/fastboot-assistant/style_dark.css
 	chmod 755 deb/usr/share/fastboot-assistant/style_light.css
+	for lang in "${SUPPORTED_LANGS[@]}"; do
+		chmod 755 "deb/usr/share/locale/$lang/LC_MESSAGES/$lang.mo"
+	done
 	chmod 755 deb/DEBIAN
 	
 	# Estimate the installed size by summing the sizes of all files in the deb directory
@@ -488,6 +692,12 @@ icons/sweet_unix.png usr/share/icons/hicolor/256x256/apps/
 style/style_dark.css usr/share/fastboot-assistant/
 style/style_light.css usr/share/fastboot-assistant/
 icons/sweet_unix.png usr/share/fastboot-assistant/
+build_project/po/LC_MESSAGES/en.mo /usr/share/locale/en/LC_MESSAGES/en.mo
+build_project/po/LC_MESSAGES/de.mo /usr/share/locale/de/LC_MESSAGES/de.mo
+build_project/po/LC_MESSAGES/ru.mo /usr/share/locale/ru/LC_MESSAGES/ru.mo
+build_project/po/LC_MESSAGES/sp.mo /usr/share/locale/sp/LC_MESSAGES/sp.mo
+build_project/po/LC_MESSAGES/pt.mo /usr/share/locale/pt/LC_MESSAGES/pt.mo
+build_project/po/LC_MESSAGES/fr.mo /usr/share/locale/fr/LC_MESSAGES/fr.mo
 debian/fastboot-assistant.1 usr/share/man/man1/
 debian/fastboot-assistant.de.1 usr/share/man/de/man1/
 EOF
@@ -505,11 +715,12 @@ override_dh_auto_build:
 	mkdir -p build_project
 	for dir in header Build config_projekt reboot flash preflash instructions updater \
 	           header/flash header/UI header/commands header/config header/directory \
-	           header/message header/spinner header/theme  header/partition flash/others main \
-	           preflash/backup preflash/prepare; do \
+	           header/message header/spinner header/theme header/partition header/language \
+	           flash/others main preflash/backup preflash/prepare po; do \
 		rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$$dir/" build_project/ ; \
 	done
 	$(MAKE) -C build_project
+	$(MAKE) -C build_project mo-all
 EOF
 
 	chmod +x "${debian_dir}/rules"
@@ -656,7 +867,7 @@ build_program_linux() {
  	then
     	echo "[⧗] Start Build for Linux..."
     	echo "[⧗] Copy all files to $target_dir..."
-    	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$h_partition_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir" "$main_dir"; do
+    	for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$h_partition_dir" "$h_language_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir" "$main_dir" "$po_dir"; do
         	# find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
         	rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$dir/" "$target_dir/"
     	done
@@ -709,7 +920,7 @@ build_program_windows() {
     build_info "$(tr build_wsl_info)"
     echo "[⧗] Start Build for Windows (WSL)..."
     echo "[⧗] Copy all files to $target_dir..."
-    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$h_partition_dir" "$f_others_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir" "$main_dir"; do
+    for dir in "$source_dir" "$build_dir" "$header_dir" "$config_dir" "$reboot_dir" "$flash_dir" "$preflash_dir" "$instructions_dir" "$h_flash_dir" "$h_UI_dir" "$h_commands_dir" "$h_config_dir" "$h_directory_dir" "$h_message_dir" "$h_spinner_dir" "$h_theme_dir" "$h_partition_dir" "$f_others_dir" "$h_language_dir" "$p_backup_dir" "$p_prepare_dir" "$updater_dir" "$main_dir" "$po_dir"; do
         # find "$dir" -maxdepth 1 -type f -exec cp {} "$target_dir" \;
         rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$dir/" "$target_dir/"
     done
