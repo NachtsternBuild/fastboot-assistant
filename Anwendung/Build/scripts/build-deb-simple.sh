@@ -24,6 +24,7 @@
 
 # function to build the debian package
 debian_package_build_simple() {
+	local out_dir="$output_dir/locale/$l/LC_MESSAGES"
 	echo "[⧗] Start Debian package build..."
 	echo "[⧗] Build mode: simple"
 	echo "[⧗] Changing to build directory..."
@@ -43,7 +44,7 @@ debian_package_build_simple() {
 	echo "[⧗] Adding language files..."
 	for lang in "${SUPPORTED_LANGS[@]}"; do
     	mkdir -p "deb/usr/share/locale/$lang/LC_MESSAGES"
-    	cp "$OUTPUT_DIR_PO/$lang/LC_MESSAGES/$lang.mo" "deb/usr/share/locale/$lang/LC_MESSAGES/"
+    	cp "$out_dir/$lang.mo" "deb/usr/share/locale/$lang/LC_MESSAGES/"
 	done
 
 	echo "[⧗] Copy all files to deb/usr/bin..."

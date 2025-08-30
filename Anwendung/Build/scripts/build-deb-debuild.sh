@@ -211,6 +211,7 @@ override_dh_auto_build:
 	export CCACHE_DISABLE=1 
 	rm -rf build_project
 	mkdir -p build_project
+	cp -r po/* build_project/po
 	for dir in header Build config_projekt reboot flash preflash instructions updater \
 	           header/flash header/UI header/commands header/config header/directory \
 	           header/message header/spinner header/theme header/partition header/language \
@@ -218,7 +219,7 @@ override_dh_auto_build:
 		rsync -av --update --exclude '.git/' --exclude='*/' --exclude='*.md' "$$dir/" build_project/ ; \
 	done
 	$(MAKE) -C build_project
-	$(MAKE) -C build_project mo-all
+	$(MAKE) mo-all
 EOF
 
 	chmod +x "${debian_dir}/rules"
