@@ -29,6 +29,7 @@
 #include "program_functions.h"
 
 #define LANGUAGE_FILE "language.txt" 
+#define LOCALE_DOMAIN "fastboot-assistant"
 
 const char *language = "de";
 
@@ -37,9 +38,10 @@ const char *language = "de";
 */
 
 // set two paths for the .po files
-const char *locale_paths[] = {
-        "./locale",             // build or working dir
-        "/usr/share/locale"     // systempath
+static const char *locale_paths[] = {
+    "./locale",   				  // build / run in source tree
+    "/usr/share/locale"           // system-wide packages  
+    "/usr/local/share/locale",    // self-installed
 };
 
 // function that create the dir
@@ -103,6 +105,7 @@ int read_language_file(char *langbuf, size_t size)
     return 1;
 }
 
+
 // function that writes the language to the file
 void write_language_file(const char *lang)
 {   
@@ -130,34 +133,33 @@ void write_language_file(const char *lang)
     LOG_INFO("Written '%s' to the file '%s'.", lang, filepath);
 }
 
+
 // try to bind local dir and .mo files
 void bind_language(const char *lang)
 {
     int found = 0;
-    for (int i = 0; i < sizeof(locale_paths)/sizeof(locale_paths[0]); i++) 
+    for (int i = 0; i < (int)(sizeof(locale_paths)/sizeof(locale_paths[0])); i++) 
     {
         char testpath[512];
-        snprintf(testpath, sizeof(testpath),
-                 "%s/%.*s/LC_MESSAGES/%s.mo",
-                 locale_paths[i], 2, lang, LOCALE_DOMAIN);
-		
-		// open the file
+        snprintf(testpath, sizeof(testpath), "%s/%.*s/LC_MESSAGES/%s.mo", locale_paths[i], 2, lang, LOCALE_DOMAIN);
+
         FILE *file = fopen(testpath, "r");
         if (file) 
         {
             fclose(file);
             bindtextdomain(LOCALE_DOMAIN, locale_paths[i]);
             found = 1;
+            LOG_INFO("Using translations from: %s", locale_paths[i]);
             break;
         }
     }
 
     if (!found) 
     {
-        LOG_INFO("Using fallback path.");
-        // fallback to systempath
+        LOG_INFO("No .mo found, fallback to /usr/share/locale");
         bindtextdomain(LOCALE_DOMAIN, "/usr/share/locale");
     }
-	LOG_INFO("Set %s as textdomain.", LOCALE_DOMAIN);
+
     textdomain(LOCALE_DOMAIN);
+    LOG_INFO("Set textdomain: %s", LOCALE_DOMAIN);
 }

@@ -168,59 +168,58 @@ $(TARGET): $(OBJS)
 # cleanup
 clean:
 	rm -f $(OBJS) $(TARGET)
+	rm -rf locale
+	rm -f po/*.po~ po/*.pot~
 
 #------------------------
 # build language files
 #------------------------
 
-# standard .pot file
-POT_FILE = po/fastboot-assistant.pot
+PACKAGE   = fastboot-assistant
+PODIR     = po
+LOCALEDIR = $(PODIR)/locale
+POT_FILE  = $(PODIR)/$(PACKAGE).pot
 
-# supported languages
 LANGS = de en es pt ru fr
+PO_FILES = $(addprefix $(PODIR)/,$(addsuffix .po,$(LANGS)))
+MO_FILES = $(addprefix $(LOCALEDIR)/,$(addsuffix /LC_MESSAGES/$(PACKAGE).mo,$(LANGS)))
 
-# po files
-PO_FILES = $(addprefix po/,$(addsuffix .po,$(LANGS)))
-
-# mo files
-MO_DIR = po/LC_MESSAGES
-MO_FILES = $(addprefix $(MO_DIR)/,$(addsuffix .mo,$(LANGS)))
-
-# 1) create the .pot file
+# 1) create .pot file
 $(POT_FILE): $(SRCS) $(HEADERS)
-	mkdir -p po
+	@mkdir -p $(PODIR)
 	xgettext --keyword=_ --language=C --from-code=UTF-8 \
 		--add-comments --sort-output \
-		--output=$(POT_FILE) $(SRCS)
+		--output=$@ $(SRCS)
 
-# 2) create .po files
+# 2) initialize .po files (only if missing)
 init-po: $(PO_FILES)
 
 define INIT_PO
-po/$1.po: $(POT_FILE)
-	@if [ ! -f po/$1.po ]; then \
-		mkdir -p po; \
-		msginit --no-translator --input=$(POT_FILE) --locale=$1 --output-file=po/$1.po; \
+$(PODIR)/$1.po: $(POT_FILE)
+	@if [ ! -f $$@ ]; then \
+		echo "Init locale $1"; \
+		msginit --no-translator --input=$(POT_FILE) --locale=$1 --output-file=$$@; \
 	else \
-		echo "po/$1.po already exists, init is skipped."; \
+		echo "$$@ already exists, skipped."; \
 	fi
 endef
 $(foreach lang,$(LANGS),$(eval $(call INIT_PO,$(lang))))
 
-# 3) update .po files
-update-po:
+# 3) update existing .po files
+update-po: $(POT_FILE)
 	@for lang in $(LANGS); do \
-		if [ -f po/$$lang.po ]; then \
-			msgmerge --update po/$$lang.po $(POT_FILE); \
-			echo "po/$$lang.po updated."; \
+		if [ -f $(PODIR)/$$lang.po ]; then \
+			msgmerge --update --backup=none $(PODIR)/$$lang.po $(POT_FILE); \
+			echo "Updated: $(PODIR)/$$lang.po"; \
 		else \
-			echo "po/$$lang.po does not exist, please run init-po first."; \
-		fi \
+			echo "$(PODIR)/$$lang.po missing, run make init-po first."; \
+		fi; \
 	done
 
-# 4) compile .po files to .mo 
-$(MO_DIR)/%.mo: po/%.po
-	mkdir -p $(MO_DIR)
+# 4) compile .po -> .mo
+$(LOCALEDIR)/%/LC_MESSAGES/$(PACKAGE).mo: $(PODIR)/%.po
+	@mkdir -p $(dir $@)
 	msgfmt $< -o $@
 
 mo-all: $(MO_FILES)
+
