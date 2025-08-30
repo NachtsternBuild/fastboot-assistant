@@ -63,9 +63,9 @@ TEXTS[invalid_input]="[⚠] Ungültige Eingabe! Bitte 'l', 'w', 'b' oder 'n' ver
 TEXTS[select_exit]="(b/n) Beenden"
 
 # English
-TEXTS[create_po]="[?] Do new translation files need to be created? (y/n)"
-TEXTS[manuell_po]="[?] Should files be built manually? (y/n)"
-TEXTS[use_po]="[?] Which translation files should be built?"
+TEXTS[create_po_en]="[?] Do new translation files need to be created? (y/n)"
+TEXTS[manuell_po_en]="[?] Should files be built manually? (y/n)"
+TEXTS[use_po_en]="[?] Which translation files should be built?"
 TEXTS[create_target_en]="[?] Should the 'build-project' folder be created? (y/n): "
 TEXTS[cleanup_prompt_en]="[?] Do you want to clean old files? (y/n): "
 TEXTS[build_debuild_en]="[?] Should a Debian package be built using 'debuild -us -uc'? "
@@ -149,10 +149,11 @@ po_dir="${source_dir}/po"
 # for the new language logic
 MAKEFILE_DIR="${target_dir}"
 PO_FILE_DIR="$MAKEFILE_DIR/po"
-MO_DIR="$PO_FILE_DIR/LC_MESSAGES"
+MO_DIR="$PO_FILE_DIR/locale"
 TARGET="fastboot-assistant"
 OUTPUT_DIR_PO="${output_dir}/local"
 SUPPORTED_LANGS=("de" "en" "es" "pt" "ru" "fr")
+
 
 # for WSL
 windows_dir="${source_dir}/Windows"

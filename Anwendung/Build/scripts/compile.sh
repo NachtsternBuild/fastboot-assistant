@@ -62,7 +62,9 @@ building() {
 # function for clean after build
 clean_build() {
 	while true; do
+		echo ""
         prompt_user "$(tr cleanup_prompt)"
+        echo ""
         read -n1 -s answer
         case "$answer" in
             j|J|y|Y )

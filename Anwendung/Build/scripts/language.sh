@@ -21,68 +21,55 @@
 # - Flatpak
 # this is a modified version of the bash script, for Debian package and the RPM building from the linux-assistant
 
-
 # generate .pot file
 generate_pot() {
-    echo "[⧗] Generating POT file via Makefile..."
-    make init-po      
-    echo "[✓] POT file created at $PO_FILE_DIR/fastboot-assistant.pot"
+    echo "[⧗] Generating POT file..."
+    make -C "$source_dir" "$PO_FILE_DIR/$TARGET.pot"
+    echo "[✓] POT file created at $PO_FILE_DIR/$TARGET.pot"
 }
 
-# generate .po files
+# initialize .po files
 generate_po() {
-    local lang="${1:-}"
-	mkdir -p "$po_dir"
-	mkdir -p "$OUTPUT_DIR_PO"
-	
-    if [ -n "$lang" ]; then
-        echo "[⧗] Creating PO file for $lang..."
-        make po-"$lang"
-        echo "[✓] PO file $lang.po ready."
-        cp "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO/"
-        cp "$PO_FILE_DIR"/* "$po_dir/"
-    else
-        echo "[⧗] Creating PO files for all languages..."
-        for lang in "${SUPPORTED_LANGS[@]}"; do
-            #make po-"$lang"
-            make init-po
-            echo "[✓] PO file $lang.po ready."
-            cp -r "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO/"
-            cp -r "$PO_FILE_DIR"/* "$po_dir/"
-        done
-    fi
-    echo "[✓] All PO files ready at $OUTPUT_DIR_PO and $po_dir."
+    echo "[⧗] Initializing PO files..."
+    for lang in "${SUPPORTED_LANGS[@]}"; do
+        if [ ! -f "$po_dir/$lang.po" ]; then
+            msginit --no-translator --input="$PO_FILE_DIR/$TARGET.pot" \
+                --locale="$lang" --output-file="$po_dir/$lang.po"
+            echo "[✓] Created $po_dir/$lang.po"
+        else
+            echo "[i] $po_dir/$lang.po already exists, skipped."
+        fi
+    done
 }
 
-# update the .po files for all languages or a single on
+# update existing .po files
 update_po() {
-    local lang="${1:-}"
-	mkdir -p "$po_dir"
-	mkdir -p "$OUTPUT_DIR_PO"
-	
+    local lang="${1:-}"  
     if [ -n "$lang" ]; then
-        echo "[⧗] Updating PO file for $lang..."
-        make update-po
-        echo "[✓] PO file $lang.po updated."
-        cp "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO/"
-        cp "$PO_FILE_DIR"/* "$po_dir/"
+        # single language
+        if [ -f "$po_dir/$lang.po" ]; then
+            msgmerge --update --backup=none "$po_dir/$lang.po" "$PO_FILE_DIR/$TARGET.pot"
+            echo "[✓] Updated $po_dir/$lang.po"
+        else
+            echo "[!] $po_dir/$lang.po missing, run generate_po first."
+        fi
     else
-        echo "[⧗] Updating PO files for all languages..."
-        make update-po
-        for lang in "${SUPPORTED_LANGS[@]}"; do
-            cp -r "$PO_FILE_DIR"/* "$OUTPUT_DIR_PO/"
-            cp -r "$PO_FILE_DIR"/* "$po_dir/"
+        # all languages
+        for l in "${SUPPORTED_LANGS[@]}"; do
+            if [ -f "$po_dir/$l.po" ]; then
+                msgmerge --update --backup=none "$po_dir/$l.po" "$PO_FILE_DIR/$TARGET.pot"
+                echo "[✓] Updated $po_dir/$l.po"
+            else
+                echo "[!] $po_dir/$l.po missing, run generate_po first."
+            fi
         done
-        echo "[✓] All PO files updated at $OUTPUT_DIR_PO and $po_dir."
     fi
 }
 
-# compile the .po files to .mo files
+# compile .po → .mo
 compile_mo() {
     local lang="${1:-}"
     local langs=()
-    mkdir -p "$MO_DIR"
-	
     if [ -n "$lang" ]; then
         langs=("$lang")
     else
@@ -90,31 +77,31 @@ compile_mo() {
     fi
 
     echo "[⧗] Compiling MO files..."
-    for lang in "${langs[@]}"; do
-        mkdir -p "$OUTPUT_DIR_PO/locale/$lang/LC_MESSAGES"
-        make mo-all
-        cp -r "$MO_DIR"/* "$OUTPUT_DIR_PO/locale/$lang/LC_MESSAGES/"
-        echo "[✓] Compiled $OUTPUT_DIR_PO/locale/$lang/LC_MESSAGES/$lang.mo"
+    for l in "${langs[@]}"; do
+        local out_dir="$output_dir/locale/$l/LC_MESSAGES"
+        mkdir -p "$out_dir"
+        msgfmt "$po_dir/$l.po" -o "$out_dir/$TARGET.mo"
+        echo "[✓] Compiled $out_dir/$TARGET.mo"
     done
 }
 
-# build the language files
+# ------------------------
+# Build translations
+# ------------------------
 build_translations() {
-    mkdir -p "$OUTPUT_DIR_PO" "$po_dir"
     generate_pot
     generate_po
     update_po
     compile_mo
-    echo "[✓] All translations built in $OUTPUT_DIR_PO"
+    echo "[✓] All translations built in $output_dir"
 }
 
-# build a single language file
 build_translation_single() {
-    mkdir -p "$OUTPUT_DIR_PO" "$po_dir"
-    local lang="${1:-}"
+    local lang="$1"
     generate_pot
-    generate_po "$lang"
+    generate_po
     update_po "$lang"
     compile_mo "$lang"
-    echo "[✓] Translation built at $OUTPUT_DIR_PO for $lang"
+    echo "[✓] Translation built at $output_dir for $lang"
 }
+

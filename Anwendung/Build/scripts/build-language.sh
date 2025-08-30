@@ -24,7 +24,9 @@
 
 language_build() {
 	echo "[⧗] Starting building the language files..."
+	echo ""
 	prompt_user "$(tr create_po)"
+	echo ""
 	while true; do
     	read -n1 -s answer_po
     	case "$answer_po" in
@@ -39,13 +41,16 @@ language_build() {
 				;;
 			n|N)
 				echo "[⧗] Build language files..."
+				echo ""
 				prompt_user "$(tr manuell_po)"
 				while true; do
     				read -n1 -s answer_manuell_po
     				case "$answer_manuell_po" in
 						j|J|y|Y)
 							echo "[⧗] Manuell building of language files..."
+							echo ""
 							prompt_user "$(tr use_po)"
+							echo ""
 							prompt_user "╭────────────── Language  ──────────────╮"
     						echo -e "${GREEN}│         (d) Deutsch            |${NC}"
     						echo -e "${GREEN}│         (e) English            │${NC}"
@@ -55,6 +60,7 @@ language_build() {
 			    			echo -e "${GREEN}│         (f) Français            │${NC}"
 			    			echo -e "${RED}│          $(tr select_exit)            │${NC}"
 			    			prompt_user "╰────────────────────────────────────────╯"
+			    			echo ""
 							while true; do
 								read -n1 -s answer_use_po
 								case "$answer_use_po" in
