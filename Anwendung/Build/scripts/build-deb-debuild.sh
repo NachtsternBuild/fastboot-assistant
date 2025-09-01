@@ -190,12 +190,12 @@ icons/sweet_unix.png usr/share/icons/hicolor/256x256/apps/
 style/style_dark.css usr/share/fastboot-assistant/
 style/style_light.css usr/share/fastboot-assistant/
 icons/sweet_unix.png usr/share/fastboot-assistant/
-build_project/po/LC_MESSAGES/en.mo /usr/share/locale/en/LC_MESSAGES/en.mo
-build_project/po/LC_MESSAGES/de.mo /usr/share/locale/de/LC_MESSAGES/de.mo
-build_project/po/LC_MESSAGES/ru.mo /usr/share/locale/ru/LC_MESSAGES/ru.mo
-build_project/po/LC_MESSAGES/sp.mo /usr/share/locale/sp/LC_MESSAGES/sp.mo
-build_project/po/LC_MESSAGES/pt.mo /usr/share/locale/pt/LC_MESSAGES/pt.mo
-build_project/po/LC_MESSAGES/fr.mo /usr/share/locale/fr/LC_MESSAGES/fr.mo
+build_project/po/en/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/en/LC_MESSAGES/fastboot-assistant.mo
+build_project/po/de/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/de/LC_MESSAGES/fastboot-assistant.mo
+build_project/po/ru/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/ru/LC_MESSAGES/fastboot-assistant.mo
+build_project/po/es/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/es/LC_MESSAGES/fastboot-assistant.mo
+build_project/po/pt/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/pt/LC_MESSAGES/fastboot-assistant.mo
+build_project/po/fr/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/fr/LC_MESSAGES/fastboot-assistant.mo
 debian/fastboot-assistant.1 usr/share/man/man1/
 debian/fastboot-assistant.de.1 usr/share/man/de/man1/
 EOF
