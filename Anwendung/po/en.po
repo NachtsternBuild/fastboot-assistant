@@ -490,11 +490,11 @@ msgstr "Bootloader Status (fastboot)"
 
 #: get_devices.c:97
 msgid "Bootloader status (ADB)"
-msgstr "Bootloader status (ADB)"
+msgstr "Bootloader Status (ADB)"
 
 #: get_devices.c:98
 msgid "Bootloader status (fastboot)"
-msgstr "Bootloader status (fastboot)"
+msgstr "Bootloader Status (fastboot)"
 
 #: reboot_fastboot.c:111
 msgid "Bootloader variables"
@@ -567,7 +567,7 @@ msgstr "Compressed image files (xz)"
 
 #: info.c:151
 msgid "Computer Info:"
-msgstr "Computer Info:"
+msgstr "System Info:"
 
 #: run_first_run_setup.c:327
 msgid "Configuration completed."
@@ -691,7 +691,7 @@ msgstr "Desktop: "
 
 #: get_devices.c:37
 msgid "Desvices (ADB)"
-msgstr "Desvices (ADB)"
+msgstr "Devices (ADB)"
 
 #: get_devices.c:48
 msgid "Devcies (fastboot)"
@@ -1532,7 +1532,7 @@ msgstr "System and Package Informations:"
 
 #: about.c:240
 msgid "System and package information"
-msgstr "System and package information"
+msgstr "System and Package information"
 
 #. button and label
 #: instruction_info.c:137
@@ -1801,7 +1801,7 @@ msgstr "Updater (for development)"
 #. new button
 #: about.c:238
 msgid "Updates"
-msgstr "Updates"
+msgstr "Update"
 
 #. gtk_widget_set_size_request(logo_page4, 64, 64);
 #. button and label
@@ -1854,7 +1854,7 @@ msgstr "Version: "
 
 #: about.c:273
 msgid "Versionen"
-msgstr "Versionen"
+msgstr "Versions"
 
 #: run_first_run_setup.c:171
 msgid "Welcome to the Fastboot Assistant!"
