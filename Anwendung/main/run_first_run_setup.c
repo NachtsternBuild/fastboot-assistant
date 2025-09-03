@@ -25,6 +25,22 @@
 
 GtkWidget *window;
 GtkCssProvider *provider_setup = NULL;
+// global widgets for page 2
+static GtkWidget *label_page_info2;
+static GtkWidget *button_setup_dir;
+static GtkWidget *button_toggle_theme;
+static GtkWidget *combo_language;
+
+// list of all languages
+static const char *language_codes[] = { "en", "de", "ru", "es", "pt", "fr" };
+static const char *language_labels[] = { "English", "Deutsch", "Русский", "Español", "Português", "Français" };
+static const int language_count = sizeof(language_codes)/sizeof(language_codes[0]);
+
+// dummy 
+void apply_language()
+{
+	LOG_INFO("Will removed later.");
+}
 
 // function that start the config of the fastboot-assistant
 static void start_config_setup(GtkButton *button, gpointer user_data) 
@@ -60,6 +76,41 @@ void load_setup_provider(void)
 		".welcome3 { font-weight: bold; font-size: 24px;}\n"
 	);
 }
+
+// function that reload the theme of page 2
+void refresh_ui(GtkWidget *stack) 
+{
+    gtk_label_set_text(GTK_LABEL(label_page_info2),
+        _("Here you can set important preferences for your Fastboot Assistant."));
+    gtk_button_set_label(GTK_BUTTON(button_setup_dir), _("Choose folder for flashing files"));
+    gtk_button_set_label(GTK_BUTTON(button_toggle_theme), _("Toggle theme (Light/Dark)"));
+
+    // select the current language in the DropDown
+    gchar *current_lang = get_current_language();
+    for (int i = 0; i < language_count; i++) 
+    {
+        if (strcmp(current_lang, language_codes[i]) == 0) 
+        {
+            gtk_drop_down_set_selected(GTK_DROP_DOWN(combo_language), i);
+            break;
+        }
+    }
+    g_free(current_lang);
+}
+
+// callback for language change
+static void toggle_language_setup(GtkDropDown *dropdown, gpointer user_data) 
+{
+    GtkWidget *stack = GTK_WIDGET(user_data);
+    int idx = gtk_drop_down_get_selected(dropdown);
+    if (idx >= 0 && idx < language_count) 
+    {
+        set_language(language_codes[idx]);
+        refresh_ui(stack);
+    }
+}
+
+
 
 /* the setup wizard */
 void run_first_run_setup(GtkWidget *widget, gpointer stack) 
@@ -149,66 +200,87 @@ void run_first_run_setup(GtkWidget *widget, gpointer stack)
 	g_object_set_data(G_OBJECT(button_welcome_1), "stack", stack);
 	g_signal_connect(button_welcome_1, "clicked", G_CALLBACK(switch_page), "config_1");  
 	
+
 	/* page 2 */
-    GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
-    
-    // button and labels 
-    GtkWidget *label_2_1 = gtk_label_new(" ");
-    // main label
-    GtkWidget *hbox2_1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-    GtkWidget *icon_info2 = gtk_image_new_from_icon_name("help-about");
-    GtkWidget *label_page_info2 = gtk_label_new(_("Here you can set important preferences for your Fastboot Assistant."));
-    // automatic linebreak
-    gtk_label_set_wrap(GTK_LABEL(label_page_info2), TRUE);
-	gtk_label_set_wrap_mode(GTK_LABEL(label_page_info2), PANGO_WRAP_WORD_CHAR);	// wrap at word boundary + character
+	GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+
+	// spacer label
+	GtkWidget *label_2_1 = gtk_label_new(" ");
+
+	// info label with icon
+	GtkWidget *hbox2_1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	GtkWidget *icon_info2 = gtk_image_new_from_icon_name("help-about");
+	label_page_info2 = gtk_label_new(_("Here you can set important preferences for your Fastboot Assistant."));
+	gtk_label_set_wrap(GTK_LABEL(label_page_info2), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_page_info2), PANGO_WRAP_WORD_CHAR);
 	gtk_widget_add_css_class(label_page_info2, "welcome3");
 	gtk_image_set_pixel_size(GTK_IMAGE(icon_info2), 32);
 	gtk_box_append(GTK_BOX(hbox2_1), icon_info2);
 	gtk_box_append(GTK_BOX(hbox2_1), label_page_info2);
-    
-    GtkWidget *label_2_2 = gtk_label_new(" ");
-    // button
-    const char *setup_dir_char = _("Choose folder for flashing files");
-    GtkWidget *button_setup_dir = create_icon_nav_button("folder-open-symbolic", setup_dir_char, G_CALLBACK(show_folder_chooser), stack);
-    const char *toggle_theme_char = _("Toggle theme (Light/Dark)");
-    GtkWidget *button_toggle_theme = create_icon_nav_button("applications-graphics-symbolic", toggle_theme_char, G_CALLBACK(toggle_theme_css), stack);
-    GtkWidget *button_welcome_2 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
+
+	// spacer
+	GtkWidget *label_2_2 = gtk_label_new(" ");
+	
+	// --- Language DropDown ---
+	GtkStringList *language_list = gtk_string_list_new(NULL);
+	for (int i = 0; i < language_count; i++) 
+	{
+	    gtk_string_list_append(language_list, language_labels[i]);
+	}
+	combo_language = gtk_drop_down_new(G_LIST_MODEL(language_list), 0);
+
+
+	// set the current language
+	gchar *current_lang = get_current_language();
+	for (int i = 0; i < language_count; i++) 
+	{
+	    if (strcmp(current_lang, language_codes[i]) == 0) 
+	    {
+	        gtk_drop_down_set_selected(GTK_DROP_DOWN(combo_language), i);
+	        break;
+	    }
+	}
+	g_free(current_lang);
+
+	// --- Buttons ---
+	button_setup_dir = create_icon_nav_button("folder-open-symbolic", _("Choose folder for flashing files"), G_CALLBACK(show_folder_chooser), stack);
+	button_toggle_theme = create_icon_nav_button("applications-graphics-symbolic", _("Toggle theme (Light/Dark)"), G_CALLBACK(toggle_theme_css), stack);
+	GtkWidget *button_welcome_2 = create_icon_nav_button_no_callback("pan-end-symbolic", next_page_char);
 	
 	// check if theme is auto or css only
-	// theme = auto (css + libadwaita)
-	if (file_exists_theme(auto_theme))
+	if (file_exists_theme(auto_theme)) 
 	{
-        // disable the button 
-        gtk_widget_set_visible(GTK_WIDGET(button_toggle_theme), FALSE);
-    } 
-    // theme = css only
-    else 
-    {
-        // enable the button
-        gtk_widget_set_visible(GTK_WIDGET(button_toggle_theme), TRUE);
-    }
-    
-    // add the widgets to the box
-    gtk_box_append(GTK_BOX(page2), label_2_1);
-    gtk_box_append(GTK_BOX(page2), hbox2_1);
-    gtk_box_append(GTK_BOX(page2), label_2_2);
-    gtk_box_append(GTK_BOX(page2), button_toggle_language);
-    gtk_box_append(GTK_BOX(page2), button_setup_dir);
-    gtk_box_append(GTK_BOX(page2), button_toggle_theme);
-    gtk_box_append(GTK_BOX(page2), button_welcome_2);
-    
-    gtk_widget_set_halign(hbox2_1, GTK_ALIGN_CENTER);
-    
-    // add page to the stack
-	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "config_1")) 
-    {
-        gtk_stack_add_named(GTK_STACK(stack), page2, "config_1");
-	}
+	    gtk_widget_set_visible(GTK_WIDGET(button_toggle_theme), FALSE);
+	} 
 	
-	// set stack reference for the button function
+	else 
+	{
+	    gtk_widget_set_visible(GTK_WIDGET(button_toggle_theme), TRUE);
+	}
+
+	// add widgets to page2
+	gtk_box_append(GTK_BOX(page2), label_2_1);
+	gtk_box_append(GTK_BOX(page2), hbox2_1);
+	gtk_box_append(GTK_BOX(page2), label_2_2);
+	gtk_box_append(GTK_BOX(page2), combo_language);
+	gtk_box_append(GTK_BOX(page2), button_setup_dir);
+	gtk_box_append(GTK_BOX(page2), button_toggle_theme);
+	gtk_box_append(GTK_BOX(page2), button_welcome_2);
+	gtk_widget_set_halign(hbox2_1, GTK_ALIGN_CENTER);
+	
+	// connect DropDown changed signal
+	g_signal_connect(combo_language, "changed", G_CALLBACK(toggle_language_setup), stack);
+	
+	// add page2 to stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "config_1")) 
+	{
+	    gtk_stack_add_named(GTK_STACK(stack), page2, "config_1");
+	}
+
+	// connect next page button
 	g_object_set_data(G_OBJECT(button_welcome_2), "stack", stack);
 	g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(switch_page), "config_2");
-    
+      
     /* page 3 */
     GtkWidget *page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     

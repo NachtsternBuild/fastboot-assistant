@@ -41,19 +41,9 @@ static void start_updater_devmode(GtkWidget *widget, gpointer stack)
 // Function to set up button labels based on the language
 void set_button_labels_updater(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Updater");
-        strcpy(labels[1], "Updater (for development)");
-        strcpy(labels[2], "Back to Home");
-    }
-    
-    else
-    {
-    	strcpy(labels[0], "Updater");
-    	strcpy(labels[1], "Updater (für Entwicklung)");
-    	strcpy(labels[2], "Zurück zur Startseite");
-    }
+    g_strlcpy(labels[0], _("Updater"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Updater (for development)"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Back to Home"), sizeof(labels[2]));
 } 
 
 /* main function - updater */
@@ -73,6 +63,8 @@ void updater(GtkWidget *widget, gpointer stack)
 
 
     GtkWidget *grid = gtk_grid_new();
+    gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
+	gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
     gtk_widget_set_halign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(grid, GTK_ALIGN_CENTER);
     gtk_widget_set_hexpand(grid, TRUE);

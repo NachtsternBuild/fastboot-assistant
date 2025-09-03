@@ -29,21 +29,21 @@ void instruction_gsi(GtkWidget *widget, gpointer stack)
 	apply_language();
 	
 	// char for the next page button
-	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
-	const char *back_page_char = strcmp(language, "de") == 0 ? "Zurück" : "Back";
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *next_page_char = _("Next");
+	const char *back_page_char = _("Back");
+	const char *exit_page_char = _("Exit");
 
 	/* page 1 */
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
     // button and label
-    GtkWidget *button_gsi1 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Hinweise" : "Notes");
+    GtkWidget *button_gsi1 = gtk_button_new_with_label(_("Notes"));
     // label 1
-    GtkWidget *label_gsi1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "GSI (Generic System Image) ist ein Android-System-Image, dass eine Unterstützung von Project Treble (siehe weitere Infos) voraussetzt." : "GSI (Generic System Image) is an Android system image that requires support for Project Treble (see further information).");
+    GtkWidget *label_gsi1_1 = gtk_label_new(_("GSI (Generic System Image) is an Android system image that requires support for Project Treble (see further information)."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_gsi1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "GSIs ermöglichen Android-Geräten ohne Custom-ROMs Unterstützung das Manuelle aufspielen von neueren Android-Versionen." : "GSI enable Android devices without custom ROMs support manual flashing of newer Android versions.");
+    GtkWidget *label_gsi1_2 = gtk_label_new(_("GSI enable Android devices without custom ROMs support manual flashing of newer Android versions."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi1_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi1_2), PANGO_WRAP_WORD_CHAR);	
     // new button
@@ -84,17 +84,17 @@ void instruction_gsi(GtkWidget *widget, gpointer stack)
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_gsi2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "GSI Flashen" : "GSI Flashing");
+    GtkWidget *button_gsi2 = gtk_button_new_with_label(_("GSI Flashing"));
     // label 1
-    GtkWidget *label_gsi2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Prüfen sie ob ihr Gerät mit Project Treble kompatibel ist. \n2. Laden sie ein entsprechendes GSI herunter. \n3. Vorbereiten sie die Images für den Flash." : "1. Check if your device is compatible with Project Treble. \n2. Download a corresponding GSI. \n3. Prepare the images for the Flash.");
+    GtkWidget *label_gsi2_1 = gtk_label_new(_("1. Check if your device is compatible with Project Treble. \n2. Download a corresponding GSI. \n3. Prepare the images for the Flash."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi2_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi2_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_gsi2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Booten sie ihr Gerät in Fastboot. \n5. Öffnen sie den Bootloader. Manche Geräte unterstützen nicht die Methode über Fastboot." : "4. Boot your device in Fastboot. \n5. Open the bootloader. Some devices do not support the Fastboot method.");
+    GtkWidget *label_gsi2_2 = gtk_label_new(_("4. Boot your device in Fastboot. \n5. Open the bootloader. Some devices do not support the Fastboot method."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi2_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi2_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_gsi2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Als Methoden des Flashs gibt es die Alternativen 'dirty flash'(1) und 'clean flash'(2)." : "The alternatives 'dirty flash'(1) and 'clean flash'(2) are available as flash methods.");
+    GtkWidget *label_gsi2_3 = gtk_label_new(_("The alternatives 'dirty flash'(1) and 'clean flash'(2) are available as flash methods."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi2_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi2_3), PANGO_WRAP_WORD_CHAR);	
 	
@@ -138,8 +138,8 @@ void instruction_gsi(GtkWidget *widget, gpointer stack)
     GtkWidget *page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_gsi3 = gtk_button_new_with_label("Clean Flash");
-    GtkWidget *label_gsi3_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Löschen sie alle Nutzerdaten. \n2. Flashen sie das System-Image \n3. Flashen sie im Bedarfsfall ein vbmeta.img. \n4. Starten sie ihr Gerät neu." : "1. Delete all user data. \n2. Flash the system image \n3. If necessary, flash a vbmeta.img. \n4. Restart your device.");
+    GtkWidget *button_gsi3 = gtk_button_new_with_label(_("Clean Flash"));
+    GtkWidget *label_gsi3_1 = gtk_label_new(_("1. Delete all user data. \n2. Flash the system image \n3. If necessary, flash a vbmeta.img. \n4. Restart your device."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi3_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi3_1), PANGO_WRAP_WORD_CHAR);	
     
@@ -177,13 +177,13 @@ void instruction_gsi(GtkWidget *widget, gpointer stack)
     GtkWidget *page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_gsi4 = gtk_button_new_with_label("Dirty Flash");
+    GtkWidget *button_gsi4 = gtk_button_new_with_label(_("Dirty Flash"));
     // label 1
-    GtkWidget *label_gsi4_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Nach einem'dirty flash' bleiben die Nutzerdaten erhalten, aber nicht jedes GSI startet danach." : "After a 'dirty flash', the user data is retained, but not every GSI starts afterwards.");
+    GtkWidget *label_gsi4_1 = gtk_label_new(_("After a 'dirty flash', the user data is retained, but not every GSI starts afterwards."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi4_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi4_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_gsi4_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Flashen sie das System-Image. \n2. Starten sie ihr Gerät neu." : "1. Flash the system image. \n2. Restart your device.");
+    GtkWidget *label_gsi4_2 = gtk_label_new(_("1. Flash the system image. \n2. Restart your device."));
     gtk_label_set_wrap(GTK_LABEL(label_gsi4_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_gsi4_2), PANGO_WRAP_WORD_CHAR);	
     

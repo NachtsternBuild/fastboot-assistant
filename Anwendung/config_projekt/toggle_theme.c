@@ -272,10 +272,10 @@ void toggle_theme(GtkWidget *widget, gpointer stack)
     gtk_switch_set_active(GTK_SWITCH(css_light_switch), FALSE);
 
     // create the labels for the switches
-    GtkWidget *adw_label = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Systemfarben verwenden" : "Use system colors");
-    GtkWidget *css_adw_label = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Benutzerdefinierte Farben" : "Custom colors");
-    GtkWidget *css_dark_label = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Manuelles Thema (Dunkel)" : "Manual theme (dark)");
-    GtkWidget *css_light_label = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Manuelles Thema (Hell)": "Manual theme (light)");
+    GtkWidget *adw_label = gtk_label_new(_("Use system colors"));
+    GtkWidget *css_adw_label = gtk_label_new(_("Custom colors"));
+    GtkWidget *css_dark_label = gtk_label_new(_("Manual theme (dark)"));
+    GtkWidget *css_light_label = gtk_label_new(_("Manual theme (light)"));
 
     // add the switches and the label to the box
     // S1
@@ -322,7 +322,7 @@ void toggle_theme(GtkWidget *widget, gpointer stack)
     set_current_switch();
     
     // function to show the home page
-	const char *back_to_home_char = strcmp(language, "de") == 0 ? "Zurück zur Startseite" : "Back to Home";
+	const char *back_to_home_char = _("Back to Home");
 	back_to_home = create_icon_nav_button_with_position("pan-start-symbolic", back_to_home_char, G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 	gtk_box_append(GTK_BOX(toggle_theme), back_to_home);
     

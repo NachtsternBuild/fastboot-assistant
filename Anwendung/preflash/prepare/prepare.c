@@ -30,27 +30,13 @@
 // Function to set up button labels based on the language
 void set_button_labels_prepare(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Boot.img");
-        strcpy(labels[1], "Recovery.img");
-        strcpy(labels[2], "Vendor.img");
-        strcpy(labels[3], "System.img");
-        strcpy(labels[4], "payload.zip");
-        strcpy(labels[5], "Decompress (xz)");
-        strcpy(labels[6], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Boot.img");
-        strcpy(labels[1], "Recovery.img");
-        strcpy(labels[2], "Vendor.img");
-        strcpy(labels[3], "System.img");
-        strcpy(labels[4], "payload.zip");
-        strcpy(labels[5], "Dekomprimieren (xz)");
-        strcpy(labels[6], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Boot.img"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Recovery.img"), sizeof(labels[0]));
+    g_strlcpy(labels[2], _("Vendor.img"), sizeof(labels[0]));
+    g_strlcpy(labels[3], _("System.img"), sizeof(labels[0]));
+    g_strlcpy(labels[4], _("payload.zip"), sizeof(labels[0]));
+    g_strlcpy(labels[5], _("Decompress (xz)"), sizeof(labels[0]));
+    g_strlcpy(labels[6], _("Back"), sizeof(labels[0]));
 }
 
 /* main function - prepare */

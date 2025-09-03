@@ -28,10 +28,21 @@
 #include <sys/types.h> 
 #include "program_functions.h"
 
-#define LANGUAGE_PATH "~/Downloads/ROM-Install/config"
 #define LANGUAGE_FILE "language.txt" 
+#define LOCALE_DOMAIN "fastboot-assistant"
 
 const char *language = "de";
+
+/* 
+* new logic to handle the language file
+*/
+
+// set two paths for the .po files
+static const char *locale_paths[] = {
+    "./locale",   				  // build / run in source tree
+    "/usr/share/locale"           // system-wide packages  
+    "/usr/local/share/locale",    // self-installed
+};
 
 // function that create the dir
 // thanks to my book for programming for linux
@@ -56,128 +67,99 @@ void create_directory_if_not_exists_lang(const char *path)
     {
         if (mkdir(expanded_path, 0700) == -1) 
         {
-            perror("Log: Error when creating the directory.\n");
-            exit(EXIT_FAILURE);
+            LOG_ERROR("Error when creating the directory.");
+            exit(1);
         }
     }
 }
 
-// function that write the dark.txt
-// thanks to my book for programming for linux
-void write_language_file() 
+
+// function that reads the language from the file
+int read_language_file(char *langbuf, size_t size)
 {
     char dir_path[512];
     get_config_dir(dir_path, sizeof(dir_path));
     
+    char path[512];
+    snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
+
+    FILE *file = fopen(path, "r");
+    if (!file) 
+    {
+    	LOG_ERROR("Error when opening the file for reading.");
+    	return 0;
+	}
+	
+    if (fgets(langbuf, size, file) == NULL) 
+    {
+        LOG_ERROR("Error when reading the content of the file.");
+        fclose(file);
+        return 0;
+    }
+    fclose(file);
+
+    // trim newline
+    langbuf[strcspn(langbuf, "\n")] = '\0';
+    if (strlen(langbuf) < 2) return 0;
+
+    return 1;
+}
+
+
+// function that writes the language to the file
+void write_language_file(const char *lang)
+{   
+    // get the path of the config files
+    char dir_path[512];
+    get_config_dir(dir_path, sizeof(dir_path));
+    
+    char filepath[512];
+    snprintf(filepath, sizeof(filepath), "%s/%s", dir_path, LANGUAGE_FILE);
+
     // create the dir 
     create_directory_if_not_exists_lang(dir_path);
-
-    char path[512];
-    snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
-
-    FILE *file = fopen(path, "w");
+	
+	// open the language.txt
+    FILE *file = fopen(filepath, "w");
     if (file == NULL) 
     {
-        perror("Log: Error when opening the file for writing.\n");
-        exit(EXIT_FAILURE);
+        LOG_ERROR("Error when opening the file for writing.");
+        return;
     }
-    fprintf(file, "English");
+	
+	// write the language to the file
+    fprintf(file, "%.*s\n", 2, lang); // only the first two symbols
     fclose(file);
-    LOG_INFO("Written to the file '%s'.", path);
+    LOG_INFO("Written '%s' to the file '%s'.", lang, filepath);
 }
 
-// thanks to my book for programming for linux
-// function that delete the dark.txt
-void delete_language_file() 
+
+// try to bind local dir and .mo files
+void bind_language(const char *lang)
 {
-    char dir_path[512];
-    get_config_dir(dir_path, sizeof(dir_path));
-
-    char path[512];
-    snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
-
-    // try to remove the file
-    if (remove(path) == 0) 
+    int found = 0;
+    for (int i = 0; i < (int)(sizeof(locale_paths)/sizeof(locale_paths[0])); i++) 
     {
-        LOG_INFO("File '%s' successfully deleted.", path);
-    } 
-    
-    else 
-    {
-        LOG_ERROR("Error deleting the file.");
+        char testpath[512];
+        snprintf(testpath, sizeof(testpath), "%s/%.*s/LC_MESSAGES/%s.mo", locale_paths[i], 2, lang, LOCALE_DOMAIN);
+
+        FILE *file = fopen(testpath, "r");
+        if (file) 
+        {
+            fclose(file);
+            bindtextdomain(LOCALE_DOMAIN, locale_paths[i]);
+            found = 1;
+            LOG_INFO("Using translations from: %s", locale_paths[i]);
+            break;
+        }
     }
-}
 
-// function that check if there are the dark.txt
-void check_language_file() 
-{
-    char dir_path[512];
-    get_config_dir(dir_path, sizeof(dir_path));
-
-    char path[512];
-    snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
-
-    FILE *file = fopen(path, "r");
-    if (file != NULL) 
+    if (!found) 
     {
-        LOG_INFO("English");
-        language = "en";
-        fclose(file);
+        LOG_INFO("No .mo found, fallback to /usr/share/locale");
+        bindtextdomain(LOCALE_DOMAIN, "/usr/share/locale");
     }
-     
-    else 
-    {
-        LOG_INFO("Deutsch");
-    }
-}
 
-void check_language_file_light() 
-{
-    char dir_path[512];
-    get_config_dir(dir_path, sizeof(dir_path));
-
-    char path[512];
-    snprintf(path, sizeof(path), "%s/%s", dir_path, LANGUAGE_FILE);
-
-    FILE *file = fopen(path, "r");
-    if (file != NULL) 
-    {
-        LOG_INFO("Deutsch");
-        language = "de";
-        delete_language_file();
-        fclose(file);
-    }
-     
-    else 
-    {
-        LOG_INFO("English");
-    }
-}
-
-// Apply the current language when called
-void apply_language() 
-{
-    check_language_file();  // Assuming this checks the current language state
-}
-
-// Callback to switch the language
-void toggle_language(GtkWidget *button, gpointer user_data) 
-{
-    // Switch the theme
-    if (strcmp(language, "de") == 0) 
-    {
-        language = "en";
-        write_language_file(); 
-        const char *message = "Please restart the Fastboot Assistant.";
-    	show_message(message);
-    } 
-    
-    else 
-    {
-        language = "de";
-        check_language_file_light(); 
-        const char *message = "Bitte starten sie den Fastboot-Assistant erneut.";
-    	show_message(message);
-    }
-    apply_language();
+    textdomain(LOCALE_DOMAIN);
+    LOG_INFO("Set textdomain: %s", LOCALE_DOMAIN);
 }

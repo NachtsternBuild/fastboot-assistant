@@ -165,7 +165,7 @@ void about(GtkWidget *widget, gpointer stack)
     GtkWidget *label_about_3 = gtk_label_new(" ");
     
     // new label
-    GtkWidget *label_about4 = gtk_label_new(_("Programm um das Installieren von Custom-ROM und GSIs auf Android-Geräte zu erleichtern." : "Program to facilitate the installation of custom ROM and GSIs on Android devices."));
+    GtkWidget *label_about4 = gtk_label_new(_("Program to facilitate the installation of custom ROM and GSIs on Android devices."));
     gtk_label_set_wrap(GTK_LABEL(label_about4), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_about4), PANGO_WRAP_WORD_CHAR);	
 	gtk_widget_add_css_class(label_about4, "about2");

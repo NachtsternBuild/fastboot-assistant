@@ -1,5 +1,5 @@
-# Install the fastboot-assistant WSL
-## Preparation
+# Install fastboot-assistant WSL
+## Preparations
 1. Check whether the Windows Subsystem for Linux (WSL) is installed and activated under Windows.
 2. Check whether the installed distribution is *Ubuntu*.
 3. Check whether a user is set up for the *Ubuntu*.
@@ -7,7 +7,7 @@
 ```sh
 cd /mnt/c/Users/UserName/Downloads/Path/to/unpacked/Zipfile
 sudo apt update && sudo apt upgrade
-sudo dpkg -i fastboot-assistant.deb
+sudo dpkg -i Projekt-122-l.deb
 ```
 
 - **If not, open a command line as administrator.** 

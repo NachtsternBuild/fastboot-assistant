@@ -43,27 +43,13 @@ static void start_erase_data(GtkWidget *widget, gpointer stack)
 // Function to set up button labels based on the language
 void set_button_labels_preflash(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Backup");
-        strcpy(labels[1], "Prepare files");
-        strcpy(labels[2], "Delete user data");
-        strcpy(labels[3], "Set active slot");
-        strcpy(labels[4], "Bootloader");
-        strcpy(labels[5], "Partitioning");
-        strcpy(labels[6], "Back to Home");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Backup");
-        strcpy(labels[1], "Dateien vorbereiten");
-        strcpy(labels[2], "Lösche Nutzerdaten");
-        strcpy(labels[3], "Setze aktiven Slot");
-        strcpy(labels[4], "Bootloader");
-        strcpy(labels[5], "Partitionierung");
-        strcpy(labels[6], "Zurück zur Startseite");
-    }
+    g_strlcpy(labels[0], _("Backup"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Prepare files"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Delete user data"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Set active slot"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Bootloader"), sizeof(labels[4]));
+    g_strlcpy(labels[5], _("Partitioning"), sizeof(labels[5]));
+    g_strlcpy(labels[6], _("Back to Home"), sizeof(labels[6]));
 }
 
 

@@ -56,23 +56,11 @@ static void start_instruction_info(GtkWidget *widget, gpointer stack)
 // function to set up button labels based on the language
 void set_button_labels_instruction_GUI(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Dealing with ADB");
-        strcpy(labels[1], "Flashing Images");
-        strcpy(labels[2], "Preparations");
-        strcpy(labels[3], "Info");
-        strcpy(labels[4], "Back to Home");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Umgang mit ADB");
-        strcpy(labels[1], "Flash Images");
-        strcpy(labels[2], "Vorbereitungen");
-        strcpy(labels[3], "Info");
-        strcpy(labels[4], "Zurück zur Startseite");
-    }
+    g_strlcpy(labels[0], _("Dealing with ADB"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Flashing Images"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Preparations"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Info"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Back to Home"), sizeof(labels[4]));
 }
 
 /* main function - instruction_GUI */

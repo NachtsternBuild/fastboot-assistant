@@ -29,25 +29,25 @@ void instruction_recovery(GtkWidget *widget, gpointer stack)
     apply_language();
 	
 	// char for the next page button
-	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
-	const char *back_page_char = strcmp(language, "de") == 0 ? "Zurück" : "Back";
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *next_page_char = _("Next");
+	const char *back_page_char = _("Back");
+	const char *exit_page_char = _("Exit");
 	
     // page 1
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
     // button and label
-    GtkWidget *button_reco1 = gtk_button_new_with_label("Recovery");
+    GtkWidget *button_reco1 = gtk_button_new_with_label(_("Recovery"));
     // label 1
-    GtkWidget *label_reco1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Recovery-Modus ist ein spezielles Boot-Menü auf Android-Geräten, das zur Wartung und Wiederherstellung des Systems dient." : "Recovery mode is a special boot menu on Android devices that is used to maintain and restore the system.");
+    GtkWidget *label_reco1_1 = gtk_label_new(_("Recovery mode is a special boot menu on Android devices that is used to maintain and restore the system."));
     gtk_label_set_wrap(GTK_LABEL(label_reco1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_reco1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_reco1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dieser ermöglicht Funktionen wie das Zurücksetzen auf Werkseinstellungen, das Installieren von Updates, und einige andere Grundfunktionen um das System wiederherzustellen." : "This enables functions such as resetting to factory settings, installing updates and some other basic functions to restore the system.");
+    GtkWidget *label_reco1_2 = gtk_label_new(_("This enables functions such as resetting to factory settings, installing updates and some other basic functions to restore the system."));
     gtk_label_set_wrap(GTK_LABEL(label_reco1_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_reco1_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_reco1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Custom-Recoverys bringen viel mehr Funktionen mit, als die Stock-Recoverys des Herstellers. Diese haben meist nur Grundausstattung an Bord." : "Custom coverys have many more functions than the stock recoverys from the same manufacturer. These usually only have basic features on board.");
+    GtkWidget *label_reco1_3 = gtk_label_new(_("Custom coverys have many more functions than the stock recoverys from the same manufacturer. These usually only have basic features on board."));
     gtk_label_set_wrap(GTK_LABEL(label_reco1_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_reco1_3), PANGO_WRAP_WORD_CHAR);	
     
@@ -92,17 +92,17 @@ void instruction_recovery(GtkWidget *widget, gpointer stack)
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_reco2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "Flashen des Recoverys" :"Flashing the recovery");
+    GtkWidget *button_reco2 = gtk_button_new_with_label(_("Flashing the recovery"));
     // label 1
-    GtkWidget *label_reco2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Prüfen Sie, ob es für Ihr Gerät einen Custom-Recovery gibt. \n2. Laden Sie einen entsprechenden Recovery herunter. \n3. Bereiten Sie die Images für den Flash vor." : "1. Check whether there is a custom recovery for your device. \n2. Download a corresponding recovery. \n3. Prepare the images for the flash.");
+    GtkWidget *label_reco2_1 = gtk_label_new(_("1. Check whether there is a custom recovery for your device. \n2. Download a corresponding recovery. \n3. Prepare the images for the flash."));
     gtk_label_set_wrap(GTK_LABEL(label_reco2_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_reco2_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_reco2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "4. Booten Sie Ihr Gerät in den Fastboot-Modus. \n5. Öffnen Sie den Bootloader. Manche Geräte unterstützen nicht die Methode über Fastboot." : "4. Boot your device into fastboot mode. \n5. Open the bootloader. Some devices do not support the fastboot method.");
+    GtkWidget *label_reco2_2 = gtk_label_new(_("4. Boot your device into fastboot mode. \n5. Open the bootloader. Some devices do not support the fastboot method."));
     gtk_label_set_wrap(GTK_LABEL(label_reco2_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_reco2_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_reco2_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Informieren Sie sich genauer über Ihren Chipsatz und das Gerät. \n6. Flashen Sie das Recovery-Image mit dieser Anwendung. \n7. Lassen Sie Ihr Gerät in den Recovery booten." : "Find out more about your chipset and the device. \n6. Flash the recovery image with this application. \n7. Boot your device into the recovery.");
+    GtkWidget *label_reco2_3 = gtk_label_new(_("Find out more about your chipset and the device. \n6. Flash the recovery image with this application. \n7. Boot your device into the recovery."));
     gtk_label_set_wrap(GTK_LABEL(label_reco2_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_reco2_3), PANGO_WRAP_WORD_CHAR);	
     // new button

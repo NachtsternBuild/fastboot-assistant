@@ -35,23 +35,11 @@ extern void reboot_heimdall(GtkWidget *widget, gpointer stack);
 // Function to set up button labels based on the language
 void set_button_labels_reboot_GUI(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Reboot Fastboot");
-        strcpy(labels[1], "Reboot");
-        strcpy(labels[2], "Reboot Recovery");
-        strcpy(labels[3], "Reboot (heimdall)");
-        strcpy(labels[4], "Back to Home");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "Neustart Fastboot");
-        strcpy(labels[1], "Neustart");
-        strcpy(labels[2], "Neustart in Recovery");
-        strcpy(labels[3], "Neustart (heimdall)");
-        strcpy(labels[4], "Zurück zur Startseite");
-    }
+    g_strlcpy(labels[0], _("Reboot Fastboot"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Reboot"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Reboot Recovery"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Reboot (heimdall)"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Back to Home"), sizeof(labels[4]));
 }
 
 /* main function - reboot_GUI */

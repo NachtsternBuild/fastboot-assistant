@@ -84,7 +84,9 @@ SRCS = \
 	header_ab_detect.c \
 	header_write_log_text.c \
 	header_create_label_icon.c \
+	header_dynamic_language.c \
 	toggle_theme.c \
+	toggle_language.c \
 	treble_updater.c \
 	get_devices.c \
 	wsl_config.c \
@@ -166,49 +168,58 @@ $(TARGET): $(OBJS)
 # cleanup
 clean:
 	rm -f $(OBJS) $(TARGET)
+	rm -rf locale
+	rm -f po/*.po~ po/*.pot~
 
 #------------------------
 # build language files
 #------------------------
 
-# standard .pot file
-POT_FILE = po/fastboot-assistant.pot
+PACKAGE   = fastboot-assistant
+PODIR     = po
+LOCALEDIR = $(PODIR)/locale
+POT_FILE  = $(PODIR)/$(PACKAGE).pot
 
-# languages
 LANGS = de en es pt ru fr
+PO_FILES = $(addprefix $(PODIR)/,$(addsuffix .po,$(LANGS)))
+MO_FILES = $(addprefix $(LOCALEDIR)/,$(addsuffix /LC_MESSAGES/$(PACKAGE).mo,$(LANGS)))
 
-# .po files in /po
-PO_FILES = $(addprefix po/,$(addsuffix .po,$(LANGS)))
-
-# create the .pot file
-i18n: $(POT_FILE)
-
+# 1) create .pot file
 $(POT_FILE): $(SRCS) $(HEADERS)
-	mkdir -p po
+	@mkdir -p $(PODIR)
 	xgettext --keyword=_ --language=C --from-code=UTF-8 \
 		--add-comments --sort-output \
-		--output=$(POT_FILE) $(SRCS)
+		--output=$@ $(SRCS)
 
-# create new .po files for the languages
+# 2) initialize .po files (only if missing)
+init-po: $(PO_FILES)
+
 define INIT_PO
-po/$1.po:
-	mkdir -p po
-	msginit --no-translator --input=$(POT_FILE) --locale=$1 --output-file=po/$1.po
+$(PODIR)/$1.po: $(POT_FILE)
+	@if [ ! -f $$@ ]; then \
+		echo "Init locale $1"; \
+		msginit --no-translator --input=$(POT_FILE) --locale=$1 --output-file=$$@; \
+	else \
+		echo "$$@ already exists, skipped."; \
+	fi
 endef
 $(foreach lang,$(LANGS),$(eval $(call INIT_PO,$(lang))))
 
-# create .po files for all languages
-po-all: $(PO_FILES)
+# 3) update existing .po files
+update-po: $(POT_FILE)
+	@for lang in $(LANGS); do \
+		if [ -f $(PODIR)/$$lang.po ]; then \
+			msgmerge --update --backup=none $(PODIR)/$$lang.po $(POT_FILE); \
+			echo "Updated: $(PODIR)/$$lang.po"; \
+		else \
+			echo "$(PODIR)/$$lang.po missing, run make init-po first."; \
+		fi; \
+	done
 
-# create .po file for only on language
-po-%: po/%.po
-
-# compile the .mo files
-OUTDIR ?= .
-MO_FILES = $(addprefix $(OUTDIR)/locale/,$(addsuffix /LC_MESSAGES/$(TARGET).mo,$(LANGS)))
-
-$(OUTDIR)/locale/%/LC_MESSAGES/$(TARGET).mo: po/%.po
-	mkdir -p $(dir $@)
+# 4) compile .po -> .mo
+$(LOCALEDIR)/%/LC_MESSAGES/$(PACKAGE).mo: $(PODIR)/%.po
+	@mkdir -p $(dir $@)
 	msgfmt $< -o $@
 
 mo-all: $(MO_FILES)
+

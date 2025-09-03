@@ -31,21 +31,21 @@ void instruction_info(GtkWidget *widget, gpointer stack)
 	apply_language();
 	
 	// char for the next page button
-	const char *next_page_char = strcmp(language, "de") == 0 ? "Weiter" : "Next";
-	const char *back_page_char = strcmp(language, "de") == 0 ? "Zurück" : "Back";
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *next_page_char = _("Next");
+	const char *back_page_char = _("Back");
+	const char *exit_page_char = _("Exit");
 	
 	/* page 1 */
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
 
     // button and label
-    GtkWidget *button_info1 = gtk_button_new_with_label("Project Treble");
+    GtkWidget *button_info1 = gtk_button_new_with_label(_("Project Treble"));
     // label 1
-    GtkWidget *label_info1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Project Treble ist eine Android-Initiative von Google, die Betriebssystem- und Hardwarekomponenten trennt." : "Project Treble is an Android initiative from Google that separates the operating system and hardware components.");
+    GtkWidget *label_info1_1 = gtk_label_new(_("Project Treble is an Android initiative from Google that separates the operating system and hardware components."));
     gtk_label_set_wrap(GTK_LABEL(label_info1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_info1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dadurch können Hersteller leichter Updates bereitstellen, da das OS unabhängig von chipsatzspezifischen Treibern ist." : "This makes it easier for manufacturers to provide updates while the OS is independent of chipset-specific drivers.");
+    GtkWidget *label_info1_2 = gtk_label_new(_("This makes it easier for manufacturers to provide updates while the OS is independent of chipset-specific drivers."));
     gtk_label_set_wrap(GTK_LABEL(label_info1_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info1_2), PANGO_WRAP_WORD_CHAR);	
 	
@@ -87,13 +87,13 @@ void instruction_info(GtkWidget *widget, gpointer stack)
     GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_info2 = gtk_button_new_with_label(g_strcmp0(language, "de") == 0 ? "a/b Partitionierung" : "a/b Partitioning");
+    GtkWidget *button_info2 = gtk_button_new_with_label(_("a/b Partitioning"));
     // label 1
-    GtkWidget *label_info2_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Das A/B-Partitionsschema nutzt zwei Systempartitionen für nahtlose Updates durch Wechsel des Slots, bietet höhere Sicherheit und kontinuierlichen Betrieb." : "The A/B partitioning scheme uses two system partitions for seamless updates by switching the slot, provides higher security and continuous operation.");
+    GtkWidget *label_info2_1 = gtk_label_new(_("The A/B partitioning scheme uses two system partitions for seamless updates by switching the slot, provides higher security and continuous operation."));
     gtk_label_set_wrap(GTK_LABEL(label_info2_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info2_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_info2_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Das Only-A-Schema hat nur eine Partition, ermöglicht einfachere Verwaltung, aber ist anfälliger für Fehler während des Updates." : "The Only-A scheme has only one partition, allows easier management, but is more prone to errors during the update.");
+    GtkWidget *label_info2_2 = gtk_label_new(_("The Only-A scheme has only one partition, allows easier management, but is more prone to errors during the update."));
     gtk_label_set_wrap(GTK_LABEL(label_info2_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info2_2), PANGO_WRAP_WORD_CHAR);	
     
@@ -134,13 +134,13 @@ void instruction_info(GtkWidget *widget, gpointer stack)
     GtkWidget *page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_info3 = gtk_button_new_with_label("System-as-root");
+    GtkWidget *button_info3 = gtk_button_new_with_label(_("System-as-root"));
     // label 1
-	GtkWidget *label_info3_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "System-as-root ist ein Android-Mechanismus, bei dem das System-Image als Root-Dateisystem gemountet wird." : "System-as-root is an Android mechanism in which the system image is mounted as the root file system.");
+	GtkWidget *label_info3_1 = gtk_label_new(_("System-as-root is an Android mechanism in which the system image is mounted as the root file system."));
 	gtk_label_set_wrap(GTK_LABEL(label_info3_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info3_1), PANGO_WRAP_WORD_CHAR);	
 	// label 2
-	GtkWidget *label_info3_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Dies verbessert die Trennung von System- und Vendor-Partitionen, erhöht die Sicherheit und erleichtert System-Updates sowie die Verwaltung von Berechtigungen." : "This improves the separation of system and vendor partitions, increases security and facilitates system updates and the management of authorizations.");
+	GtkWidget *label_info3_2 = gtk_label_new(_("This improves the separation of system and vendor partitions, increases security and facilitates system updates and the management of authorizations."));
 	gtk_label_set_wrap(GTK_LABEL(label_info3_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info3_2), PANGO_WRAP_WORD_CHAR);	
 
@@ -181,17 +181,17 @@ void instruction_info(GtkWidget *widget, gpointer stack)
     GtkWidget *page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     
     // button and label
-    GtkWidget *button_info4 = gtk_button_new_with_label("Kernel");
+    GtkWidget *button_info4 = gtk_button_new_with_label(_("Kernel"));
     // label 1
-	GtkWidget *label_info4_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Kernel ist der Kern eines Betriebssystems, der direkt mit der Hardware kommuniziert und Ressourcen wie CPU, Speicher und Geräte verwaltet." : "The kernel is the core of an operating system, which communicates directly with the hardware and manages resources such as CPU, memory and devices.");
+	GtkWidget *label_info4_1 = gtk_label_new(_("The kernel is the core of an operating system, which communicates directly with the hardware and manages resources such as CPU, memory and devices."));
 	gtk_label_set_wrap(GTK_LABEL(label_info4_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info4_1), PANGO_WRAP_WORD_CHAR);	
 	// label 2
-	GtkWidget *label_info4_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Der Kernel bildet die Schnittstelle zwischen Hardware, Anwendungen und dem Rest des Systems und sorgt für eine sichere und effiziente Ausführung." : "The kernel forms the interface between hardware, applications and the rest of the system and ensures secure and efficient execution.");
+	GtkWidget *label_info4_2 = gtk_label_new(_("The kernel forms the interface between hardware, applications and the rest of the system and ensures secure and efficient execution."));
 	gtk_label_set_wrap(GTK_LABEL(label_info4_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info4_2), PANGO_WRAP_WORD_CHAR);	
 	// label 3
-	GtkWidget *label_info4_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Android-Versionen sind nur mit bestimmten Kernel-Versionen kompatibel; bei Inkompatibilität startet Android nicht." : "Android versions are only compatible with certain Kernel versions; if incompatible, Android will not start.");
+	GtkWidget *label_info4_3 = gtk_label_new(_("Android versions are only compatible with certain Kernel versions; if incompatible, Android will not start."));
     gtk_label_set_wrap(GTK_LABEL(label_info4_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_info4_3), PANGO_WRAP_WORD_CHAR);	
 	

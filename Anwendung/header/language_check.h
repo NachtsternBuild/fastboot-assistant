@@ -37,16 +37,13 @@
 #define LOCALE_DOMAIN "fastboot-assistant"
 
 // TODO: replace the old langauge system with the new
-// old langauge function, only as backup
-// remain in the program until everything has been completely replaced
-void create_directory_if_not_exists_lang(const char *path);
-void write_language_file();
-void delete_language_file();
-void check_language_file();
-void check_language_file_light();
+// dummy
 void apply_language();
-void toggle_language(GtkWidget *button, gpointer user_data);
-void toggle_language_setup(GtkWidget *button, gpointer user_data);
+
+// function that get the path of the language file
+char *get_lang_path();
+// function that get the current language
+gchar *get_current_language();
 
 // new function that init the language
 // this usage the system language or fallback to english
@@ -55,6 +52,18 @@ void init_language(void);
 // use: 
 // set_language("de");
 void set_language(const char *lang);
+
+// additional functions for the language managment
+// // function that reads the language from the file
+int read_language_file(char *langbuf, size_t size);
+// function that writes the language to the file
+void write_language_file(const char *lang);
+// try to bind local dir and .mo files
+void bind_language(const char *lang);
+// function that switch the language
+void toggle_language();
+
+
 
 #endif // LANGUAGE_CHECK_H
 

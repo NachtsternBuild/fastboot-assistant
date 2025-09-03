@@ -29,7 +29,7 @@ void instruction_backup(GtkWidget *widget, gpointer stack)
     apply_language();
 	
 	// char for the next page button
-	const char *exit_page_char = strcmp(language, "de") == 0 ? "Verlassen" : "Exit";
+	const char *exit_page_char = _("Exit");
 	
 	/* page 1 */
     GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
@@ -37,15 +37,15 @@ void instruction_backup(GtkWidget *widget, gpointer stack)
     // button and label
     GtkWidget *button_backup1 = gtk_button_new_with_label("Backups");
     // label 1
-    GtkWidget *label_backup1_1 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Das Backup dient dazu, sie vor Datenverlust zu schützen und ist vor jedem flash Vorgang zu empfehlen. Es gibt zwei Varianten des Backups: " : "The backup serves to protect you from data loss and is recommended before every flash operation. There are two types of backup: ");
+    GtkWidget *label_backup1_1 = gtk_label_new(_("The backup serves to protect you from data loss and is recommended before every flash operation. There are two types of backup: "));
     gtk_label_set_wrap(GTK_LABEL(label_backup1_1), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_backup1_1), PANGO_WRAP_WORD_CHAR);	
     // label 2
-    GtkWidget *label_backup1_2 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "1. Das Backup mit Root \n2. Das Backup ohne Root. \nBeim Backup mit Root werden die Partitionen als Images kopiert und können später wieder geflasht werden." : "1. The backup with root. \n2. The backup without root. \nWhen backing up with root, the partitions are copied as images and can be flashed again later.");
+    GtkWidget *label_backup1_2 = gtk_label_new(_("1. The backup with root. \n2. The backup without root. \nWhen backing up with root, the partitions are copied as images and can be flashed again later."));
     gtk_label_set_wrap(GTK_LABEL(label_backup1_2), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_backup1_2), PANGO_WRAP_WORD_CHAR);	
     // label 3
-    GtkWidget *label_backup1_3 = gtk_label_new(g_strcmp0(language, "de") == 0 ? "Beim Backup ohne Root kommt 'Open Android Backup' zum Einsatz. Es ist ein Open Source Tool für Linux." : "'Open Android Backup' is used for backups without root. It is an open source tool for Linux.");
+    GtkWidget *label_backup1_3 = gtk_label_new(_("'Open Android Backup' is used for backups without root. It is an open source tool for Linux."));
     gtk_label_set_wrap(GTK_LABEL(label_backup1_3), TRUE);
 	gtk_label_set_wrap_mode(GTK_LABEL(label_backup1_3), PANGO_WRAP_WORD_CHAR);	
     

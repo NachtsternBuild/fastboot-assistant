@@ -36,7 +36,7 @@ static void reboot_from_adb_heimdall(GtkWidget *widget, gpointer stack)
     // prevention of crashes
     if (!is_android_device_connected_adb()) 
     {      
-        const char *error_message = strcmp(language, "de") == 0 ? "Kein Gerät erkannt." : "No device detected.";
+        const char *error_message = _("No device detected.");
         show_error_message(GTK_WIDGET(main_window), error_message);
         return;
     }
@@ -60,7 +60,7 @@ static void heimdall_help(GtkWidget *widget, gpointer stack)
 static void get_pit(GtkWidget *widget, gpointer stack) 
 {
 	LOG_INFO("get_pit");
-    const char *message = strcmp(language, "de") == 0 ? "Beachten sie, dass sich ihr Gerät im Download-Modus befindet!" : "Please note that your device is in download mode!";
+    const char *message = _("Please note that your device is in download mode!");
     show_message(message);
     
     open_terminal_by_desktop("heimdall print-pit");
@@ -70,21 +70,10 @@ static void get_pit(GtkWidget *widget, gpointer stack)
 // Function to set up button labels based on the language
 void set_button_labels_reboot_heim(char labels[][30]) 
 {
-    if (strcmp(language, "en") == 0) 
-    {
-        strcpy(labels[0], "Restart in Download");
-        strcpy(labels[1], "Help");
-        strcpy(labels[2], "Output pit");
-        strcpy(labels[3], "Back");
-    } 
-    
-    else 
-    {
-        strcpy(labels[0], "In Download neustarten");
-        strcpy(labels[1], "Hilfe");
-        strcpy(labels[2], "Pit ausgeben");
-        strcpy(labels[3], "Zurück");
-    }
+    g_strlcpy(labels[0], _("Restart in Download"), sizeof(labels[0]));
+    g_strlcpy(labels[1], _("Help"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Output pit"), sizeof(labels[2]));
+    g_strlcpy(labels[3], _("Back"), sizeof(labels[3]));
 }
 
 /* main function - reboot_heimdall */
