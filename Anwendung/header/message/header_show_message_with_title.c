@@ -43,7 +43,16 @@ void show_message_with_title(const char *title, const char *message)
     // Create a vertical box for the dialog content and add it to the dialog
     content_area = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
     gtk_window_set_child(GTK_WINDOW(dialog), content_area);
-
+	
+	// spacer
+	GtkWidget *spacer_label = gtk_label_new("");
+	gtk_box_append(GTK_BOX(content_area), spacer_label);
+	
+	// add an icon
+	GtkWidget *info_icon = gtk_image_new_from_icon_name("help-about-symbolic");
+    gtk_image_set_pixel_size(GTK_IMAGE(info_icon), 64);
+    gtk_box_append(GTK_BOX(content_area), info_icon);
+	
     // Create the label with the message and add it to the content area
     label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(label), formatted_message);
