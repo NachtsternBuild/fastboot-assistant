@@ -1,0 +1,109 @@
+# Allrounder .gitignore
+#
+# General
+# 
+# backup, tmp files
+#
+
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+*.log
+
+#
+# systemfiles
+#
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# 
+# build files /object files
+# 
+# C/C++ / Java / Go / Rust 
+#
+
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.exe
+*.out
+*.class
+*.jar
+
+#
+# build direcotries
+#
+
+/build/
+/bin/
+/dist/
+/target/
+/out/
+
+# 
+# packagemanager
+# 
+# Python
+
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+*.whl
+
+#
+# Node / JavaScript
+#
+
+node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+
+#
+# Ruby
+#
+
+*.gem
+.bundle/
+
+#
+# Java
+#
+
+*.war
+*.ear
+
+#
+# Rust
+#
+
+Cargo.lock
+target/
+
+# 
+# IDEs / Editor
+# 
+
+.vscode/
+.idea/
+*.iml
+*.sublime-workspace
+*.sublime-project
+
+# 
+# Logs / Runtime
+# 
+
+*.log
+*.pid
+*.seed
+*.pid.lock
+
