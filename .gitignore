@@ -107,3 +107,7 @@ target/
 *.seed
 *.pid.lock
 
+build
+deb
+!deb/config
+

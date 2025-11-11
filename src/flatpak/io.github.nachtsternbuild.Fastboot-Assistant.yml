@@ -1,0 +1,81 @@
+app-id: io.github.nachtsternbuild.Fastboot-Assistant
+runtime: org.gnome.Platform
+runtime-version: '44'
+sdk: org.gnome.Sdk
+
+command: /app/bin/fastboot-assistant
+finish-args:
+  - "--socket=fallback-x11"
+  - "--device=dri"
+  - "--share=ipc"
+  - "--filesystem=host"
+  - "--share=network"
+  - "--filesystem=xdg-download"
+  - "--device=all"
+  - "--socket=wayland"
+  - "--talk-name=org.freedesktop.portal.Desktop"
+  - "--talk-name=org.freedesktop.portal.FileChooser"
+  - "--talk-name=org.freedesktop.portal.OpenURI"
+
+modules:
+  - name: fastboot-assistant
+    buildsystem: simple
+    build-commands:
+      - install -D io.github.nachtsternbuild.Fastboot-Assistant.metainfo.xml /app/share/metainfo/io.github.nachtsternbuild.Fastboot-Assistant.metainfo.xml
+      - install -D fastboot-assistant /app/bin/fastboot-assistant
+      - install -D io.github.nachtsternbuild.Fastboot-Assistant.desktop /app/share/applications/io.github.nachtsternbuild.Fastboot-Assistant.desktop
+      - install -D sweet_unix.png /app/share/icons/hicolor/256x256/apps/sweet_unix.png
+    sources:
+      - type: file
+        path: io.github.nachtsternbuild.Fastboot-Assistant.metainfo.xml
+      - type: file
+        path: fastboot-assistant
+      - type: file
+        path: io.github.nachtsternbuild.Fastboot-Assistant.desktop
+      - type: file
+        path: sweet_unix.png
+        
+  - name: curl
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://curl.se/download/curl-8.2.1.tar.gz
+        sha256: <SHA256_SUMME>
+        
+  - name: polkit
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://gitlab.freedesktop.org/polkit/polkit/-/archive/0.120/polkit-0.120.tar.gz
+        sha256: <SHA256_SUMME>
+
+  - name: xz-utils
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://tukaani.org/xz/xz-5.2.5.tar.gz
+        sha256: <SHA256_SUMME>
+    build-commands:
+      - tar -xzf heimdall-v1.4.2-linux.tar.gz -C /app/bin/
+ 
+  - name: adb
+    buildsystem: simple
+    sources:
+      - type: archive
+        url: https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+        sha256: <SHA256_HERE>
+        dest-filename: adb.zip
+    build-commands:
+      - unzip adb.zip -d /app/bin/
+          
+  - name: heimdall
+    buildsystem: simple
+    sources:
+      - type: archive
+        url: https://github.com/Benjamin-Dobell/Heimdall/releases/download/v1.4.2/heimdall-v1.4.2-linux.tar.gz
+        sha256: <SHA256_SUMME>
+    build-commands:
+      - tar -xzf heimdall-v1.4.2-linux.tar.gz -C /app/bin/
+    
+
+

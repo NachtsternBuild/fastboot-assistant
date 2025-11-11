@@ -1,0 +1,189 @@
+name: fastboot-assistant
+base: core24
+version: '0.9.1'
+summary: "Tool for installing Custom-ROMs and GSIs on Android devices"
+description: |
+  The Fastboot Assistant facilitates the installation of Custom-ROMs and GSIs
+  on Android devices. It offers a user-friendly GTK4/Libadwaita interface
+  and integrates tools such as adb, fastboot, and heimdall.
+  
+# required for metadata
+title: Fastboot-Assistant
+contact: elias.moerz@mail.de
+license: GPL-3.0 license
+
+# required by lint
+donation: https://github.com/NachtsternBuild/fastboot-assistant
+issues: https://github.com/NachtsternBuild/fastboot-assistant/issues
+source-code: https://github.com/NachtsternBuild/fastboot-assistant
+website: https://nachtsternbuild.github.io/fastboot-assistant/
+
+
+grade: stable
+confinement: strict
+
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: [amd64]
+
+apps:
+  fastboot-assistant:
+    command: usr/bin/fastboot-assistant
+    desktop: usr/share/applications/fastboot-assistant.desktop
+    extensions: [gnome]
+    plugs:
+      - home
+      - removable-media
+      - network
+      - hardware-observe
+      - desktop
+      - desktop-legacy
+      - x11
+      - wayland
+      - raw-usb
+      - mount-observe
+      - opengl
+      - adb-support
+      - gsettings
+      - cups
+      - uhid
+      - gnome
+      - system-observe
+    slots:
+      - fastboot-assistant
+    environment:
+      XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
+      GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
+      GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0
+      GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
+      GTK_USE_PORTAL: "1"
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET"
+      GDK_DISABLE_MEDIA: "1"
+      GSK_RENDERER: "cairo"
+      GTK_MEDIA_BACKEND: "none"
+
+plugs: 
+  gnome:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
+    
+  dbus:
+    interface: dbus
+    bus: session
+    name: org.freedesktop.portal.Desktop
+  
+  opengl:
+    interface: opengl
+
+slots:
+  fastboot-assistant:
+    interface: dbus
+    bus: session
+    name: io.github.nachtsternbuild.Fastboot-Assistant
+
+environment:
+  LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+  LIBGL_DEBUG: verbose
+  MESA_LOADER_DRIVER_OVERRIDE: swrast
+
+parts:
+  adb-fastboot:
+    plugin: nil
+    source: https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+    override-build: |
+      set -xe
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
+      curl -L -o platform-tools.zip https://dl.google.com/android/repository/platform-tools-latest-linux.zip
+      unzip -o platform-tools.zip
+      mv platform-tools/* $SNAPCRAFT_PART_INSTALL/usr/bin/
+      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/adb
+      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/fastboot
+    build-packages:
+      - unzip
+      - curl
+    stage-packages:
+      - libusb-1.0-0
+
+  heimdall:
+    plugin: nil
+    source: https://github.com/Benjamin-Dobell/Heimdall/archive/refs/tags/v1.4.2.zip
+    override-build: |
+      set -xe
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin
+      curl -L -o heimdall.zip https://github.com/Benjamin-Dobell/Heimdall/archive/refs/tags/v1.4.2.zip
+      unzip -o heimdall.zip
+      cd Heimdall-1.4.2
+      mkdir build && cd build
+      cmake ..
+      make -j$(nproc)
+      cp bin/heimdall $SNAPCRAFT_PART_INSTALL/usr/bin/
+      chmod +x $SNAPCRAFT_PART_INSTALL/usr/bin/heimdall
+    build-packages:
+      - cmake
+      - build-essential
+      - libusb-1.0-0-dev
+      - qtbase5-dev
+      - qttools5-dev
+      - qttools5-dev-tools
+      - qtchooser
+      - qt5-qmake
+    stage-packages:
+      - libusb-1.0-0
+      - libqt5widgets5
+      - qt5-qmake
+      - libqt5gui5
+      - libqt5core5a
+
+  fastboot-assistant:
+    source: .
+    plugin: dump
+    organize:
+      assets/fastboot-assistant.desktop: gui/fastboot-assistant.desktop
+      output/fastboot-assistant:  bin/fastboot-assistant
+      assets/sweet_unix.png: meta/gui/sweet_unix.png
+    stage-packages:
+      - xz-utils
+      - unzip
+      - zip
+      - wget
+      - curl
+      - pkexec
+      - coreutils
+      - libc6
+      - libglib2.0-0
+      - dconf-gsettings-backend
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
+      - xdg-utils
+      - libgl1-mesa-dri
+      - mesa-vulkan-drivers
+      - libvulkan1
+      - libdbus-glib-1-dev
+      - libglib2.0-bin
+      - adwaita-icon-theme
+      - gnome-themes-extra
+      - libproxy1v5
+      - libproxy1-plugin-gsettings
+      - libproxy1-plugin-networkmanager
+      - libgl1
+      - libegl1
+      - libgles2
+      - libgdk-pixbuf-2.0-0
+
+    override-build: |
+      craftctl default
+      glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
+      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
+    override-prime: |
+      craftctl prime
+      set -eux
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp fastboot-assistant $SNAPCRAFT_PART_INSTALL/bin/fastboot-assistant
+      mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
+      cp sweet_unix.png $SNAPCRAFT_PART_INSTALL/meta/gui/sweet_unix.png
+      mkdir -p $SNAPCRAFT_PART_INSTALL/gui
+      cp fastboot-assistant.desktop $SNAPCRAFT_PART_INSTALL/gui/fastboot-assistant.desktop
+      sed -i 's@^Icon=.*$@Icon=${SNAP}/meta/gui/linux-assistant.png@' $SNAPCRAFT_PART_INSTALL/gui/fastboot-assistant.desktop
