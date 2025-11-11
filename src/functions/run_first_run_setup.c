@@ -1,0 +1,378 @@
+/**
+* run_first_run_setup.c
+*
+* (C) Copyright 2025 @NachtsternBuild
+*
+* License: GNU GENERAL PUBLIC LICENSE Version 3
+*/
+#include "fastboot_assistant.h"
+
+GtkCssProvider *provider_setup = NULL;
+
+// function that start the config of the fastboot-assistant
+static void start_config_setup(GtkButton *button, gpointer user_data) 
+{
+	LOGD("Config depended directories.");
+    // create the depended directories
+    make_dir();
+    LOGD("Directories created.");
+    LOGD("Config system.");
+	LOGD("Check if the system are native linux or WSL.");
+	// check if system are native linux or wsl
+	wsl_config();
+	LOGD("System checked.");
+	LOGD("Set last label active.");	
+	// set the last label active
+	GtkWidget *last_label = GTK_WIDGET(user_data);
+    gtk_widget_set_visible(last_label, TRUE);
+}
+
+// function that load different css providers
+void load_setup_provider(void) 
+{
+	gtk_css_provider_load_from_string(provider_setup,
+		".welcome { text-decoration: underline; font-weight: bold; font-size: 32px;}\n"
+		".welcome2 { text-decoration: underline; font-weight: bold; font-size: 24px;}\n"
+		".welcome3 { font-weight: bold; font-size: 24px;}\n"
+	);
+}
+
+/* the setup wizard */
+void run_first_run_setup(GtkWidget *widget, gpointer stack) 
+{
+	LOGD("run_first_run_setup");
+	
+	// extra provider for about
+    // check for the adw provider
+    if (provider_setup) 
+    {
+        g_object_unref(provider_setup);
+    }
+    // create a new adw provider
+    provider_setup = create_css_provider();
+    
+    // load the provider
+    load_setup_provider();
+    
+    // add the provider to the app
+    gtk_style_context_add_provider_for_display(
+        gdk_display_get_default(),
+        GTK_STYLE_PROVIDER(provider_setup),
+        GTK_STYLE_PROVIDER_PRIORITY_USER);
+	
+	// char for the next page button
+	const char *next_page_char = _("Next");
+		
+	/* page 1 */
+    GtkWidget *page1 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+	
+    // button and label
+    GtkWidget *label_welcome_1 = gtk_label_new(" ");
+    GtkWidget *logo = gtk_image_new();
+    // add the fastboot-assistant logo  
+    const char *main_icon[] = {
+    		"./sweet_unix.png",
+    		"/usr/share/fastboot-assistant/sweet_unix.png"
+	};
+
+	for (int i = 0; i < 2; ++i) 
+	{
+    	if (g_file_test(main_icon[i], G_FILE_TEST_EXISTS)) 
+    	{
+       		// add the logo
+       		logo = gtk_image_new_from_file(main_icon[i]);
+       		break;
+    	}
+	} 
+	gtk_widget_set_size_request(logo, 128, 128);
+	//gtk_image_set_pixel_size(GTK_IMAGE(logo), 64);
+	
+	// labels
+	GtkWidget *label_welcome_2 = gtk_label_new(" "); 
+	GtkWidget *label_welcome_3 = gtk_label_new(_("Welcome to the Fastboot Assistant!"));
+	gtk_widget_set_halign(label_welcome_3, GTK_ALIGN_CENTER);
+	gtk_widget_add_css_class(label_welcome_3, "welcome");
+    GtkWidget *label_welcome_4 = gtk_label_new(" ");
+    GtkWidget *label_welcome_5 = gtk_label_new(_(" Let's get everything set up together."));
+    gtk_widget_set_halign(label_welcome_5, GTK_ALIGN_CENTER);
+    gtk_widget_add_css_class(label_welcome_5, "welcome3");
+    GtkWidget *label_welcome_6 = gtk_label_new(" "); 
+    GtkWidget *button_welcome_1 = create_button_icon_no_callback("pan-end-symbolic", next_page_char);
+    
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page1), label_welcome_1);
+    gtk_box_append(GTK_BOX(page1), logo);
+    gtk_box_append(GTK_BOX(page1), label_welcome_2);
+    gtk_box_append(GTK_BOX(page1), label_welcome_3);
+    gtk_box_append(GTK_BOX(page1), label_welcome_4);
+    gtk_box_append(GTK_BOX(page1), label_welcome_5);
+    gtk_box_append(GTK_BOX(page1), label_welcome_6);
+    gtk_box_append(GTK_BOX(page1), button_welcome_1);
+    
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "welcome")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page1, "welcome");
+	}
+	gtk_stack_set_visible_child_name(GTK_STACK(stack), "welcome");
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_welcome_1), "stack", stack);
+	g_signal_connect(button_welcome_1, "clicked", G_CALLBACK(switch_page), "config_1");  
+	
+
+	/* page 2 */
+	GtkWidget *page2 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+
+	// spacer label
+	GtkWidget *label_2_1 = gtk_label_new(" ");
+
+	// info label with icon
+	GtkWidget *hbox2_1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+	GtkWidget *icon_info2 = gtk_image_new_from_icon_name("help-about");
+	GtkWidget *label_page_info2 = gtk_label_new(_("Here you can set important preferences for your Fastboot Assistant."));
+	gtk_label_set_wrap(GTK_LABEL(label_page_info2), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_page_info2), PANGO_WRAP_WORD_CHAR);
+	gtk_widget_add_css_class(label_page_info2, "welcome3");
+	gtk_image_set_pixel_size(GTK_IMAGE(icon_info2), 32);
+	gtk_box_append(GTK_BOX(hbox2_1), icon_info2);
+	gtk_box_append(GTK_BOX(hbox2_1), label_page_info2);
+
+	// spacer
+	GtkWidget *label_2_2 = gtk_label_new(" ");
+	
+	// other button
+	GtkWidget *button_setup_dir = create_button_icon("folder-open-symbolic", _("Choose folder for flashing files"),  G_CALLBACK(show_folder_chooser), (gpointer)process_selected_setup_folder);
+	GtkWidget *button_welcome_2 = create_button_icon_no_callback("pan-end-symbolic", next_page_char);
+
+	// add widgets to page2
+	gtk_box_append(GTK_BOX(page2), label_2_1);
+	gtk_box_append(GTK_BOX(page2), hbox2_1);
+	gtk_box_append(GTK_BOX(page2), label_2_2);
+	gtk_box_append(GTK_BOX(page2), button_setup_dir);
+	gtk_box_append(GTK_BOX(page2), button_welcome_2);
+	
+	gtk_widget_set_halign(hbox2_1, GTK_ALIGN_CENTER);
+	
+	
+	// add page2 to stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "config_1")) 
+	{
+	    gtk_stack_add_named(GTK_STACK(stack), page2, "config_1");
+	}
+
+	// connect next page button
+	g_object_set_data(G_OBJECT(button_welcome_2), "stack", stack);
+	g_signal_connect(button_welcome_2, "clicked", G_CALLBACK(switch_page), "config_2");
+      
+    /* page 3 */
+    GtkWidget *page3 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    
+    // 0. label 
+    GtkWidget *label_page3_0 = gtk_label_new(" ");
+    // 1. label
+    GtkWidget *label_page3_1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    GtkWidget *icon_info3 = gtk_image_new_from_icon_name("help-about");
+    GtkWidget *label_page_info3 = gtk_label_new(_("To work correctly, the Fastboot Assistant needs to perform some initial setup."));
+    
+    gtk_label_set_wrap(GTK_LABEL(label_page_info3), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_page_info3), PANGO_WRAP_WORD_CHAR);	
+	gtk_image_set_pixel_size(GTK_IMAGE(icon_info3), 32);
+	gtk_widget_add_css_class(label_page_info3, "welcome3");
+	gtk_box_append(GTK_BOX(label_page3_1), icon_info3);
+	gtk_box_append(GTK_BOX(label_page3_1), label_page_info3);
+       
+    // 2. label
+    GtkWidget *label_page3_2 = gtk_label_new(" ");
+    
+    // 3. label
+    GtkWidget *hbox3_1 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    GtkWidget *icon_setup1 = gtk_image_new_from_icon_name("software-update-urgent-symbolic");
+    GtkWidget *label_folders = gtk_label_new(_("1. Creating all required folders"));
+    gtk_box_append(GTK_BOX(hbox3_1), icon_setup1);
+    gtk_box_append(GTK_BOX(hbox3_1), label_folders);
+
+    // 4. label
+    GtkWidget *hbox3_2 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    GtkWidget *icon_setup2 = gtk_image_new_from_icon_name("software-update-urgent-symbolic");
+    GtkWidget *label_system_config = gtk_label_new(_("2. Adjusting the system environment"));
+    gtk_box_append(GTK_BOX(hbox3_2), icon_setup2);
+    gtk_box_append(GTK_BOX(hbox3_2), label_system_config);
+    
+    // 5. label
+    GtkWidget *hbox3_3 = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+    GtkWidget *icon_setup3 = gtk_image_new_from_icon_name("emblem-default");
+    GtkWidget *label_completed = gtk_label_new(_("Configuration completed."));
+    gtk_box_append(GTK_BOX(hbox3_3), icon_setup3);
+    gtk_box_append(GTK_BOX(hbox3_3), label_completed);
+    
+    // set the label unvisible
+    gtk_widget_set_visible(hbox3_3, FALSE);
+    
+    // 6. label
+    GtkWidget *label_page3_3 = gtk_label_new(" ");
+    
+    // start config button
+    const char *config_dir_char = _("Configure");
+    GtkWidget *button_config_dir = create_button_icon_no_callback("applications-system-symbolic", config_dir_char);
+    
+    // next page  
+    GtkWidget *button_welcome_3 = create_button_icon_no_callback("pan-end-symbolic", next_page_char);
+    
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page3), label_page3_0);
+    gtk_box_append(GTK_BOX(page3), label_page3_1);
+    gtk_box_append(GTK_BOX(page3), label_page3_2);
+    gtk_box_append(GTK_BOX(page3), hbox3_1);
+    gtk_box_append(GTK_BOX(page3), hbox3_2);
+    gtk_box_append(GTK_BOX(page3), hbox3_3);
+    gtk_box_append(GTK_BOX(page3), label_page3_3);
+    gtk_box_append(GTK_BOX(page3), button_config_dir);
+    gtk_box_append(GTK_BOX(page3), button_welcome_3);
+    
+    // center the label
+    gtk_widget_set_halign(label_page3_1, GTK_ALIGN_CENTER);
+    // set the label to the same start point
+    gtk_widget_set_margin_start(hbox3_1, 15);
+	gtk_widget_set_margin_start(hbox3_2, 15);
+	gtk_widget_set_margin_start(hbox3_3, 15);
+
+	// connect the button
+    g_signal_connect(button_config_dir, "clicked", G_CALLBACK(start_config_setup), hbox3_3);
+    
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "config_2")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page3, "config_2");
+	}
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_welcome_3), "stack", stack);
+	g_signal_connect(button_welcome_3, "clicked", G_CALLBACK(switch_page), "use");
+    
+    /* page 4 */
+    GtkWidget *page4 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    
+    GtkWidget *label_page4_0 = gtk_label_new(" ");
+    
+    GtkWidget *logo_page4 = gtk_image_new_from_icon_name("software-update-urgent-symbolic");
+    gtk_image_set_pixel_size(GTK_IMAGE(logo_page4), 64);
+    //gtk_widget_set_size_request(logo_page4, 64, 64);
+    
+    // button and label
+    // button 1
+    GtkWidget *button_page4_1 = gtk_label_new(_("Use"));
+    gtk_widget_add_css_class(button_page4_1, "welcome2");
+	
+	GtkWidget *label_page4_2 = gtk_label_new(" ");
+	// label 1
+	GtkWidget *label_page4_3 = gtk_label_new(_("1. Please read the manual and documentation before using the program."));
+	gtk_label_set_wrap(GTK_LABEL(label_page4_3), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_page4_3), PANGO_WRAP_WORD_CHAR);
+	// label 2
+	GtkWidget *label_page4_4 = gtk_label_new(_("2. Always copy all images to be flashed into the 'ROM-Install' folder."));
+	gtk_label_set_wrap(GTK_LABEL(label_page4_4), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_page4_4), PANGO_WRAP_WORD_CHAR);
+	// label 3
+	GtkWidget *label_page4_5 = gtk_label_new(_("3. If flashing Samsung devices, always use 'heimdall'."));
+	gtk_label_set_wrap(GTK_LABEL(label_page4_5), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_page4_5), PANGO_WRAP_WORD_CHAR);
+	// label 4
+	GtkWidget *label_page4_6 = gtk_label_new(_("4. Check regularly for Fastboot-Assistant updates."));
+	gtk_label_set_wrap(GTK_LABEL(label_page4_6), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_page4_6), PANGO_WRAP_WORD_CHAR);
+	// button 2
+    GtkWidget *button_welcome_4 = create_button_icon_no_callback("pan-end-symbolic", next_page_char);
+    
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page4), label_page4_0);
+    gtk_box_append(GTK_BOX(page4), logo_page4);
+    gtk_box_append(GTK_BOX(page4), button_page4_1);
+    gtk_box_append(GTK_BOX(page4), label_page4_2);
+    gtk_box_append(GTK_BOX(page4), label_page4_3);
+    gtk_box_append(GTK_BOX(page4), label_page4_4);
+    gtk_box_append(GTK_BOX(page4), label_page4_5);
+    gtk_box_append(GTK_BOX(page4), label_page4_6);
+    gtk_box_append(GTK_BOX(page4), button_welcome_4);
+    
+    // set the label to the left side
+    gtk_widget_set_halign(label_page4_2, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_page4_3, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_page4_4, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_page4_5, GTK_ALIGN_START);
+    gtk_widget_set_halign(label_page4_6, GTK_ALIGN_START);
+    
+    // set the label to the same start point
+    gtk_widget_set_margin_start(label_page4_2, 15);
+	gtk_widget_set_margin_start(label_page4_3, 15);
+	gtk_widget_set_margin_start(label_page4_4, 15);
+	gtk_widget_set_margin_start(label_page4_5, 15);
+	gtk_widget_set_margin_start(label_page4_6, 15);
+       
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "use")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page4, "use");
+	}
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_welcome_4), "stack", stack);
+	g_signal_connect(button_welcome_4, "clicked", G_CALLBACK(switch_page), "end");
+       
+    /* page 5 */
+    GtkWidget *page5 = gtk_box_new(GTK_ORIENTATION_VERTICAL, 10);
+    
+    // button and label
+    GtkWidget *label_end_1 = gtk_label_new(" ");
+    GtkWidget *logo_end = gtk_image_new();
+
+	for (int i = 0; i < 2; ++i) 
+	{
+    	if (g_file_test(main_icon[i], G_FILE_TEST_EXISTS)) 
+    	{
+       		// add the logo
+       		logo_end = gtk_image_new_from_file(main_icon[i]);
+       		break;
+    	}
+	} 
+	gtk_widget_set_size_request(logo_end, 128, 128);
+	//gtk_image_set_pixel_size(GTK_IMAGE(logo), 64);
+	
+	// labels  
+    GtkWidget *label_end_2 = gtk_label_new(" ");
+    GtkWidget *label_end_3 = gtk_label_new(_("Have fun with the Fastboot-Assistants!"));
+    gtk_widget_set_halign(label_end_3, GTK_ALIGN_CENTER);
+	gtk_widget_add_css_class(label_end_3, "welcome");
+	GtkWidget *label_end_4 = gtk_label_new(" ");
+	GtkWidget *label_end_5 = gtk_label_new(_("The setup is complete. The Fastboot-Assistant is now ready."));
+	gtk_widget_set_halign(label_end_4, GTK_ALIGN_CENTER);
+	gtk_label_set_wrap(GTK_LABEL(label_end_4), TRUE);
+	gtk_label_set_wrap_mode(GTK_LABEL(label_end_4), PANGO_WRAP_WORD_CHAR);
+	gtk_widget_add_css_class(label_end_3, "welcome3");
+    GtkWidget *label_end_6 = gtk_label_new(" ");
+    const char *end_setup_char = _("Finished");
+    GtkWidget *button_welcome_5 = create_button_icon_no_callback("emblem-default-symbolic", end_setup_char);
+    
+    // add everything to the page
+    gtk_box_append(GTK_BOX(page5), label_end_1);
+    gtk_box_append(GTK_BOX(page5), logo_end);
+    gtk_box_append(GTK_BOX(page5), label_end_2);
+    gtk_box_append(GTK_BOX(page5), label_end_3);
+    gtk_box_append(GTK_BOX(page5), label_end_4);
+    gtk_box_append(GTK_BOX(page5), label_end_5);
+    gtk_box_append(GTK_BOX(page5), label_end_6);
+    gtk_box_append(GTK_BOX(page5), button_welcome_5);
+    
+    // add page to the stack
+	if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "end")) 
+    {
+        gtk_stack_add_named(GTK_STACK(stack), page5, "end");
+	}
+	
+	// set stack reference for the button function
+	g_object_set_data(G_OBJECT(button_welcome_5), "stack", stack);
+	g_signal_connect(button_welcome_5, "clicked", G_CALLBACK(show_home_page), stack);
+	
+	LOGD("end run_first_setup");
+}	
+    

@@ -1,8 +1,0 @@
-build_project/fastboot-assistant usr/bin/
-desktop/fastboot-assistant.desktop usr/share/applications/
-icons/sweet_unix.png usr/share/icons/hicolor/256x256/apps/
-style/style_dark.css usr/share/fastboot-assistant/
-style/style_light.css usr/share/fastboot-assistant/
-icons/sweet_unix.png usr/share/fastboot-assistant/
-debian/fastboot-assistant.1 usr/share/man/man1/
-debian/fastboot-assistant.de.1 usr/share/man/de/man1/

@@ -1,2 +1,0 @@
-# Updater
-- all updater files
