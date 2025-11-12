@@ -155,6 +155,7 @@ parts:
       - git
       - libglib2.0-dev
       - libnotify-dev
+      - ccache
     stage-packages:
       - xz-utils
       - unzip
@@ -174,7 +175,7 @@ parts:
     override-build: |
       set -eux
       cd src
-      make -j$(nproc)
+      make -j$(nproc) GIT_HTTPS=1
       craftctl default
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
       gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
