@@ -24,12 +24,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Snapcraft
+      - name: Set up Snapcraft and build snap
         uses: snapcore/action-build@v1
         with: 
           path: ./src
           
-      - name: Find built snap file
+      - name: Find builted snap file
         id: find_snap
         run: |
           SNAP_FILE=$(find . -name "*.snap" -type f | head -n 1)
@@ -47,17 +47,6 @@ jobs:
           name: fastboot-assistant
           path: ${{ steps.find_snap.outputs.snap_file }}
 
-  draft-release:
-    name: Create Draft Release
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download built snap artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: fastboot-assistant-snap
-
       - name: Create Draft Release
         uses: softprops/action-gh-release@v2
         with:
@@ -73,7 +62,7 @@ jobs:
 
             **Build channel:** `${{ github.event.inputs.snap_channel }}`
           files: |
-            *.snap
+            ${{ steps.find_snap.outputs.snap_file }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
