@@ -22,6 +22,7 @@ extern GtkWidget *main_window;
 extern const char *detected_device;
 extern GtkWidget *bootctl_status_label;
 extern GtkWidget *root_status_label;
+extern bool debug_mode;
 
 /** 
 * function, that get the path of the config file

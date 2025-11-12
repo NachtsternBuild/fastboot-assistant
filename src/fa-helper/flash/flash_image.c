@@ -181,11 +181,15 @@ void flash_image(GtkWidget *widget, const char *partition1, const char *partitio
 	snprintf(image_info, sizeof(image_info), "%s/%s", image_path, image_name);
 	
     // check if the image not exists
-    if (access(image_info, F_OK) == -1)
+    if (!debug_mode && access(image_info, F_OK) == -1)
     {      
         const char *error_message = _("Image file not found.");
         show_error_dialog(GTK_WIDGET(main_window), error_message);
         return;
+    }
+    else if (debug_mode)
+	{
+    	g_print("[DEBUG] Security check skipped.\n");
     }
     
     // prevention of crashes

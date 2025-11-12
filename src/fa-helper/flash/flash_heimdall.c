@@ -30,12 +30,16 @@ void flash_heimdall(GtkWidget *widget, const char *partition, const char *image_
     snprintf(image_info, sizeof(image_info), "%s/%s", image_path, image_name);
     
     // check if the image exists
-    if (access(image_info, F_OK) == -1) 
+    if (!debug_mode && access(image_info, F_OK) == -1) 
     {
         char error_message[4096];
         snprintf(error_message, sizeof(error_message), _("Image file '%s' not found.\n"), image_info); 	
         show_error_dialog(GTK_WIDGET(main_window), error_message);
         return;
+    }
+    else if (debug_mode)
+	{
+    	g_print("[DEBUG] Security check skipped.\n");
     }
     
     // prevention of crashes

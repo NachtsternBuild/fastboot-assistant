@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 17:52+0100\n"
+"POT-Creation-Date: 2025-11-11 21:06+0100\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Image file '%s' not found.\n"
 msgstr "Image file '%s' not found.\n"
 
-#: fa-helper/flash/flash_heimdall.c:44 fa-helper/flash/flash_image.c:194
+#: fa-helper/flash/flash_heimdall.c:48 fa-helper/flash/flash_image.c:198
 #: fa-helper/commands/get_bootctl.c:20
 #: fa-helper/commands/check_root_access.c:20
 #: fa-helper/partition/create_partition.c:94
@@ -45,11 +45,11 @@ msgstr "Image file '%s' not found.\n"
 msgid "No device detected."
 msgstr "No device detected."
 
-#: fa-helper/flash/flash_heimdall.c:53
+#: fa-helper/flash/flash_heimdall.c:57
 msgid "Heimdall running"
 msgstr "Heimdall running"
 
-#: fa-helper/flash/flash_heimdall.c:55
+#: fa-helper/flash/flash_heimdall.c:59
 #, c-format
 msgid "Flashing %s ..."
 msgstr "Flashing %s ..."
@@ -131,7 +131,7 @@ msgstr "Error: Unknown partition. Please check partition."
 msgid "Image file not found."
 msgstr "Image file not found."
 
-#: fa-helper/flash/flash_image.c:203
+#: fa-helper/flash/flash_image.c:207
 msgid "Fastboot running"
 msgstr "Fastboot running"
 

@@ -1,0 +1,78 @@
+name: Build & Create Draft Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version number (0.9.1)"
+        required: true
+        default: "0.9.1"
+      snap_channel:
+        description: "Snap channel to build for (stable)"
+        required: false
+        default: "stable"
+
+permissions:
+  contents: write 
+
+jobs:
+  build:
+    name: Build Snap Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Snapcraft
+        uses: snapcore/action-build@v1
+
+      - name: Build Snap
+        run: |
+          sudo snap install snapcraft --classic
+          snapcraft
+        env:
+          SNAPCRAFT_BUILD_ENVIRONMENT: host
+
+      - name: Find built snap file
+        id: find_snap
+        run: |
+          SNAP_FILE=$(ls *.snap | head -n 1)
+          echo "snap_file=$SNAP_FILE" >> $GITHUB_OUTPUT
+
+      - name: Upload snap artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastboot-assistant-snap
+          path: ${{ steps.find_snap.outputs.snap_file }}
+
+  draft-release:
+    name: Create Draft Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download built snap artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: fastboot-assistant-snap
+
+      - name: Create Draft Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.version }}
+          name: "Fastboot Assistant v${{ github.event.inputs.version }}"
+          draft: true
+          prerelease: false
+          body: |
+            **Fastboot Assistant v${{ github.event.inputs.version }} (Draft)**
+
+            This draft release contains the latest build of the Fastboot Assistant Snap.
+            Once verified, it can be published manually.
+
+            **Build channel:** `${{ github.event.inputs.snap_channel }}`
+          files: |
+            *.snap
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

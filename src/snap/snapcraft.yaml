@@ -138,12 +138,23 @@ parts:
       - libqt5core5a
 
   fastboot-assistant:
-    source: .
-    plugin: dump
-    organize:
-      assets/fastboot-assistant.desktop: gui/fastboot-assistant.desktop
-      output/fastboot-assistant:  bin/fastboot-assistant
-      assets/sweet_unix.png: meta/gui/sweet_unix.png
+    source: https://github.com/NachtsternBuild/fastboot-assistant.git
+    source-type: git
+    plugin: make
+    build-packages:
+      - debhelper-compat
+      - rsync
+      - libgtk-4-dev
+      - libadwaita-1-dev
+      - libsecret-1-dev
+      - pkgconf
+      - gcc
+      - make
+      - libvte-2.91-gtk4-dev
+      - libglib2.0-dev
+      - git
+      - libglib2.0-dev
+      - libnotify-dev
     stage-packages:
       - xz-utils
       - unzip
@@ -151,39 +162,29 @@ parts:
       - wget
       - curl
       - pkexec
-      - coreutils
-      - libc6
       - libglib2.0-0
-      - dconf-gsettings-backend
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-utils
-      - libgl1-mesa-dri
-      - mesa-vulkan-drivers
+      - libvte2.91-gtk4-0
       - libvulkan1
-      - libdbus-glib-1-dev
-      - libglib2.0-bin
+      - libgl1
+      - libegl1
+      - libgles2
+      - libgdk-pixbuf-2.0-0
       - adwaita-icon-theme
       - gnome-themes-extra
       - libproxy1v5
       - libproxy1-plugin-gsettings
       - libproxy1-plugin-networkmanager
-      - libgl1
-      - libegl1
-      - libgles2
-      - libgdk-pixbuf-2.0-0
-
+      - libnotify-bin
     override-build: |
+      set -eux
       craftctl default
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
       gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
-    override-prime: |
-      craftctl prime
-      set -eux
-      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
-      cp fastboot-assistant $SNAPCRAFT_PART_INSTALL/bin/fastboot-assistant
-      mkdir -p $SNAPCRAFT_PART_INSTALL/meta/gui
-      cp sweet_unix.png $SNAPCRAFT_PART_INSTALL/meta/gui/sweet_unix.png
-      mkdir -p $SNAPCRAFT_PART_INSTALL/gui
-      cp fastboot-assistant.desktop $SNAPCRAFT_PART_INSTALL/gui/fastboot-assistant.desktop
-      sed -i 's@^Icon=.*$@Icon=${SNAP}/meta/gui/linux-assistant.png@' $SNAPCRAFT_PART_INSTALL/gui/fastboot-assistant.desktop
+    organize:
+      fastboot-assistant: $SNAPCRAFT_PART_INSTALL/usr/bin/fastboot-assistant
+      assets/fastboot-assistant-snap.desktop: $SNAPCRAFT_PART_INSTALL/usr/share/applications/fastboot-assistant.desktop
+      assets/sweet_unix.png: $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
+      
