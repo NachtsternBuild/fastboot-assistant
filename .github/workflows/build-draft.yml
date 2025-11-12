@@ -32,9 +32,10 @@ jobs:
       - name: Find built snap file
         id: find_snap
         run: |
-          SNAP_FILE=$(find . -maxdepth 1 -name "*.snap" -type f | head -n 1)
+          SNAP_FILE=$(find . -name "*.snap" -type f | head -n 1)
           if [ -z "$SNAP_FILE" ]; then
-          echo "::error:The .snap file was not found! The previous build step failed or did not place the file in the expected location."
+          echo "The .snap file was not found! The previous build step failed or did not place the file in the expected location."
+          echo "Snap-File: $SNAP_FILE"
           exit 1
           fi
           echo "Snap-File: $SNAP_FILE"
