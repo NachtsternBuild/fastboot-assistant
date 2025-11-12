@@ -10,7 +10,7 @@ description: |
 # required for metadata
 title: Fastboot-Assistant
 contact: elias.moerz@mail.de
-license: GPL-3.0 license
+license: GPL-3.0
 
 # required by lint
 donation: https://github.com/NachtsternBuild/fastboot-assistant
@@ -141,6 +141,10 @@ parts:
     source: https://github.com/NachtsternBuild/fastboot-assistant.git
     source-type: git
     plugin: make
+    organize:
+      fastboot-assistant: $SNAPCRAFT_PART_INSTALL/usr/bin/fastboot-assistant
+      assets/fastboot-assistant-snap.desktop: $SNAPCRAFT_PART_INSTALL/usr/share/applications/fastboot-assistant.desktop
+      assets/sweet_unix.png: $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
     build-packages:
       - debhelper-compat
       - rsync
@@ -175,12 +179,13 @@ parts:
     override-build: |
       set -eux
       cd src
+      make -f Dependencies.mk GIT_HTTPS=1
       make GIT_HTTPS=1
-      craftctl default
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/bin/
+      cp fastboot-assistant $SNAPCRAFT_PART_INSTALL/usr/bin/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/applications/
+      cp assets/fastboot-assistant-snap.desktop $SNAPCRAFT_PART_INSTALL/usr/share/applications/fastboot-assistant.desktop
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/
+      cp assets/sweet_unix.png $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/sweet_unix.png 
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
-      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
-    organize:
-      fastboot-assistant: $SNAPCRAFT_PART_INSTALL/usr/bin/fastboot-assistant
-      assets/fastboot-assistant-snap.desktop: $SNAPCRAFT_PART_INSTALL/usr/share/applications/fastboot-assistant.desktop
-      assets/sweet_unix.png: $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
-      
+      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules           

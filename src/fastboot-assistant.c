@@ -125,13 +125,6 @@ int main(int argc, char *argv[])
             }
         }
     }
-
-    if (debug_mode)
-        g_print("[DEBUG] Debugmodus aktiv.\n");
-
-    if (debug_snap)
-        g_print("[DEBUG] SNAP-Testmodus aktiv.\n");
-	
 	
 	g_autoptr(AdwApplication) app = NULL;
 
