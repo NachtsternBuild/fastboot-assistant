@@ -24,36 +24,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # name Set up Snapcraft
-      #  uses snapcore/action-build@v1
-      #  with 
-      #    path ./src
-
-      - name: Install Snapcraft and dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y snapd
-          sudo snap install snapcraft --classic
-          sudo snap install lxd 
-          sudo usermod -aG lxd $USER
-          newgrp lxd << EOF
-          lxd init --auto
-          EOF
-
-      - name: Verify environment
-        run: |
-          snap version
-          snapcraft --version
-          lxc version || true
-          echo "Building on $(uname -a)"
-
-      - name: Build Snap package
-        run: |
-          cd ./src
-          snapcraft pack
-
-        env:
-          SNAPCRAFT_BUILD_ENVIRONMENT: host
+      - name: Set up Snapcraft
+        uses: snapcore/action-build@v1
+        with: 
+          path: ./src
 
       - name: Find built snap file
         id: find_snap
