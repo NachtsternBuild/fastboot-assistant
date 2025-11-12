@@ -51,7 +51,7 @@ jobs:
         run: |
           newgrp lxd << EOF
           cd ./src
-          sudo snapcraft pack
+          snapcraft pack
           EOF
 
         env:
