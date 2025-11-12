@@ -48,7 +48,7 @@ jobs:
 
       - name: Build Snap package
         run: |
-          cd ./srcy
+          cd ./src
           snapcraft pack
 
       - name: Build Snap
