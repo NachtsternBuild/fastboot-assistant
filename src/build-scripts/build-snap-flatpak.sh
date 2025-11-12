@@ -27,7 +27,7 @@ build_snap() {
     # Create the snap package using snapcraft
     echo "[⧗] Starting snap build..."
     cd "$build_dir_snap" || { error_msg "Failed to change to $build_dir_snap"; exit 1; }
-    snapcraft
+    snapcraft pack
 
     if [ -f "$build_dir_snap/${snap_name}_${VERSION}_${ARCHITECTURE}.snap" ]; then
         echo "[✓] Snap package built successfully: $build_dir_snap/${snap_name}_${VERSION}_${ARCHITECTURE}.snap"

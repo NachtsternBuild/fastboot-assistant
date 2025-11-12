@@ -131,9 +131,6 @@ int main(int argc, char *argv[])
 
     if (debug_snap)
         g_print("[DEBUG] SNAP-Testmodus aktiv.\n");
-
-    if (debug_mock)
-        g_print("[DEBUG] Mock-Testmodus aktiv.\n");
 	
 	
 	g_autoptr(AdwApplication) app = NULL;
