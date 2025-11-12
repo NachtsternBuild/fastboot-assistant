@@ -167,18 +167,14 @@ parts:
       - xdg-utils
       - libvte-2.91-gtk4-0
       - libvulkan1
-      - libgl1
-      - libegl1
-      - libgles2
-      - libgdk-pixbuf-2.0-0
-      - adwaita-icon-theme
-      - gnome-themes-extra
       - libproxy1v5
       - libproxy1-plugin-gsettings
       - libproxy1-plugin-networkmanager
       - libnotify-bin
     override-build: |
       set -eux
+      cd src
+      make -j$(nproc)
       craftctl default
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
       gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
