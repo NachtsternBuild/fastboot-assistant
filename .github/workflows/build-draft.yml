@@ -38,8 +38,32 @@ jobs:
       - name: Upload snap artifact
         uses: actions/upload-artifact@v4
         with:
-          name: fastboot-assistant-snap
+          name: fastboot-assistant
           path: ${{ steps.find_snap.outputs.snap_file }}
+          
+      - name: Find built snap file
+        id: find_snap
+        run: |
+          SNAP_FILE=$(find . -maxdepth 1 -name "*.snap" -type f | head -n 1)
+          if [ -z "$SNAP_FILE" ]; then
+          echo "::error:The .snap file was not found! The previous build step failed or did not place the file in the expected location."
+          exit 1
+          fi
+          echo "Snap-File: $SNAP_FILE"
+          echo "snap_file=$SNAP_FILE" >> $GITHUB_OUTPUT
+          
+      - name: Upload snap artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fastboot-assistant
+          path: ${{ steps.find_snap.outputs.snap_file }}
+
+- name: Upload snap artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: fastboot-assistant
+      # Wichtig: Der Pfad ist korrekt referenziert, solange der Wert nicht leer ist
+      path: ${{ steps.find_snap.outputs.snap_file }}
 
   draft-release:
     name: Create Draft Release
