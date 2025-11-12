@@ -34,10 +34,11 @@ jobs:
           sudo apt update
           sudo apt install -y snapd
           sudo snap install snapcraft --classic
-          sudo snap install lxd --channel=5.21/stable
+          sudo snap install lxd 
           sudo usermod -aG lxd $USER
-          newgrp lxd
+          newgrp lxd << EOF
           sudo lxd init --auto
+          EOF
 
       - name: Verify environment
         run: |
@@ -48,14 +49,10 @@ jobs:
 
       - name: Build Snap package
         run: |
+          newgrp lxd << EOF
           cd ./src
           snapcraft pack
-
-      - name: Build Snap
-        run: |
-          sudo snap install snapcraft --classic
-          cd ./src
-          snapcraft pack
+          EOF
         env:
           SNAPCRAFT_BUILD_ENVIRONMENT: host
 
