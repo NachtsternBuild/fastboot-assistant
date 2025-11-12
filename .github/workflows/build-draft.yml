@@ -30,7 +30,7 @@ jobs:
       - name: Build Snap
         run: |
           sudo snap install snapcraft --classic
-          snapcraft
+          snapcraft pack
         env:
           SNAPCRAFT_BUILD_ENVIRONMENT: host
 
