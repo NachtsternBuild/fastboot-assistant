@@ -50,7 +50,7 @@ jobs:
       - name: Build Snap package
         run: |
           cd ./src
-          sudo snapcraft pack
+          snapcraft pack
 
         env:
           SNAPCRAFT_BUILD_ENVIRONMENT: host
