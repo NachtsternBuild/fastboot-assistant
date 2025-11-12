@@ -51,7 +51,6 @@ jobs:
           fi
           echo "Snap-File: $SNAP_FILE"
           echo "snap_file=$SNAP_FILE" >> $GITHUB_OUTPUT
-          
       - name: Upload snap artifact
         uses: actions/upload-artifact@v4
         with:
