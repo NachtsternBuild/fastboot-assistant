@@ -28,18 +28,6 @@ jobs:
         uses: snapcore/action-build@v1
         with: 
           path: ./src
-
-      - name: Find built snap file
-        id: find_snap
-        run: |
-          SNAP_FILE=$(ls *.snap | head -n 1)
-          echo "snap_file=$SNAP_FILE" >> $GITHUB_OUTPUT
-
-      - name: Upload snap artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: fastboot-assistant
-          path: ${{ steps.find_snap.outputs.snap_file }}
           
       - name: Find built snap file
         id: find_snap
