@@ -26,10 +26,13 @@ jobs:
 
       - name: Set up Snapcraft
         uses: snapcore/action-build@v1
+        with: 
+          path: ./src
 
       - name: Build Snap
         run: |
           sudo snap install snapcraft --classic
+          cd ./src
           snapcraft pack
         env:
           SNAPCRAFT_BUILD_ENVIRONMENT: host
