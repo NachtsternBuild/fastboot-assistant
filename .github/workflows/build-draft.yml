@@ -37,7 +37,7 @@ jobs:
           sudo snap install lxd 
           sudo usermod -aG lxd $USER
           newgrp lxd << EOF
-          sudo lxd init --auto
+          lxd init --auto
           EOF
 
       - name: Verify environment
@@ -51,8 +51,9 @@ jobs:
         run: |
           newgrp lxd << EOF
           cd ./src
-          snapcraft pack
+          sudo snapcraft pack
           EOF
+
         env:
           SNAPCRAFT_BUILD_ENVIRONMENT: host
 
