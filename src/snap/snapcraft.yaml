@@ -162,11 +162,10 @@ parts:
       - wget
       - curl
       - pkexec
-      - libglib2.0-0
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-utils
-      - libvte2.91-gtk4-0
+      - libvte-2.91-gtk4-0
       - libvulkan1
       - libgl1
       - libegl1
