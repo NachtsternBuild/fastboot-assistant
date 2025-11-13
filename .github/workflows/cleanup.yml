@@ -1,0 +1,32 @@
+name: Cleanup Old Workflows and Artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      days_to_keep:
+        description: "How many days of runs to keep"
+        required: false
+        default: "7"
+
+permissions:
+  actions: write
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete old workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          retain_days: ${{ github.event.inputs.days_to_keep }}
+          keep_minimum_runs: 2
+
+      - name: Delete old artifacts
+        uses: geekyeggo/delete-artifact@v4
+        with:
+          name: "*"
+          failOnError: false
+
