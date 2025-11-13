@@ -14,13 +14,13 @@
 #include "fastboot_assistant.h"
 
 #define MAX_BUFFER_SIZE 256
+#define SEARCH_STRING "fastboot-assistant" 
+#define SOURCES_DIR "/etc/apt/sources.list.d"
 
 // define option for debug mode
 bool debug_mode = false;
 bool debug_snap = false;
 bool debug_mock = false;
-
-#define APP_VERSION "0.9.1.dev"
 
 // define the local domain
 const char *LOCALE_DOMAIN = "fastboot-assistant";
@@ -69,61 +69,126 @@ const char *special_thanks[] = {
 	NULL
 };
 
+// show version info about fastboot-assistant
+void version_details() 
+{
+	const char *env = get_execution_environment();
+	char package[20];
+		
+	// flatpak		
+    if (strcmp(env, "flatpak") == 0) 
+    {
+        snprintf(package, sizeof(package), "Flatpak");
+    }
+    // snap
+    else if (strcmp(env, "snap") == 0) 
+    {
+        snprintf(package, sizeof(package), "Snap");
+    } 
+    
+    // PPA/DEB
+    else 
+    {
+        int result = search_file_directory(SOURCES_DIR, SEARCH_STRING);
+    
+    	if (result == -1) 
+    	{
+        	LOGE("Error check for PPA files");
+        	exit(1);
+   	 	}
+    
+    	else if (result == 1) 
+    	{
+        	snprintf(package, sizeof(package), "Debian Package PPA");
+    	} 
+    
+    	else 
+    	{
+        	snprintf(package, sizeof(package), "Local Debian Package");
+    	}
+    }
+    
+    g_print("Fastboot-Assistant [%s] %s", package, version);  
+}
+
+void help()
+{
+	g_print("Usage: fastboot-assistant <option>\n");
+	g_print("Options:\n");
+	g_print("   -debug [flags] – Debugging\n");
+	g_print("          -snp    – Set snap environment\n");
+	g_print("          -flp    – Set flatpak environment\n");
+	g_print("   -v, --version  – Show Version Info\n");
+	g_print("   -h, --help     – Show this help\n");
+	g_print("\n");
+	g_print("More Infos:\n");
+	g_print("man fastboot-assistant - Only for Debian Package\n");
+	g_print("Project Site:\n");
+	g_print("https://github.com/NachtsternBuild/fastboot-assistant\n");
+	g_print("Wiki:\n");
+	g_print("https://github.com/NachtsternBuild/fastboot-assistant/wiki\n");
+	g_print("Issues:\n");
+	g_print("https://github.com/NachtsternBuild/fastboot-assistant/issues\n");
+}
+
 /* main function */
 int main(int argc, char *argv[]) 
 {
+	int new_argc = 0;
+	char *new_argv[argc];
+
+	new_argv[new_argc++] = argv[0];
+	
 	// check arguments 
     for (int i = 1; i < argc; i++) 
-    {
-        if (strcmp(argv[i], "-debug") == 0 || strcmp(argv[i], "--debug") == 0) 
+    {       
+        if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--d") == 0 || strcmp(argv[i], "-debug") == 0 || strcmp(argv[i], "--debug") == 0) 
         {
             debug_mode = true;
             continue;
         }
 
-        if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--version") == 0) 
+        if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--v") == 0 || strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-version") == 0) 
         {
-            printf("Fastboot-Assistant Version %s\n", APP_VERSION);
+            version_details();
             return 0;
         }
 
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) 
         {
-            printf("Verwendung: %s [Optionen]\n\n", argv[0]);
-            printf("Optionen:\n");
-            printf("  -debug [Flags]      Debugmodus aktivieren (z.B. -snp, -mock)\n");
-            printf("  -v, --version       Versionsnummer anzeigen\n");
-            printf("  -h, --help          Diese Hilfe anzeigen\n");
+            help();
             return 0;
         }
 
-        // Debug-Unteroptionen nur gültig, wenn -debug aktiv
+        // use debug mode, if debug mode is active
         if (debug_mode) 
         {
             if (strcmp(argv[i], "-snp") == 0) 
             {
                 debug_snap = true;
                 setenv("SNAP", "/tmp/snap-debug", 1);
-                g_print("[DEBUG] SNAP-Umgebung simuliert: $SNAP=%s\n", getenv("SNAP"));
+                g_print("[DEBUG] SNAP-Env: $SNAP=%s\n", getenv("SNAP"));
                 continue;
             }
             
             else if (strcmp(argv[i], "-flp") == 0) 
             {
                 debug_mock = true;
-                g_print("[DEBUG] Mock-Modus aktiviert.\n");
+                setenv("FLATPAK_ID", "io.github.nachtsternbuild.Fastboot-Assistant", 1);
+                g_print("[DEBUG] Flatpak-End: $FLATPAK_ID=%s\n", getenv("FLATPAK_ID"));
                 continue;
-            }
+            }    
         } 
         
         else 
         {
-            // Falls jemand versucht, Debug-Unterflags ohne -debug zu setzen
-            if (strncmp(argv[i], "-", 1) == 0) 
+            // error without debug flag
+            if (strncmp(argv[i], "-", 1) == 0)
             {
-                fprintf(stderr, "Warnung: '%s' kann nur mit -debug verwendet werden.\n", argv[i]);
+                fprintf(stderr, "Warning: '%s' can only be used with -debug.\n", argv[i]);
             }
         }
+    new_argv[new_argc++] = argv[i];    
     }
 	
 	g_autoptr(AdwApplication) app = NULL;
@@ -131,5 +196,5 @@ int main(int argc, char *argv[])
     app = adw_application_new("io.github.nachtsternbuild.Fastboot-Assistant", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK (activate_fastboot_assistant), NULL);
 
-    return g_application_run(G_APPLICATION (app), argc, argv);
+    return g_application_run(G_APPLICATION (app), new_argc, new_argv);
 }

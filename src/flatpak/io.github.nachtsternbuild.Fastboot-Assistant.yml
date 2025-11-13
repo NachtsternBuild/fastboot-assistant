@@ -1,81 +1,116 @@
-app-id: io.github.nachtsternbuild.Fastboot-Assistant
+id: io.github.nachtsternbuild.FastbootAssistant
 runtime: org.gnome.Platform
-runtime-version: '44'
+runtime-version: "49"
 sdk: org.gnome.Sdk
-
-command: /app/bin/fastboot-assistant
+command: fastboot-assistant
+  
 finish-args:
-  - "--socket=fallback-x11"
-  - "--device=dri"
-  - "--share=ipc"
-  - "--filesystem=host"
-  - "--share=network"
-  - "--filesystem=xdg-download"
-  - "--device=all"
-  - "--socket=wayland"
-  - "--talk-name=org.freedesktop.portal.Desktop"
-  - "--talk-name=org.freedesktop.portal.FileChooser"
-  - "--talk-name=org.freedesktop.portal.OpenURI"
+  - --share=network
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --socket=pulseaudio
+  - --device=dri
+  - --filesystem=home
+  - --filesystem=host:ro
+  - --filesystem=xdg-run/gvfs
+  - --talk-name=org.freedesktop.portal.Desktop
+  - --talk-name=org.freedesktop.Flatpak
+  - --system-talk-name=org.freedesktop.UDisks2
+  - --system-talk-name=org.freedesktop.NetworkManager
+  - --system-talk-name=org.freedesktop.UPower
+  - --device=all
+  - --allow=devel
+  - --allow=multiarch
+
+  - --device=all
+  - --talk-name=org.freedesktop.login1
+
+  #- --env=G_MESSAGES_DEBUG=all
+  #- --env=GSK_RENDERER=cairo
+  #- --env=GTK_MEDIA_BACKEND=none
 
 modules:
-  - name: fastboot-assistant
-    buildsystem: simple
-    build-commands:
-      - install -D io.github.nachtsternbuild.Fastboot-Assistant.metainfo.xml /app/share/metainfo/io.github.nachtsternbuild.Fastboot-Assistant.metainfo.xml
-      - install -D fastboot-assistant /app/bin/fastboot-assistant
-      - install -D io.github.nachtsternbuild.Fastboot-Assistant.desktop /app/share/applications/io.github.nachtsternbuild.Fastboot-Assistant.desktop
-      - install -D sweet_unix.png /app/share/icons/hicolor/256x256/apps/sweet_unix.png
-    sources:
-      - type: file
-        path: io.github.nachtsternbuild.Fastboot-Assistant.metainfo.xml
-      - type: file
-        path: fastboot-assistant
-      - type: file
-        path: io.github.nachtsternbuild.Fastboot-Assistant.desktop
-      - type: file
-        path: sweet_unix.png
-        
-  - name: curl
-    buildsystem: autotools
-    sources:
-      - type: archive
-        url: https://curl.se/download/curl-8.2.1.tar.gz
-        sha256: <SHA256_SUMME>
-        
-  - name: polkit
-    buildsystem: meson
-    sources:
-      - type: archive
-        url: https://gitlab.freedesktop.org/polkit/polkit/-/archive/0.120/polkit-0.120.tar.gz
-        sha256: <SHA256_SUMME>
-
-  - name: xz-utils
-    buildsystem: autotools
-    sources:
-      - type: archive
-        url: https://tukaani.org/xz/xz-5.2.5.tar.gz
-        sha256: <SHA256_SUMME>
-    build-commands:
-      - tar -xzf heimdall-v1.4.2-linux.tar.gz -C /app/bin/
- 
-  - name: adb
+  - name: adb-fastboot
     buildsystem: simple
     sources:
       - type: archive
         url: https://dl.google.com/android/repository/platform-tools-latest-linux.zip
-        sha256: <SHA256_HERE>
-        dest-filename: adb.zip
+        sha256: 0ead642c943ffe79701fccca8f5f1c69c4ce4f43df2eefee553f6ccb27cbfbe8
+        dest-filename: platform-tools.zip
     build-commands:
-      - unzip adb.zip -d /app/bin/
-          
+      - mkdir -p /app/bin
+      - mv adb /app/bin
+      - mv fastboot /app/bin
+      - chmod +x /app/bin/adb /app/bin/fastboot
+      
+  - name: libusb
+    buildsystem: simple
+    build-commands:
+      - echo "Installing libusb dependency"
+    build-options:
+      env:
+        - CC=gcc
+    sources:
+      - type: archive
+        url: https://github.com/libusb/libusb/archive/refs/tags/v1.0.27.tar.gz
+        sha256: e8f18a7a36ecbb11fb820bd71540350d8f61bcd9db0d2e8c18a6fb80b214a3de
+    builddir: true
+    buildsystem: autotools
+  
+  - name: xz-utils
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://tukaani.org/xz/xz-5.6.3.tar.gz
+        sha256: b1d45295d3f71f25a4c9101bd7c8d16cb56348bbef3bbc738da0351e17c73317
+    build-commands:
+      - --prefix=/app
+  
+  - name: wget
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://ftp.gnu.org/gnu/wget/wget-1.24.5.tar.gz
+        sha256: fa2dc35bab5184ecbc46a9ef83def2aaaa3f4c9f3c97d4bd19dcb07d4da637de
+    build-commands:
+      - --prefix=/app
+      - --disable-static
+      - --with-ssl=openssl
+  
+  - name: curl
+    buildsystem: autotools
+    sources:
+      - type: archive
+        url: https://curl.se/download/curl-8.17.0.tar.xz
+        sha256: 955f6e729ad6b3566260e8fef68620e76ba3c31acf0a18524416a185acf77992
+    build-commands:
+      - --prefix=/app
+      - --disable-static
+      - --with-openssl=/usr
+ 
   - name: heimdall
     buildsystem: simple
     sources:
-      - type: archive
-        url: https://github.com/Benjamin-Dobell/Heimdall/releases/download/v1.4.2/heimdall-v1.4.2-linux.tar.gz
-        sha256: <SHA256_SUMME>
+      - type: dir
+        path: src/build_heimdall
     build-commands:
-      - tar -xzf heimdall-v1.4.2-linux.tar.gz -C /app/bin/
-    
+      - install -Dm755 heimdall /app/bin/heimdall
 
+  - name: fastboot-assistant
+    buildsystem: simple
+    sources:
+      - type: dir
+        path: src
+    build-commands:
+      - install -Dm755 fastboot-assistant /app/bin/fastboot-assistant
+      - install -Dm644 flatpak/io.github.nachtsternbuild.Fastboot-Assistant.desktop /app/share/applications/io.github.nachtsternbuild.Fastboot-Assistant.desktop
+      - install -Dm644 assets/sweet_unix.png /app/share/icons/hicolor/256x256/apps/io.github.nachtsternbuild.FastbootAssistant.png
+
+build-options:
+  strip: true
+cleanup:
+  - /share/man
+  - /share/doc
+  - /share/gtk-doc
 
