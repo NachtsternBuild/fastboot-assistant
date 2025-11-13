@@ -75,7 +75,7 @@ void flash_vendor(GtkWidget *widget, gpointer stack)
 {
 	LOGD("flash_vendor");
     
-    char labels[7][30];  // labels for the button 
+    char labels[9c][30];  // labels for the button 
     set_button_labels_flash_vendor(labels);  // for both languages
     
     GtkWidget *flash_vendor = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
@@ -103,15 +103,15 @@ void flash_vendor(GtkWidget *widget, gpointer stack)
     // line 1
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
-    // line 2 (1)
-    gtk_grid_attach(GTK_GRID(grid), btn4, 0, 1, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), btn5, 1, 1, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), btn6, 2, 1, 1, 1);
-    // line 3 (2)
-    gtk_grid_attach(GTK_GRID(grid), btn7, 0, 2, 1, 1);
-    gtk_grid_attach(GTK_GRID(grid), btn8, 1, 2, 1, 1);
-    //gtk_grid_attach(GTK_GRID(grid), btn_back, 2, 2, 1, 1);
+    // line 2
+    gtk_grid_attach(GTK_GRID(grid), btn3, 0, 1, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn4, 1, 1, 1, 1);
+    // line 3
+    gtk_grid_attach(GTK_GRID(grid), btn5, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn6, 1, 2, 1, 1);
+    // line 4 
+    gtk_grid_attach(GTK_GRID(grid), btn7, 0, 3, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), btn8, 1, 3, 1, 1);
     
 
     // pack the grid to the box

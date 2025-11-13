@@ -17,89 +17,19 @@ permissions:
 
 jobs:
   build:
-    name: Build Packages
+    name: Build Snap Package
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
-      - name: Setup Flatpak
-        run: |
-          sudo apt update
-          sudo apt install --no-install-recommends -y flatpak flatpak-builder curl unzip cmake ninja-build build-essential git libgtk-4-dev desktop-file-utils make dpkg-dev debhelper ccache libsecret-1-dev build-essential libadwaita-1-dev rsync git libgtk-4-dev desktop-file-utils make curl vte2.91-gtk4-dev curl pkexec xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils libnotify-dev wget qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libusb-1.0-0-dev
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak update -y
-          flatpak install -y flathub org.gnome.Platform/x86_64/49
-          flatpak install -y flathub org.gnome.Sdk/x86_64/49
-      
-      - name: Pre-clean runner to free disk space
-        run: |
-          echo "Cleaning apt lists and caches..."
-          sudo apt-get clean
-          sudo rm -rf /var/lib/apt/lists/*
-          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android || true
-          df -h
-      
-      - name: Build Heimdall
-        run: |
-          set -xe
-          mkdir src/build_heimdall
-          curl -L -o heimdall.zip https://github.com/Benjamin-Dobell/Heimdall/archive/refs/tags/v1.4.2.zip
-          unzip -o heimdall.zip
-          cd Heimdall-1.4.2
-          mkdir build && cd build
-          cmake ..
-          make -j$(nproc)
-          FLATPAK_FILE=$(find . -name "heimdall" -type f | head -n 1)
-          if [ -z "$FLATPAK_FILE" ]; then
-          echo "The .flatpak file was not found! The previous build step failed or did not place the file in the expected location."
-          echo "Flatpak-File: $FLATPAK_FILE"
-          exit 1
-          fi
-          cp $FLATPAK_FILE src/build_heimdall
-                    
-      - name: Build fastboot-assistant for flatpak
-        run: |
-          set -eux
-          cd src
-          make -f Dependencies.mk GIT_HTTPS=1
-          make GIT_HTTPS=1
-          
-      - name: Build and Export Flatpak
-        run: |
-          flatpak-builder --force-clean src/build_flatpak src/flatpak/io.github.nachtsternbuild.FastbootAssistant.yml
-          flatpak build-bundle src/build_flatpak fastboot-assistant.flatpak io.github.nachtsternbuild.FastbootAssistant
-      
-      
-      - name: Find builded flatpak file
-        id: find_flatpak
-        run: |
-          FLATPAK_FILE=$(find . -name "*.flatpak" -type f | head -n 1)
-          if [ -z "$FLATPAK_FILE" ]; then
-          echo "The .flatpak file was not found! The previous build step failed or did not place the file in the expected location."
-          echo "Flatpak-File: $FLATPAK_FILE"
-          exit 1
-          fi
-          echo "Flatpak-File: $FLATPAK_FILE"
-          echo "flatpak_file=$FLATPAK_FILE" >> $GITHUB_OUTPUT
-         
-      - name: Remove Flatpak Tools
-        run: |
-          set -eux
-          flatpak remove -y org.gnome.Platform/x86_64/49 
-          flatpak remove -y flathub org.gnome.Sdk/x86_64/49
-          flatpak unistall -y --unused
-          sudo apt purge -y flatpak flatpak-builder curl unzip cmake ninja-build build-essential git libgtk-4-dev desktop-file-utils make dpkg-dev debhelper ccache libsecret-1-dev build-essential libadwaita-1-dev rsync git libgtk-4-dev desktop-file-utils make curl vte2.91-gtk4-dev curl pkexec xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils libnotify-dev wget qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libusb-1.0-0-dev
-          sudo apt autoremove 
-          sudo apt autoclean
-       
+
       - name: Set up Snapcraft and build snap
         uses: snapcore/action-build@v1
         with: 
           path: ./src
-        
-      - name: Find builded snap file
+          
+      - name: Find builted snap file
         id: find_snap
         run: |
           SNAP_FILE=$(find . -name "*.snap" -type f | head -n 1)
@@ -110,14 +40,12 @@ jobs:
           fi
           echo "Snap-File: $SNAP_FILE"
           echo "snap_file=$SNAP_FILE" >> $GITHUB_OUTPUT
-                    
+          
       - name: Upload snap artifact
         uses: actions/upload-artifact@v4
         with:
           name: fastboot-assistant
-          path: |
-            ${{ steps.find_snap.outputs.snap_file }}
-            ${{ steps.find_flatpak.outputs.flatpak_file }}
+          path: ${{ steps.find_snap.outputs.snap_file }}
 
       - name: Create Draft Release
         uses: softprops/action-gh-release@v2
@@ -135,8 +63,6 @@ jobs:
             **Build channel:** `${{ github.event.inputs.snap_channel }}`
           files: |
             ${{ steps.find_snap.outputs.snap_file }}
-            ${{ steps.find_flatpak.outputs.flatpak_file }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
 
