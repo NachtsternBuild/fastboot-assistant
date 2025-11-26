@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 21:06+0100\n"
+"POT-Creation-Date: 2025-11-17 11:02+0100\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -325,7 +325,7 @@ msgstr "Language: "
 msgid "Session Type: "
 msgstr "Session Type: "
 
-#: functions/info.c:140
+#: functions/info.c:141
 msgid "Check for root permissions..."
 msgstr "Check for root permissions..."
 
@@ -422,7 +422,7 @@ msgstr "Images in the directory"
 #: functions/preflash/prepare/prepare.c:20
 #: functions/preflash/backup/backup_function.c:16
 #: functions/preflash/backup/backup_noroot.c:93
-#: functions/config-projekt/remove_old.c:99 functions/reboot/reboot.c:70
+#: functions/config-project/remove_old.c:99 functions/reboot/reboot.c:70
 #: functions/reboot/reboot_recovery.c:57 functions/reboot/reboot_fastboot.c:94
 #: functions/reboot/reboot_heimdall.c:54
 #: functions/instructions/instruction_flash.c:20
@@ -468,7 +468,7 @@ msgstr "Flash Preloader"
 
 #: functions/flash/flash_GUI.c:21
 msgid "Flash Nutzerdaten"
-msgstr "Flash Nutzerdaten"
+msgstr "Flash Userdata"
 
 #: functions/flash/flash_GUI.c:22
 msgid "Flash Other Images"
@@ -476,7 +476,7 @@ msgstr "Flash Other Images"
 
 #: functions/flash/flash_GUI.c:23 functions/get_devices.c:83
 #: functions/preflash/preflash_GUI.c:20 functions/treble_updater.c:219
-#: functions/config-projekt/config-project.c:137
+#: functions/config-project/config-project.c:130
 #: functions/reboot/reboot_GUI.c:19 functions/instructions/instruction_GUI.c:18
 msgid "Back to Home"
 msgstr "Back to Home"
@@ -646,7 +646,7 @@ msgstr "System (heimdall)"
 msgid "System (inactive)"
 msgstr "System (inactive)"
 
-#: functions/flash/flash_payload.c:54 functions/main.c:117
+#: functions/flash/flash_payload.c:54 functions/main.c:130
 msgid "Flash"
 msgstr "Flash"
 
@@ -711,39 +711,39 @@ msgstr "Flash running..."
 msgid "Erasing files..."
 msgstr "Erasing files..."
 
-#: functions/main.c:78
+#: functions/main.c:84
 msgid "Fastboot-Assistant"
 msgstr "Fastboot-Assistant"
 
-#: functions/main.c:113
+#: functions/main.c:126
 msgid "Devices"
 msgstr "Devices"
 
-#: functions/main.c:114 functions/treble_updater.c:215
+#: functions/main.c:127 functions/treble_updater.c:215
 msgid "Reboot Device"
 msgstr "Reboot Device"
 
-#: functions/main.c:115
+#: functions/main.c:128
 msgid "Settings"
 msgstr "Settings"
 
-#: functions/main.c:116
+#: functions/main.c:129
 msgid "Prepare Flashing"
 msgstr "Prepare Flashing"
 
-#: functions/main.c:118
+#: functions/main.c:131
 msgid "Instructions"
 msgstr "Instructions"
 
-#: functions/main.c:119 functions/instructions/instruction_GUI.c:17
+#: functions/main.c:132 functions/instructions/instruction_GUI.c:17
 msgid "Info"
 msgstr "Info"
 
-#: functions/main.c:120 functions/treble_updater.c:160
+#: functions/main.c:133 functions/treble_updater.c:160
 msgid "Treble Updater"
 msgstr "Treble Updater"
 
-#: functions/main.c:121
+#: functions/main.c:134
 msgid "About"
 msgstr "About"
 
@@ -1029,72 +1029,72 @@ msgstr "Alternative for slot change (not recommended)"
 msgid "Start Flash"
 msgstr "Start Flash"
 
-#: functions/config-projekt/remove_old.c:47
-#: functions/config-projekt/remove_old.c:58
-#: functions/config-projekt/remove_old.c:88
-#: functions/config-projekt/config-project.c:17
+#: functions/config-project/remove_old.c:47
+#: functions/config-project/remove_old.c:58
+#: functions/config-project/remove_old.c:88
+#: functions/config-project/config-project.c:17
 msgid "Ready!"
 msgstr "Ready!"
 
-#: functions/config-projekt/remove_old.c:96
+#: functions/config-project/remove_old.c:96
 msgid "ROM-Install"
 msgstr "ROM-Install"
 
-#: functions/config-projekt/remove_old.c:97
+#: functions/config-project/remove_old.c:97
 msgid "Old files"
 msgstr "Old files"
 
-#: functions/config-projekt/remove_old.c:98
+#: functions/config-project/remove_old.c:98
 msgid "Backups"
 msgstr "Backups"
 
-#: functions/config-projekt/wsl_config.c:43
+#: functions/config-project/wsl_config.c:43
 msgid "Configuration"
 msgstr "Configuration"
 
-#: functions/config-projekt/wsl_config.c:44
+#: functions/config-project/wsl_config.c:44
 msgid "Running configuration..."
 msgstr "Running configuration..."
 
-#: functions/config-projekt/config-project.c:94
+#: functions/config-project/config-project.c:88
 #, c-format
 msgid "Completed"
 msgstr "Completed"
 
-#: functions/config-projekt/config-project.c:128
+#: functions/config-project/config-project.c:121
 msgid "Create folder"
 msgstr "Create folder"
 
-#: functions/config-projekt/config-project.c:129
+#: functions/config-project/config-project.c:122
 msgid "Clean up"
 msgstr "Clean up"
 
-#: functions/config-projekt/config-project.c:130
+#: functions/config-project/config-project.c:123
 #: functions/run_first_run_setup.c:216
 msgid "Configure"
 msgstr "Configure"
 
-#: functions/config-projekt/config-project.c:131
+#: functions/config-project/config-project.c:124
 msgid "Updates"
 msgstr "Updates"
 
-#: functions/config-projekt/config-project.c:132
+#: functions/config-project/config-project.c:125
 msgid "System Informations"
 msgstr "System Informations"
 
-#: functions/config-projekt/config-project.c:133
+#: functions/config-project/config-project.c:126
 msgid "Clean log"
 msgstr "Clean log"
 
-#: functions/config-projekt/config-project.c:134
+#: functions/config-project/config-project.c:127
 msgid "Define new directory"
 msgstr "Define new directory"
 
-#: functions/config-projekt/config-project.c:135
+#: functions/config-project/config-project.c:128
 msgid "Post update"
 msgstr "Post update"
 
-#: functions/config-projekt/config-project.c:136
+#: functions/config-project/config-project.c:129
 msgid "Restart Setup"
 msgstr "Restart Setup"
 

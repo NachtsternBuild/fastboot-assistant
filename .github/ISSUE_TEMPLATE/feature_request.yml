@@ -1,0 +1,86 @@
+# modified version from https://github.com/raspberrypi/rpi-imager/blob/main/.github/ISSUE_TEMPLATE/feature-request.yml
+name: Feature Request
+description: What would you like to see from rpi-imager?
+title: "[FEATURE][e.g. Settings]"
+labels: ["enhancement"]
+assignees: []
+body:
+  - type: textarea
+    id: what-could-be-better
+    attributes:
+      label: Is your feature request related to a problem? Please describe.
+      description: A description of the issue you're facing that requires this feature.
+      placeholder: e.g. Whenever fastboot finishes flashing...
+    validations:
+      required: true
+  - type: textarea
+    id: what-do-you-want-to-see
+    attributes:
+      label: Describe the solution you would like to see implemented
+      description: A clear and concise description of what you want to happen.
+      placeholder: e.g. Then a really cool animation would be great...
+    validations:
+      required: true
+  - type: textarea
+    id: what-else-did-you-consider
+    attributes:
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+      placeholder: e.g. A hammer that comes out of the computer and hits you on the head...
+    validations:
+      required: true
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Additional context
+      description: Add any other context or screenshots about the feature request here.
+      placeholder: e.g. The hammer should have the following dimensions...
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Which version of Fastboot Assistant are you using?
+      options:
+        - 0.9.1.dev (Default)
+        - 0.8.1.9
+        - 0.8.1.8
+        - 0.8.1.x
+        - 0.8.1
+        - 0.8.x
+        - < 0.8.x
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: codeparts_c
+    attributes:
+      label: Relevant code parts (C-Code)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: c
+    validations:
+      required: false
+  - type: textarea
+    id: codeparts_sh
+    attributes:
+      label: Relevant code parts (Shell)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: codeparts_mk
+    attributes:
+      label: Relevant code parts (Makefile)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: makefile
+    validations:
+      required: false
+  - type: textarea
+    id: codeparts_yml
+    attributes:
+      label: Relevant code parts (YAML)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: yaml
+    validations:
+      required: false

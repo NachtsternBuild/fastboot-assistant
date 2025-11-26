@@ -1,0 +1,171 @@
+# Modified version from https://github.com/raspberrypi/rpi-imager/blob/main/.github/ISSUE_TEMPLATE/bug-report.yml
+name: Bug Report
+description: A bug is in the app
+title: "[BUG][e.g. Snap]"
+labels: ["bug"]
+assignees: []
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What happened and what was supposed to happen?
+      placeholder: Describe exactly what happened!
+      value: "An error has occurred and we don't know what caused it!"
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Which version of Fastboot Assistant are you using?
+      options:
+        - 0.9.1.dev (Default)
+        - 0.8.1.9
+        - 0.8.1.8
+        - 0.8.1.x
+        - 0.8.1
+        - 0.8.x
+        - < 0.8.x
+      default: 0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System (OS)?
+      multiple: true
+      options:
+        - Ubuntu (Default)
+        - Debian
+        - Linux Mint
+        - Other Ubuntu and derivatives
+        - Other Debian and derivatives
+        - Other Snap environment
+        - Other Flatpak environment
+        - Other Linux environment
+        - Windows Subsystem on Linux (WSL)
+        - Other environment
+      default: 0
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: OS Version?
+      placeholder: e.g. 24.04, 25.10, 13, 12
+    validations:
+      required: true
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package type?
+      multiple: true
+      options:
+        - Debian Package
+        - Debian Package PPA
+        - Snap
+        - Flatpak
+        - WSL
+        - Binary file
+        - Others
+    validations:
+      required: true
+  - type: dropdown
+    id: operating_mode
+    attributes:
+      label: Operating mode?
+      multiple: true
+      options:
+        - Native (Default)
+        - VM
+        - Snap 
+        - Flatpak
+        - WSL
+        - Others
+      default: 0
+    validations:
+      required: false  
+  - type: dropdown
+    id: error_time
+    attributes:
+      label: Where does the error occur?
+      multiple: false
+      options:
+        - Build (Compiler)
+        - Build (Linker)
+        - Run
+        - Package Build (DEB)
+        - Package Build (Snap)
+        - Package Build (Flatpak)
+        - Others
+    validations:
+      required: false
+  - type: dropdown
+    id: error_location
+    attributes:
+      label: Where does the error occur?
+      multiple: true
+      options:
+        - Flash 
+        - Prepare files 
+        - Reboot
+        - Instructions 
+        - Info 
+        - Updater 
+        - Config 
+        - Backup 
+        - Partitions 
+        - About 
+        - Get devices
+        - Userdata 
+        - Bootloader 
+        - Code security 
+        - UI
+        - UIBase
+        - Snap Build
+        - Flatpak Build 
+        - Dialogs
+        - Documentation
+        - Website
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: codeparts_c
+    attributes:
+      label: Relevant code parts (C-Code)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: c
+    validations:
+      required: false
+  - type: textarea
+    id: codeparts_sh
+    attributes:
+      label: Relevant code parts (Shell)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: codeparts_mk
+    attributes:
+      label: Relevant code parts (Makefile)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: makefile
+    validations:
+      required: false
+  - type: textarea
+    id: codeparts_yml
+    attributes:
+      label: Relevant code parts (YAML)
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: yaml
+    validations:
+      required: false

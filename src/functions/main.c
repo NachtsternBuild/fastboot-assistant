@@ -28,6 +28,9 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     // use the advanced custom css provider
     use_adw_provider();
     
+    // apply language
+    init_language();
+    
     // run post update function
     post_update();
 	
