@@ -20,7 +20,10 @@
 // define option for debug mode
 bool debug_mode = false;
 bool debug_snap = false;
-bool debug_mock = false;
+bool debug_flatpak = false;
+bool snap_app = false;
+bool flatpak_app = false;
+bool ppa_app = false;
 
 // define the local domain
 const char *LOCALE_DOMAIN = "fastboot-assistant";
@@ -139,6 +142,9 @@ int main(int argc, char *argv[])
 
 	new_argv[new_argc++] = argv[0];
 	
+	// config the application env
+	application_environment();
+	
 	// check arguments 
     for (int i = 1; i < argc; i++) 
     {       
@@ -166,6 +172,7 @@ int main(int argc, char *argv[])
             if (strcmp(argv[i], "-snp") == 0) 
             {
                 debug_snap = true;
+                snap_app = true;
                 setenv("SNAP", "/tmp/snap-debug", 1);
                 g_print("[DEBUG] SNAP-Env: $SNAP=%s\n", getenv("SNAP"));
                 continue;
@@ -173,7 +180,8 @@ int main(int argc, char *argv[])
             
             else if (strcmp(argv[i], "-flp") == 0) 
             {
-                debug_mock = true;
+                debug_flatpak = true;
+                flatpak_app = true;
                 setenv("FLATPAK_ID", "io.github.nachtsternbuild.Fastboot-Assistant", 1);
                 g_print("[DEBUG] Flatpak-End: $FLATPAK_ID=%s\n", getenv("FLATPAK_ID"));
                 continue;

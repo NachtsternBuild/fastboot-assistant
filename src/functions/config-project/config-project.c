@@ -105,7 +105,24 @@ void config_project_GUI(GtkWidget *widget, gpointer stack)
     //gtk_grid_attach(GTK_GRID(grid), btn7, 0, 2, 1, 1);
     //gtk_grid_attach(GTK_GRID(grid), btn8, 1, 2, 1, 1);
     //gtk_grid_attach(GTK_GRID(grid), btn9, 2, 2, 1, 1);
-
+	
+	// get the env of the application
+	// enable updater at debug mode
+	if (debug_mode)
+	{
+		gtk_widget_set_visible(GTK_WIDGET(btn7), TRUE);
+	}
+	// disable updater for snap/flatpak/PPA version
+	if (snap_app || flatpak_app || ppa_app) 
+	{
+	    gtk_widget_set_visible(GTK_WIDGET(btn7), FALSE);
+	} 
+	// enable updater for local version
+	else 
+	{
+	    gtk_widget_set_visible(GTK_WIDGET(btn7), TRUE);
+	}
+	
     // pack the grid to the box
     gtk_box_append(GTK_BOX(config_project_GUI), grid);
     // add the back button under the grid

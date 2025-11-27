@@ -24,8 +24,19 @@ extern const char *detected_device;
 extern GtkWidget *bootctl_status_label;
 extern GtkWidget *root_status_label;
 extern bool debug_mode;
+extern bool debug_snap;
+extern bool debug_flatpak;
+extern bool snap_app;
+extern bool flatpak_app;
+extern bool ppa_app;
 
+/**
+* Functions to get the application enviroment
+*/
+// get env details
 const char* get_execution_environment();
+// set configs for application env
+void application_environment();
 
 /** 
 * function, that get the path of the config file

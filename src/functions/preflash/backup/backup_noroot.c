@@ -121,7 +121,30 @@ void backup_noroot(GtkWidget *widget, gpointer stack)
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), btn2, 1, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
-
+	
+	// get the env of the application
+	// enable updater at debug mode
+	if (debug_mode)
+	{
+		gtk_widget_set_visible(GTK_WIDGET(btn1), TRUE);
+		gtk_widget_set_visible(GTK_WIDGET(btn2), TRUE);
+		gtk_widget_set_visible(GTK_WIDGET(btn3), TRUE);
+	}
+	// disable updater for snap/flatpak version
+	if (snap_app || flatpak_app) 
+	{
+	    gtk_widget_set_visible(GTK_WIDGET(btn1), FALSE);
+	    gtk_widget_set_visible(GTK_WIDGET(btn2), TRUE);
+	    gtk_widget_set_visible(GTK_WIDGET(btn3), FALSE);
+	} 
+	// enable updater for local version
+	else 
+	{
+	    gtk_widget_set_visible(GTK_WIDGET(btn1), TRUE);
+	    gtk_widget_set_visible(GTK_WIDGET(btn2), TRUE);
+	    gtk_widget_set_visible(GTK_WIDGET(btn3), TRUE);
+	}
+	
     // pack the grid to the box
     gtk_box_append(GTK_BOX(backup_noroot), grid);
     // add the back button under the grid
