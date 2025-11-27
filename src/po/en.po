@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 11:02+0100\n"
+"POT-Creation-Date: 2025-11-27 09:57+0100\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -27,7 +27,7 @@ msgstr "Image file '%s' not found.\n"
 #: fa-helper/commands/check_root_access.c:20
 #: fa-helper/partition/create_partition.c:94
 #: fa-helper/partition/resize_partition.c:92
-#: fa-helper/partition/remove_partition.c:21 functions/info.c:76
+#: fa-helper/partition/remove_partition.c:21 functions/info.c:64
 #: functions/flash/flash_system.c:24 functions/flash/flash_system.c:107
 #: functions/flash/flash_payload.c:44
 #: functions/flash/others/flash_list_images.c:174
@@ -134,23 +134,6 @@ msgstr "Image file not found."
 #: fa-helper/flash/flash_image.c:207
 msgid "Fastboot running"
 msgstr "Fastboot running"
-
-#: fa-helper/updater/spawn_updater_helper.c:34
-#: functions/updater/local_updater.c:18
-msgid "Fastboot-Assistant Updater"
-msgstr "Fastboot-Assistant Updater"
-
-#: fa-helper/updater/spawn_updater_helper.c:35
-msgid "Exit Fastboot Assistant to install the update."
-msgstr "Exit Fastboot Assistant to install the update."
-
-#: fa-helper/updater/spawn_updater_helper.c:36
-msgid "Update successfully installed!"
-msgstr "Update successfully installed!"
-
-#: fa-helper/updater/spawn_updater_helper.c:37
-msgid "Error during installation!"
-msgstr "Error during installation!"
 
 #: fa-helper/commands/get_bootctl.c:25
 msgid "✅ Bootctl detected."
@@ -269,139 +252,175 @@ msgstr "Error"
 msgid "Completed."
 msgstr "Completed."
 
-#: functions/info.c:59
+#: functions/info.c:53
 msgid "Android Info:"
 msgstr "Android Info:"
 
-#: functions/info.c:60
+#: functions/info.c:54
 msgid "Android Version: "
 msgstr "Android Version: "
 
-#: functions/info.c:61
+#: functions/info.c:55
 msgid "Kernel Version: "
 msgstr "Kernel Version: "
 
-#: functions/info.c:62
+#: functions/info.c:56
 msgid "Device Name: "
 msgstr "Device Name: "
 
-#: functions/info.c:63
+#: functions/info.c:57
 msgid "Project Treble: "
 msgstr "Project Treble: "
 
-#: functions/info.c:64
+#: functions/info.c:58
 msgid "Active Slot: "
 msgstr "Active Slot: "
 
-#: functions/info.c:65
+#: functions/info.c:59
 msgid "Root Access: "
 msgstr "Root Access: "
 
-#: functions/info.c:66
+#: functions/info.c:60
 msgid "System-on-Chip: "
 msgstr "System-on-Chip: "
 
-#: functions/info.c:67
-msgid "Computer Info:"
-msgstr "Computer Info:"
+#: functions/info.c:89 functions/main.c:137
+#: functions/instructions/instruction_GUI.c:17
+msgid "Info"
+msgstr "Info"
 
-#: functions/info.c:68 functions/info_tools.c:65
-msgid "Distribution: "
-msgstr "Distribution: "
-
-#: functions/info.c:69 functions/info_tools.c:66
-msgid "Version: "
-msgstr "Version: "
-
-#: functions/info.c:70 functions/info_tools.c:70
-msgid "Desktop: "
-msgstr "Desktop: "
-
-#: functions/info.c:71 functions/info_tools.c:71
-msgid "Language: "
-msgstr "Language: "
-
-#: functions/info.c:72
-msgid "Session Type: "
-msgstr "Session Type: "
-
-#: functions/info.c:141
+#: functions/info.c:136
 msgid "Check for root permissions..."
 msgstr "Check for root permissions..."
 
-#: functions/info_tools.c:48
+#: functions/info_tools.c:49
 msgid "System and Package Informations:"
 msgstr "System and Package Informations:"
 
-#: functions/info_tools.c:49
+#: functions/info_tools.c:50
 msgid "Package Informations:"
 msgstr "Package Informations:"
 
+#: functions/info_tools.c:66
+msgid "Distribution: "
+msgstr "Distribution: "
+
 #: functions/info_tools.c:67
+msgid "Version: "
+msgstr "Version: "
+
+#: functions/info_tools.c:68
 msgid "Kernel-Version: "
 msgstr "Kernel-Version: "
 
-#: functions/info_tools.c:68
+#: functions/info_tools.c:69
 msgid "Processor: "
 msgstr "Processor: "
 
-#: functions/info_tools.c:69
+#: functions/info_tools.c:70
 msgid "Graphics card: "
 msgstr "Graphics card: "
 
+#: functions/info_tools.c:71
+msgid "Desktop: "
+msgstr "Desktop: "
+
 #: functions/info_tools.c:72
+msgid "Language: "
+msgstr "Language: "
+
+#: functions/info_tools.c:73
 msgid "Session: "
 msgstr "Session: "
 
-#: functions/info_tools.c:93
+#: functions/info_tools.c:102
 msgid "ADB: "
 msgstr "ADB: "
 
-#: functions/info_tools.c:94
+#: functions/info_tools.c:103
 msgid "Fastboot: "
 msgstr "Fastboot: "
 
-#: functions/info_tools.c:95
+#: functions/info_tools.c:104
 msgid "XZ-Utils: "
 msgstr "XZ-Utils: "
 
-#: functions/info_tools.c:96
+#: functions/info_tools.c:105
 msgid "Unzip: "
 msgstr "Unzip: "
 
-#: functions/info_tools.c:97
+#: functions/info_tools.c:106
 msgid "Zip: "
 msgstr "Zip: "
 
-#: functions/info_tools.c:98
+#: functions/info_tools.c:107
 msgid "Wget: "
 msgstr "Wget: "
 
-#: functions/info_tools.c:99
+#: functions/info_tools.c:108
 msgid "Curl: "
 msgstr "Curl: "
 
-#: functions/info_tools.c:100
+#: functions/info_tools.c:109
 msgid "Pkexec: "
 msgstr "Pkexec: "
 
-#: functions/info_tools.c:101
+#: functions/info_tools.c:110
 msgid "Heimdall: "
 msgstr "Heimdall: "
 
-#: functions/info_tools.c:102
-msgid "GTK+: "
-msgstr "GTK+: "
+#: functions/info_tools.c:111
+#, fuzzy
+msgid "Heimdall UI: "
+msgstr "Heimdall: "
 
-#: functions/info_tools.c:103
+#: functions/info_tools.c:112
+#, fuzzy
+msgid "Desktop File Utils: "
+msgstr "Desktop: "
+
+#: functions/info_tools.c:113
+msgid "GLib2: "
+msgstr ""
+
+#: functions/info_tools.c:114
+msgid "GTK4: "
+msgstr ""
+
+#: functions/info_tools.c:115
+msgid "Libadwaita1.6: "
+msgstr ""
+
+#: functions/info_tools.c:116
+msgid "vte-GTK4: "
+msgstr ""
+
+#: functions/info_tools.c:117
+msgid "Libnotify: "
+msgstr ""
+
+#: functions/info_tools.c:118
+msgid "XDG-Portal: "
+msgstr ""
+
+#: functions/info_tools.c:119
+msgid "XDG-Portal GTK: "
+msgstr ""
+
+#: functions/info_tools.c:120
 msgid "Coreutils: "
 msgstr "Coreutils: "
 
-#: functions/info_tools.c:104
+#: functions/info_tools.c:121
 msgid "Libc6: "
 msgstr "Libc6: "
 
-#: functions/info_tools.c:135
+#: functions/info_tools.c:144
+#, fuzzy
+msgid "System Info"
+msgstr "System Informations"
+
+#: functions/info_tools.c:164
 msgid "Fastboot-Assistant: v.0.9.1.dev"
 msgstr "Fastboot-Assistant: v.0.9.1.dev"
 
@@ -476,7 +495,7 @@ msgstr "Flash Other Images"
 
 #: functions/flash/flash_GUI.c:23 functions/get_devices.c:83
 #: functions/preflash/preflash_GUI.c:20 functions/treble_updater.c:219
-#: functions/config-project/config-project.c:130
+#: functions/config-project/config-project.c:63
 #: functions/reboot/reboot_GUI.c:19 functions/instructions/instruction_GUI.c:18
 msgid "Back to Home"
 msgstr "Back to Home"
@@ -646,7 +665,7 @@ msgstr "System (heimdall)"
 msgid "System (inactive)"
 msgstr "System (inactive)"
 
-#: functions/flash/flash_payload.c:54 functions/main.c:130
+#: functions/flash/flash_payload.c:54 functions/main.c:135
 msgid "Flash"
 msgstr "Flash"
 
@@ -711,39 +730,35 @@ msgstr "Flash running..."
 msgid "Erasing files..."
 msgstr "Erasing files..."
 
-#: functions/main.c:84
+#: functions/main.c:89
 msgid "Fastboot-Assistant"
 msgstr "Fastboot-Assistant"
 
-#: functions/main.c:126
+#: functions/main.c:131
 msgid "Devices"
 msgstr "Devices"
 
-#: functions/main.c:127 functions/treble_updater.c:215
+#: functions/main.c:132 functions/treble_updater.c:215
 msgid "Reboot Device"
 msgstr "Reboot Device"
 
-#: functions/main.c:128
+#: functions/main.c:133
 msgid "Settings"
 msgstr "Settings"
 
-#: functions/main.c:129
+#: functions/main.c:134
 msgid "Prepare Flashing"
 msgstr "Prepare Flashing"
 
-#: functions/main.c:131
+#: functions/main.c:136
 msgid "Instructions"
 msgstr "Instructions"
 
-#: functions/main.c:132 functions/instructions/instruction_GUI.c:17
-msgid "Info"
-msgstr "Info"
-
-#: functions/main.c:133 functions/treble_updater.c:160
+#: functions/main.c:138 functions/treble_updater.c:160
 msgid "Treble Updater"
 msgstr "Treble Updater"
 
-#: functions/main.c:134
+#: functions/main.c:139
 msgid "About"
 msgstr "About"
 
@@ -1048,70 +1063,67 @@ msgstr "Old files"
 msgid "Backups"
 msgstr "Backups"
 
-#: functions/config-project/wsl_config.c:43
+#: functions/config-project/wsl_config.c:49
 msgid "Configuration"
 msgstr "Configuration"
 
-#: functions/config-project/wsl_config.c:44
+#: functions/config-project/wsl_config.c:50
 msgid "Running configuration..."
 msgstr "Running configuration..."
 
-#: functions/config-project/config-project.c:88
-#, c-format
-msgid "Completed"
-msgstr "Completed"
-
-#: functions/config-project/config-project.c:121
+#: functions/config-project/config-project.c:56
 msgid "Create folder"
 msgstr "Create folder"
 
-#: functions/config-project/config-project.c:122
-msgid "Clean up"
+#: functions/config-project/config-project.c:57
+#, fuzzy
+msgid "Cleanup"
 msgstr "Clean up"
 
-#: functions/config-project/config-project.c:123
+#: functions/config-project/config-project.c:58
 #: functions/run_first_run_setup.c:216
 msgid "Configure"
 msgstr "Configure"
 
-#: functions/config-project/config-project.c:124
-msgid "Updates"
-msgstr "Updates"
+#: functions/config-project/config-project.c:59
+#, fuzzy
+msgid "Post Update"
+msgstr "Post update"
 
-#: functions/config-project/config-project.c:125
+#: functions/config-project/config-project.c:60
 msgid "System Informations"
 msgstr "System Informations"
 
-#: functions/config-project/config-project.c:126
-msgid "Clean log"
-msgstr "Clean log"
-
-#: functions/config-project/config-project.c:127
+#: functions/config-project/config-project.c:61
 msgid "Define new directory"
 msgstr "Define new directory"
 
-#: functions/config-project/config-project.c:128
-msgid "Post update"
-msgstr "Post update"
+#: functions/config-project/config-project.c:62
+msgid "Updates"
+msgstr "Updates"
 
-#: functions/config-project/config-project.c:129
-msgid "Restart Setup"
-msgstr "Restart Setup"
+#: functions/updater/local_updater.c:37
+msgid "Fastboot-Assistant Updater"
+msgstr "Fastboot-Assistant Updater"
 
-#: functions/updater/local_updater.c:29
+#: functions/updater/local_updater.c:48
 msgid "Update check failed."
 msgstr "Update check failed."
 
-#: functions/updater/local_updater.c:52
+#: functions/updater/local_updater.c:64
+msgid "Error: Invalid configuration files."
+msgstr ""
+
+#: functions/updater/local_updater.c:76
 msgid "No updates available."
 msgstr "No updates available."
 
-#: functions/updater/local_updater.c:58
+#: functions/updater/local_updater.c:84
 #, c-format
 msgid "Update to version %s available."
 msgstr "Update to version %s available."
 
-#: functions/updater/local_updater.c:70
+#: functions/updater/local_updater.c:97
 msgid "Error downloading the package."
 msgstr "Error downloading the package."
 
@@ -1944,3 +1956,31 @@ msgstr "The setup is complete. The Fastboot-Assistant is now ready."
 #: functions/run_first_run_setup.c:353
 msgid "Finished"
 msgstr "Finished"
+
+#, c-format
+#~ msgid "Completed"
+#~ msgstr "Completed"
+
+#~ msgid "Clean log"
+#~ msgstr "Clean log"
+
+#~ msgid "Restart Setup"
+#~ msgstr "Restart Setup"
+
+#~ msgid "Exit Fastboot Assistant to install the update."
+#~ msgstr "Exit Fastboot Assistant to install the update."
+
+#~ msgid "Update successfully installed!"
+#~ msgstr "Update successfully installed!"
+
+#~ msgid "Error during installation!"
+#~ msgstr "Error during installation!"
+
+#~ msgid "GTK+: "
+#~ msgstr "GTK+: "
+
+#~ msgid "Computer Info:"
+#~ msgstr "Computer Info:"
+
+#~ msgid "Session Type: "
+#~ msgstr "Session Type: "

@@ -77,8 +77,8 @@ void reboot_recovery(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_button(labels[0], G_CALLBACK(start_recovery_adb), stack);
-    GtkWidget *btn2 = create_button(labels[1], G_CALLBACK(start_recovery_fastboot), stack);
+    GtkWidget *btn1 = create_button_icon_position("system-reboot-symbolic", labels[0], G_CALLBACK(start_recovery_adb), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_button_icon_position("system-reboot-symbolic", labels[1], G_CALLBACK(start_recovery_fastboot), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[2], G_CALLBACK(reboot_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

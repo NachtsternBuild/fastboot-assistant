@@ -25,12 +25,12 @@ bool debug_mock = false;
 // define the local domain
 const char *LOCALE_DOMAIN = "fastboot-assistant";
 // define the filter file
-const char *DEFAULT_FILTER = "/etc/fastboot-assistant/filter.conf";
+const char *DEFAULT_FILTER = "~/.config/fastboot-assistant/filter.conf";
 // define the local dir
 const char *LOCALEDIR_PATH = "local/";
 
 // define about infos
-const char *app_icon = "/usr/share/icons/hicolor/256x256/apps/sweet_unix.png";
+const char *app_icon = "sweet_unix"; // use the name, that safed in the desktop file
 const char *app_name = "Fastboot-Assistant";
 const char *developer_name = "NachtsternBuild";
 const char *version = "0.9.1.dev";
@@ -73,7 +73,7 @@ const char *special_thanks[] = {
 void version_details() 
 {
 	const char *env = get_execution_environment();
-	char package[20];
+	char package[25];
 		
 	// flatpak		
     if (strcmp(env, "flatpak") == 0) 
@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
         }
 
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) 
-        {
+		{
             help();
             return 0;
         }
@@ -192,8 +192,8 @@ int main(int argc, char *argv[])
     }
 	
 	g_autoptr(AdwApplication) app = NULL;
-
-    app = adw_application_new("io.github.nachtsternbuild.Fastboot-Assistant", G_APPLICATION_DEFAULT_FLAGS);
+		
+    app = adw_application_new("io.github.nachtsternbuild.fastboot-assistant", G_APPLICATION_DEFAULT_FLAGS);
     g_signal_connect(app, "activate", G_CALLBACK (activate_fastboot_assistant), NULL);
 
     return g_application_run(G_APPLICATION (app), new_argc, new_argv);

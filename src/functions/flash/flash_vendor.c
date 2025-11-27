@@ -75,7 +75,7 @@ void flash_vendor(GtkWidget *widget, gpointer stack)
 {
 	LOGD("flash_vendor");
     
-    char labels[9c][30];  // labels for the button 
+    char labels[9][30];  // labels for the button 
     set_button_labels_flash_vendor(labels);  // for both languages
     
     GtkWidget *flash_vendor = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
@@ -89,14 +89,14 @@ void flash_vendor(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_button(labels[0], G_CALLBACK(vendor_on_a), stack);
-    GtkWidget *btn2 = create_button(labels[1], G_CALLBACK(vendor_on_ab), stack);
-    GtkWidget *btn3 = create_button(labels[2], G_CALLBACK(vendor_heimdall), stack);
-    GtkWidget *btn4 = create_button(labels[3], G_CALLBACK(vendor_boot_on_a), stack);
-    GtkWidget *btn5 = create_button(labels[4], G_CALLBACK(vendor_boot_on_ab), stack);
-    GtkWidget *btn6 = create_button(labels[5], G_CALLBACK(vendor_boot_heimdall), stack);
-    GtkWidget *btn7 = create_button(labels[6], G_CALLBACK(vendor_kernel_boot), stack);
-    GtkWidget *btn8 = create_button(labels[7], G_CALLBACK(vendor_kernel_boot_heimdall), stack);
+    GtkWidget *btn1 = create_button_icon_position("drive-harddisk-system-symbolic", labels[0], G_CALLBACK(vendor_on_a), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_button_icon_position("drive-harddisk-system-symbolic", labels[1], G_CALLBACK(vendor_on_ab), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_button_icon_position("drive-harddisk-system-symbolic", labels[2], G_CALLBACK(vendor_heimdall), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_button_icon_position("drive-harddisk-system-symbolic", labels[3], G_CALLBACK(vendor_boot_on_a), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_button_icon_position("drive-harddisk-system-symbolic", labels[4], G_CALLBACK(vendor_boot_on_ab), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_button_icon_position("drive-harddisk-system-symbolic", labels[5], G_CALLBACK(vendor_boot_heimdall), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn7 = create_button_icon_position("drive-harddisk-system-symbolic", labels[6], G_CALLBACK(vendor_kernel_boot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn8 = create_button_icon_position("drive-harddisk-system-symbolic", labels[7], G_CALLBACK(vendor_kernel_boot_heimdall), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[8], G_CALLBACK(flash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

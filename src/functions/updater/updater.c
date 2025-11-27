@@ -49,18 +49,66 @@ void updater(GtkWidget *widget, gpointer stack)
     const char *env = get_execution_environment();
     LOGD("The app runs in the environment: **%s**\n", env);
 	
+
 	// flatpak		
     if (strcmp(env, "flatpak") == 0) 
     {
         LOGD("Running as flatpak");
         command = "gnome-software || plasma-discover || xdg-open 'appstream://'"; 
+        result = system(command);
+        if (result == -1) 
+    	{
+        	LOGE("Error executing the system() command");
+        	perror("Error executing the system() command");
+    	} 
+    
+    	else if (result != 0) 
+    	{	
+        	LOGW("Store command executed, but the store may not have been opened (exit code: %d).", result);
+    	} 
+    
+    	else 
+    	{
+    	    LOGD("Store successfully opened.");
+    	}
     }
+    
     // snap
     else if (strcmp(env, "snap") == 0) 
     {
         LOGD("Running as snap");
         command = "snap-store";
-    } 
+        result = system(command);
+        if (result == -1) 
+    	{
+        	LOGE("Error executing the system() command");
+        	perror("Error executing the system() command");
+    	} 
+    
+    	else if (result != 0) 
+    	{
+        	LOGW("Store command executed, but the store may not have been opened (exit code: %d).", result);
+    	} 
+    
+    	else 
+    	{
+        	LOGD("Store successfully opened.");
+    	}
+    }   
+    
+    // for debugging
+    else if (debug_mode) 
+    {
+    	LOGD("[DEBUG] Running updater in debug mode.");
+    	LOGD("Running local DEB package.");
+    	if (spawn_updater_helper() == 0) 
+    	{
+    		LOGE("Error with checking helper script for the updater.");
+    		return;
+    	}
+    	// run local updater
+        local_updater();
+    }
     
     // PPA/DEB
     else 
@@ -83,30 +131,13 @@ void updater(GtkWidget *widget, gpointer stack)
     	else 
     	{
         	LOGD("Running local DEB package.");
+        	if (spawn_updater_helper() == 0) 
+    		{
+    			LOGE("Error with checking helper script for the updater.");
+    			return;
+    		}
+    		// run local updater
         	local_updater();
     	}
-    }
-    
-    // open stores for snap/flatpak
-    if (command != NULL) 
-    {
-        LOGD("Run command: %s", command);
-        result = system(command);
-    }
-    
-    if (result == -1) 
-    {
-        LOGE("Error executing the system() command");
-        perror("Error executing the system() command");
-    } 
-    
-    else if (result != 0) 
-    {
-        LOGW("Store command executed, but the store may not have been opened (exit code: %d).", result);
-    } 
-    
-    else 
-    {
-        LOGD("Store successfully opened.");
     }
 }

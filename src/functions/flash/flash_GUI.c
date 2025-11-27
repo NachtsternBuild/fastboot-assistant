@@ -42,15 +42,15 @@ void flash_GUI(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_button(labels[0], G_CALLBACK(flash_recovery), stack);
-    GtkWidget *btn2 = create_button(labels[1], G_CALLBACK(flash_boot), stack);
-    GtkWidget *btn3 = create_button(labels[2], G_CALLBACK(flash_vendor), stack);
-    GtkWidget *btn4 = create_button(labels[3], G_CALLBACK(flash_payload), stack);
-    GtkWidget *btn5 = create_button(labels[4], G_CALLBACK(flash_system), stack);
-    GtkWidget *btn6 = create_button(labels[5], G_CALLBACK(flash_vbmeta_dtbo), stack);
-    GtkWidget *btn7 = create_button(labels[6], G_CALLBACK(flash_preloader_super), stack);
-    GtkWidget *btn8 = create_button(labels[7], G_CALLBACK(flash_data), stack);
-    GtkWidget *btn9 = create_button(labels[8], G_CALLBACK(flash_others), stack);
+    GtkWidget *btn1 = create_button_icon_position("drive-multidisk-symbolic", labels[0], G_CALLBACK(flash_recovery), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_button_icon_position("drive-multidisk-symbolic", labels[1], G_CALLBACK(flash_boot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_button_icon_position("drive-multidisk-symbolic", labels[2], G_CALLBACK(flash_vendor), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_button_icon_position("drive-multidisk-symbolic", labels[3], G_CALLBACK(flash_payload), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_button_icon_position("drive-multidisk-symbolic", labels[4], G_CALLBACK(flash_system), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_button_icon_position("drive-multidisk-symbolic", labels[5], G_CALLBACK(flash_vbmeta_dtbo), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn7 = create_button_icon_position("drive-multidisk-symbolic", labels[6], G_CALLBACK(flash_preloader_super), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn8 = create_button_icon_position("drive-multidisk-symbolic", labels[7], G_CALLBACK(flash_data), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn9 = create_button_icon_position("drive-multidisk-symbolic", labels[8], G_CALLBACK(flash_others), stack, GTK_ALIGN_CENTER);
 	GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[9], G_CALLBACK(show_home_page), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

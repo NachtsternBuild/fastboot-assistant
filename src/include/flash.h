@@ -18,17 +18,17 @@ extern "C" {
 
 #include "atlbase.h"
 
-void flash_recovery();
-void flash_boot();
-void flash_vendor();
-void flash_payload();
-void flash_system();
-void flash_vbmeta_dtbo();
-void flash_preloader_super();
-void flash_data();
-void flash_others();
-void flash_images();
-void flash_list_images();
+void flash_recovery(GtkWidget *widget, gpointer stack);
+void flash_boot(GtkWidget *widget, gpointer stack);
+void flash_vendor(GtkWidget *widget, gpointer stack);
+void flash_payload(GtkWidget *widget, gpointer stack);
+void flash_system(GtkWidget *widget, gpointer stack);
+void flash_vbmeta_dtbo(GtkWidget *widget, gpointer stack);
+void flash_preloader_super(GtkWidget *widget, gpointer stack);
+void flash_data(GtkWidget *widget, gpointer stack);
+void flash_others(GtkWidget *widget, gpointer stack);
+void flash_images(GtkWidget *widget, gpointer stack);
+void flash_list_images(GtkWidget *widget, gpointer stack);
 
 #ifdef __cplusplus
 }

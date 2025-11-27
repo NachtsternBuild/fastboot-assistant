@@ -149,7 +149,7 @@ void flash_images_in_directory(const char *directory)
     }
 }
 
-void flash_list_images(GtkWidget *widget, gpointer *stack) 
+void flash_list_images(GtkWidget *widget, gpointer stack) 
 {
     LOGD("flash_other");
 	

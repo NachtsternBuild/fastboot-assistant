@@ -24,7 +24,8 @@ extern "C" {
 #include "functions.h"
 #include <gobject/gobject.h>
 #include <glib-object.h>
-#include <libnotify/notify.h> 
+#include <libnotify/notify.h>
+#include <sys/prctl.h>
 
 #ifdef __cplusplus
 }

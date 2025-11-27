@@ -34,14 +34,15 @@ void get_package_status(const char *command, char *output, size_t size, gboolean
     pclose(fp);
 }
 
+// TODO: use a new window instead of stack part
 /* main function - info_tools */
 void info_tools(GtkWidget *widget, gpointer stack)  
 {  
     LOGD("info_tools");
     
-    char versions[12][2048] = {0};
-    char informations[15][2048] = {0};
-    gboolean is_installed[12] = {FALSE};
+    char versions[20][2048] = {0};
+    char informations[23][2048] = {0};
+    gboolean is_installed[20] = {FALSE};
 
     // define labels 
     //const char *version_info_title = _("System and Package Informations");
@@ -59,7 +60,7 @@ void info_tools(GtkWidget *widget, gpointer stack)
         "echo $LANG | cut -d'_' -f1",
         "echo $XDG_SESSION_TYPE",
     };
-    
+        
 	// labels for system informations
     const char *labels_system[] = {
         _("Distribution: "),
@@ -74,18 +75,26 @@ void info_tools(GtkWidget *widget, gpointer stack)
 
     // commands for the packages
     const char *commands_packages[] = {
-        "which adb",
-        "which fastboot",
-        "which xz",
-        "which unzip",
-        "which zip",
-        "which wget",
-        "which curl",
-        "which pkexec",
-        "which heimdall",
-        "which gtk4-demo",
-        "which ls",
-        "which ldd",
+        "dpkg-query -W -f='${Version}' adb",
+        "dpkg-query -W -f='${Version}' fastboot",
+        "dpkg-query -W -f='${Version}' xz-utils",
+        "dpkg-query -W -f='${Version}' unzip",
+        "dpkg-query -W -f='${Version}' zip",
+        "dpkg-query -W -f='${Version}' wget",
+        "dpkg-query -W -f='${Version}' curl",
+        "dpkg-query -W -f='${Version}' pkexec",
+        "dpkg-query -W -f='${Version}' heimdall-flash",
+        "dpkg-query -W -f='${Version}' heimdall-flash-frontend", 
+        "dpkg-query -W -f='${Version}' desktop-file-utils",
+        "dpkg-query -W -f='${Version}' libglib2.0-0t64", 
+        "dpkg-query -W -f='${Version}' libgtk-4-1",
+        "dpkg-query -W -f='${Version}' libadwaita-1-0",
+        "dpkg-query -W -f='${Version}' libvte-2.91-gtk4-0",
+        "dpkg-query -W -f='${Version}' libnotify-bin", 
+        "dpkg-query -W -f='${Version}' xdg-desktop-portal", 
+        "dpkg-query -W -f='${Version}' xdg-desktop-portal-gtk", 
+        "dpkg-query -W -f='${Version}' coreutils",
+        "dpkg-query -W -f='${Version}' libc-bin",
     };
 	
 	// lables for the packages
@@ -99,7 +108,15 @@ void info_tools(GtkWidget *widget, gpointer stack)
 	    _("Curl: "),
 	    _("Pkexec: "),
 	    _("Heimdall: "),
-	    _("GTK+: "),
+	    _("Heimdall UI: "),
+	    _("Desktop File Utils: "),
+	    _("GLib2: "), 
+	    _("GTK4: "),
+	    _("Libadwaita1.6: "),
+	    _("vte-GTK4: "),
+	    _("Libnotify: "),
+	    _("XDG-Portal: "),
+	    _("XDG-Portal GTK: "),
 	    _("Coreutils: "),
 	    _("Libc6: "),
 	};
@@ -111,19 +128,31 @@ void info_tools(GtkWidget *widget, gpointer stack)
     }
     
     // function to get the installed packages
-    for (int i = 0; i < 12; i++) 
+    for (int i = 0; i < 20; i++) 
     {
         get_package_status(commands_packages[i], versions[i], sizeof(versions[i]), &is_installed[i]);
     }
+    
+    // create the main window
+    AdwApplicationWindow *info_tools_window = ADW_APPLICATION_WINDOW(adw_application_window_new(app));
+    
+    // create toolbar for header and content
+    GtkWidget *toolbar_view = adw_toolbar_view_new();
 
+    // create headerbar
+    GtkWidget *header_bar = adw_header_bar_new();
+    GtkWidget *title = gtk_label_new(_("System Info"));
+    adw_header_bar_set_title_widget(ADW_HEADER_BAR(header_bar), title);
+
+    adw_toolbar_view_add_top_bar(ADW_TOOLBAR_VIEW(toolbar_view), header_bar);
+    gtk_window_set_default_size(GTK_WINDOW(info_tools_window), WINDOW_WIDTH, WINDOW_HEIGHT);
+    
     // test if stack work's with scrolled window
 	GtkWidget *scrolled_window = gtk_scrolled_window_new();
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-    gtk_window_set_child(GTK_WINDOW(main_window), scrolled_window);
 	
     // create box for get_devices
     GtkWidget *info_tools = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
-    //gtk_window_set_child(GTK_WINDOW(scrolled_window), info);
     gtk_scrolled_window_set_child(GTK_SCROLLED_WINDOW(scrolled_window), info_tools);
     gtk_widget_set_halign(info_tools, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(info_tools, GTK_ALIGN_CENTER);
@@ -148,20 +177,18 @@ void info_tools(GtkWidget *widget, gpointer stack)
     
     // add version info labels to the window
     // packageinforamtions with labels
-    for (int i = 0; i < 12; i++) 
+    for (int i = 0; i < 20; i++) 
     {
         const char *checkmark = is_installed[i] ? "✅ " : "❌ ";
         GtkWidget *label = gtk_label_new(g_strdup_printf("%s%s%s", labels_packages[i], checkmark, versions[i]));
         gtk_box_append(GTK_BOX(info_tools), label);
     }
     
-    // is needed to prevent it from being stacked again when called again
-    if (!gtk_stack_get_child_by_name(GTK_STACK(stack), "info_tools")) 
-    {
-        gtk_stack_add_named(GTK_STACK(stack), scrolled_window, "info_tools");
-    }
-    
-	gtk_stack_set_visible_child_name(GTK_STACK(stack), "info_tools");
+    //
+	adw_toolbar_view_set_content(ADW_TOOLBAR_VIEW(toolbar_view), scrolled_window);
+	adw_application_window_set_content(info_tools_window, toolbar_view);
+	
+	gtk_window_present(GTK_WINDOW(info_tools_window));
 	
     LOGD("end info_tools");
 }

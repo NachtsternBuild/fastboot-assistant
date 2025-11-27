@@ -79,17 +79,6 @@ source_dir="$(pwd)"
 
 # infos from the other files
 build_dir="${source_dir}/Build"
-build_info_dir="${build_dir}/info"
-
-# the version
-VERSION="$(cat ${build_info_dir}/version.txt)"
-VERSION_DEBUILD="$(cat ${build_info_dir}/version_deb.txt)"
-# the patch
-PATCH="$(cat ${build_info_dir}/patch.txt)"
-# changelog content
-CONTENT="$(cat ${build_info_dir}/content.txt)"
-# branch → Ubuntu Version (noble, oracular)
-BRANCH="$(cat ${build_info_dir}/branch.txt)"
 
 # the architecture
 ARCHITECTURE="amd64"
@@ -103,9 +92,6 @@ snapcraft_file="${snapcraft_dir}/snapcraft.yaml"
 flatpak_dir="${source_dir}/flatpak"
 flatpak_name="fastboot-assistant"
 flatpak_manifest="${flatpak_dir}/io.github.nachtsternbuild.Fastboot-Assistant.yml"
-
-# define the name of the zip-file for windows
-zip_name="fastboot-assistant.zip"
 
 # function that have output with color
 prompt_user() {

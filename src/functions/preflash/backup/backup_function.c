@@ -12,8 +12,8 @@
 void set_button_labels_backup(char labels[][30]) 
 {
     g_strlcpy(labels[0], _("Backup with root"), sizeof(labels[0]));
-    g_strlcpy(labels[0], _("Backup without root"), sizeof(labels[1]));
-    g_strlcpy(labels[0], _("Back"), sizeof(labels[2]));
+    g_strlcpy(labels[1], _("Backup without root"), sizeof(labels[1]));
+    g_strlcpy(labels[2], _("Back"), sizeof(labels[2]));
 } 
 
 /* main function - backup_function */

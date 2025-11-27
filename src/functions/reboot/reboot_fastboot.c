@@ -113,10 +113,10 @@ void reboot_fastboot(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_button(labels[0], G_CALLBACK(reboot_from_adb), stack);
-    GtkWidget *btn2 = create_button(labels[1], G_CALLBACK(reboot_from_fastboot), stack);
-    GtkWidget *btn3 = create_button(labels[2], G_CALLBACK(fastboot_help), stack);
-    GtkWidget *btn4 = create_button(labels[3], G_CALLBACK(list_bootloader_var), stack);
+    GtkWidget *btn1 = create_button_icon_position("system-reboot-symbolic", labels[0], G_CALLBACK(reboot_from_adb), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_button_icon_position("system-reboot-symbolic", labels[1], G_CALLBACK(reboot_from_fastboot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_button_icon_position("system-reboot-symbolic", labels[2], G_CALLBACK(fastboot_help), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_button_icon_position("system-reboot-symbolic", labels[3], G_CALLBACK(list_bootloader_var), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[4], G_CALLBACK(reboot_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

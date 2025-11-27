@@ -10,7 +10,7 @@
 
 #define BUFFER_SIZE 2048
 
-char slot_command[2048];
+char slot_command[512];
 
 // button 1 - set slot a
 static void set_slot_a(GtkWidget *widget, gpointer stack)
@@ -57,7 +57,7 @@ static void set_slot_auto(GtkWidget *widget, gpointer stack)
 {
 	LOGD("set_slot_auto");
 	char active_slot[BUFFER_SIZE] = {0};
-    char inactive_slot[BUFFER_SIZE] = {0};
+    char inactive_slot[3] = {0};
 
     // get active slot
     check_active_slot(active_slot, sizeof(active_slot));

@@ -19,10 +19,13 @@ extern "C" {
 #include "atlbase.h"
 
 extern GtkWidget *main_window;
+extern GtkApplication* app;
 extern const char *detected_device;
 extern GtkWidget *bootctl_status_label;
 extern GtkWidget *root_status_label;
 extern bool debug_mode;
+
+const char* get_execution_environment();
 
 /** 
 * function, that get the path of the config file
@@ -115,7 +118,7 @@ char *get_bootctl_char();
 // download the update.conf from the GitHub API
 bool download_update_conf();
 // create a new child process, that run the update
-void spawn_updater_helper(const char *pkg_cmd);
+int spawn_updater_helper();
 
 #ifdef __cplusplus
 }

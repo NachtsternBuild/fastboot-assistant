@@ -119,7 +119,7 @@ void flash_dir(const char *directory)
     {
         if (entry->d_type == DT_REG) 
         {
-            char image_path[MAX_PATH];
+            char image_path[1024];
             
             // create image_path
             snprintf(image_path, sizeof(image_path), "%s/%s", directory, entry->d_name);
@@ -142,11 +142,11 @@ void flash_dir(const char *directory)
 }
 
 /* main function - flash_images */
-void flash_images(GtkWidget *widget, gpointer *stack) 
+void flash_images(GtkWidget *widget, gpointer stack) 
 {
     LOGI("flash_images");
     
-    char config_file[2048];
+    char config_file[512];
     get_config_file_path(config_file, sizeof(config_file));
     // load the path
     const char *directory = load_path_from_file(config_file);

@@ -16,7 +16,7 @@ void system_to_inactiv(GtkWidget *widget, gpointer stack)
 	LOGD("system_to_inactiv");
 		
 	char active_slot[BUFFER_SIZE] = {0};
-    char inactive_slot[BUFFER_SIZE] = {0};
+    char inactive_slot[3] = {0};
 	
 	// prevention of crashes
     if (!is_android_device_connected_fastboot()) 
@@ -47,8 +47,8 @@ void system_to_inactiv(GtkWidget *widget, gpointer stack)
         exit(1);
     }
         
-    char config_file[4096];
-    char erase_command[BUFFER_SIZE];
+    char config_file[1024];
+    char erase_command[128];
 	char function_command[4096];
 	char image_info[BUFFER_SIZE];
     auto_free char *device_command = fastboot_command();
@@ -156,9 +156,9 @@ void flash_system(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_button(labels[0], G_CALLBACK(system_to_activ), stack);
-    GtkWidget *btn2 = create_button(labels[1], G_CALLBACK(system_to_activ_heimdall), stack);
-    GtkWidget *btn3 = create_button(labels[2], G_CALLBACK(system_to_inactiv), stack);
+    GtkWidget *btn1 = create_button_icon_position("drive-harddisk-system-symbolic", labels[0], G_CALLBACK(system_to_activ), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_button_icon_position("drive-harddisk-system-symbolic", labels[1], G_CALLBACK(system_to_activ_heimdall), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_button_icon_position("drive-harddisk-system-symbolic", labels[2], G_CALLBACK(system_to_inactiv), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[3], G_CALLBACK(flash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

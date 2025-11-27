@@ -60,13 +60,13 @@ void process_selected_setup_folder(const char *folder_path)
     create_directory(full_path);
 
     // get config file path
-    char config_dir[2048];
+    char config_dir[512];
     get_config_dir(config_dir, sizeof(config_dir));
 
     // create config directory
     create_directory(config_dir);
 
-    char config_file[2048];
+    char config_file[1048];
     snprintf(config_file, sizeof(config_file), "%s/path_config.txt", config_dir);
 
     // save the path

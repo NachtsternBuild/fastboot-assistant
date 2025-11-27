@@ -18,9 +18,9 @@ gpointer backup_root_thread(gpointer data)
 {
     LOGD("backup_root");
     
-    char command[4096];
-    char backup_dir[4096];
-    char backup_predir_file[4096];
+    char command[2048];
+    char backup_dir[1024];
+    char backup_predir_file[512];
     auto_free const char *adb = adb_command();
     
 	// get path
@@ -48,7 +48,7 @@ gpointer backup_root_thread(gpointer data)
     execute_command(command);
     
     // file with all partitions
-    char file_partition[2048];
+    char file_partition[1050];
     snprintf(file_partition, sizeof(file_partition), "%s/partitions.txt", backup_dir);
     
     // open file
@@ -74,11 +74,8 @@ gpointer backup_root_thread(gpointer data)
         {
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
-                snprintf(command, sizeof(command), "%s/%s_%c.img", backup_dir, partition, slot);
                 LOGD("Safe %s (slot %c) to %s", partition, slot, command);
-
-                snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", 
-                        adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
+                snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
                 execute_command(command);
             }
         } 
@@ -86,11 +83,8 @@ gpointer backup_root_thread(gpointer data)
         // for devices without a/b slots
         else 
         {
-            snprintf(command, sizeof(command), "%s/%s.img", backup_dir, partition);
             LOGD("Safe %s to %s", partition, command);
-
-            snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", 
-                    adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
+            snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
             execute_command(command);
         }
     }

@@ -11,8 +11,8 @@
 void flash_payload(GtkWidget *widget, gpointer data)
 {
     LOGD("flash_payload");
-    char config_file_payload[4096];  
-    char payload_info[4096];
+    char config_file_payload[1024];  
+    char payload_info[2048];
     
     // flash payload.zip via adb sideload   
     // create the path to the payload.zip

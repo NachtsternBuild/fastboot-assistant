@@ -15,8 +15,8 @@ void flash_heimdall(GtkWidget *widget, const char *partition, const char *image_
     // let's see if we still need that with the new adw dialog
     //setenv("GSK_RENDERER", "cairo", 1);
     
-    char config_file[4096]; 
-    char image_info[4096];
+    char config_file[512]; 
+    char image_info[1024];
     
     get_config_file_path(config_file, sizeof(config_file));
     // load the path
@@ -51,8 +51,8 @@ void flash_heimdall(GtkWidget *widget, const char *partition, const char *image_
     }
     
     // create the command
-    char *function_command = malloc(4096); // bigger buffer for bigger commands
-    snprintf(function_command, 4096, "heimdall flash --%s %s --no-reboot", partition, image_info);
+    char function_command[2048]; // bigger buffer for bigger commands
+    snprintf(function_command, sizeof(function_command), "heimdall flash --%s %s --no-reboot", partition, image_info);
     
     const char *title = _("Heimdall running");
     char message[256]; // Korrigiert: Jetzt ein char Array, kein Array von Pointern

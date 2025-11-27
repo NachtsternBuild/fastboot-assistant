@@ -61,10 +61,10 @@ void flash_data(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_button(labels[0], G_CALLBACK(metadata_img), stack);
-    GtkWidget *btn2 = create_button(labels[1], G_CALLBACK(metadata_img_heimdall), stack);
-    GtkWidget *btn3 = create_button(labels[2], G_CALLBACK(userdata_img), stack);
-    GtkWidget *btn4 = create_button(labels[3], G_CALLBACK(userdata_img_heimdall), stack);
+    GtkWidget *btn1 = create_button_icon_position("drive-harddisk-system-symbolic", labels[0], G_CALLBACK(metadata_img), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_button_icon_position("drive-harddisk-system-symbolic", labels[1], G_CALLBACK(metadata_img_heimdall), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_button_icon_position("drive-harddisk-system-symbolic", labels[2], G_CALLBACK(userdata_img), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_button_icon_position("drive-harddisk-system-symbolic", labels[3], G_CALLBACK(userdata_img_heimdall), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[4], G_CALLBACK(flash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

@@ -99,15 +99,15 @@ void partitions(GtkWidget *widget, gpointer stack)
     gtk_grid_set_column_homogeneous(GTK_GRID(grid), TRUE);
 	
 	// create button
-    GtkWidget *btn1 = create_button(labels[0], G_CALLBACK(remove_boot), stack);
-    GtkWidget *btn2 = create_button(labels[1], G_CALLBACK(remove_vendor), stack);
-    GtkWidget *btn3 = create_button(labels[2], G_CALLBACK(remove_system), stack);
-    GtkWidget *btn4 = create_button(labels[3], G_CALLBACK(resize_boot), stack);
-    GtkWidget *btn5 = create_button(labels[4], G_CALLBACK(resize_vendor), stack);
-    GtkWidget *btn6 = create_button(labels[5], G_CALLBACK(resize_system), stack);
-    GtkWidget *btn7 = create_button(labels[6], G_CALLBACK(create_boot), stack);
-    GtkWidget *btn8 = create_button(labels[7], G_CALLBACK(create_vendor), stack);
-    GtkWidget *btn9 = create_button(labels[8], G_CALLBACK(create_system), stack);
+    GtkWidget *btn1 = create_button_icon_position("user-trash-symbolic", labels[0], G_CALLBACK(remove_boot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn2 = create_button_icon_position("user-trash-symbolic", labels[1], G_CALLBACK(remove_vendor), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_button_icon_position("user-trash-symbolic", labels[2], G_CALLBACK(remove_system), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn4 = create_button_icon_position("emblem-synchronizing-symbolic", labels[3], G_CALLBACK(resize_boot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn5 = create_button_icon_position("emblem-synchronizing-symbolic", labels[4], G_CALLBACK(resize_vendor), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn6 = create_button_icon_position("emblem-synchronizing-symbolic", labels[5], G_CALLBACK(resize_system), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn7 = create_button_icon_position("applications-engineering-symbolic", labels[6], G_CALLBACK(create_boot), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn8 = create_button_icon_position("applications-engineering-symbolic", labels[7], G_CALLBACK(create_vendor), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn9 = create_button_icon_position("applications-engineering-symbolic", labels[8], G_CALLBACK(create_system), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[9], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid

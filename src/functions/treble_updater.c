@@ -16,9 +16,9 @@ GtkWidget *bootctl_status_label;
 // function that flash the images in the inactive slot and set a new active slot
 void update_device(GtkWidget *widget, gpointer stack) 
 {      
-    char config_file[4096];
-    char boot_image[4096];
-    char system_image[4096];
+    char config_file[512];
+    char boot_image[550];
+    char system_image[550];
     char command_build[4096];
     const char *boot_image_name = "boot.img";
 	const char *system_image_name = "system.img";

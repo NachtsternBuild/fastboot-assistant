@@ -14,7 +14,7 @@
 * gtk_css_provider_load_from_string(provider_adw, adw_css);
 *
 * Note: 
-* Requires GTK4 (> 4.10), libadwaita (> 1.4)
+* Requires GTK4 (> 4.14), libadwaita (> 1.5)
 */
 #include "atlbase.h"
 
@@ -45,11 +45,6 @@ const char *get_custom_adw_css(void)
         "    color: @theme_fg_color;\n"
         "    font-size: 16px;\n"
         "    font-weight: bold;\n"
-        "}\n"
-        "notebook {\n"
-        "    background-color: @theme_bg_color;\n"
-        "    border: 2px solid @accent_bg_color;\n"
-        "    border-radius: 35px;\n"
         "}\n"
         "headerbar {\n"
         "    background-color: @theme_bg_color;\n"

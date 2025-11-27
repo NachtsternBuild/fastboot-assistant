@@ -16,22 +16,22 @@
 extern "C" {
 #endif
 
-void instruction_adb();
-void instruction_flash();
-void instruction_prepare_flash();
-void instruction_info();
+void instruction_adb(GtkWidget *widget, gpointer stack);
+void instruction_flash(GtkWidget *widget, gpointer stack);
+void instruction_prepare_flash(GtkWidget *widget, gpointer stack);
+void instruction_info(GtkWidget *widget, gpointer stack);
 
 // function for instruction_flash
-void instruction_recovery();
-void instruction_root();
-void instruction_vendor();
-void instruction_gsi();
-void instruction_custom_rom();
-void instruction_others();
+void instruction_recovery(GtkWidget *widget, gpointer stack);
+void instruction_root(GtkWidget *widget, gpointer stack);
+void instruction_vendor(GtkWidget *widget, gpointer stack);
+void instruction_gsi(GtkWidget *widget, gpointer stack);
+void instruction_custom_rom(GtkWidget *widget, gpointer stack);
+void instruction_others(GtkWidget *widget, gpointer stack);
 
 //function for instruction_preflash-function
-void instruction_backup();
-void instruction_preflash();
+void instruction_backup(GtkWidget *widget, gpointer stack);
+void instruction_preflash(GtkWidget *widget, gpointer stack);
 
 #ifdef __cplusplus
 }

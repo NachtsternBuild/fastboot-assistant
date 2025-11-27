@@ -11,10 +11,29 @@
 #define LOCAL_CONF "local.conf"
 #define UPDATE_CONF "update.conf"
 
-// run updater for local installed DEB packages
+// helper to run the updater script
+static void run_update(char *package_path)
+{
+    char cmd[512];
+    pid_t pid = getpid();  // PID of fastboot-assistant
+
+    snprintf(cmd, sizeof(cmd), "bash /var/lib/fastboot-assistant/fa-updater.sh %d \"%s\" &", pid, package_path);
+
+    system(cmd);
+}
+
+/**
+* Run updater for local installed DEB packages
+*/
 void local_updater()
 {
-    notify_init("Fastboot-Assistant Updater");
+    if (!notify_init("Fastboot-Assistant Updater"))
+    {
+        fprintf(stderr, "Libnotify could not be initialized.\n");
+        return;
+    }
+
+    NotifyNotification *n = NULL;
     const char *title = _("Fastboot-Assistant Updater");
     char conf_dir[128];
     char update_file[256];
@@ -23,12 +42,15 @@ void local_updater()
     snprintf(update_file, sizeof(update_file), "%s/%s", conf_dir, UPDATE_CONF);
     snprintf(local_file, sizeof(local_file), "%s/%s", conf_dir, LOCAL_CONF);
     	
-	// get the update.conf
-    if (!download_update_conf()) 
+    // get the update.conf
+    if (!download_update_conf())
     {
-        notify_notification_show(notify_notification_new(title, _("Update check failed."), "dialog-error"), NULL);
-        return;
+        n = notify_notification_new(title, _("Update check failed."), "dialog-error");
+        notify_notification_set_timeout(n, 5000);
+        notify_notification_show(n, NULL);
+        goto cleanup;
     }
+
 	
 	// get the config values
     char *local_version = get_config_value(local_file, "version");
@@ -39,7 +61,9 @@ void local_updater()
     if (!local_version || !remote_version || !package_url) 
     {
         LOGE("Invalid configuration files.");
-        fprintf(stderr, "Invalid configuration files.\n");
+        n = notify_notification_new(title, _("Error: Invalid configuration files."), "dialog-error");
+        notify_notification_set_timeout(n, 5000);
+        notify_notification_show(n, NULL);
         goto cleanup;
     }
 
@@ -49,14 +73,17 @@ void local_updater()
 	// check version
     if (strcmp(local_version, remote_version) == 0) 
     {
-        notify_notification_show(notify_notification_new(title, _("No updates available."), "emblem-ok-symbolic"), NULL);
+         n = notify_notification_new(title, _("No updates available."), "emblem-ok-symbolic");
+        notify_notification_set_timeout(n, 3000);
+        notify_notification_show(n, NULL);
         goto cleanup;
     }
 
     // update avaible
     char msg[256];
     snprintf(msg, sizeof(msg), _("Update to version %s available."), remote_version);
-    notify_notification_show(notify_notification_new(title, msg, "software-update-available"), NULL);
+    n = notify_notification_new(title, msg, "software-update-available");
+    notify_notification_show(n, NULL);
 
     // download package
     LOGD("Download package: %s", package_url);
@@ -67,14 +94,13 @@ void local_updater()
     
     if (!run_command_bool(cmd)) 
     {
-        notify_notification_show(notify_notification_new(title, _("Error downloading the package."), "dialog-error"), NULL);
+        n = notify_notification_new(title, _("Error downloading the package."), "dialog-error");
+        notify_notification_show(n, NULL);
         goto cleanup;
     }
 	
-	char tmp_pkg_cmd[512];
-	snprintf(tmp_pkg_cmd, sizeof(tmp_pkg_cmd), "pkexec apt install -y \"%s\"", package_path);
-    // start child process that waits for FA to terminate
-    spawn_updater_helper(tmp_pkg_cmd);
+	// install the update
+    run_update(package_path);
 
 // running cleanup
 cleanup:

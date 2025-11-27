@@ -36,13 +36,13 @@ int post_update_helper()
 	// check if files exsists
     if (access(old_path, F_OK) != 0) 
     {
-        LOGI("Old configuration file (‘%s’) not found.", OLD_CONFIG_NAME);
+        LOGW("Old configuration file (‘%s’) not found.", OLD_CONFIG_NAME);
         return 1; // 1: old files missing
     }
    
     if (access(new_path, F_OK) != 0) 
     {
-        LOGI("New configuration file (‘%s’) not found.", NEW_CONFIG_NAME);
+        LOGW("New configuration file (‘%s’) not found.", NEW_CONFIG_NAME);
         return 2; // 2: new files missing
     }
     

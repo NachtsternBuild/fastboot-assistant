@@ -18,7 +18,7 @@ const char *detected_device = "only_a";
 void write_ab_file() 
 {
     char dir_path[512];
-    char device_typ_dir[512];
+    char device_typ_dir[1024];
     get_config_dir(dir_path, sizeof(dir_path));
     
     // create the path of the device dir
@@ -27,7 +27,7 @@ void write_ab_file()
     // create the dir 
     create_directory(device_typ_dir);
 
-    char path[512];
+    char path[1040];
     snprintf(path, sizeof(path), "%s/%s", device_typ_dir, AB_FILE);
 
     FILE *file = fopen(path, "w");
@@ -46,13 +46,13 @@ void write_ab_file()
 void delete_ab_file() 
 {
     char dir_path[512];
-    char device_typ_dir[512];
+    char device_typ_dir[1024];
     get_config_dir(dir_path, sizeof(dir_path));
     
     // create the path of the device dir
     snprintf(device_typ_dir, sizeof(device_typ_dir), "%s/device", dir_path);
 
-    char path[512];
+    char path[1040];
     snprintf(path, sizeof(path), "%s/%s", device_typ_dir, AB_FILE);
 
     // try to remove the file
@@ -71,13 +71,13 @@ void delete_ab_file()
 void check_ab_file() 
 {
     char dir_path[512];
-    char device_typ_dir[512];
+    char device_typ_dir[1024];
     get_config_dir(dir_path, sizeof(dir_path));
     
     // create the path of the device dir
     snprintf(device_typ_dir, sizeof(device_typ_dir), "%s/device", dir_path);
 
-    char path[512];
+    char path[1040];
     snprintf(path, sizeof(path), "%s/%s", device_typ_dir, AB_FILE);
 
     FILE *file = fopen(path, "r");
@@ -99,13 +99,13 @@ void check_ab_file()
 void check_ab_file_light() 
 {
     char dir_path[512];
-    char device_typ_dir[512];
+    char device_typ_dir[1024];
     get_config_dir(dir_path, sizeof(dir_path));
     
     // create the path of the device dir
     snprintf(device_typ_dir, sizeof(device_typ_dir), "%s/device", dir_path);
 
-    char path[512];
+    char path[1040];
     snprintf(path, sizeof(path), "%s/%s", device_typ_dir, AB_FILE);
 
     FILE *file = fopen(path, "r");

@@ -10,6 +10,8 @@
 
 // for the main window
 GtkWidget *main_window = NULL;
+GtkApplication* app;
+
 
 // function that show the about site
 static void about(GtkWidget *widget, gpointer stack)
@@ -25,11 +27,11 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     // 1 → syslog
     set_logging_mode(1);
     
-    // use the advanced custom css provider
-    use_adw_provider();
-    
     // apply language
     init_language();
+    
+    // use the advanced custom css provider
+    use_adw_provider();
     
     // run post update function
     post_update();
@@ -37,10 +39,10 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 	// run config check
 	// check if first setup
     const char *content = "Fisch";
-    char fish_path[2048];
-    char setup_dir[2048];
-    char setup_file[2048];
-    char setup_info[2048];
+    char fish_path[512];
+    char setup_dir[1024];
+    char setup_file[1050];
+    char setup_info[20];
 
     // get config path
     get_config_dir(fish_path, sizeof(fish_path));
@@ -77,13 +79,26 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     }
     
     // create the main window
-    main_window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(main_window), _("Fastboot-Assistant"));
+    AdwApplicationWindow *main_window = ADW_APPLICATION_WINDOW(adw_application_window_new(app));
+    
+    // create toolbar for header and content
+    GtkWidget *toolbar_view = adw_toolbar_view_new();
+
+    // create headerbar
+    GtkWidget *header_bar = adw_header_bar_new();
+    GtkWidget *title = gtk_label_new(_("Fastboot-Assistant"));
+    adw_header_bar_set_title_widget(ADW_HEADER_BAR(header_bar), title);
+
+    adw_toolbar_view_add_top_bar(ADW_TOOLBAR_VIEW(toolbar_view), header_bar);
+        
+    //main_window = gtk_application_window_new(app);
+    //gtk_window_set_title(GTK_WINDOW(main_window), _("Fastboot-Assistant"));
     gtk_window_set_default_size(GTK_WINDOW(main_window), WINDOW_WIDTH, WINDOW_HEIGHT);
 
     // create a box container for the main content
     GtkWidget *content_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_window_set_child(GTK_WINDOW(main_window), content_box);
+    //gtk_window_set_child(GTK_WINDOW(main_window), content_box);
+    //adw_application_window_set_content(main_window, content_box);
     gtk_widget_set_halign(content_box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(content_box, GTK_ALIGN_CENTER);
     gtk_widget_set_hexpand(content_box, TRUE);
@@ -115,7 +130,7 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     // create the buttons with translated labels
     GtkWidget *btn1 = create_button_icon_position("folder-publicshare-symbolic", _("Devices"), G_CALLBACK(get_devices), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn2 = create_button_icon_position("system-reboot-symbolic", _("Reboot Device"), G_CALLBACK(reboot_GUI), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn3 = create_button_icon_position("applications-system-symbolic", _("Settings"), G_CALLBACK(config_projekt_GUI), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn3 = create_button_icon_position("applications-system-symbolic", _("Settings"), G_CALLBACK(config_project_GUI), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn4 = create_button_icon_position("applications-engineering-symbolic", _("Prepare Flashing"), G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn5 = create_button_icon_position("drive-multidisk-symbolic", _("Flash"), G_CALLBACK(flash_GUI), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn6 = create_button_icon_position("system-help-symbolic", _("Instructions"), G_CALLBACK(instruction_GUI), stack, GTK_ALIGN_CENTER);
@@ -139,7 +154,11 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     // add grid to stack
     gtk_stack_add_named(GTK_STACK(stack), home_page, "home_page");
     gtk_stack_set_visible_child_name(GTK_STACK(stack), "home_page");
-
+	
+	adw_toolbar_view_set_content(ADW_TOOLBAR_VIEW(toolbar_view), content_box);
+	
+	adw_application_window_set_content(main_window, toolbar_view);
+	
     gtk_window_present(GTK_WINDOW(main_window));
 	
 	// run setup if needed
