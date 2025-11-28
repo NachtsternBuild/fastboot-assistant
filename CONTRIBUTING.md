@@ -14,28 +14,25 @@
 ### In the Source Code
 ***Please start your source code for the project as follows:***
 ```c
-/*
- *-------------------------------------------*
- *         Fastboot Assistant - GUI          *
- *-------------------------------------------*
- *          Apache License, Version 2.0      *
- *-------------------------------------------*
- *    (C) Copyright <year> <contributor>     *
- *-------------------------------------------*
- *          name_of_the_code_part            *
- *-------------------------------------------*
- */
-/* headers */
-#inlcude <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/**
+* file_name.c
+*
+* (C) Copyright 2025 @Contributors
+*
+* License: GNU GENERAL PUBLIC LICENSE Version 3
+*/
+#include "fastboot_assistant.h"
 ```
+- **Note:** Include other extra header in `fastboot_assistant.h`
+
 ***Or if it is a bash script:***
 ```sh
 #!/bin/bash
 # name_of_the_file.sh
-# thanks to somebody
-# contributors
+#
+# (C) Copyright 2025 @Contributors
+#
+# License: GNU GENERAL PUBLIC LICENSE Version 3
 
 VERSION="$(cat Build/version.txt)"
 ```
