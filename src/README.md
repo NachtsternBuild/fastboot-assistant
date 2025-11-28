@@ -2,11 +2,7 @@
 ## Application development
 ---
 ### Status:
-- **v.0.8.1:** **beta**
-- **v.0.7.2:** *stable*
-- **v.0.7.1:** *beta* 
-- **v.0.6.2.2:** *stable*
-- **v.0.5.5.2:** *stable*
+- **v.0.9.1:** *dev*
 ---
   
 ### Build
@@ -14,7 +10,7 @@
 
 ```sh
 # Debian / Ubuntu:
-sudo apt update && sudo apt install gcc libgtk-4-dev adb fastboot desktop-file-utils make dpkg-dev debhelper ccache libsecret-1-dev build-essential libadwaita-1-dev rsync git
+sudo apt update && sudo apt install xz-utils unzip zip wget curl pkexec adb fastboot heimdall-flash heimdall-flash-frontend desktop-file-utils libglib2.0-0t64 libgtk-4-1 xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils libadwaita-1-0 libvte2.91-gtk4-0 libnotify-bin debhelper rsync libgtk-4-dev libadwaita-1-dev libsecret-1-dev git libglib2.0-dev libnotify-dev pkgconf gcc make libvte-2.91-gtk4-dev
 ```
 
 2. Download the source code:
@@ -40,24 +36,51 @@ lxd init --minimal
 
 4. Edit the source code with an editor of your choice according to your requirements. *Note that the Makefile must also be changed if you change the name.*
 5. Change to the directory *Applications*:
-   ```sh
-   cd ~/fastboot-assistant/Anwendung
-   ```
-
-6. Compile the code:
 ```sh
-bash Build/build-fastboot-assistant.sh
+cd ~/fastboot-assistant/Anwendung
 ```
-- The project can be built for the following operating systems:
-	- Linux
- 	- Windows (WSL)
-  
-*The following package types are available for Linux:*
-- Debian package
-- Snap
 
-*For Windows, a zip file is packed which contains the Debian package included for the WSL.*
+6. Compile the code use:
+```sh
+make
+```
+- Before running the first build:
+```sh
+make -f Dependencies.mk
+```
+
+7. Clean after the build:
+```sh
+make clean
+```
+
+8. Test the app:
+```sh
+./fastboot-assistant
+# for debugging:
+./fastboot-assistant -d
+# debugging as snap
+./fastboot-assistant -d -snp
+# debugging as flatpak
+./fastboot-assistant -d -flp
+# show version
+./fastboot-assistant -v
+# show help
+./fastboot-assistant -h
+```
+
+9. Build Snap package:
+```sh
+snapcraft pack
+```
+
+10. Build Debian Package:
+```sh
+./create_debian_config.sh
+debuild -us -uc
+``` 
 
 **Note:**
-*→ Building the WSL package only works on **Debian/Ubuntu systems**, as the build script automatically builds a Debian package.*
+- *Building the WSL package only works on **Debian/Ubuntu systems**, as the build script automatically builds a Debian package.*
+- **Some features are not yet fully functional, as this version is still under development.**
 
