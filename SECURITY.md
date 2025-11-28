@@ -20,17 +20,19 @@
 
 | Version     | Supported          | Informations                 | Status            | Release Code                 | For the operating systems (OS)                             | Packages                   |
 | ----------- | ------------------ | ---------------------------- | ----------------- | ---------------------------- | ---------------------------------------------------------- | -------------------------- |
-| 0.8.2       | :x:                | *build version*              | *dev*             | *Glitschiges GNOME 48*       | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
+| 0.9.1       | :white_check_mark: | **dev**                      | *dev*             | **Zappeliges Zorin**         | *Linux (Debian/Ubuntu), Snap, WSL*                         | *DEB, Snap, PPA, Zip*
+| 0.9.x       | :white_check_mark: | **dev**                      | *dev*             | **Zappeliges Zorin**         | *Linux (Debian/Ubuntu), Snap, WSL*                         | *DEB, Snap, PPA, Zip*      |
+| 0.8.2       | :x:                | *reverted*                   | *dev*             | *Glitschiges GNOME 48*       | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
 | 0.8.1       | :white_check_mark: | **active version**           | **stable**        | **Glitschiges GNOME 40**     | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Snap, Zip, PPA*      |
 | 0.8.x       | :white_check_mark: | **active version**           | **stable**        | **Glitschiges GNOME**        | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Snap, Zip, PPA*      |
-| 0.7.2.1     | :white_check_mark: | **active version**           | **stable**        | **Mutiges Mint 22**          | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Zip, Snap*           |
+| 0.7.2.1     | :x:                | *old version*                | *stable*          | *Mutiges Mint 22*            | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip, Snap*           |
 | 0.7.2       | :x:                | *old version*                | *stable*          | *Mutiges Mint 21.3*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip, Snap*           |
 | 0.7.1       | :x:                | *old version*                | *beta*            | *Mutiges Mint 20.3*          | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip, exp. Snap*      |
 | 0.7.x       | :x:                | *old version*                | *stable*          | *Mutiges Mint*               | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip, Snap*           |
 | 0.6.2.2     | :x:                | *old version*                | *stable*          | *Rostiges Red Hat 9*         | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip*                 |
 | 0.6.2.1     | :x:                | *old version*                | *stable*          | *Rostiges Red Hat 9*         | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip*                 |
 | 0.6.2       | :x:                | *old version*                | **stable**        | *Rostiges Red Hat 9*         | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Zip*                 |
-| 0.6.2       | :x:, not longer    | *active version (RPM)*       | *beta*            | *Rostiges Red Hat 9*         | *Linux (Fedora/RHEL)*                                      | *RPM*                      |
+| 0.6.2       | :x:                | *active version (RPM)*       | *beta*            | *Rostiges Red Hat 9*         | *Linux (Fedora/RHEL)*                                      | *RPM*                      |
 | 0.6.2.dev   | :x:                | *build this from source*     | *dev*             | *Rostiges Red Hat 8*         | *Linux (Debian/Ubuntu)*                                    | :x:                        |
 | 0.6.1       | :x:                | *build this from source*     | *dev*             | *Rostiges Red Hat 7*         | *Linux (Debian/Ubuntu)*                                    | :x:                        |
 | 0.6.x       | :x:                | *old version*                | *stable*          | *Rostiges Red Hat*           | *Linux (Debian/Ubuntu/Fedora/RHEL), Windows via WSL)*      | *DEB, RPM, Zip*            |
@@ -39,6 +41,6 @@
 | 0.5.3.beta  | :x:                | *old version*                | *beta*            | *Sweet Unix System III*      | *Linux (Debian/Ubuntu/Fedora/RHEL)*                        | *DEB, RPM*                 |
 | 0.5.2.dev   | :x:                | *old version*                | *dev*             | *Sweet Unix System II*       | *Linux (Debian/Ubuntu)*                                    | *DEB*                      |
 | 0.5.1.dev   | :x:                | *old version*                | *dev*             | *Sweet Unix System I*        | *Linux (Debian/Ubuntu)*                                    | *DEB*                      |
-| 0.5.x       | :x:                | *all Sweet Unix versions*    | *stable*          | *Sweet Unix*                 | *Linux (Debian/Ubuntu/Fedora/RHEL)*                        | *DEB, RPM, Zip*            |
+| 0.5.x       | :x:                | *old version*                | *stable*          | *Sweet Unix*                 | *Linux (Debian/Ubuntu/Fedora/RHEL)*                        | *DEB, RPM, Zip*            |
 | 0.4.x       | :x:                | *old version*                | *dev/beta*        | *Effervescent PC cooling*    | *Linux (Debian/Ubuntu)*                                    | *Zip*                      |
 | < 0.4       | :x:                | *very old versions*          | *dev/beta*        | *Sparkling data crystals*    | *Linux (Debian/Ubuntu)*                                    | *Zip*                      |
