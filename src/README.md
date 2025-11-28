@@ -76,7 +76,7 @@ snapcraft pack
 
 10. Build Debian Package:
 ```sh
-./create_debian_config.sh
+./build-fastboot-assistant.sh
 debuild -us -uc
 ``` 
 
