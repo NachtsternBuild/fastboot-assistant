@@ -2,7 +2,6 @@
 *<https://github.com/NachtsternBuild/fastboot-assistant/releases>*
 - ***see [CHANGELOG](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/CHANGELOG) for all changes.***
 - ***see the [SECURTIY.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/SECURITY.md)***
-- ***see the [BUILDLOG.md](https://github.com/NachtsternBuild/fastboot-assistant/blob/main/BUILDLOG.md)***
 
 ### Zappeliges Zorin v.0.9.x
 - **[fastboot-assistant v.0.9.1.dev](https://github.com/NachtsternBuild/fastboot-assistant/tree/main/src)** → Development Version
