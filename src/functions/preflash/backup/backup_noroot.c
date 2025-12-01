@@ -48,8 +48,8 @@ static void download_backup(GtkWidget *widget, gpointer stack)
     {
         LOGD("Loaded path: %s", path_file_load);
     }
-    snprintf(main_path_build, sizeof(main_path_build), "%s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle.zip", path_file_load);
-    snprintf(wget_command, sizeof(wget_command), "wget -O %s https://github.com/mrrfv/open-android-backup/releases/download/v1.1.0/Open_Android_Backup_v1.1.0_Bundle.zip && unzip %s -d %s", main_path_build, main_path_build, main_path_build);
+    snprintf(main_path_build, sizeof(main_path_build), "%s/Backup/Noroot/Open_Android_Backup_v1.2.0_Bundle", path_file_load);
+    snprintf(wget_command, sizeof(wget_command), "wget -O %s https://github.com/mrrfv/open-android-backup/releases/download/v1.2.0/Open_Android_Backup_v1.2.0_Bundle.zip && unzip %s.zip -d %s", main_path_build, main_path_build, main_path_build);
 	
     LOGD("Run: %s", wget_command);
     show_spinner_dialog(GTK_WIDGET(widget), _("Downloading Backup Tool"), _("Please wait..."), wget_command);
@@ -75,7 +75,7 @@ static void open_backup(GtkWidget *widget, gpointer stack)
         LOGD("Loaded path: %s", run_open_backup_bash);
     }
     // build command
-    snprintf(bash_command, sizeof(bash_command), "bash %s/Backup/Noroot/Open_Android_Backup_v1.0.18_Bundle/backup.sh", run_open_backup_bash);
+    snprintf(bash_command, sizeof(bash_command), "bash %s/Backup/Noroot/Open_Android_Backup_v1.2.0_Bundle/backup.sh", run_open_backup_bash);
     open_terminal_by_desktop(bash_command);
     
     if (run_open_backup_bash != NULL) 
@@ -84,13 +84,21 @@ static void open_backup(GtkWidget *widget, gpointer stack)
 	}
 }
 
+static void show_backup_help(GtkWidget *widget, gpointer stack)
+{
+	const char *title = _("Backup No Root in Sandbox");
+	const char *message = _("Due to the Snap/Flatpak sandbox, it is not possible to execute commands as root on the host. Run the following command on your host: \napt install p7zip-full adb curl whiptail pv bc secure-delete zenity");
+	show_dialog_title(widget, title, message);
+}
+
 // Function to set up button labels based on the language
 void set_button_labels_backup_noroot(char labels[][30]) 
 {
     g_strlcpy(labels[0], _("Prepare"), sizeof(labels[0]));
     g_strlcpy(labels[1], _("Download"), sizeof(labels[1]));
     g_strlcpy(labels[2], _("Start"), sizeof(labels[2]));
-    g_strlcpy(labels[3], _("Back"), sizeof(labels[3]));
+    g_strlcpy(labels[3], _("Information"), sizeof(labels[3]));
+    g_strlcpy(labels[4], _("Back"), sizeof(labels[4]));
 } 
 
 /* main function - backup_noroot */
@@ -98,7 +106,7 @@ void backup_noroot(GtkWidget *widget, gpointer stack)
 {
     LOGD("backup_noroot");
     
-    char labels[4][30];  // labels for the button 
+    char labels[5][30];  // labels for the button 
     set_button_labels_backup_noroot(labels);  // for both languages
     
     GtkWidget *backup_noroot = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
@@ -115,7 +123,8 @@ void backup_noroot(GtkWidget *widget, gpointer stack)
     GtkWidget *btn1 = create_button_icon_position("applications-engineering-symbolic", labels[0], G_CALLBACK(install_depends), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn2 = create_button_icon_position("folder-download-symbolic", labels[1], G_CALLBACK(download_backup), stack, GTK_ALIGN_CENTER);
     GtkWidget *btn3 = create_button_icon_position("utilities-terminal-symbolic", labels[2], G_CALLBACK(open_backup), stack, GTK_ALIGN_CENTER);
-    GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[3], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_h = create_button_icon_position("dialog-information-symbolic", labels[3], G_CALLBACK(show_backup_help), stack, GTK_ALIGN_CENTER);
+    GtkWidget *btn_back = create_button_icon_position("pan-start-symbolic", labels[4], G_CALLBACK(preflash_GUI), stack, GTK_ALIGN_CENTER);
 
     // add the button to the grid
     gtk_grid_attach(GTK_GRID(grid), btn1, 0, 0, 1, 1);
@@ -123,30 +132,35 @@ void backup_noroot(GtkWidget *widget, gpointer stack)
     gtk_grid_attach(GTK_GRID(grid), btn3, 2, 0, 1, 1);
 	
 	// get the env of the application
-	// enable updater at debug mode
+	// enable backup functions at debug mode
 	if (debug_mode)
 	{
 		gtk_widget_set_visible(GTK_WIDGET(btn1), TRUE);
 		gtk_widget_set_visible(GTK_WIDGET(btn2), TRUE);
 		gtk_widget_set_visible(GTK_WIDGET(btn3), TRUE);
+		gtk_widget_set_visible(GTK_WIDGET(btn_h), FALSE);
 	}
-	// disable updater for snap/flatpak version
+	// disable backup functions for snap/flatpak version
 	if (snap_app || flatpak_app) 
 	{
 	    gtk_widget_set_visible(GTK_WIDGET(btn1), FALSE);
 	    gtk_widget_set_visible(GTK_WIDGET(btn2), TRUE);
 	    gtk_widget_set_visible(GTK_WIDGET(btn3), FALSE);
+	    gtk_widget_set_visible(GTK_WIDGET(btn_h), TRUE);
 	} 
-	// enable updater for local version
+	// enable functions for local version
 	else 
 	{
 	    gtk_widget_set_visible(GTK_WIDGET(btn1), TRUE);
 	    gtk_widget_set_visible(GTK_WIDGET(btn2), TRUE);
 	    gtk_widget_set_visible(GTK_WIDGET(btn3), TRUE);
+	    gtk_widget_set_visible(GTK_WIDGET(btn_h), FALSE);
 	}
 	
     // pack the grid to the box
     gtk_box_append(GTK_BOX(backup_noroot), grid);
+    // add info button
+    gtk_box_append(GTK_BOX(backup_noroot), btn_h);
     // add the back button under the grid
     gtk_box_append(GTK_BOX(backup_noroot), btn_back); 
 

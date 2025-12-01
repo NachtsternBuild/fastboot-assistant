@@ -20,6 +20,7 @@
 // define option for debug mode
 bool debug_mode = false;
 bool debug_snap = false;
+bool debug_lang = false;
 bool debug_flatpak = false;
 bool snap_app = false;
 bool flatpak_app = false;
@@ -121,6 +122,7 @@ void help()
 	g_print("   -debug [flags] – Debugging\n");
 	g_print("          -snp    – Set snap environment\n");
 	g_print("          -flp    – Set flatpak environment\n");
+	g_print("          -lang   – Set fallback language as active\n");
 	g_print("   -v, --version  – Show Version Info\n");
 	g_print("   -h, --help     – Show this help\n");
 	g_print("\n");
@@ -185,7 +187,14 @@ int main(int argc, char *argv[])
                 setenv("FLATPAK_ID", "io.github.nachtsternbuild.Fastboot-Assistant", 1);
                 g_print("[DEBUG] Flatpak-End: $FLATPAK_ID=%s\n", getenv("FLATPAK_ID"));
                 continue;
-            }    
+            }   
+            
+            else if (strcmp(argv[i], "-lang") == 0)
+            {
+            	debug_lang = true;
+            	g_print("[DEBUG] Using fallback language");
+            	continue;
+            } 
         } 
         
         else 

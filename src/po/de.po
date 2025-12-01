@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-27 09:57+0100\n"
+"POT-Creation-Date: 2025-12-01 13:10+0100\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -247,6 +247,7 @@ msgid "Special thanks to"
 msgstr "Besonderen Dank an"
 
 #: build/design/dialogs/dialogs.c:30 build/design/dialogs/dialogs.c:39
+#: functions/preflash/backup/backup_noroot.c:100
 msgid "Information"
 msgstr "Information"
 
@@ -392,31 +393,31 @@ msgstr "Desktop: "
 
 #: functions/info_tools.c:113
 msgid "GLib2: "
-msgstr ""
+msgstr "GLib2: "
 
 #: functions/info_tools.c:114
 msgid "GTK4: "
-msgstr ""
+msgstr "GTK4: "
 
 #: functions/info_tools.c:115
 msgid "Libadwaita1.6: "
-msgstr ""
+msgstr "Libadwaita 1.6: "
 
 #: functions/info_tools.c:116
 msgid "vte-GTK4: "
-msgstr ""
+msgstr "vte-GTK4: "
 
 #: functions/info_tools.c:117
 msgid "Libnotify: "
-msgstr ""
+msgstr "Libnotify: "
 
 #: functions/info_tools.c:118
 msgid "XDG-Portal: "
-msgstr ""
+msgstr "XDG-Portal: "
 
 #: functions/info_tools.c:119
 msgid "XDG-Portal GTK: "
-msgstr ""
+msgstr "XDG-Portal GTK: "
 
 #: functions/info_tools.c:120
 msgid "Coreutils: "
@@ -451,7 +452,7 @@ msgstr "Images im Verzeichnis"
 #: functions/preflash/lock_unlock_bootloader.c:79
 #: functions/preflash/prepare/prepare.c:20
 #: functions/preflash/backup/backup_function.c:16
-#: functions/preflash/backup/backup_noroot.c:93
+#: functions/preflash/backup/backup_noroot.c:101
 #: functions/config-project/remove_old.c:99 functions/reboot/reboot.c:70
 #: functions/reboot/reboot_recovery.c:57 functions/reboot/reboot_fastboot.c:94
 #: functions/reboot/reboot_heimdall.c:54
@@ -965,15 +966,29 @@ msgstr "Installiere Abhängigkeiten "
 msgid "Downloading Backup Tool"
 msgstr "Downloade Backup Tools"
 
+#: functions/preflash/backup/backup_noroot.c:89
+msgid "Backup No Root in Sandbox"
+msgstr "Backup ohne Root in Sandbox"
+
 #: functions/preflash/backup/backup_noroot.c:90
+msgid ""
+"Due to the Snap/Flatpak sandbox, it is not possible to execute commands as "
+"root on the host. Run the following command on your host: \n"
+"apt install p7zip-full adb curl whiptail pv bc secure-delete zenity"
+msgstr ""
+"Aufgrund der Snap/Flatpak-Sandbox ist es nicht möglich, Befehle als Root auf dem Host auszuführen. "
+"Führen Sie den folgenden Befehl auf Ihrem Host aus: \n"
+"apt install p7zip-full adb curl whiptail pv bc secure-delete zenity"
+
+#: functions/preflash/backup/backup_noroot.c:97
 msgid "Prepare"
 msgstr "Vorbereiten"
 
-#: functions/preflash/backup/backup_noroot.c:91
+#: functions/preflash/backup/backup_noroot.c:98
 msgid "Download"
 msgstr "Downloaden"
 
-#: functions/preflash/backup/backup_noroot.c:92
+#: functions/preflash/backup/backup_noroot.c:99
 msgid "Start"
 msgstr "Starten"
 
@@ -1457,6 +1472,8 @@ msgid ""
 "Opening the bootloader bypasses this security check to install custom OS or "
 "software on the device."
 msgstr ""
+"Durch das Öffnen des Bootloaders wird diese Sicherheitsüberprüfung umgangen, um ein benutzerdefiniertes Betriebssystem oder "
+"Software auf dem Gerät zu installieren."
 
 #: functions/instructions/instruction_adb.c:90
 msgid "This allows custom ROMs and other image files to be flashed."
@@ -1664,6 +1681,8 @@ msgid ""
 "The kernel is the core of an operating system, which communicates directly "
 "with the hardware and manages resources such as CPU, memory and devices."
 msgstr ""
+"Der Kernel ist der Kern eines Betriebssystems, der direkt mit der Hardware kommuniziert"
+"und Ressourcen wie CPU, Speicher und Geräte verwaltet."
 
 #: functions/instructions/instruction_info.c:173
 msgid ""
@@ -1835,8 +1854,7 @@ msgid ""
 "5. Rename the image to boot.img or let the application prepare it."
 msgstr ""
 "4. Kopieren Sie das von Magisk gepatchte Boot-Image auf Ihren Computer. \n"
-"5. Benennen Sie das Image in boot.img um oder lassen Sie es von der "
-"Anwendung vorbereiten."
+"5. Benennen Sie das Image in boot.img um oder lassen Sie es von der Anwendung vorbereiten."
 
 #: functions/instructions/instruction_root.c:170
 msgid ""
@@ -1985,31 +2003,3 @@ msgstr "Setup beendet. Der Fastboot-Assistant ist jetzt bereit."
 #: functions/run_first_run_setup.c:353
 msgid "Finished"
 msgstr "Beendet"
-
-#, c-format
-#~ msgid "Completed"
-#~ msgstr "Beendet"
-
-#~ msgid "Clean log"
-#~ msgstr "Log aufräumen"
-
-#~ msgid "Restart Setup"
-#~ msgstr "Setup neustarten"
-
-#~ msgid "Exit Fastboot Assistant to install the update."
-#~ msgstr "Beenden um das Update zu installieren."
-
-#~ msgid "Update successfully installed!"
-#~ msgstr "Update erfolgreich installiert!"
-
-#~ msgid "Error during installation!"
-#~ msgstr "Fehler bei der Installation!"
-
-#~ msgid "GTK+: "
-#~ msgstr "GTK+: "
-
-#~ msgid "Computer Info:"
-#~ msgstr "Computer-Info: "
-
-#~ msgid "Session Type: "
-#~ msgstr "Session: "

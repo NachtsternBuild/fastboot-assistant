@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-27 09:57+0100\n"
+"POT-Creation-Date: 2025-12-01 13:10+0100\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -236,6 +236,7 @@ msgid "Special thanks to"
 msgstr "Special thanks to"
 
 #: build/design/dialogs/dialogs.c:30 build/design/dialogs/dialogs.c:39
+#: functions/preflash/backup/backup_noroot.c:100
 msgid "Information"
 msgstr "Information"
 
@@ -440,7 +441,7 @@ msgstr "Images in the directory"
 #: functions/preflash/lock_unlock_bootloader.c:79
 #: functions/preflash/prepare/prepare.c:20
 #: functions/preflash/backup/backup_function.c:16
-#: functions/preflash/backup/backup_noroot.c:93
+#: functions/preflash/backup/backup_noroot.c:101
 #: functions/config-project/remove_old.c:99 functions/reboot/reboot.c:70
 #: functions/reboot/reboot_recovery.c:57 functions/reboot/reboot_fastboot.c:94
 #: functions/reboot/reboot_heimdall.c:54
@@ -954,15 +955,26 @@ msgstr "Install Depends"
 msgid "Downloading Backup Tool"
 msgstr "Downloading Backup Tool"
 
+#: functions/preflash/backup/backup_noroot.c:89
+msgid "Backup No Root in Sandbox"
+msgstr ""
+
 #: functions/preflash/backup/backup_noroot.c:90
+msgid ""
+"Due to the Snap/Flatpak sandbox, it is not possible to execute commands as "
+"root on the host. Run the following command on your host: \n"
+"apt install p7zip-full adb curl whiptail pv bc secure-delete zenity"
+msgstr ""
+
+#: functions/preflash/backup/backup_noroot.c:97
 msgid "Prepare"
 msgstr "Prepare"
 
-#: functions/preflash/backup/backup_noroot.c:91
+#: functions/preflash/backup/backup_noroot.c:98
 msgid "Download"
 msgstr "Download"
 
-#: functions/preflash/backup/backup_noroot.c:92
+#: functions/preflash/backup/backup_noroot.c:99
 msgid "Start"
 msgstr "Start"
 
@@ -1956,31 +1968,3 @@ msgstr "The setup is complete. The Fastboot-Assistant is now ready."
 #: functions/run_first_run_setup.c:353
 msgid "Finished"
 msgstr "Finished"
-
-#, c-format
-#~ msgid "Completed"
-#~ msgstr "Completed"
-
-#~ msgid "Clean log"
-#~ msgstr "Clean log"
-
-#~ msgid "Restart Setup"
-#~ msgstr "Restart Setup"
-
-#~ msgid "Exit Fastboot Assistant to install the update."
-#~ msgstr "Exit Fastboot Assistant to install the update."
-
-#~ msgid "Update successfully installed!"
-#~ msgstr "Update successfully installed!"
-
-#~ msgid "Error during installation!"
-#~ msgstr "Error during installation!"
-
-#~ msgid "GTK+: "
-#~ msgstr "GTK+: "
-
-#~ msgid "Computer Info:"
-#~ msgstr "Computer Info:"
-
-#~ msgid "Session Type: "
-#~ msgstr "Session Type: "
