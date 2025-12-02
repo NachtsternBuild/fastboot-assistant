@@ -97,6 +97,10 @@ plugs:
     interface: content
     target: $SNAP/data-dir/sounds
     default-provider: gtk-common-themes
+  gnome:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
   gnome-46-2404:
     interface: content
     target: $SNAP/gnome-platform
