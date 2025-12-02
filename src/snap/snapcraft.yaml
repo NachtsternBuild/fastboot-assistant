@@ -74,11 +74,13 @@ apps:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
       GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
       GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
-      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0
+      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
       GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
       GTK_USE_PORTAL: "1"
-      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET"
+      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/gnome-platform/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH"
       GTK_MEDIA_BACKEND: "none"
+      LIBPROXY_PLUGIN_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libproxy
+
 
 plugs:    
   dbus:
@@ -128,6 +130,7 @@ environment:
   GTK_USE_PORTAL: "1"
   LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/gnome-platform/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH"
   GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
+  
 
 parts:
   adb-fastboot:
