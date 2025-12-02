@@ -10,8 +10,6 @@
 
 // for the main window
 GtkWidget *main_window = NULL;
-GtkApplication* app;
-
 
 // function that show the about site
 static void about(GtkWidget *widget, gpointer stack)
@@ -91,14 +89,10 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 
     adw_toolbar_view_add_top_bar(ADW_TOOLBAR_VIEW(toolbar_view), header_bar);
         
-    //main_window = gtk_application_window_new(app);
-    //gtk_window_set_title(GTK_WINDOW(main_window), _("Fastboot-Assistant"));
     gtk_window_set_default_size(GTK_WINDOW(main_window), WINDOW_WIDTH, WINDOW_HEIGHT);
 
     // create a box container for the main content
     GtkWidget *content_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    //gtk_window_set_child(GTK_WINDOW(main_window), content_box);
-    //adw_application_window_set_content(main_window, content_box);
     gtk_widget_set_halign(content_box, GTK_ALIGN_CENTER);
     gtk_widget_set_valign(content_box, GTK_ALIGN_CENTER);
     gtk_widget_set_hexpand(content_box, TRUE);
@@ -111,10 +105,22 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     gtk_widget_set_hexpand(stack, TRUE);
     gtk_widget_set_vexpand(stack, TRUE);
 
-    // add the headerbar
-    GtkWidget *headerbar = create_custom_headerbar(stack);
-    gtk_box_append(GTK_BOX(content_box), headerbar);
-
+	/**
+	* disable headerbar with log for sandboxed apps
+	* because snap and flatpak has problems with libvte
+	*/
+	if (snap_app || flatpak_app) 
+	{
+    	LOGD("Running in sandbox");
+    }
+    
+    else 
+    {
+   		// add the headerbar
+    	GtkWidget *headerbar = create_custom_headerbar(stack);
+    	gtk_box_append(GTK_BOX(content_box), headerbar);
+	}
+	
     // add the stack to the box
     gtk_box_append(GTK_BOX(content_box), stack);
 

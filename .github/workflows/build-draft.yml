@@ -93,7 +93,7 @@ jobs:
           body: |
             ## Fastboot Assistant v${{ github.event.inputs.version }}
 
-            **Changelog (automatisch aus Datei):**
+            **Changelog:**
 
             ${{ steps.changelog.outputs.content }}
 
