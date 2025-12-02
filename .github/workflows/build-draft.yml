@@ -46,7 +46,43 @@ jobs:
         with:
           name: fastboot-assistant
           path: ${{ steps.find_snap.outputs.snap_file }}
+      
+      - name: Find latest changelog file
+        id: changelog
+        run: |
+          DIR=""
+          if [ -d "CHANGELOG" ]; then DIR="CHANGELOG"; fi
+          if [ -d "CHNAGELOG" ]; then DIR="CHNAGELOG"; fi
 
+          if [ -z "$DIR" ]; then
+            echo "Changelog directory not found!"
+            exit 1
+          fi
+
+          echo "Using directory $DIR"
+
+          VERSION_LIST=$(for f in "$DIR"/v.*.md; do
+              [ -e "$f" ] || continue
+              ver=$(basename "$f" | sed -E 's/^v\.([0-9]+\.[0-9]+\.[0-9]+)\.md$/\1/')
+              echo "$ver $f"
+            done)
+
+          if [ -z "$VERSION_LIST" ]; then
+            echo "No matching changelog files found!"
+            exit 1
+          fi
+
+          BEST_LINE=$(echo "$VERSION_LIST" | sort -V | tail -n 1)
+          FILE=$(echo "$BEST_LINE" | awk '{print $2}')
+
+          echo "Newest changelog file $FILE"
+          echo "file=$FILE" >> $GITHUB_OUTPUT
+
+          CONTENT=$(cat "$FILE" | sed 's/%/%25/g')
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
       - name: Create Draft Release
         uses: softprops/action-gh-release@v2
         with:
@@ -55,14 +91,16 @@ jobs:
           draft: true
           prerelease: false
           body: |
-            **Fastboot Assistant v${{ github.event.inputs.version }} (Draft)**
+            ## Fastboot Assistant v${{ github.event.inputs.version }}
 
-            This draft release contains the latest build of the Fastboot Assistant Snap.
-            Once verified, it can be published manually.
+            **Changelog (automatisch aus Datei):**
+
+            ${{ steps.changelog.outputs.content }}
 
             **Build channel:** `${{ github.event.inputs.snap_channel }}`
           files: |
             ${{ steps.find_snap.outputs.snap_file }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 
