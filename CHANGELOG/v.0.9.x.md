@@ -7,35 +7,35 @@
 	- The `Fastboot-Assistant` need some more optimizations for Snap and Debian package build
 
 ## Changes
-- [NEW] Use for basic UI functions [ATL UIBase](https://github.com/AtlantisOS-Project/atlantis-UI-base) 
-- [NEW] Use more modern Libadwaita functions
-- [NEW] Restructuring full source code
-- [NEW] Add new dialogs (ATL UIBase)
-- [NEW] Add new about page (ATL UIBase/Libadwaita)
-- [NEW] Icons on the most button
-- [NEW] Spinner and Spinner handeling
-- [NEW] Debugging option at startupAdwApplicationWindow
-- [NEW] Autodisable Updater and not working `backup_no_root` functions
-- [NEW] At satrtup otpions for debugging, version and help
-- [NEW] Use `AdwApplicationWindow` instead of `GtkWindow`
-- [NEW] Use better `make` build system
-- [NEW] Use `syslog` and `journald` for logging
-- [NEW] Support for running `fastboot-assistant` as flatpak
-- [NEW] Use `libnotify` for notifications at the system 
-- [NEW] Use GH Workflows for build and draft release
-- [RM] Removed unused bash scripts
-- [RM] Remove a lot of overhead source code
-- [CHANGE] Move a lot of basic functions to ATL UIBase
-- [CHANGE] License to GPL3.0 and Apache2.0
-- [CHANGE] Updater only for local packages
-- [CHANGE] Use ATL UIBase Headerbar
-- [CHANGE] A lot of details in the structure
-- [UPDATE] Updater use better smaller and better installing function
-- [UPDATE] Update most functions to the better standards
-- [UPDATE] Update memory safety
-- [UPDATE] Support for Snap and DEB
-- [UPDATE] Issue templates based on [RPI-Imager](https://github.com/raspberrypi/rpi-imager/blob/main/.github/ISSUE_TEMPLATE/) 
-- [FIX] Fix a lot errors with memory warnings
-- [FIX] Fix stabilty problems
-- [FIX] Fix errors with spinners 
-- [FIX] Fix other errors
+- **[NEW]** Use for basic UI functions [ATL UIBase](https://github.com/AtlantisOS-Project/atlantis-UI-base) 
+- **[NEW]** Use more modern Libadwaita functions
+- **[NEW]** Restructuring full source code
+- **[NEW]** Add new dialogs (ATL UIBase)
+- **[NEW]** Add new about page (ATL UIBase/Libadwaita)
+- **[NEW]** Icons on the most button
+- **[NEW]** Spinner and Spinner handeling
+- **[NEW]** Debugging option at startupAdwApplicationWindow
+- **[NEW]** Autodisable Updater and not working `backup_no_root` functions
+- **[NEW]** At satrtup otpions for debugging, version and help
+- **[NEW]** Use `AdwApplicationWindow` instead of `GtkWindow`
+- **[NEW]** Use better `make` build system
+- **[NEW]** Use `syslog` and `journald` for logging
+- **[NEW]** Support for running `fastboot-assistant` as flatpak
+- **[NEW]** Use `libnotify` for notifications at the system 
+- **[NEW]** Use GH Workflows for build and draft release
+- **[RM]** Removed unused bash scripts
+- **[RM]** Remove a lot of overhead source code
+- **[CHANGE]** Move a lot of basic functions to ATL UIBase
+- **[CHANGE]** License to GPL3.0 and Apache2.0
+- **[CHANGE]** Updater only for local packages
+- **[CHANGE]** Use ATL UIBase Headerbar
+- **[CHANGE]** A lot of details in the structure
+- **[UPDATE]** Updater use better smaller and better installing function
+- **[UPDATE]** Update most functions to the better standards
+- **[UPDATE]** Update memory safety
+- **[UPDATE]** Support for Snap and DEB
+- **[UPDATE]** Issue templates based on [RPI-Imager](https://github.com/raspberrypi/rpi-imager/blob/main/.github/ISSUE_TEMPLATE/) 
+- **[FIX]** Fix a lot errors with memory warnings
+- **[FIX]** Fix stabilty problems
+- **[FIX]** Fix errors with spinners 
+- **[FIX]** Fix other errors
