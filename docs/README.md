@@ -1,2 +1,3 @@
-# Docs
-- Location of the Website and the Documentation for the fastboot-assistant
+# APT Package
+- This is a test to use GH Pages for publishing the fastboot-assistant as Server for APT
+
