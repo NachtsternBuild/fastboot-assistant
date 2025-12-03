@@ -57,8 +57,6 @@ slots:
     interface: dbus
     bus: session
     name: io.github.nachtsternbuild.Fastboot-Assistant
-  opengl:
-    interface: opengl  
   icon-themes:
     interface: content
     target: $SNAP/data-dir/icons
