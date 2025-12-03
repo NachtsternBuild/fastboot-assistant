@@ -40,8 +40,6 @@ layout:
     symlink: $SNAP/gpu-2404/drirc.d
   /usr/share/X11/XErrorDB:
     symlink: $SNAP/gpu-2404/X11/XErrorDB
-  /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/vte-2.91:
-    bind: $SNAP/gnome-platform/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/vte-2.91
   /usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules:
     bind: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
 
@@ -68,7 +66,7 @@ apps:
       - uhid
       - gnome
       - system-observe
-    slots:
+    slots:Getty Images
       - fastboot-assistant
     environment:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
@@ -215,7 +213,6 @@ parts:
       - xdg-desktop-portal
       - xdg-desktop-portal-gtk
       - xdg-utils
-      - libvte-2.91-gtk4-0
       - libvulkan1
       - libproxy1v5
       - libproxy1-plugin-gsettings
