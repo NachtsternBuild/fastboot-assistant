@@ -49,10 +49,24 @@ apps:
       GSETTINGS_SCHEMA_DIR: "$SNAP/usr/share/glib-2.0/schemas"
 
 slots:
+  dbus:
+    interface: dbus
+    bus: session
+    name: org.freedesktop.portal.Desktop
   fastboot-assistant:
     interface: dbus
     bus: session
     name: io.github.nachtsternbuild.Fastboot-Assistant
+  opengl:
+    interface: opengl  
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  gnome:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
 
 parts:
   adb-fastboot:
