@@ -133,7 +133,8 @@ parts:
     override-build: |
       set -eux
       cd src
-      make
+      make -f Dependencies.mk GIT_HTTPS=1
+      make GIT_HTTPS=1
       install -Dm755 fastboot-assistant $SNAPCRAFT_PART_INSTALL/usr/bin/fastboot-assistant
       install -Dm644 assets/sweet_unix.png $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
       install -Dm644 assets/fastboot-assistant-snap.desktop $SNAPCRAFT_PART_INSTALL/usr/share/applications/fastboot-assistant.desktop
