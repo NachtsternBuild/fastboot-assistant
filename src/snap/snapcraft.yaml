@@ -66,16 +66,18 @@ apps:
       - uhid
       - gnome
       - system-observe
+      - process-control 
     slots:
       - fastboot-assistant
     environment:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
       GTK_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gtk-4.0
       GSETTINGS_SCHEMA_DIR: $SNAP/share/glib-2.0/schemas
-      GI_TYPELIB_PATH: $SNAP/usr/lib/girepository-1.0:$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
       GIO_EXTRA_MODULES: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/gio/modules
       GTK_USE_PORTAL: "1"
-      LD_LIBRARY_PATH: "$SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/lib/$SNAPCRAFT_ARCH_TRIPLET:$SNAP/gnome-platform/usr/lib/$SNAPCRAFT_ARCH_TRIPLET:$LD_LIBRARY_PATH"
+      GI_TYPELIB_PATH: "$SNAP/usr/lib/girepository-1.0:$GI_TYPELIB_PATH"
+      LD_LIBRARY_PATH: "$SNAP/usr/lib:$LD_LIBRARY_PATH"
+      VTE_VERSION: "2.91"
       GTK_MEDIA_BACKEND: "none"
       LIBPROXY_PLUGIN_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/libproxy
 
@@ -218,6 +220,7 @@ parts:
       - libproxy1-plugin-gsettings
       - libproxy1-plugin-networkmanager
       - libnotify-bin
+      - libvte-2.91-gtk4-0
     override-build: |
       set -eux
       cd src
@@ -230,7 +233,9 @@ parts:
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/
       cp assets/sweet_unix.png $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/sweet_unix.png 
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
-      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules     
+      gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
+      mkdir -p $CRAFT_PART_INSTALL/usr/lib/girepository-1.0
+      cp /usr/lib/girepository-1.0/Vte-2.91.typelib $CRAFT_PART_INSTALL/usr/lib/girepository-1.0/ 
     build-environment:
       - PATH: /snap/gnome-46-2404-sdk/current/usr/bin${PATH:+:$PATH}
       - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/gnome-46-2404-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
