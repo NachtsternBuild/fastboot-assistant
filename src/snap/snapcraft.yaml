@@ -203,6 +203,7 @@ parts:
       - libglib2.0-dev
       - libnotify-dev
       - ccache
+      - gir1.2-vte-2.91 
     build-snaps:
       - gnome-46-2404-sdk/latest/candidate
     stage-packages:
@@ -221,6 +222,7 @@ parts:
       - libproxy1-plugin-networkmanager
       - libnotify-bin
       - libvte-2.91-gtk4-0
+      - gir1.2-vte-2.91 
     override-build: |
       set -eux
       cd src
