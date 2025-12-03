@@ -66,7 +66,7 @@ apps:
       - uhid
       - gnome
       - system-observe
-    slots:Getty Images
+    slots:
       - fastboot-assistant
     environment:
       XDG_DATA_DIRS: $SNAP/usr/share:$SNAP/share:$XDG_DATA_DIRS
