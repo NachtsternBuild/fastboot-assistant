@@ -235,7 +235,9 @@ parts:
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
       gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/x86_64-linux-gnu/gio/modules
       mkdir -p $CRAFT_PART_INSTALL/usr/lib/girepository-1.0
-      cp /usr/lib/girepository-1.0/Vte-2.91.typelib $CRAFT_PART_INSTALL/usr/lib/girepository-1.0/ 
+      VTE_TLIB=$(dirname $(find /usr -name "Vte-2.91.typelib" | head -n1))
+      cp "$VTE_TLIB/Vte-2.91.typelib" $CRAFT_PART_INSTALL/usr/lib/girepository-1.0/
+
     build-environment:
       - PATH: /snap/gnome-46-2404-sdk/current/usr/bin${PATH:+:$PATH}
       - XDG_DATA_DIRS: $CRAFT_STAGE/usr/share:/snap/gnome-46-2404-sdk/current/usr/share:/usr/share${XDG_DATA_DIRS:+:$XDG_DATA_DIRS}
