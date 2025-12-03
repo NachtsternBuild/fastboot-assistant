@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	export CCACHE_DISABLE=1
+	rm -rf debian/po
+	$(MAKE)

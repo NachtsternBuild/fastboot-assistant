@@ -1,0 +1,9 @@
+fastboot-assistant usr/bin/
+assets/fastboot-assistant.desktop usr/share/applications/
+assets/sweet_unix.png usr/share/icons/hicolor/256x256/apps/
+assets/sweet_unix.png usr/share/@PKG_NAME@/
+po/en/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/en/LC_MESSAGES/fastboot-assistant.mo
+po/de/LC_MESSAGES/fastboot-assistant.mo /usr/share/locale/de/LC_MESSAGES/fastboot-assistant.mo
+debian/fastboot-assistant.1 usr/share/man/man1/
+debian/fastboot-assistant.de.1 usr/share/man/de/man1/
+

@@ -18,5 +18,4 @@ source_dir="$(pwd)"
 DEB="deb"
 BUILD_DEBIAN="$DEB/build-debian-debuild.sh"
 
-"$BUILD_DEBIAN"
-
+bash "$BUILD_DEBIAN"
