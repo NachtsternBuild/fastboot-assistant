@@ -44,9 +44,22 @@ apps:
       - x11
       - uhid
       - cups
+    slots:
+      - fastboot-assistant
     environment:
       GI_TYPELIB_PATH: "$SNAP/usr/lib/girepository-1.0:$GI_TYPELIB_PATH"
       GSETTINGS_SCHEMA_DIR: "$SNAP/usr/share/glib-2.0/schemas"
+
+plugs:
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  gnome:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-46-2404
+
 
 slots:
   dbus:
@@ -56,15 +69,7 @@ slots:
   fastboot-assistant:
     interface: dbus
     bus: session
-    name: io.github.nachtsternbuild.Fastboot-Assistant
-  icon-themes:
-    interface: content
-    target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes
-  gnome:
-    interface: content
-    target: $SNAP/gnome-platform
-    default-provider: gnome-46-2404
+    name: io.github.nachtsternbuild.fastboot-assistant
 
 parts:
   adb-fastboot:
