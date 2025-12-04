@@ -45,8 +45,6 @@ apps:
       - uhid
       - cups
       - gnome
-      - xdg-desktop-portal
-      - xdg-desktop-portal-gtk
     slots:
       - fastboot-assistant
     environment:
@@ -56,6 +54,7 @@ apps:
       GTK_USE_PORTAL: "1"
       GTK_THEME: ""
       LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
+      SNAP_DESKTOP_RUNTIME: $SNAP/gnome-platform
 
 plugs:
   icon-themes:
@@ -66,6 +65,10 @@ plugs:
     interface: content
     target: $SNAP/gnome-platform
     default-provider: gnome-46-2404
+  gpu-2404:
+      interface: content
+      target: $SNAP/gpu-2404
+      default-provider: mesa-2404
 
 
 slots:
