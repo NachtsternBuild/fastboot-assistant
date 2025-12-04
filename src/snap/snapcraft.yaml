@@ -44,11 +44,18 @@ apps:
       - x11
       - uhid
       - cups
+      - gnome
+      - xdg-desktop-portal
+      - xdg-desktop-portal-gtk
     slots:
       - fastboot-assistant
     environment:
       GI_TYPELIB_PATH: "$SNAP/usr/lib/girepository-1.0:$GI_TYPELIB_PATH"
       GSETTINGS_SCHEMA_DIR: "$SNAP/usr/share/glib-2.0/schemas"
+      GIO_USE_VFS: "local"
+      GTK_USE_PORTAL: "1"
+      GTK_THEME: ""
+      LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
 
 plugs:
   icon-themes:
@@ -160,3 +167,5 @@ parts:
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/girepository-1.0
       VTE_TLIB=$(find $SNAPCRAFT_PART_INSTALL -name "Vte-2.91.typelib" | head -n1)
       cp "$VTE_TLIB" $SNAPCRAFT_PART_INSTALL/usr/lib/girepository-1.0/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/usr/share/libdrm
+      touch $SNAPCRAFT_PART_INSTALL/usr/share/libdrm/amdgpu.ids
