@@ -20,7 +20,7 @@
 
 | Version     | Supported          | Informations                 | Status            | Release Code                 | For the operating systems (OS)                             | Packages                   |
 | ----------- | ------------------ | ---------------------------- | ----------------- | ---------------------------- | ---------------------------------------------------------- | -------------------------- |
-| 0.9.1       | :white_check_mark: | **dev**                      | *dev*             | **Zappeliges Zorin**         | *Linux (Debian/Ubuntu), Snap, WSL*                         | *DEB, Snap, PPA, Zip*
+| 0.9.1       | :white_check_mark: | **beta**                      | *beta*            | **Zappeliges Zorin**         | *Linux (Debian/Ubuntu), Snap, WSL*                         | *DEB, Snap, PPA, Zip*
 | 0.9.x       | :white_check_mark: | **dev**                      | *dev*             | **Zappeliges Zorin**         | *Linux (Debian/Ubuntu), Snap, WSL*                         | *DEB, Snap, PPA, Zip*      |
 | 0.8.2       | :x:                | *reverted*                   | *dev*             | *Glitschiges GNOME 48*       | *Linux (Debian/Ubuntu), Windows via WSL*                   | *DEB, Snap, Flatpak, Zip*  |
 | 0.8.1       | :white_check_mark: | **active version**           | **stable**        | **Glitschiges GNOME 40**     | **Linux (Debian/Ubuntu), Windows via WSL**                 | *DEB, Snap, Zip, PPA*      |
