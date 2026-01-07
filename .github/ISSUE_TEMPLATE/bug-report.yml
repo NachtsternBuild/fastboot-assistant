@@ -1,7 +1,7 @@
 # Modified version from https://github.com/raspberrypi/rpi-imager/blob/main/.github/ISSUE_TEMPLATE/bug-report.yml
 name: Bug Report
 description: A bug is in the app
-title: "[BUG][e.g. Snap]"
+title: "[BUG][e.g. Snap] e.g. test"
 labels: ["bug"]
 assignees: []
 body:
@@ -93,7 +93,7 @@ body:
       options:
         - Build (Compiler)
         - Build (Linker)
-        - Run
+        - Runtime
         - Package Build (DEB)
         - Package Build (Snap)
         - Package Build (Flatpak)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-01 13:10+0100\n"
+"POT-Creation-Date: 2025-12-09 10:05+0100\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,42 +17,73 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: fa-helper/flash/flash_heimdall.c:36 functions/flash/flash_payload.c:36
-#, c-format
-msgid "Image file '%s' not found.\n"
-msgstr "Image '%s' nicht gefunden.\n"
+#: fa-helper/partition/create_partition.c:48
+#: fa-helper/partition/remove_partition.c:29
+#: fa-helper/partition/resize_partition.c:47
+msgid "Partitions"
+msgstr "Partitionen"
 
-#: fa-helper/flash/flash_heimdall.c:48 fa-helper/flash/flash_image.c:198
-#: fa-helper/commands/get_bootctl.c:20
-#: fa-helper/commands/check_root_access.c:20
+#: fa-helper/partition/create_partition.c:49
+msgid "Creating partition..."
+msgstr "Erstelle Partitionen..."
+
 #: fa-helper/partition/create_partition.c:94
-#: fa-helper/partition/resize_partition.c:92
-#: fa-helper/partition/remove_partition.c:21 functions/info.c:64
-#: functions/flash/flash_system.c:24 functions/flash/flash_system.c:107
-#: functions/flash/flash_payload.c:44
-#: functions/flash/others/flash_list_images.c:174
-#: functions/flash/others/flash_images.c:164 functions/get_devices.c:46
-#: functions/get_devices.c:66 functions/preflash/set_active_slot.c:23
-#: functions/preflash/set_active_slot.c:43
+#: fa-helper/partition/remove_partition.c:21
+#: fa-helper/partition/resize_partition.c:92 fa-helper/flash/flash_image.c:198
+#: fa-helper/flash/flash_heimdall.c:48 fa-helper/commands/get_bootctl.c:20
+#: fa-helper/commands/check_root_access.c:20
 #: functions/preflash/lock_unlock_bootloader.c:21
 #: functions/preflash/lock_unlock_bootloader.c:41
 #: functions/preflash/lock_unlock_bootloader.c:61
-#: functions/preflash/erase_data.c:21 functions/reboot/reboot.c:19
-#: functions/reboot/reboot.c:50 functions/reboot/reboot_recovery.c:20
-#: functions/reboot/reboot_recovery.c:40 functions/reboot/reboot_fastboot.c:19
-#: functions/reboot/reboot_fastboot.c:41 functions/reboot/reboot_fastboot.c:75
-#: functions/reboot/reboot_heimdall.c:19
+#: functions/preflash/set_active_slot.c:23
+#: functions/preflash/set_active_slot.c:43 functions/preflash/erase_data.c:21
+#: functions/get_devices.c:46 functions/get_devices.c:66
+#: functions/reboot/reboot_fastboot.c:19 functions/reboot/reboot_fastboot.c:41
+#: functions/reboot/reboot_fastboot.c:75 functions/reboot/reboot_heimdall.c:19
+#: functions/reboot/reboot.c:19 functions/reboot/reboot.c:50
+#: functions/reboot/reboot_recovery.c:20 functions/reboot/reboot_recovery.c:40
+#: functions/flash/flash_payload.c:44 functions/flash/flash_system.c:24
+#: functions/flash/flash_system.c:107
+#: functions/flash/others/flash_list_images.c:174
+#: functions/flash/others/flash_images.c:164 functions/info.c:64
 msgid "No device detected."
 msgstr "Kein Gerät gefunden."
 
-#: fa-helper/flash/flash_heimdall.c:57
-msgid "Heimdall running"
-msgstr "Heimdall Running"
+#: fa-helper/partition/create_partition.c:100
+msgid "Creat Partition"
+msgstr "Erstelle Partition"
 
-#: fa-helper/flash/flash_heimdall.c:59
-#, c-format
-msgid "Flashing %s ..."
-msgstr "Flashen %s ..."
+#: fa-helper/partition/create_partition.c:101
+#: fa-helper/partition/resize_partition.c:99
+msgid "Enter the partition size:"
+msgstr "Eingabe Partitionsgröße:"
+
+#: fa-helper/partition/create_partition.c:102
+#: fa-helper/partition/resize_partition.c:100
+msgid "Partition Size:"
+msgstr "Partitions Größe:"
+
+#: fa-helper/partition/create_partition.c:107
+#: fa-helper/partition/resize_partition.c:105
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#: fa-helper/partition/create_partition.c:108
+#: fa-helper/partition/resize_partition.c:106
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: fa-helper/partition/remove_partition.c:30
+msgid "Removing partition..."
+msgstr "Lösche Partition..."
+
+#: fa-helper/partition/resize_partition.c:48
+msgid "Resizing partition..."
+msgstr "Partitionsgröße ändern..."
+
+#: fa-helper/partition/resize_partition.c:98
+msgid "Resize Partition"
+msgstr "Partitionsgröße ändern"
 
 #: fa-helper/flash/flash_image.c:31
 msgid "Error: Target did not report max-download-size."
@@ -146,6 +177,20 @@ msgstr "Image nicht gefunden."
 msgid "Fastboot running"
 msgstr "Fastboot Running"
 
+#: fa-helper/flash/flash_heimdall.c:36 functions/flash/flash_payload.c:36
+#, c-format
+msgid "Image file '%s' not found.\n"
+msgstr "Image '%s' nicht gefunden.\n"
+
+#: fa-helper/flash/flash_heimdall.c:57
+msgid "Heimdall running"
+msgstr "Heimdall Running"
+
+#: fa-helper/flash/flash_heimdall.c:59
+#, c-format
+msgid "Flashing %s ..."
+msgstr "Flashen %s ..."
+
 #: fa-helper/commands/get_bootctl.c:25
 msgid "✅ Bootctl detected."
 msgstr "✅ Bootctl aktiv."
@@ -162,107 +207,1498 @@ msgstr "✅ Root Rechte verfügbar."
 msgid "❌ No root permissions available."
 msgstr "❌ Root Rechte nicht verfügbar."
 
-#: fa-helper/partition/create_partition.c:48
-#: fa-helper/partition/resize_partition.c:47
-#: fa-helper/partition/remove_partition.c:29
-msgid "Partitions"
-msgstr "Partitionen"
+#: functions/treble_updater.c:51
+msgid "Getting devices..."
+msgstr "Gerät suchen..."
 
-#: fa-helper/partition/create_partition.c:49
-msgid "Creating partition..."
-msgstr "Erstelle Partitionen..."
+#: functions/treble_updater.c:63
+msgid "Copy boot.img..."
+msgstr "Boot.img kopieren..."
 
-#: fa-helper/partition/create_partition.c:100
-msgid "Creat Partition"
-msgstr "Erstelle Partition"
+#: functions/treble_updater.c:72
+msgid "Installing boot..."
+msgstr "Installiere Boot..."
 
-#: fa-helper/partition/create_partition.c:101
-#: fa-helper/partition/resize_partition.c:99
-msgid "Enter the partition size:"
-msgstr "Eingabe Partitionsgröße:"
+#: functions/treble_updater.c:80 functions/treble_updater.c:110
+msgid "Cleaning up..."
+msgstr "Aufräumen..."
 
-#: fa-helper/partition/create_partition.c:102
-#: fa-helper/partition/resize_partition.c:100
-msgid "Partition Size:"
-msgstr "Partitions Größe:"
+#: functions/treble_updater.c:92
+msgid "Copy system.img..."
+msgstr "System.img kopieren..."
 
-#: fa-helper/partition/create_partition.c:107
-#: fa-helper/partition/resize_partition.c:105
-msgid "Confirm"
-msgstr "Bestätigen"
+#: functions/treble_updater.c:102
+msgid "Installing system..."
+msgstr "Installiere System..."
 
-#: fa-helper/partition/create_partition.c:108
-#: fa-helper/partition/resize_partition.c:106
-msgid "Cancel"
-msgstr "Abbrechen"
+#: functions/treble_updater.c:119
+msgid "Checking bootctl..."
+msgstr "Prüfe auf Bootctl..."
 
-#: fa-helper/partition/resize_partition.c:48
-msgid "Resizing partition..."
-msgstr "Partitionsgröße ändern..."
+#: functions/treble_updater.c:127 functions/treble_updater.c:138
+msgid "Setting active slot..."
+msgstr "Setze aktiven Slot..."
 
-#: fa-helper/partition/resize_partition.c:98
-msgid "Resize Partition"
-msgstr "Partitionsgröße ändern"
+#: functions/treble_updater.c:160 functions/main.c:144
+msgid "Treble Updater"
+msgstr "Treble Updater"
 
-#: fa-helper/partition/remove_partition.c:30
-msgid "Removing partition..."
-msgstr "Lösche Partition..."
+#: functions/treble_updater.c:161
+msgid "Rebooting device..."
+msgstr "Gerät neustarten..."
 
-#: build/helper/log/write_log_text.c:46
-msgid "Log Viewer"
-msgstr "Log"
+#: functions/treble_updater.c:179
+msgid ""
+"The Treble Updater only works with a/b devices. Root rights must be provided."
+msgstr ""
+"Der Treble Updater funktioniert nur mit a/b-Geräten. Root-Rechte müssen "
+"vorhanden sein."
 
-#: build/helper/log/write_log_text.c:113
-msgid "Show Log"
-msgstr "Log anziegen"
+#: functions/treble_updater.c:184
+msgid ""
+"The Treble Updater has the task of flashing a new boot/system image into the "
+"inactive slot and making it active."
+msgstr ""
+"Der Treble Updater hat die Aufgabe, ein neues Boot-/System-Image in den "
+"inaktiven Steckplatz zu flashen und ihn aktiv zu machen."
 
-#: build/helper/log/write_log_text.c:137
-#: functions/instructions/instruction_others.c:19
-#: functions/instructions/instruction_vendor.c:17
-#: functions/instructions/instruction_backup.c:17
-#: functions/instructions/instruction_preflash.c:61
-#: functions/instructions/instruction_adb.c:19
-#: functions/instructions/instruction_gsi.c:19
-#: functions/instructions/instruction_info.c:19
-#: functions/instructions/instruction_recovery.c:19
-#: functions/instructions/instruction_root.c:32
-#: functions/instructions/instruction_custom_rom.c:19
-msgid "Exit"
-msgstr "Verlassen"
+#: functions/treble_updater.c:189
+msgid "Root permission:"
+msgstr "Root-Rechte:"
 
-#: build/design/dialogs/about_dialog.c:74
-msgid "translator-credits"
-msgstr "translator-credits"
+#: functions/treble_updater.c:195
+msgid "Bootctl:"
+msgstr "Bootctl:"
 
-#: build/design/dialogs/about_dialog.c:78
-msgid "Documentation"
-msgstr "Dokumentation"
+#: functions/treble_updater.c:202
+msgid "Flash new boot image"
+msgstr "Boot-Image flashen"
 
-#: build/design/dialogs/about_dialog.c:82
-msgid "Fonts"
-msgstr "Schriftarten"
+#: functions/treble_updater.c:205
+msgid "Flash new system image"
+msgstr "System-Image flashen"
 
-#: build/design/dialogs/about_dialog.c:87
-msgid "Special thanks to"
-msgstr "Besonderen Dank an"
+#: functions/treble_updater.c:208
+msgid "Alternative for slot change (not recommended)"
+msgstr "Alternative für Slot Wechsel (nicht empfohlen)"
 
-#: build/design/dialogs/dialogs.c:30 build/design/dialogs/dialogs.c:39
+#: functions/treble_updater.c:211
+msgid "Start Flash"
+msgstr "Starte Flash"
+
+#: functions/treble_updater.c:215 functions/main.c:138
+msgid "Reboot Device"
+msgstr "Gerät Neustarten"
+
+#: functions/treble_updater.c:219 functions/preflash/preflash_GUI.c:20
+#: functions/get_devices.c:83 functions/reboot/reboot_GUI.c:19
+#: functions/flash/flash_GUI.c:23 functions/config-project/config-project.c:63
+#: functions/instructions/instruction_GUI.c:18
+msgid "Back to Home"
+msgstr "Zurück zur Startseite"
+
+#: functions/preflash/preflash_GUI.c:14
+#: functions/instructions/instruction_prepare_flash.c:14
+msgid "Backup"
+msgstr "Backup"
+
+#: functions/preflash/preflash_GUI.c:15
+msgid "Prepare files"
+msgstr "Dateien vorbereiten"
+
+#: functions/preflash/preflash_GUI.c:16
+msgid "Delete user data"
+msgstr "Nutzerdaten Löschen"
+
+#: functions/preflash/preflash_GUI.c:17
+msgid "Set active slot"
+msgstr "Setze aktiven Slot"
+
+#: functions/preflash/preflash_GUI.c:18
+msgid "Bootloader"
+msgstr "Bootloader"
+
+#: functions/preflash/preflash_GUI.c:19
+msgid "Partitioning"
+msgstr "Partitionieren"
+
+#: functions/preflash/partitions.c:71
+msgid "Delete Boot"
+msgstr "Lösche Boot"
+
+#: functions/preflash/partitions.c:72
+msgid "Delete Vendor"
+msgstr "Lösche Vendor"
+
+#: functions/preflash/partitions.c:73
+msgid "Delete System"
+msgstr "Lösche System"
+
+#: functions/preflash/partitions.c:74
+msgid "Resize Boot"
+msgstr "Größe Ändern Boot"
+
+#: functions/preflash/partitions.c:75
+msgid "Resize Vendor"
+msgstr "Größe Ändern Vendor"
+
+#: functions/preflash/partitions.c:76
+msgid "Resize System"
+msgstr "Größe Ändern System"
+
+#: functions/preflash/partitions.c:77
+msgid "Create Boot"
+msgstr "Erstelle Boot"
+
+#: functions/preflash/partitions.c:78
+msgid "Create Vendor"
+msgstr "Erstelle Boot"
+
+#: functions/preflash/partitions.c:79
+msgid "Create System"
+msgstr "Erstelle System"
+
+#: functions/preflash/partitions.c:80
+#: functions/preflash/lock_unlock_bootloader.c:79
+#: functions/preflash/backup/backup_noroot.c:101
+#: functions/preflash/backup/backup_function.c:16
+#: functions/preflash/set_active_slot.c:101
+#: functions/preflash/prepare/prepare.c:20
+#: functions/reboot/reboot_fastboot.c:94 functions/reboot/reboot_heimdall.c:54
+#: functions/reboot/reboot.c:70 functions/reboot/reboot_recovery.c:57
+#: functions/flash/flash_preloader_super.c:70 functions/flash/flash_data.c:42
+#: functions/flash/flash_boot.c:57 functions/flash/flash_system.c:137
+#: functions/flash/flash_vbmeta_dtbo.c:57 functions/flash/flash_vendor.c:70
+#: functions/flash/flash_others.c:16 functions/flash/flash_recovery.c:29
+#: functions/config-project/remove_old.c:99
+#: functions/instructions/instruction_prepare_flash.c:16
+#: functions/instructions/instruction_others.c:18
+#: functions/instructions/instruction_root.c:31
+#: functions/instructions/instruction_adb.c:18
+#: functions/instructions/instruction_gsi.c:18
+#: functions/instructions/instruction_flash.c:20
+#: functions/instructions/instruction_info.c:18
+#: functions/instructions/instruction_recovery.c:18
+#: functions/instructions/instruction_preflash.c:60
+#: functions/instructions/instruction_custom_rom.c:18
+msgid "Back"
+msgstr "Zurück"
+
+#: functions/preflash/lock_unlock_bootloader.c:29
+#: functions/preflash/lock_unlock_bootloader.c:49
+msgid "Unlocking Bootloader"
+msgstr "Öffne Bootloader"
+
+#: functions/preflash/lock_unlock_bootloader.c:29
+#: functions/preflash/lock_unlock_bootloader.c:49
+#: functions/preflash/lock_unlock_bootloader.c:69
+#: functions/preflash/backup/backup_noroot.c:33
+#: functions/preflash/backup/backup_noroot.c:55
+#: functions/preflash/set_active_slot.c:31
+#: functions/preflash/set_active_slot.c:51
+#: functions/preflash/set_active_slot.c:91 functions/preflash/erase_data.c:31
+#: functions/preflash/prepare/unxz_files.c:53
+#: functions/reboot/reboot_fastboot.c:28 functions/reboot/reboot_fastboot.c:50
+#: functions/reboot/reboot_heimdall.c:27 functions/reboot/reboot.c:28
+#: functions/reboot/reboot.c:60 functions/reboot/reboot_recovery.c:28
+#: functions/reboot/reboot_recovery.c:48
+msgid "Please wait..."
+msgstr "Bitte warten..."
+
+#: functions/preflash/lock_unlock_bootloader.c:69
+msgid "Locking Bootloader"
+msgstr "Schließe Bootloader"
+
+#: functions/preflash/lock_unlock_bootloader.c:76
+msgid "Unlock (new)"
+msgstr "Öffnen (Neu)"
+
+#: functions/preflash/lock_unlock_bootloader.c:77
+msgid "Unlock (old)"
+msgstr "Öffnen (Alt)"
+
+#: functions/preflash/lock_unlock_bootloader.c:78
+msgid "Lock"
+msgstr "Schließen"
+
+#: functions/preflash/backup/backup_noroot.c:33
+msgid "Install Depends"
+msgstr "Installiere Abhängigkeiten "
+
+#: functions/preflash/backup/backup_noroot.c:55
+msgid "Downloading Backup Tool"
+msgstr "Downloade Backup Tools"
+
+#: functions/preflash/backup/backup_noroot.c:89
+msgid "Backup No Root in Sandbox"
+msgstr "Backup ohne Root in Sandbox"
+
+#: functions/preflash/backup/backup_noroot.c:90
+msgid ""
+"Due to the Snap/Flatpak sandbox, it is not possible to execute commands as "
+"root on the host. Run the following command on your host: \n"
+"apt install p7zip-full adb curl whiptail pv bc secure-delete zenity"
+msgstr ""
+"Aufgrund der Snap/Flatpak-Sandbox ist es nicht möglich, Befehle als Root auf "
+"dem Host auszuführen. Führen Sie den folgenden Befehl auf Ihrem Host aus: \n"
+"apt install p7zip-full adb curl whiptail pv bc secure-delete zenity"
+
+#: functions/preflash/backup/backup_noroot.c:97
+msgid "Prepare"
+msgstr "Vorbereiten"
+
+#: functions/preflash/backup/backup_noroot.c:98
+msgid "Download"
+msgstr "Downloaden"
+
+#: functions/preflash/backup/backup_noroot.c:99
+msgid "Start"
+msgstr "Starten"
+
 #: functions/preflash/backup/backup_noroot.c:100
+#: build/design/dialogs/dialogs.c:32 build/design/dialogs/dialogs.c:43
 msgid "Information"
 msgstr "Information"
 
-#: build/design/dialogs/dialogs.c:31 build/design/dialogs/dialogs.c:47
-#: build/design/dialogs/dialogs.c:56 build/design/dialogs/dialogs.c:72
-msgid "OK"
-msgstr "OK"
+#: functions/preflash/backup/backup_function.c:14
+msgid "Backup with root"
+msgstr "Backup mit Root"
 
-#: build/design/dialogs/dialogs.c:55 build/design/dialogs/dialogs.c:64
-msgid "Error"
-msgstr "Fehler"
+#: functions/preflash/backup/backup_function.c:15
+msgid "Backup without root"
+msgstr "Backup ohne Root"
 
-#: build/design/dialogs/dialog_multi_progress.c:42
-msgid "Completed."
-msgstr "Beendet."
+#: functions/preflash/set_active_slot.c:31
+#: functions/preflash/set_active_slot.c:51
+#: functions/preflash/set_active_slot.c:91
+msgid "Setting slot"
+msgstr "Setze Slot"
+
+#: functions/preflash/set_active_slot.c:98
+msgid "Set 'a'"
+msgstr "Setze 'a'"
+
+#: functions/preflash/set_active_slot.c:99
+msgid "Set 'b'"
+msgstr "Setze 'b'"
+
+#: functions/preflash/set_active_slot.c:100
+msgid "Set slot auto"
+msgstr "Setze Slot Automatisch"
+
+#: functions/preflash/erase_data.c:31
+msgid "Erasing Userdata"
+msgstr "Nutzerdaten Löschen"
+
+#: functions/preflash/prepare/prepare.c:14
+msgid "Boot.img"
+msgstr "Boot.img"
+
+#: functions/preflash/prepare/prepare.c:15
+msgid "Recovery.img"
+msgstr "Recovery.img"
+
+#: functions/preflash/prepare/prepare.c:16
+msgid "Vendor.img"
+msgstr "Vendor.img"
+
+#: functions/preflash/prepare/prepare.c:17
+msgid "System.img"
+msgstr "System.img"
+
+#: functions/preflash/prepare/prepare.c:18
+msgid "payload.zip"
+msgstr "payload.zip"
+
+#: functions/preflash/prepare/prepare.c:19
+msgid "Decompress (xz)"
+msgstr "Dekomprimieren (XZ)"
+
+#: functions/preflash/prepare/unxz_files.c:53
+msgid "Decompressing File"
+msgstr "Dateien Dekomprimieren"
+
+#: functions/get_devices.c:21
+msgid "Desvices (ADB)"
+msgstr "Geräte (ADB)"
+
+#: functions/get_devices.c:32
+msgid "Devcies (fastboot)"
+msgstr "Geräte (Fastboot)"
+
+#: functions/get_devices.c:52
+msgid "Bootloader Status (ADB)"
+msgstr "Bootloader Status (ADB)"
+
+#: functions/get_devices.c:72
+msgid "Bootloader Status (fastboot)"
+msgstr "Bootloader Status (Fastboot"
+
+#: functions/get_devices.c:79
+msgid "Devices in ADB"
+msgstr "Geräte über ADB"
+
+#: functions/get_devices.c:80
+msgid "Devices in Fastboot"
+msgstr "Geräte über Fastboot"
+
+#: functions/get_devices.c:81
+msgid "Bootloader status (ADB)"
+msgstr "Bootloader Status (ADB)"
+
+#: functions/get_devices.c:82
+msgid "Bootloader status (fastboot)"
+msgstr "Bootloader Status (Fastboot)"
+
+#: functions/reboot/reboot_fastboot.c:28 functions/reboot/reboot_fastboot.c:50
+msgid "Rebooting Bootloader"
+msgstr "Neustart Bootloader"
+
+#: functions/reboot/reboot_fastboot.c:90 functions/reboot/reboot_recovery.c:55
+msgid "Restart ADB"
+msgstr "Neustart ADB"
+
+#: functions/reboot/reboot_fastboot.c:91 functions/reboot/reboot_recovery.c:56
+msgid "Restarting Fastboot"
+msgstr "Neustart Fastboot"
+
+#: functions/reboot/reboot_fastboot.c:92
+msgid "Fastboot help"
+msgstr "Fastboot Hilfe"
+
+#: functions/reboot/reboot_fastboot.c:93
+msgid "Bootloader variables"
+msgstr "Bootloader Daten"
+
+#: functions/reboot/reboot_heimdall.c:27
+msgid "Rebooting Download"
+msgstr "Neustart Download-Modus"
+
+#: functions/reboot/reboot_heimdall.c:41
+msgid "Please note that your device is in download mode!"
+msgstr "Bitte beachten Sie, dass sich Ihr Gerät im Download-Modus befindet!"
+
+#: functions/reboot/reboot_heimdall.c:51
+msgid "Restart in Download"
+msgstr "Neustart in Download"
+
+#: functions/reboot/reboot_heimdall.c:52
+msgid "Help"
+msgstr "Hilfe"
+
+#: functions/reboot/reboot_heimdall.c:53
+msgid "Output pit"
+msgstr "Pit ausgeben"
+
+#: functions/reboot/reboot.c:28 functions/reboot/reboot.c:60
+msgid "Rebooting"
+msgstr "Neustarten"
+
+#: functions/reboot/reboot.c:68
+msgid "Reboot System"
+msgstr "System neustarten"
+
+#: functions/reboot/reboot.c:69
+msgid "Reboot Image(.img)"
+msgstr "Ins Image(.img) booten"
+
+#: functions/reboot/reboot_recovery.c:28 functions/reboot/reboot_recovery.c:48
+msgid "Rebooting Recovery"
+msgstr "Neustart Recovery"
+
+#: functions/reboot/reboot_GUI.c:15
+#: functions/instructions/instruction_adb.c:190
+msgid "Reboot Fastboot"
+msgstr "Neustart Fastboot"
+
+#: functions/reboot/reboot_GUI.c:16
+msgid "Reboot"
+msgstr "Neustart"
+
+#: functions/reboot/reboot_GUI.c:17
+msgid "Reboot Recovery"
+msgstr "Neustart Recovery"
+
+#: functions/reboot/reboot_GUI.c:18
+msgid "Reboot (heimdall)"
+msgstr "Neustart (Heimdall)"
+
+#: functions/flash/flash_payload.c:54 functions/main.c:141
+msgid "Flash"
+msgstr "Flash"
+
+#: functions/flash/flash_payload.c:55
+msgid "Sideloading..."
+msgstr "Sideloading..."
+
+#: functions/flash/flash_preloader_super.c:62
+msgid "preloader.bin (only-a)"
+msgstr "preloader.bin (only-a)"
+
+#: functions/flash/flash_preloader_super.c:63
+msgid "preloader.bin (a/b)"
+msgstr "preloader.bin (a/b)"
+
+#: functions/flash/flash_preloader_super.c:64
+msgid "preloader.img (only-a)"
+msgstr "preloader.img (only-a)"
+
+#: functions/flash/flash_preloader_super.c:65
+msgid "preloader.img (a/b)"
+msgstr "preloader.img (a/b)"
+
+#: functions/flash/flash_preloader_super.c:66
+msgid "preloader.bin (heimdall)"
+msgstr "prelaoder.bin (Heimdall)"
+
+#: functions/flash/flash_preloader_super.c:67
+msgid "preloader.img (heimdall)"
+msgstr "preloader.img (Heimdall)"
+
+#: functions/flash/flash_preloader_super.c:68
+msgid "super.img"
+msgstr "super.img"
+
+#: functions/flash/flash_preloader_super.c:69
+msgid "super.img (heimdall)"
+msgstr "super.img (Heimdall)"
+
+#: functions/flash/flash_GUI.c:14
+msgid "Flash Recovery"
+msgstr "Recovery flashen"
+
+#: functions/flash/flash_GUI.c:15
+msgid "Flash Boot"
+msgstr "Boot flashen"
+
+#: functions/flash/flash_GUI.c:16
+msgid "Flash Vendor"
+msgstr "Vendor flashen"
+
+#: functions/flash/flash_GUI.c:17
+msgid "Flash payload.zip"
+msgstr "Payload.zip flashen"
+
+#: functions/flash/flash_GUI.c:18
+msgid "Flash System"
+msgstr "System flashen"
+
+#: functions/flash/flash_GUI.c:19
+msgid "Flash vbmeta/dtbo"
+msgstr "vbmeta/dtbo flashen"
+
+#: functions/flash/flash_GUI.c:20
+msgid "Flash Preloader"
+msgstr "Bootloader flashen"
+
+#: functions/flash/flash_GUI.c:21
+msgid "Flash Nutzerdaten"
+msgstr "Nutzerdaten flashen"
+
+#: functions/flash/flash_GUI.c:22
+msgid "Flash Other Images"
+msgstr "Andere Images flashen"
+
+#: functions/flash/flash_data.c:38
+msgid "Metadata"
+msgstr "Metadata"
+
+#: functions/flash/flash_data.c:39
+msgid "Metadata (heimdall)"
+msgstr "Metadata (Heimdall)"
+
+#: functions/flash/flash_data.c:40
+msgid "Userdata"
+msgstr "Nutzerdaten"
+
+#: functions/flash/flash_data.c:41
+msgid "Userdata (heimdall)"
+msgstr "Nutzerdaten (Heimdall)"
+
+#: functions/flash/flash_boot.c:51
+msgid "Boot"
+msgstr "Boot"
+
+#: functions/flash/flash_boot.c:52
+msgid "Boot (a/b)"
+msgstr "Boot (a/b)"
+
+#: functions/flash/flash_boot.c:53
+msgid "Boot (heimdall)"
+msgstr "Boot (heimall)"
+
+#: functions/flash/flash_boot.c:54
+msgid "init_boot"
+msgstr "init_boot"
+
+#: functions/flash/flash_boot.c:55
+msgid "init_boot (a/b)"
+msgstr "init_boot (a/b)"
+
+#: functions/flash/flash_boot.c:56
+msgid "init_boot (heimdall)"
+msgstr "init_boot (Heimdall)"
+
+#: functions/flash/flash_system.c:86 functions/flash/flash_system.c:115
+#: functions/flash/others/flash_images.c:37
+msgid "Fastboot Running"
+msgstr "Fastboot Running"
+
+#: functions/flash/flash_system.c:87
+msgid "Flashing..."
+msgstr "Flashen..."
+
+#: functions/flash/flash_system.c:116
+msgid "Erasing old files..."
+msgstr "Lösche alte Dateien..."
+
+#: functions/flash/flash_system.c:134
+msgid "System"
+msgstr "System"
+
+#: functions/flash/flash_system.c:135
+msgid "System (heimdall)"
+msgstr "System (Heimdall)"
+
+#: functions/flash/flash_system.c:136
+msgid "System (inactive)"
+msgstr "System (Inaktiv)"
+
+#: functions/flash/flash_vbmeta_dtbo.c:51
+#: functions/instructions/instruction_others.c:104
+msgid "vbmeta"
+msgstr "vbemta"
+
+#: functions/flash/flash_vbmeta_dtbo.c:52
+msgid "vbmeta (a/b)"
+msgstr "vbmeta (a/b)"
+
+#: functions/flash/flash_vbmeta_dtbo.c:53
+msgid "vbmeta (heimdall)"
+msgstr "vbmeta (Heimdall)"
+
+#: functions/flash/flash_vbmeta_dtbo.c:54
+#: functions/instructions/instruction_others.c:25
+msgid "dtbo"
+msgstr "dtbo"
+
+#: functions/flash/flash_vbmeta_dtbo.c:55
+msgid "dtbo (a/b)"
+msgstr "dtbo (a/b)"
+
+#: functions/flash/flash_vbmeta_dtbo.c:56
+msgid "dtbo (heimdall)"
+msgstr "dtbo (Heimdall)"
+
+#: functions/flash/flash_vendor.c:62
+msgid "Vendor"
+msgstr "Vendor"
+
+#: functions/flash/flash_vendor.c:63
+msgid "Vendor (a/b"
+msgstr "Vendor (a/b)"
+
+#: functions/flash/flash_vendor.c:64
+msgid "Vendor (heimdall)"
+msgstr "Vendor (Heimdall)"
+
+#: functions/flash/flash_vendor.c:65
+msgid "vendor_boot"
+msgstr "vendor_boot"
+
+#: functions/flash/flash_vendor.c:66
+msgid "vendor_boot (a/b)"
+msgstr "vendor_boot (a/b)"
+
+#: functions/flash/flash_vendor.c:67
+msgid "vendor_boot (heimdall)"
+msgstr "vendor_boot (Heimdall)"
+
+#: functions/flash/flash_vendor.c:68
+msgid "vendor_kernel_boot"
+msgstr "vendor_kernel_boot"
+
+#: functions/flash/flash_vendor.c:69
+msgid "vendor_kernel_boot (heimdall)"
+msgstr "vendor_kernel_boot (Heimdall)"
+
+#: functions/flash/flash_others.c:14
+msgid "Predefined images"
+msgstr "Vordefinierte Images"
+
+#: functions/flash/flash_others.c:15
+msgid "Images in the directory"
+msgstr "Images im Verzeichnis"
+
+#: functions/flash/flash_recovery.c:27
+#: functions/instructions/instruction_flash.c:18
+#: functions/instructions/instruction_recovery.c:25
+msgid "Recovery"
+msgstr "Recovery"
+
+#: functions/flash/flash_recovery.c:28
+msgid "Recovery (heimdall)"
+msgstr "Recovery (Heimdall)"
+
+#: functions/flash/others/flash_list_images.c:25
+msgid "Flashing gz.img..."
+msgstr "Flashe gz.img..."
+
+#: functions/flash/others/flash_list_images.c:35
+msgid "Flashing lk.img..."
+msgstr "Flashe lk.img..."
+
+#: functions/flash/others/flash_list_images.c:45
+msgid "Flashing logo.img..."
+msgstr "Flashe logo.img..."
+
+#: functions/flash/others/flash_list_images.c:55
+msgid "Flashing md1img.img..."
+msgstr "Flashe md1img.img..."
+
+#: functions/flash/others/flash_list_images.c:65
+msgid "Flashing metadata.img..."
+msgstr "Flashe metadata.img..."
+
+#: functions/flash/others/flash_list_images.c:75
+msgid "Flashing protect.img..."
+msgstr "Flashe protect.img..."
+
+#: functions/flash/others/flash_list_images.c:85
+msgid "Flashing scp.img..."
+msgstr "Flashe scp.img..."
+
+#: functions/flash/others/flash_list_images.c:95
+msgid "Flashing spmfw.img..."
+msgstr "Flashe spmfw.img..."
+
+#: functions/flash/others/flash_list_images.c:105
+msgid "Flashing sspm.img..."
+msgstr "Flashe sspm.img..."
+
+#: functions/flash/others/flash_list_images.c:115
+msgid "Flashing tee.img..."
+msgstr "Flashe tee.img..."
+
+#: functions/flash/others/flash_list_images.c:143
+msgid "Fastboot Flashing"
+msgstr "Fastboot Flash"
+
+#: functions/flash/others/flash_list_images.c:143
+msgid "This may take some time..."
+msgstr "Dies kann einige Zeit dauern..."
+
+#: functions/flash/others/flash_images.c:48
+#: functions/flash/others/flash_images.c:93
+msgid "Flash running..."
+msgstr "Flash Running..."
+
+#: functions/flash/others/flash_images.c:61
+msgid "Erasing files..."
+msgstr "Lösche Dateien..."
+
+#: functions/main.c:87
+msgid "Fastboot-Assistant"
+msgstr "Fastboot-Assistant"
+
+#: functions/main.c:137
+msgid "Devices"
+msgstr "Geräte"
+
+#: functions/main.c:139
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: functions/main.c:140
+msgid "Prepare Flashing"
+msgstr "Flashen Vorbereiten"
+
+#: functions/main.c:142
+msgid "Instructions"
+msgstr "Anleitungen"
+
+#: functions/main.c:143 functions/instructions/instruction_GUI.c:17
+#: functions/info.c:89
+msgid "Info"
+msgstr "Info"
+
+#: functions/main.c:145
+msgid "About"
+msgstr "Über das Programm"
+
+#: functions/config-project/remove_old.c:47
+#: functions/config-project/remove_old.c:58
+#: functions/config-project/remove_old.c:88
+#: functions/config-project/config-project.c:17
+msgid "Ready!"
+msgstr "Fertig!"
+
+#: functions/config-project/remove_old.c:96
+msgid "ROM-Install"
+msgstr "ROM-Install"
+
+#: functions/config-project/remove_old.c:97
+msgid "Old files"
+msgstr "Alte Dateien"
+
+#: functions/config-project/remove_old.c:98
+msgid "Backups"
+msgstr "Backups"
+
+#: functions/config-project/config-project.c:56
+msgid "Create folder"
+msgstr "Ordner erstellen"
+
+#: functions/config-project/config-project.c:57
+#, fuzzy
+msgid "Cleanup"
+msgstr "Aufräumen"
+
+#: functions/config-project/config-project.c:58
+#: functions/run_first_run_setup.c:216
+msgid "Configure"
+msgstr "Konfigurieren"
+
+#: functions/config-project/config-project.c:59
+#, fuzzy
+msgid "Post Update"
+msgstr "Post Update"
+
+#: functions/config-project/config-project.c:60
+msgid "System Informations"
+msgstr "System-Informationen"
+
+#: functions/config-project/config-project.c:61
+msgid "Define new directory"
+msgstr "Neues Verzeichnis festlegen"
+
+#: functions/config-project/config-project.c:62
+msgid "Updates"
+msgstr "Updates"
+
+#: functions/config-project/wsl_config.c:49
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: functions/config-project/wsl_config.c:50
+msgid "Running configuration..."
+msgstr "Konfigurationen ausführen..."
+
+#: functions/instructions/instruction_prepare_flash.c:15
+msgid "Prepare images"
+msgstr "Vorbereiten Images"
+
+#: functions/instructions/instruction_others.c:17
+#: functions/instructions/instruction_root.c:30
+#: functions/instructions/instruction_adb.c:17
+#: functions/instructions/instruction_gsi.c:17
+#: functions/instructions/instruction_info.c:17
+#: functions/instructions/instruction_recovery.c:17
+#: functions/instructions/instruction_preflash.c:59
+#: functions/instructions/instruction_custom_rom.c:17
+#: functions/run_first_run_setup.c:64
+msgid "Next"
+msgstr "Weiter"
+
+#: functions/instructions/instruction_others.c:19
+#: functions/instructions/instruction_root.c:32
+#: functions/instructions/instruction_adb.c:19
+#: functions/instructions/instruction_backup.c:17
+#: functions/instructions/instruction_gsi.c:19
+#: functions/instructions/instruction_info.c:19
+#: functions/instructions/instruction_recovery.c:19
+#: functions/instructions/instruction_preflash.c:61
+#: functions/instructions/instruction_custom_rom.c:19
+#: functions/instructions/instruction_vendor.c:17
+#: build/helper/log/write_log_text.c:152
+msgid "Exit"
+msgstr "Verlassen"
+
+#: functions/instructions/instruction_others.c:26
+msgid ""
+"This is a partition which is stored in the device tree of the device. This "
+"is essential for the communication of the hardware with the boot loader and "
+"the kernel."
+msgstr ""
+"Dies ist eine Partition, die im Gerätebaum des Geräts gespeichert ist. Sie "
+"ist für die Kommunikation der Hardware mit dem Bootloader und dem Kernel "
+"unerlässlich."
+
+#: functions/instructions/instruction_others.c:65
+msgid "Super"
+msgstr "Super"
+
+#: functions/instructions/instruction_others.c:66
+msgid ""
+"This is a partition that includes all other partitions on devices with "
+"dynamic partitions."
+msgstr ""
+
+#: functions/instructions/instruction_others.c:105
+msgid ""
+"'vbmeta' ensures that the boot process of Stock-Android runs safely. Some "
+"custom ROMs can only be started if a new vbmeta image has been flashed."
+msgstr ""
+"'vbmeta' stellt sicher, dass der Startvorgang von Stock-Android sicher "
+"abläuft. Einige benutzerdefinierte ROMs können nur gestartet werden, wenn "
+"ein neues vbmeta-Image geflasht wurde."
+
+#: functions/instructions/instruction_root.c:38
+#: functions/instructions/instruction_gsi.c:25
+#: functions/instructions/instruction_custom_rom.c:25
+msgid "Notes"
+msgstr "Hinweise"
+
+#: functions/instructions/instruction_root.c:40
+msgid ""
+"When rooting Android devices, the user is granted superuser rights that give "
+"them full access to Android. This gives them the possibility to make far-"
+"reaching changes."
+msgstr ""
+"Beim Rooten von Android-Geräten erhält der Nutzer Superuser-Rechte, die ihm "
+"vollen Zugriff auf Android gewähren. Dies gibt ihm die Möglichkeit, "
+"weitreichende Änderungen vorzunehmen."
+
+#: functions/instructions/instruction_root.c:44
+msgid ""
+"This allows you to remove pre-installed applications, change system settings "
+"and install special applications that require extended permissions."
+msgstr ""
+"Dadurch können Sie vorinstallierte Anwendungen entfernen, "
+"Systemeinstellungen ändern und spezielle Anwendungen installieren, die "
+"erweiterte Berechtigungen erfordern."
+
+#: functions/instructions/instruction_root.c:48
+msgid ""
+"With the extensive rights, there are also great dangers while users and "
+"software can cause great damage to the software."
+msgstr ""
+"Mit den weitreichenden Rechten gehen auch große Gefahren einher, da Nutzer "
+"und Software der Software großen Schaden zufügen können."
+
+#: functions/instructions/instruction_root.c:92
+#: functions/instructions/instruction_root.c:107
+msgid "Magisk"
+msgstr "Magisk"
+
+#: functions/instructions/instruction_root.c:94
+msgid ""
+"Magisk is a package of open source software for Android customization. With "
+"the following components:"
+msgstr ""
+"Magisk ist ein Paket mit Open-Source-Software zur Anpassung von Android. Mit "
+"den folgenden Komponenten:"
+
+#: functions/instructions/instruction_root.c:98
+msgid ""
+"1. MagiskSU: Provision of root access for applications. \n"
+"2. Magisk Modules: Change read-only partitions by installing modules."
+msgstr ""
+"1. MagiskSU: Bereitstellung von Root-Zugriff für Anwendungen. \n"
+"2. Magisk Module: Ändern Sie schreibgeschützte Partitionen durch die "
+"Installation von Modulen."
+
+#: functions/instructions/instruction_root.c:102
+msgid ""
+"3. MagiskBoot: The most comprehensive tool for unpacking and repacking "
+"Android boot images. \n"
+"4. Zygisk: Execute code in all processes of Android applications."
+msgstr ""
+"3. MagiskBoot: Das umfassendste Tool zum Entpacken und Wiederverpacken von "
+"Android-Boot-Images. \n"
+"4. Zygisk: Führen Sie Code in allen Prozessen von Android-Anwendungen aus."
+
+#: functions/instructions/instruction_root.c:108
+msgid "Magisk-APK"
+msgstr "Magisk-APK"
+
+#: functions/instructions/instruction_root.c:156
+msgid "Rooting via Magisk"
+msgstr "Rooten via Magisk"
+
+#: functions/instructions/instruction_root.c:158
+msgid ""
+"1. Install the Magisk APK on your device. \n"
+"2. Start Magisk on your device and select Install Magisk."
+msgstr ""
+"1. Installieren Sie die Magisk-APK auf Ihrem Gerät. \n"
+"2. Starten Sie Magisk auf Ihrem Gerät und wählen Sie 'Magisk installieren'."
+
+#: functions/instructions/instruction_root.c:162
+msgid ""
+"3. Select a boot image for your device and have it patched by Magisk "
+"(Usually the boot images can be found on the Internet. Caution is advised "
+"here)."
+msgstr ""
+"3. Wählen Sie ein Boot-Image für Ihr Gerät aus und lassen Sie es von Magisk "
+"patchen.(In der Regel finden Sie die Boot-Images im Internet. Seien Sie "
+"dabei vorsichtig hier)."
+
+#: functions/instructions/instruction_root.c:166
+msgid ""
+"4. Copy the boot image patched by Magisk to your computer. \n"
+"5. Rename the image to boot.img or let the application prepare it."
+msgstr ""
+"4. Kopieren Sie das von Magisk gepatchte Boot-Image auf Ihren Computer. \n"
+"5. Benennen Sie das Image in boot.img um oder lassen Sie es von der "
+"Anwendung vorbereiten."
+
+#: functions/instructions/instruction_root.c:170
+msgid ""
+"6. Start your device to Fastboot. \n"
+"7. Flash the boot image for your device type. \n"
+"8. Reboot your device. Now Magisk should provide root privileges."
+msgstr ""
+"6. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
+"7. Flashen Sie das Boot-Image für Ihren Gerätetyp. \n"
+"8. Starten Sie Ihr Gerät neu. Nun sollte Magisk Root-Rechte bereitstellen."
+
+#: functions/instructions/instruction_GUI.c:14
+msgid "Dealing with ADB"
+msgstr "Umgang mit ADB"
+
+#: functions/instructions/instruction_GUI.c:15
+msgid "Flashing Images"
+msgstr "Images Flashen"
+
+#: functions/instructions/instruction_GUI.c:16
+msgid "Preparations"
+msgstr "Vorbereitungen"
+
+#: functions/instructions/instruction_adb.c:25
+msgid "ADB/Fastboot"
+msgstr "ADB/Fastboot"
+
+#: functions/instructions/instruction_adb.c:27
+msgid ""
+"ADB (Android Debug Bridge) serves as a communication interface between a "
+"computer and an Android device. It is used for debugging and file transfer."
+msgstr ""
+"ADB (Android Debug Bridge) dient als Kommunikationsschnittstelle zwischen "
+"einemComputer und einem Android-Gerät. Es wird zum Debuggen und zur "
+"Dateiübertragung verwendet."
+
+#: functions/instructions/instruction_adb.c:31
+msgid ""
+"Fastboot is a command line tool for the bootloader of Android devices, with "
+"which user-defined firmware and other system images can be flashed."
+msgstr ""
+"Fastboot ist ein Befehlszeilentool für den Bootloader von Android-Geräten, "
+"mit dem benutzerdefinierte Firmware und andere System-Images geflasht werden "
+"können."
+
+#: functions/instructions/instruction_adb.c:35
+msgid ""
+"Both tools are very useful for developers and advanced users when it comes "
+"to modifying and diagnosing Android devices."
+msgstr ""
+"Beide Tools sind für Entwickler und fortgeschrittene Nutzer sehr nützlich, "
+"wenn es darum geht, Android-Geräte zu modifizieren und zu diagnostizieren."
+
+#: functions/instructions/instruction_adb.c:80
+msgid "Bootloader/Preloader"
+msgstr "Bootloader/Preloader"
+
+#: functions/instructions/instruction_adb.c:82
+msgid ""
+"The bootloader is a program that loads the operating system when an Android "
+"device is started and checks whether the software is secure and authorized."
+msgstr ""
+"Der Bootloader ist ein Programm, das beim Start eines Android-Geräts das "
+"Betriebssystem lädt und überprüft, ob die Software sicher und autorisiert "
+"ist."
+
+#: functions/instructions/instruction_adb.c:86
+msgid ""
+"Opening the bootloader bypasses this security check to install custom OS or "
+"software on the device."
+msgstr ""
+"Durch das Öffnen des Bootloaders wird diese Sicherheitsüberprüfung umgangen, "
+"um ein benutzerdefiniertes Betriebssystem oder Software auf dem Gerät zu "
+"installieren."
+
+#: functions/instructions/instruction_adb.c:90
+msgid "This allows custom ROMs and other image files to be flashed."
+msgstr "Dadurch können Custom-ROMs und andere Image-Dateien geflasht werden."
+
+#: functions/instructions/instruction_adb.c:135
+msgid "Connect with ADB"
+msgstr "Verbinden über ADB"
+
+#: functions/instructions/instruction_adb.c:137
+msgid ""
+"Connect your device to your computer. \n"
+"1.Enable developer options. \n"
+"1.1. Search for 'Build number' in the settings."
+msgstr ""
+"Verbinden Sie ihr Gerät mit ihrem Computer \n"
+"1.Entwickleroptionen aktivieren. \n"
+"1.1. Suchen sie nach 'Build-Nummer'."
+
+#: functions/instructions/instruction_adb.c:141
+msgid ""
+"1.2. Tap the 'Build number' seven times. \n"
+"1.3. Search for 'Debug' in the settings. \n"
+"1.4. Activate USB debugging. \n"
+"1.5. Activate 'File transfer' in the USB settings."
+msgstr ""
+
+#: functions/instructions/instruction_adb.c:145
+msgid "2. Use the program to check whether there is a connection to the ADB."
+msgstr ""
+"2. Überprüfen Sie mit dem Programm, ob eine Verbindung zum ADB besteht."
+
+#: functions/instructions/instruction_adb.c:192
+msgid ""
+"1. Navigate in the application through 'Reboot device' to 'Reboot from ADB'."
+msgstr ""
+"1. Navigieren Sie in der Anwendung über 'Gerät neustarten' zu 'Von ADB neu "
+"starten'."
+
+#: functions/instructions/instruction_adb.c:196
+msgid "2. Wait until your device is in fastboot mode."
+msgstr "2. Warten Sie, bis sich Ihr Gerät im Fastboot-Modus befindet."
+
+#: functions/instructions/instruction_adb.c:200
+msgid "3. Check whether there is a connection to fastboot mode."
+msgstr "3. Überprüfen Sie, ob eine Verbindung zum Fastboot-Modus besteht."
+
+#: functions/instructions/instruction_backup.c:25
+msgid ""
+"The backup serves to protect you from data loss and is recommended before "
+"every flash operation. There are two types of backup: "
+msgstr ""
+"Die Sicherung dient dazu, Sie vor Datenverlust zu schützen, und wird vor "
+"jedem Flash-Vorgang empfohlen. Es gibt zwei Arten von Sicherungen: "
+
+#: functions/instructions/instruction_backup.c:29
+msgid ""
+"1. The backup with root. \n"
+"2. The backup without root. \n"
+"When backing up with root, the partitions are copied as images and can be "
+"flashed again later."
+msgstr ""
+"1. Die Sicherung mit Root-Rechten. \n"
+"2. Die Sicherung ohne Root-Rechte. \n"
+"Bei der Sicherung mit Root-Rechten werden die Partitionen als Images kopiert "
+"und können später erneut geflasht werden."
+
+#: functions/instructions/instruction_backup.c:33
+msgid ""
+"'Open Android Backup' is used for backups without root. It is an open source "
+"tool for Linux."
+msgstr ""
+"'Open Android Backup' wird für Backups ohne Root-Zugriff verwendet. Es "
+"handelt sich um ein Open-Source-Tool für Linux."
+
+#: functions/instructions/instruction_gsi.c:27
+msgid ""
+"GSI (Generic System Image) is an Android system image that requires support "
+"for Project Treble (see further information)."
+msgstr ""
+"GSI (Generic System Image) ist ein Android-System-Image, das Unterstützung "
+"für Project Treble erfordert (siehe weitere Informationen)."
+
+#: functions/instructions/instruction_gsi.c:31
+msgid ""
+"GSI enable Android devices without custom ROMs support manual flashing of "
+"newer Android versions."
+msgstr ""
+"GSI ermöglicht Android-Geräten ohne benutzerdefinierte ROMs das manuelle "
+"Flashen von neueren Android-Versionen."
+
+#: functions/instructions/instruction_gsi.c:72
+msgid "GSI Flashing"
+msgstr "GSI Flashen"
+
+#: functions/instructions/instruction_gsi.c:74
+msgid ""
+"1. Check if your device is compatible with Project Treble. \n"
+"2. Download a corresponding GSI. \n"
+"3. Prepare the images for the Flash."
+msgstr ""
+"1. Überprüfen Sie, ob Ihr Gerät mit Project Treble kompatibel ist. \n"
+"2. Laden Sie eine entsprechende GSI herunter. \n"
+"3. Bereiten Sie die Images für den Flash vor."
+
+#: functions/instructions/instruction_gsi.c:78
+msgid ""
+"4. Boot your device in Fastboot. \n"
+"5. Open the bootloader. Some devices do not support the Fastboot method."
+msgstr ""
+"4. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
+"5. Öffnen Sie den Bootloader. Einige Geräte unterstützen die Fastboot-"
+"Methode nicht."
+
+#: functions/instructions/instruction_gsi.c:82
+msgid ""
+"The alternatives 'dirty flash'(1) and 'clean flash'(2) are available as "
+"flash methods."
+msgstr ""
+"Die Alternativen 'Dirty Flash' (1) und 'Clean Flash' (2) sind als Flash-"
+"Methoden verfügbar."
+
+#: functions/instructions/instruction_gsi.c:126
+msgid "Clean Flash"
+msgstr "Clean Flash"
+
+#: functions/instructions/instruction_gsi.c:127
+msgid ""
+"1. Delete all user data. \n"
+"2. Flash the system image \n"
+"3. If necessary, flash a vbmeta.img. \n"
+"4. Restart your device."
+msgstr ""
+"1. Löschen Sie alle Benutzerdaten. \n"
+"2. Flashen Sie das System-Image. \n"
+"3. Flashen Sie gegebenenfalls eine vbmeta.img-Datei. \n"
+"4. Starten Sie Ihr Gerät neu."
+
+#: functions/instructions/instruction_gsi.c:165
+msgid "Dirty Flash"
+msgstr "Dirty Flash"
+
+#: functions/instructions/instruction_gsi.c:167
+msgid ""
+"After a 'dirty flash', the user data is retained, but not every GSI starts "
+"afterwards."
+msgstr ""
+"Nach einem 'Dirty Flash' bleiben die Benutzerdaten erhalten, aber nicht jede "
+"GSI startet danach neu."
+
+#: functions/instructions/instruction_gsi.c:171
+msgid ""
+"1. Flash the system image. \n"
+"2. Restart your device."
+msgstr ""
+"1. Flashen Sie das System-Image. \n"
+"2. Starten Sie ihr Gerät neu."
+
+#: functions/instructions/instruction_flash.c:14
+msgid "Rooting"
+msgstr "Rooten"
+
+#: functions/instructions/instruction_flash.c:15
+msgid "Vendor (VNDK)"
+msgstr "Vendor (VNDK)"
+
+#: functions/instructions/instruction_flash.c:16
+msgid "Generic System Image (GSI)"
+msgstr "Generisches System Image (GSI)"
+
+#: functions/instructions/instruction_flash.c:17
+msgid "Custom ROMs"
+msgstr "Custom-ROMs"
+
+#: functions/instructions/instruction_flash.c:19
+msgid "Others"
+msgstr "Andere"
+
+#: functions/instructions/instruction_info.c:25
+msgid "Project Treble"
+msgstr "Project Treble"
+
+#: functions/instructions/instruction_info.c:27
+msgid ""
+"Project Treble is an Android initiative from Google that separates the "
+"operating system and hardware components."
+msgstr ""
+"Project Treble ist eine Android-Initiative von Google, die das "
+"Betriebssystem und die Hardwarekomponenten voneinander trennt."
+
+#: functions/instructions/instruction_info.c:31
+msgid ""
+"This makes it easier for manufacturers to provide updates while the OS is "
+"independent of chipset-specific drivers."
+msgstr ""
+"Dies erleichtert es den Herstellern, Updates bereitzustellen, während das "
+"Betriebssystem unabhängig von chipsatzspezifischen Treibern ist."
+
+#: functions/instructions/instruction_info.c:73
+msgid "a/b Partitioning"
+msgstr "a/b-Partitionierung"
+
+#: functions/instructions/instruction_info.c:75
+msgid ""
+"The A/B partitioning scheme uses two system partitions for seamless updates "
+"by switching the slot, provides higher security and continuous operation."
+msgstr ""
+"Das A/B-Partitionierungsschema verwendet zwei Systempartitionen für nahtlose "
+"Updates.Durch das Umschalten des Steckplatzes werden höhere Sicherheit und "
+"kontinuierlicher Betrieb gewährleistet."
+
+#: functions/instructions/instruction_info.c:79
+msgid ""
+"The Only-A scheme has only one partition, allows easier management, but is "
+"more prone to errors during the update."
+msgstr ""
+"Das Only-A-Schema hat nur eine Partition, ermöglicht eine einfachere "
+"Verwaltung, ist jedoch anfälliger für Fehler während der Aktualisierung."
+
+#: functions/instructions/instruction_info.c:120
+msgid "System-as-root"
+msgstr "System-as-Root"
+
+#: functions/instructions/instruction_info.c:122
+msgid ""
+"System-as-root is an Android mechanism in which the system image is mounted "
+"as the root file system."
+msgstr ""
+"System-as-root ist ein Android-Mechanismus, bei dem das System-Image als "
+"Root-Dateisystem gemountet wird."
+
+#: functions/instructions/instruction_info.c:126
+msgid ""
+"This improves the separation of system and vendor partitions, increases "
+"security and facilitates system updates and the management of authorizations."
+msgstr ""
+"Dies verbessert die Trennung von System- und Anbieterpartitionen, erhöht die "
+"Sicherheit und erleichtert Systemaktualisierungen und die Verwaltung von "
+"Berechtigungen."
+
+#: functions/instructions/instruction_info.c:167
+msgid "Kernel"
+msgstr "Kernel"
+
+#: functions/instructions/instruction_info.c:169
+msgid ""
+"The kernel is the core of an operating system, which communicates directly "
+"with the hardware and manages resources such as CPU, memory and devices."
+msgstr ""
+"Der Kernel ist der Kern eines Betriebssystems, der direkt mit der Hardware "
+"kommuniziertund Ressourcen wie CPU, Speicher und Geräte verwaltet."
+
+#: functions/instructions/instruction_info.c:173
+msgid ""
+"The kernel forms the interface between hardware, applications and the rest "
+"of the system and ensures secure and efficient execution."
+msgstr ""
+"Der Kernel bildet die Schnittstelle zwischen Hardware, Anwendungen und dem "
+"Rest des Systems und gewährleistet eine sichere und effiziente Ausführung."
+
+#: functions/instructions/instruction_info.c:177
+msgid ""
+"Android versions are only compatible with certain Kernel versions; if "
+"incompatible, Android will not start."
+msgstr ""
+"Android-Versionen sind nur mit bestimmten Kernel-Versionen kompatibel; bei "
+"Inkompatibilität startet Android nicht."
+
+#: functions/instructions/instruction_recovery.c:27
+msgid ""
+"Recovery mode is a special boot menu on Android devices that is used to "
+"maintain and restore the system."
+msgstr ""
+"Der Recoverymodus ist ein spezielles Startmenü auf Android-Geräten, das zur "
+"Wartung und Wiederherstellung des Systems verwendet wird."
+
+#: functions/instructions/instruction_recovery.c:31
+msgid ""
+"This enables functions such as resetting to factory settings, installing "
+"updates and some other basic functions to restore the system."
+msgstr ""
+"Dadurch werden Funktionen wie das Zurücksetzen auf die Werkseinstellungen, "
+"die Installation von Updates und einige andere grundlegende Funktionen zur "
+"Wiederherstellung des Systems ermöglicht."
+
+#: functions/instructions/instruction_recovery.c:35
+msgid ""
+"Custom coverys have many more functions than the stock recoverys from the "
+"same manufacturer. These usually only have basic features on board."
+msgstr ""
+"Custom-Recoveries haben viel mehr Funktionen als die Stockrecoveries "
+"desselben Herstellers. Diese verfügen in der Regel nur über grundlegende "
+"Funktionen."
+
+#: functions/instructions/instruction_recovery.c:80
+msgid "Flashing the recovery"
+msgstr "Recovery Flashen"
+
+#: functions/instructions/instruction_recovery.c:82
+msgid ""
+"1. Check whether there is a custom recovery for your device. \n"
+"2. Download a corresponding recovery. \n"
+"3. Prepare the images for the flash."
+msgstr ""
+"1. Überprüfen Sie, ob es eine Custom-Recovery für Ihr Gerät gibt. \n"
+"2. Laden Sie eine entsprechende Recvery herunter. \n"
+"3. Bereiten Sie die Images für den Flash-Vorgang vor."
+
+#: functions/instructions/instruction_recovery.c:86
+msgid ""
+"4. Boot your device into fastboot mode. \n"
+"5. Open the bootloader. Some devices do not support the fastboot method."
+msgstr ""
+"4. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
+"5. Öffnen Sie den Bootloader. Einige Geräte unterstützen die Fastboot-"
+"Methode nicht."
+
+#: functions/instructions/instruction_recovery.c:90
+msgid ""
+"Find out more about your chipset and the device. \n"
+"6. Flash the recovery image with this application. \n"
+"7. Boot your device into the recovery."
+msgstr ""
+"Erfahren Sie mehr über Ihren Chipsatz und das Gerät. \n"
+"6. Flashen Sie das Recovery-Image mit dieser Anwendung. \n"
+"7. Starten Sie Ihr Gerät im Recoverymodus."
+
+#: functions/instructions/instruction_preflash.c:67
+msgid "Preparation Flash"
+msgstr "Vorbereitungen Flash"
+
+#: functions/instructions/instruction_preflash.c:69
+msgid ""
+"1. Provide more detailed information about your device and the chipset of "
+"the device. \n"
+"2. Search for corresponding custom ROMs, custom recoverys or GSIs."
+msgstr ""
+"1. Geben Sie detailliertere Informationen zu Ihrem Gerät und dem Chipsatz "
+"des Geräts an. \n"
+"2. Suchen Sie nach entsprechenden benutzerdefinierten ROMs, "
+"benutzerdefinierten Wiederherstellungen oder GSIs."
+
+#: functions/instructions/instruction_preflash.c:73
+msgid ""
+"3. Check the availability of Project Treble for your device. \n"
+"4. Check which partitioning scheme is available on your device (a/b-devices "
+"or only-a-devices)."
+msgstr ""
+"3. Überprüfen Sie die Verfügbarkeit von Project Treble für Ihr Gerät. \n"
+"4. Überprüfen Sie, welches Partitionierungsschema auf Ihrem Gerät verfügbar "
+"ist (a/b-Geräte oder nur-a-Geräte)."
+
+#: functions/instructions/instruction_preflash.c:77
+msgid ""
+"5. Back up your data locally and, if you wish, in a cloud. \n"
+"6. Download all the files you need for the flash."
+msgstr ""
+
+#: functions/instructions/instruction_preflash.c:81
+msgid ""
+"7. Read the developer's instructions before using Flash. \n"
+"8. Copy all files that are flashed to: '~/Downloads/ROM-Install/'"
+msgstr ""
+"7. Lesen Sie die Anweisungen des Entwicklers, bevor Sie Flash verwenden. \n"
+"8. Kopieren Sie alle geflashten Dateien nach: '~/Downloads/ROM-Install/'"
+
+#: functions/instructions/instruction_preflash.c:129
+msgid "Some custom ROMs"
+msgstr "Einige Custom-ROMs"
+
+#: functions/instructions/instruction_preflash.c:130
+msgid "TWRP (a recovery)"
+msgstr "TWRP (Recovery)"
+
+#: functions/instructions/instruction_preflash.c:131
+msgid "/e/ OS"
+msgstr "/e/ OS"
+
+#: functions/instructions/instruction_preflash.c:132
+msgid "LineageOS"
+msgstr "LineageOS"
+
+#: functions/instructions/instruction_preflash.c:133
+msgid "Project Elixir"
+msgstr "Project Elixir"
+
+#: functions/instructions/instruction_preflash.c:134
+msgid "CrDroid"
+msgstr "CrDroid"
+
+#: functions/instructions/instruction_preflash.c:135
+msgid "Evolution X"
+msgstr "Evolution X"
+
+#: functions/instructions/instruction_custom_rom.c:27
+msgid ""
+"Custom ROMs are modified versions of Android to offer additional functions, "
+"performance improvements or a different user interface."
+msgstr ""
+"Custom-ROMs sind modifizierte Versionen von Android, die zusätzliche "
+"Funktionen, Leistungsverbesserungen oder eine andere Benutzeroberfläche "
+"bieten."
+
+#: functions/instructions/instruction_custom_rom.c:31
+msgid ""
+"They replace the pre-installed Android and often contain newer software "
+"versions or special customizations that the manufacturer does not offer."
+msgstr ""
+"Sie ersetzen das vorinstallierte Android und enthalten oft neuere "
+"Softwareversionen oder spezielle Anpassungen, die der Hersteller nicht "
+"anbietet."
+
+#: functions/instructions/instruction_custom_rom.c:73
+msgid "Custom ROM flashing"
+msgstr "Flashen Custom-ROMs"
+
+#: functions/instructions/instruction_custom_rom.c:75
+msgid ""
+"1. Download a custom ROM for your device. \n"
+"2. Boot your device into fastboot mode. \n"
+"3. Unlock the bootloader."
+msgstr ""
+"1. Laden Sie ein benutzerdefiniertes ROM für Ihr Gerät herunter. \n"
+"2. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
+"3. Entsperren Sie den Bootloader."
+
+#: functions/instructions/instruction_custom_rom.c:79
+msgid ""
+"4. Flash the custom recovery, the boot image (boot.img/init_boot.img), \n"
+"if necessary the dtbo.img. \n"
+"5. Perform a reboot in the recovery."
+msgstr ""
+"4. Flashen Sie die benutzerdefinierte Wiederherstellung, das Boot-Image "
+"(boot.img/init_boot.img), \n"
+"falls erforderlich, die dtbo.img. \n"
+"5. Führen Sie einen Neustart in der Wiederherstellung durch."
+
+#: functions/instructions/instruction_custom_rom.c:83
+msgid ""
+"6. Copy the zip of the custom ROM to your device. \n"
+"7. Tap install and flash the zip."
+msgstr ""
+"6. Kopieren Sie die ZIP-Datei des benutzerdefinierten ROMs auf Ihr Gerät. \n"
+"7. Tippen Sie auf 'Installieren' und flashen Sie die ZIP-Datei."
+
+#: functions/instructions/instruction_custom_rom.c:87
+msgid ""
+"8. Optionally you can now flash Magisk (as a zip) or Google services (only "
+"if your custom ROM does not contain any). \n"
+"9. Restart your device."
+msgstr ""
+"8. Optional können Sie nun Magisk (als ZIP-Datei) oder Google-Dienste (nur, "
+"wenn Ihr Custom-ROM keine enthält) flashen. \n"
+"9. Starten Sie Ihr Gerät neu."
+
+#: functions/instructions/instruction_vendor.c:25
+msgid ""
+"Everything labeled 'Vendor' are manufacturer- or device-specific components "
+"of the operating system. Changes to these can lead to problems."
+msgstr ""
+"Alle mit 'Vendor' gekennzeichneten Komponenten sind hersteller- oder "
+"gerätespezifische Komponentendes Betriebssystems. Änderungen daran können zu "
+"Problemen führen."
+
+#: functions/instructions/instruction_vendor.c:29
+msgid ""
+"The VNDK version (Vendor Native Development Kit) is a collection of "
+"libraries and guidelines that separates the hardware-specific part from the "
+"rest of Android."
+msgstr ""
+"Die VNDK-Version (Vendor Native Development Kit) ist eine Sammlung von "
+"Bibliotheken und Richtlinien, die den hardwarespezifischen Teil vom Rest von "
+"Android trennen."
+
+#: functions/instructions/instruction_vendor.c:33
+msgid ""
+"This makes updates and maintenance easier because manufacturer-specific "
+"adjustments do not affect the compatibility and stability of the Android "
+"system."
+msgstr ""
+"Dies erleichtert Updates und Wartungsarbeiten, da herstellerspezifische "
+"Anpassungen keinen Einfluss auf die Kompatibilität und Stabilität des "
+"Android-Systems haben."
 
 #: functions/info.c:53
 msgid "Android Info:"
@@ -296,14 +1732,86 @@ msgstr "Root-Rechte: "
 msgid "System-on-Chip: "
 msgstr "System-on-Chip: "
 
-#: functions/info.c:89 functions/main.c:137
-#: functions/instructions/instruction_GUI.c:17
-msgid "Info"
-msgstr "Info"
-
 #: functions/info.c:136
 msgid "Check for root permissions..."
 msgstr "Prüfe auf Root-Rechte..."
+
+#: functions/run_first_run_setup.c:92
+msgid "Welcome to the Fastboot Assistant!"
+msgstr "Willkommen beim Fastboot-Assistant!"
+
+#: functions/run_first_run_setup.c:96
+msgid " Let's get everything set up together."
+msgstr "Lassen Sie uns alles gemeinsam vorbereiten."
+
+#: functions/run_first_run_setup.c:133
+msgid "Here you can set important preferences for your Fastboot Assistant."
+msgstr ""
+"Hier können Sie wichtige Einstellungen für Ihren Fastboot Assistant "
+"vornehmen."
+
+#: functions/run_first_run_setup.c:145
+msgid "Choose folder for flashing files"
+msgstr "Auswählen des Ordners für Flash Dateien"
+
+#: functions/run_first_run_setup.c:176
+msgid ""
+"To work correctly, the Fastboot Assistant needs to perform some initial "
+"setup."
+msgstr ""
+"Damit der Fastboot Assistant ordnungsgemäß funktioniert, muss zunächst eine "
+"Einrichtung durchgeführt werden."
+
+#: functions/run_first_run_setup.c:191
+msgid "1. Creating all required folders"
+msgstr "1. Erstellen der benötigten Ordner"
+
+#: functions/run_first_run_setup.c:198
+msgid "2. Adjusting the system environment"
+msgstr "2. Anpassungen an die System-Umgebung"
+
+#: functions/run_first_run_setup.c:205
+msgid "Configuration completed."
+msgstr "Konfiguration abgeschlossen."
+
+#: functions/run_first_run_setup.c:264
+msgid "Use"
+msgstr "Nutzung"
+
+#: functions/run_first_run_setup.c:269
+msgid "1. Please read the manual and documentation before using the program."
+msgstr ""
+"1. Bitte lesen Sie vor der Verwendung des Programms die Anleitung und die "
+"Dokumentation."
+
+#: functions/run_first_run_setup.c:273
+msgid "2. Always copy all images to be flashed into the 'ROM-Install' folder."
+msgstr ""
+"2. Kopieren Sie immer alle zu flashenden Bilder in den Ordner 'ROM-Install'."
+
+#: functions/run_first_run_setup.c:277
+msgid "3. If flashing Samsung devices, always use 'heimdall'."
+msgstr ""
+"3. Verwenden Sie beim Flashen von Samsung-Geräten immer die Option "
+"'heimdall'."
+
+#: functions/run_first_run_setup.c:281
+msgid "4. Check regularly for Fastboot-Assistant updates."
+msgstr ""
+"4. Überprüfen Sie regelmäßig, ob Updates für Fastboot-Assistant verfügbar "
+"sind."
+
+#: functions/run_first_run_setup.c:343
+msgid "Have fun with the Fastboot-Assistants!"
+msgstr "Viel Spaß mit den Fastboot-Assistant!"
+
+#: functions/run_first_run_setup.c:347
+msgid "The setup is complete. The Fastboot-Assistant is now ready."
+msgstr "Setup beendet. Der Fastboot-Assistant ist jetzt bereit."
+
+#: functions/run_first_run_setup.c:353
+msgid "Finished"
+msgstr "Beendet"
 
 #: functions/info_tools.c:49
 msgid "System and Package Informations:"
@@ -436,699 +1944,6 @@ msgstr "System-Informationen"
 msgid "Fastboot-Assistant: v.0.9.1.dev"
 msgstr "Fastboot-Assistant: v.0.9.1.dev"
 
-#: functions/flash/flash_others.c:14
-msgid "Predefined images"
-msgstr "Vordefinierte Images"
-
-#: functions/flash/flash_others.c:15
-msgid "Images in the directory"
-msgstr "Images im Verzeichnis"
-
-#: functions/flash/flash_others.c:16 functions/flash/flash_recovery.c:29
-#: functions/flash/flash_boot.c:57 functions/flash/flash_data.c:42
-#: functions/flash/flash_vendor.c:70 functions/flash/flash_preloader_super.c:70
-#: functions/flash/flash_vbmeta_dtbo.c:57 functions/flash/flash_system.c:137
-#: functions/preflash/set_active_slot.c:101 functions/preflash/partitions.c:80
-#: functions/preflash/lock_unlock_bootloader.c:79
-#: functions/preflash/prepare/prepare.c:20
-#: functions/preflash/backup/backup_function.c:16
-#: functions/preflash/backup/backup_noroot.c:101
-#: functions/config-project/remove_old.c:99 functions/reboot/reboot.c:70
-#: functions/reboot/reboot_recovery.c:57 functions/reboot/reboot_fastboot.c:94
-#: functions/reboot/reboot_heimdall.c:54
-#: functions/instructions/instruction_flash.c:20
-#: functions/instructions/instruction_others.c:18
-#: functions/instructions/instruction_preflash.c:60
-#: functions/instructions/instruction_adb.c:18
-#: functions/instructions/instruction_gsi.c:18
-#: functions/instructions/instruction_info.c:18
-#: functions/instructions/instruction_prepare_flash.c:16
-#: functions/instructions/instruction_recovery.c:18
-#: functions/instructions/instruction_root.c:31
-#: functions/instructions/instruction_custom_rom.c:18
-msgid "Back"
-msgstr "Zurück"
-
-#: functions/flash/flash_GUI.c:14
-msgid "Flash Recovery"
-msgstr "Recovery flashen"
-
-#: functions/flash/flash_GUI.c:15
-msgid "Flash Boot"
-msgstr "Boot flashen"
-
-#: functions/flash/flash_GUI.c:16
-msgid "Flash Vendor"
-msgstr "Vendor flashen"
-
-#: functions/flash/flash_GUI.c:17
-msgid "Flash payload.zip"
-msgstr "Payload.zip flashen"
-
-#: functions/flash/flash_GUI.c:18
-msgid "Flash System"
-msgstr "System flashen"
-
-#: functions/flash/flash_GUI.c:19
-msgid "Flash vbmeta/dtbo"
-msgstr "vbmeta/dtbo flashen"
-
-#: functions/flash/flash_GUI.c:20
-msgid "Flash Preloader"
-msgstr "Bootloader flashen"
-
-#: functions/flash/flash_GUI.c:21
-msgid "Flash Nutzerdaten"
-msgstr "Nutzerdaten flashen"
-
-#: functions/flash/flash_GUI.c:22
-msgid "Flash Other Images"
-msgstr "Andere Images flashen"
-
-#: functions/flash/flash_GUI.c:23 functions/get_devices.c:83
-#: functions/preflash/preflash_GUI.c:20 functions/treble_updater.c:219
-#: functions/config-project/config-project.c:63
-#: functions/reboot/reboot_GUI.c:19 functions/instructions/instruction_GUI.c:18
-msgid "Back to Home"
-msgstr "Zurück zur Startseite"
-
-#: functions/flash/flash_recovery.c:27
-#: functions/instructions/instruction_flash.c:18
-#: functions/instructions/instruction_recovery.c:25
-msgid "Recovery"
-msgstr "Recovery"
-
-#: functions/flash/flash_recovery.c:28
-msgid "Recovery (heimdall)"
-msgstr "Recovery (Heimdall)"
-
-#: functions/flash/flash_boot.c:51
-msgid "Boot"
-msgstr "Boot"
-
-#: functions/flash/flash_boot.c:52
-msgid "Boot (a/b)"
-msgstr "Boot (a/b)"
-
-#: functions/flash/flash_boot.c:53
-msgid "Boot (heimdall)"
-msgstr "Boot (heimall)"
-
-#: functions/flash/flash_boot.c:54
-msgid "init_boot"
-msgstr "init_boot"
-
-#: functions/flash/flash_boot.c:55
-msgid "init_boot (a/b)"
-msgstr "init_boot (a/b)"
-
-#: functions/flash/flash_boot.c:56
-msgid "init_boot (heimdall)"
-msgstr "init_boot (Heimdall)"
-
-#: functions/flash/flash_data.c:38
-msgid "Metadata"
-msgstr "Metadata"
-
-#: functions/flash/flash_data.c:39
-msgid "Metadata (heimdall)"
-msgstr "Metadata (Heimdall)"
-
-#: functions/flash/flash_data.c:40
-msgid "Userdata"
-msgstr "Nutzerdaten"
-
-#: functions/flash/flash_data.c:41
-msgid "Userdata (heimdall)"
-msgstr "Nutzerdaten (Heimdall)"
-
-#: functions/flash/flash_vendor.c:62
-msgid "Vendor"
-msgstr "Vendor"
-
-#: functions/flash/flash_vendor.c:63
-msgid "Vendor (a/b"
-msgstr "Vendor (a/b)"
-
-#: functions/flash/flash_vendor.c:64
-msgid "Vendor (heimdall)"
-msgstr "Vendor (Heimdall)"
-
-#: functions/flash/flash_vendor.c:65
-msgid "vendor_boot"
-msgstr "vendor_boot"
-
-#: functions/flash/flash_vendor.c:66
-msgid "vendor_boot (a/b)"
-msgstr "vendor_boot (a/b)"
-
-#: functions/flash/flash_vendor.c:67
-msgid "vendor_boot (heimdall)"
-msgstr "vendor_boot (Heimdall)"
-
-#: functions/flash/flash_vendor.c:68
-msgid "vendor_kernel_boot"
-msgstr "vendor_kernel_boot"
-
-#: functions/flash/flash_vendor.c:69
-msgid "vendor_kernel_boot (heimdall)"
-msgstr "vendor_kernel_boot (Heimdall)"
-
-#: functions/flash/flash_preloader_super.c:62
-msgid "preloader.bin (only-a)"
-msgstr "preloader.bin (only-a)"
-
-#: functions/flash/flash_preloader_super.c:63
-msgid "preloader.bin (a/b)"
-msgstr "preloader.bin (a/b)"
-
-#: functions/flash/flash_preloader_super.c:64
-msgid "preloader.img (only-a)"
-msgstr "preloader.img (only-a)"
-
-#: functions/flash/flash_preloader_super.c:65
-msgid "preloader.img (a/b)"
-msgstr "preloader.img (a/b)"
-
-#: functions/flash/flash_preloader_super.c:66
-msgid "preloader.bin (heimdall)"
-msgstr "prelaoder.bin (Heimdall)"
-
-#: functions/flash/flash_preloader_super.c:67
-msgid "preloader.img (heimdall)"
-msgstr "preloader.img (Heimdall)"
-
-#: functions/flash/flash_preloader_super.c:68
-msgid "super.img"
-msgstr "super.img"
-
-#: functions/flash/flash_preloader_super.c:69
-msgid "super.img (heimdall)"
-msgstr "super.img (Heimdall)"
-
-#: functions/flash/flash_vbmeta_dtbo.c:51
-#: functions/instructions/instruction_others.c:104
-msgid "vbmeta"
-msgstr "vbemta"
-
-#: functions/flash/flash_vbmeta_dtbo.c:52
-msgid "vbmeta (a/b)"
-msgstr "vbmeta (a/b)"
-
-#: functions/flash/flash_vbmeta_dtbo.c:53
-msgid "vbmeta (heimdall)"
-msgstr "vbmeta (Heimdall)"
-
-#: functions/flash/flash_vbmeta_dtbo.c:54
-#: functions/instructions/instruction_others.c:25
-msgid "dtbo"
-msgstr "dtbo"
-
-#: functions/flash/flash_vbmeta_dtbo.c:55
-msgid "dtbo (a/b)"
-msgstr "dtbo (a/b)"
-
-#: functions/flash/flash_vbmeta_dtbo.c:56
-msgid "dtbo (heimdall)"
-msgstr "dtbo (Heimdall)"
-
-#: functions/flash/flash_system.c:86 functions/flash/flash_system.c:115
-#: functions/flash/others/flash_images.c:37
-msgid "Fastboot Running"
-msgstr "Fastboot Running"
-
-#: functions/flash/flash_system.c:87
-msgid "Flashing..."
-msgstr "Flashen..."
-
-#: functions/flash/flash_system.c:116
-msgid "Erasing old files..."
-msgstr "Lösche alte Dateien..."
-
-#: functions/flash/flash_system.c:134
-msgid "System"
-msgstr "System"
-
-#: functions/flash/flash_system.c:135
-msgid "System (heimdall)"
-msgstr "System (Heimdall)"
-
-#: functions/flash/flash_system.c:136
-msgid "System (inactive)"
-msgstr "System (Inaktiv)"
-
-#: functions/flash/flash_payload.c:54 functions/main.c:135
-msgid "Flash"
-msgstr "Flash"
-
-#: functions/flash/flash_payload.c:55
-msgid "Sideloading..."
-msgstr "Sideloading..."
-
-#: functions/flash/others/flash_list_images.c:25
-msgid "Flashing gz.img..."
-msgstr "Flashe gz.img..."
-
-#: functions/flash/others/flash_list_images.c:35
-msgid "Flashing lk.img..."
-msgstr "Flashe lk.img..."
-
-#: functions/flash/others/flash_list_images.c:45
-msgid "Flashing logo.img..."
-msgstr "Flashe logo.img..."
-
-#: functions/flash/others/flash_list_images.c:55
-msgid "Flashing md1img.img..."
-msgstr "Flashe md1img.img..."
-
-#: functions/flash/others/flash_list_images.c:65
-msgid "Flashing metadata.img..."
-msgstr "Flashe metadata.img..."
-
-#: functions/flash/others/flash_list_images.c:75
-msgid "Flashing protect.img..."
-msgstr "Flashe protect.img..."
-
-#: functions/flash/others/flash_list_images.c:85
-msgid "Flashing scp.img..."
-msgstr "Flashe scp.img..."
-
-#: functions/flash/others/flash_list_images.c:95
-msgid "Flashing spmfw.img..."
-msgstr "Flashe spmfw.img..."
-
-#: functions/flash/others/flash_list_images.c:105
-msgid "Flashing sspm.img..."
-msgstr "Flashe sspm.img..."
-
-#: functions/flash/others/flash_list_images.c:115
-msgid "Flashing tee.img..."
-msgstr "Flashe tee.img..."
-
-#: functions/flash/others/flash_list_images.c:143
-msgid "Fastboot Flashing"
-msgstr "Fastboot Flash"
-
-#: functions/flash/others/flash_list_images.c:143
-msgid "This may take some time..."
-msgstr "Dies kann einige Zeit dauern..."
-
-#: functions/flash/others/flash_images.c:48
-#: functions/flash/others/flash_images.c:93
-msgid "Flash running..."
-msgstr "Flash Running..."
-
-#: functions/flash/others/flash_images.c:61
-msgid "Erasing files..."
-msgstr "Lösche Dateien..."
-
-#: functions/main.c:89
-msgid "Fastboot-Assistant"
-msgstr "Fastboot-Assistant"
-
-#: functions/main.c:131
-msgid "Devices"
-msgstr "Geräte"
-
-#: functions/main.c:132 functions/treble_updater.c:215
-msgid "Reboot Device"
-msgstr "Gerät Neustarten"
-
-#: functions/main.c:133
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: functions/main.c:134
-msgid "Prepare Flashing"
-msgstr "Flashen Vorbereiten"
-
-#: functions/main.c:136
-msgid "Instructions"
-msgstr "Anleitungen"
-
-#: functions/main.c:138 functions/treble_updater.c:160
-msgid "Treble Updater"
-msgstr "Treble Updater"
-
-#: functions/main.c:139
-msgid "About"
-msgstr "Über das Programm"
-
-#: functions/get_devices.c:21
-msgid "Desvices (ADB)"
-msgstr "Geräte (ADB)"
-
-#: functions/get_devices.c:32
-msgid "Devcies (fastboot)"
-msgstr "Geräte (Fastboot)"
-
-#: functions/get_devices.c:52
-msgid "Bootloader Status (ADB)"
-msgstr "Bootloader Status (ADB)"
-
-#: functions/get_devices.c:72
-msgid "Bootloader Status (fastboot)"
-msgstr "Bootloader Status (Fastboot"
-
-#: functions/get_devices.c:79
-msgid "Devices in ADB"
-msgstr "Geräte über ADB"
-
-#: functions/get_devices.c:80
-msgid "Devices in Fastboot"
-msgstr "Geräte über Fastboot"
-
-#: functions/get_devices.c:81
-msgid "Bootloader status (ADB)"
-msgstr "Bootloader Status (ADB)"
-
-#: functions/get_devices.c:82
-msgid "Bootloader status (fastboot)"
-msgstr "Bootloader Status (Fastboot)"
-
-#: functions/preflash/set_active_slot.c:31
-#: functions/preflash/set_active_slot.c:51
-#: functions/preflash/set_active_slot.c:91
-msgid "Setting slot"
-msgstr "Setze Slot"
-
-#: functions/preflash/set_active_slot.c:31
-#: functions/preflash/set_active_slot.c:51
-#: functions/preflash/set_active_slot.c:91
-#: functions/preflash/lock_unlock_bootloader.c:29
-#: functions/preflash/lock_unlock_bootloader.c:49
-#: functions/preflash/lock_unlock_bootloader.c:69
-#: functions/preflash/prepare/unxz_files.c:53
-#: functions/preflash/backup/backup_noroot.c:33
-#: functions/preflash/backup/backup_noroot.c:55
-#: functions/preflash/erase_data.c:31 functions/reboot/reboot.c:28
-#: functions/reboot/reboot.c:60 functions/reboot/reboot_recovery.c:28
-#: functions/reboot/reboot_recovery.c:48 functions/reboot/reboot_fastboot.c:28
-#: functions/reboot/reboot_fastboot.c:50 functions/reboot/reboot_heimdall.c:27
-msgid "Please wait..."
-msgstr "Bitte warten..."
-
-#: functions/preflash/set_active_slot.c:98
-msgid "Set 'a'"
-msgstr "Setze 'a'"
-
-#: functions/preflash/set_active_slot.c:99
-msgid "Set 'b'"
-msgstr "Setze 'b'"
-
-#: functions/preflash/set_active_slot.c:100
-msgid "Set slot auto"
-msgstr "Setze Slot Automatisch"
-
-#: functions/preflash/partitions.c:71
-msgid "Delete Boot"
-msgstr "Lösche Boot"
-
-#: functions/preflash/partitions.c:72
-msgid "Delete Vendor"
-msgstr "Lösche Vendor"
-
-#: functions/preflash/partitions.c:73
-msgid "Delete System"
-msgstr "Lösche System"
-
-#: functions/preflash/partitions.c:74
-msgid "Resize Boot"
-msgstr "Größe Ändern Boot"
-
-#: functions/preflash/partitions.c:75
-msgid "Resize Vendor"
-msgstr "Größe Ändern Vendor"
-
-#: functions/preflash/partitions.c:76
-msgid "Resize System"
-msgstr "Größe Ändern System"
-
-#: functions/preflash/partitions.c:77
-msgid "Create Boot"
-msgstr "Erstelle Boot"
-
-#: functions/preflash/partitions.c:78
-msgid "Create Vendor"
-msgstr "Erstelle Boot"
-
-#: functions/preflash/partitions.c:79
-msgid "Create System"
-msgstr "Erstelle System"
-
-#: functions/preflash/lock_unlock_bootloader.c:29
-#: functions/preflash/lock_unlock_bootloader.c:49
-msgid "Unlocking Bootloader"
-msgstr "Öffne Bootloader"
-
-#: functions/preflash/lock_unlock_bootloader.c:69
-msgid "Locking Bootloader"
-msgstr "Schließe Bootloader"
-
-#: functions/preflash/lock_unlock_bootloader.c:76
-msgid "Unlock (new)"
-msgstr "Öffnen (Neu)"
-
-#: functions/preflash/lock_unlock_bootloader.c:77
-msgid "Unlock (old)"
-msgstr "Öffnen (Alt)"
-
-#: functions/preflash/lock_unlock_bootloader.c:78
-msgid "Lock"
-msgstr "Schließen"
-
-#: functions/preflash/prepare/unxz_files.c:53
-msgid "Decompressing File"
-msgstr "Dateien Dekomprimieren"
-
-#: functions/preflash/prepare/prepare.c:14
-msgid "Boot.img"
-msgstr "Boot.img"
-
-#: functions/preflash/prepare/prepare.c:15
-msgid "Recovery.img"
-msgstr "Recovery.img"
-
-#: functions/preflash/prepare/prepare.c:16
-msgid "Vendor.img"
-msgstr "Vendor.img"
-
-#: functions/preflash/prepare/prepare.c:17
-msgid "System.img"
-msgstr "System.img"
-
-#: functions/preflash/prepare/prepare.c:18
-msgid "payload.zip"
-msgstr "payload.zip"
-
-#: functions/preflash/prepare/prepare.c:19
-msgid "Decompress (xz)"
-msgstr "Dekomprimieren (XZ)"
-
-#: functions/preflash/preflash_GUI.c:14
-#: functions/instructions/instruction_prepare_flash.c:14
-msgid "Backup"
-msgstr "Backup"
-
-#: functions/preflash/preflash_GUI.c:15
-msgid "Prepare files"
-msgstr "Dateien vorbereiten"
-
-#: functions/preflash/preflash_GUI.c:16
-msgid "Delete user data"
-msgstr "Nutzerdaten Löschen"
-
-#: functions/preflash/preflash_GUI.c:17
-msgid "Set active slot"
-msgstr "Setze aktiven Slot"
-
-#: functions/preflash/preflash_GUI.c:18
-msgid "Bootloader"
-msgstr "Bootloader"
-
-#: functions/preflash/preflash_GUI.c:19
-msgid "Partitioning"
-msgstr "Partitionieren"
-
-#: functions/preflash/backup/backup_function.c:14
-msgid "Backup with root"
-msgstr "Backup mit Root"
-
-#: functions/preflash/backup/backup_function.c:15
-msgid "Backup without root"
-msgstr "Backup ohne Root"
-
-#: functions/preflash/backup/backup_noroot.c:33
-msgid "Install Depends"
-msgstr "Installiere Abhängigkeiten "
-
-#: functions/preflash/backup/backup_noroot.c:55
-msgid "Downloading Backup Tool"
-msgstr "Downloade Backup Tools"
-
-#: functions/preflash/backup/backup_noroot.c:89
-msgid "Backup No Root in Sandbox"
-msgstr "Backup ohne Root in Sandbox"
-
-#: functions/preflash/backup/backup_noroot.c:90
-msgid ""
-"Due to the Snap/Flatpak sandbox, it is not possible to execute commands as "
-"root on the host. Run the following command on your host: \n"
-"apt install p7zip-full adb curl whiptail pv bc secure-delete zenity"
-msgstr ""
-"Aufgrund der Snap/Flatpak-Sandbox ist es nicht möglich, Befehle als Root auf dem Host auszuführen. "
-"Führen Sie den folgenden Befehl auf Ihrem Host aus: \n"
-"apt install p7zip-full adb curl whiptail pv bc secure-delete zenity"
-
-#: functions/preflash/backup/backup_noroot.c:97
-msgid "Prepare"
-msgstr "Vorbereiten"
-
-#: functions/preflash/backup/backup_noroot.c:98
-msgid "Download"
-msgstr "Downloaden"
-
-#: functions/preflash/backup/backup_noroot.c:99
-msgid "Start"
-msgstr "Starten"
-
-#: functions/preflash/erase_data.c:31
-msgid "Erasing Userdata"
-msgstr "Nutzerdaten Löschen"
-
-#: functions/treble_updater.c:51
-msgid "Getting devices..."
-msgstr "Gerät suchen..."
-
-#: functions/treble_updater.c:63
-msgid "Copy boot.img..."
-msgstr "Boot.img kopieren..."
-
-#: functions/treble_updater.c:72
-msgid "Installing boot..."
-msgstr "Installiere Boot..."
-
-#: functions/treble_updater.c:80 functions/treble_updater.c:110
-msgid "Cleaning up..."
-msgstr "Aufräumen..."
-
-#: functions/treble_updater.c:92
-msgid "Copy system.img..."
-msgstr "System.img kopieren..."
-
-#: functions/treble_updater.c:102
-msgid "Installing system..."
-msgstr "Installiere System..."
-
-#: functions/treble_updater.c:119
-msgid "Checking bootctl..."
-msgstr "Prüfe auf Bootctl..."
-
-#: functions/treble_updater.c:127 functions/treble_updater.c:138
-msgid "Setting active slot..."
-msgstr "Setze aktiven Slot..."
-
-#: functions/treble_updater.c:161
-msgid "Rebooting device..."
-msgstr "Gerät neustarten..."
-
-#: functions/treble_updater.c:179
-msgid ""
-"The Treble Updater only works with a/b devices. Root rights must be provided."
-msgstr ""
-"Der Treble Updater funktioniert nur mit a/b-Geräten. Root-Rechte müssen "
-"vorhanden sein."
-
-#: functions/treble_updater.c:184
-msgid ""
-"The Treble Updater has the task of flashing a new boot/system image into the "
-"inactive slot and making it active."
-msgstr ""
-"Der Treble Updater hat die Aufgabe, ein neues Boot-/System-Image in den "
-"inaktiven Steckplatz zu flashen und ihn aktiv zu machen."
-
-#: functions/treble_updater.c:189
-msgid "Root permission:"
-msgstr "Root-Rechte:"
-
-#: functions/treble_updater.c:195
-msgid "Bootctl:"
-msgstr "Bootctl:"
-
-#: functions/treble_updater.c:202
-msgid "Flash new boot image"
-msgstr "Boot-Image flashen"
-
-#: functions/treble_updater.c:205
-msgid "Flash new system image"
-msgstr "System-Image flashen"
-
-#: functions/treble_updater.c:208
-msgid "Alternative for slot change (not recommended)"
-msgstr "Alternative für Slot Wechsel (nicht empfohlen)"
-
-#: functions/treble_updater.c:211
-msgid "Start Flash"
-msgstr "Starte Flash"
-
-#: functions/config-project/remove_old.c:47
-#: functions/config-project/remove_old.c:58
-#: functions/config-project/remove_old.c:88
-#: functions/config-project/config-project.c:17
-msgid "Ready!"
-msgstr "Fertig!"
-
-#: functions/config-project/remove_old.c:96
-msgid "ROM-Install"
-msgstr "ROM-Install"
-
-#: functions/config-project/remove_old.c:97
-msgid "Old files"
-msgstr "Alte Dateien"
-
-#: functions/config-project/remove_old.c:98
-msgid "Backups"
-msgstr "Backups"
-
-#: functions/config-project/wsl_config.c:49
-msgid "Configuration"
-msgstr "Konfiguration"
-
-#: functions/config-project/wsl_config.c:50
-msgid "Running configuration..."
-msgstr "Konfigurationen ausführen..."
-
-#: functions/config-project/config-project.c:56
-msgid "Create folder"
-msgstr "Ordner erstellen"
-
-#: functions/config-project/config-project.c:57
-#, fuzzy
-msgid "Cleanup"
-msgstr "Aufräumen"
-
-#: functions/config-project/config-project.c:58
-#: functions/run_first_run_setup.c:216
-msgid "Configure"
-msgstr "Konfigurieren"
-
-#: functions/config-project/config-project.c:59
-#, fuzzy
-msgid "Post Update"
-msgstr "Post Update"
-
-#: functions/config-project/config-project.c:60
-msgid "System Informations"
-msgstr "System-Informationen"
-
-#: functions/config-project/config-project.c:61
-msgid "Define new directory"
-msgstr "Neues Verzeichnis festlegen"
-
-#: functions/config-project/config-project.c:62
-msgid "Updates"
-msgstr "Updates"
-
 #: functions/updater/local_updater.c:37
 msgid "Fastboot-Assistant Updater"
 msgstr "Updater"
@@ -1154,852 +1969,39 @@ msgstr "Update auf Version %s verfügbar."
 msgid "Error downloading the package."
 msgstr "fehler beim Downloaden des Pakets"
 
-#: functions/reboot/reboot.c:28 functions/reboot/reboot.c:60
-msgid "Rebooting"
-msgstr "Neustarten"
-
-#: functions/reboot/reboot.c:68
-msgid "Reboot System"
-msgstr "System neustarten"
-
-#: functions/reboot/reboot.c:69
-msgid "Reboot Image(.img)"
-msgstr "Ins Image(.img) booten"
-
-#: functions/reboot/reboot_recovery.c:28 functions/reboot/reboot_recovery.c:48
-msgid "Rebooting Recovery"
-msgstr "Neustart Recovery"
-
-#: functions/reboot/reboot_recovery.c:55 functions/reboot/reboot_fastboot.c:90
-msgid "Restart ADB"
-msgstr "Neustart ADB"
-
-#: functions/reboot/reboot_recovery.c:56 functions/reboot/reboot_fastboot.c:91
-msgid "Restarting Fastboot"
-msgstr "Neustart Fastboot"
-
-#: functions/reboot/reboot_fastboot.c:28 functions/reboot/reboot_fastboot.c:50
-msgid "Rebooting Bootloader"
-msgstr "Neustart Bootloader"
-
-#: functions/reboot/reboot_fastboot.c:92
-msgid "Fastboot help"
-msgstr "Fastboot Hilfe"
-
-#: functions/reboot/reboot_fastboot.c:93
-msgid "Bootloader variables"
-msgstr "Bootloader Daten"
-
-#: functions/reboot/reboot_GUI.c:15
-#: functions/instructions/instruction_adb.c:190
-msgid "Reboot Fastboot"
-msgstr "Neustart Fastboot"
-
-#: functions/reboot/reboot_GUI.c:16
-msgid "Reboot"
-msgstr "Neustart"
-
-#: functions/reboot/reboot_GUI.c:17
-msgid "Reboot Recovery"
-msgstr "Neustart Recovery"
-
-#: functions/reboot/reboot_GUI.c:18
-msgid "Reboot (heimdall)"
-msgstr "Neustart (Heimdall)"
-
-#: functions/reboot/reboot_heimdall.c:27
-msgid "Rebooting Download"
-msgstr "Neustart Download-Modus"
-
-#: functions/reboot/reboot_heimdall.c:41
-msgid "Please note that your device is in download mode!"
-msgstr "Bitte beachten Sie, dass sich Ihr Gerät im Download-Modus befindet!"
-
-#: functions/reboot/reboot_heimdall.c:51
-msgid "Restart in Download"
-msgstr "Neustart in Download"
-
-#: functions/reboot/reboot_heimdall.c:52
-msgid "Help"
-msgstr "Hilfe"
-
-#: functions/reboot/reboot_heimdall.c:53
-msgid "Output pit"
-msgstr "Pit ausgeben"
-
-#: functions/instructions/instruction_flash.c:14
-msgid "Rooting"
-msgstr "Rooten"
-
-#: functions/instructions/instruction_flash.c:15
-msgid "Vendor (VNDK)"
-msgstr "Vendor (VNDK)"
-
-#: functions/instructions/instruction_flash.c:16
-msgid "Generic System Image (GSI)"
-msgstr "Generisches System Image (GSI)"
-
-#: functions/instructions/instruction_flash.c:17
-msgid "Custom ROMs"
-msgstr "Custom-ROMs"
-
-#: functions/instructions/instruction_flash.c:19
-msgid "Others"
-msgstr "Andere"
-
-#: functions/instructions/instruction_others.c:17
-#: functions/instructions/instruction_preflash.c:59
-#: functions/instructions/instruction_adb.c:17
-#: functions/instructions/instruction_gsi.c:17
-#: functions/instructions/instruction_info.c:17
-#: functions/instructions/instruction_recovery.c:17
-#: functions/instructions/instruction_root.c:30
-#: functions/instructions/instruction_custom_rom.c:17
-#: functions/run_first_run_setup.c:64
-msgid "Next"
-msgstr "Weiter"
-
-#: functions/instructions/instruction_others.c:26
-msgid ""
-"This is a partition which is stored in the device tree of the device. This "
-"is essential for the communication of the hardware with the boot loader and "
-"the kernel."
-msgstr ""
-"Dies ist eine Partition, die im Gerätebaum des Geräts gespeichert ist. Sie "
-"ist für die Kommunikation der Hardware mit dem Bootloader und dem Kernel "
-"unerlässlich."
-
-#: functions/instructions/instruction_others.c:65
-msgid "Super"
-msgstr "Super"
-
-#: functions/instructions/instruction_others.c:66
-msgid ""
-"This is a partition that includes all other partitions on devices with "
-"dynamic partitions."
-msgstr ""
-
-#: functions/instructions/instruction_others.c:105
-msgid ""
-"'vbmeta' ensures that the boot process of Stock-Android runs safely. Some "
-"custom ROMs can only be started if a new vbmeta image has been flashed."
-msgstr ""
-"'vbmeta' stellt sicher, dass der Startvorgang von Stock-Android sicher "
-"abläuft. Einige benutzerdefinierte ROMs können nur gestartet werden, wenn "
-"ein neues vbmeta-Image geflasht wurde."
-
-#: functions/instructions/instruction_vendor.c:25
-msgid ""
-"Everything labeled 'Vendor' are manufacturer- or device-specific components "
-"of the operating system. Changes to these can lead to problems."
-msgstr ""
-"Alle mit 'Vendor' gekennzeichneten Komponenten sind hersteller- oder "
-"gerätespezifische Komponentendes Betriebssystems. Änderungen daran können zu "
-"Problemen führen."
-
-#: functions/instructions/instruction_vendor.c:29
-msgid ""
-"The VNDK version (Vendor Native Development Kit) is a collection of "
-"libraries and guidelines that separates the hardware-specific part from the "
-"rest of Android."
-msgstr ""
-"Die VNDK-Version (Vendor Native Development Kit) ist eine Sammlung von "
-"Bibliotheken und Richtlinien, die den hardwarespezifischen Teil vom Rest von "
-"Android trennen."
-
-#: functions/instructions/instruction_vendor.c:33
-msgid ""
-"This makes updates and maintenance easier because manufacturer-specific "
-"adjustments do not affect the compatibility and stability of the Android "
-"system."
-msgstr ""
-"Dies erleichtert Updates und Wartungsarbeiten, da herstellerspezifische "
-"Anpassungen keinen Einfluss auf die Kompatibilität und Stabilität des "
-"Android-Systems haben."
-
-#: functions/instructions/instruction_backup.c:25
-msgid ""
-"The backup serves to protect you from data loss and is recommended before "
-"every flash operation. There are two types of backup: "
-msgstr ""
-"Die Sicherung dient dazu, Sie vor Datenverlust zu schützen, und wird vor "
-"jedem Flash-Vorgang empfohlen. Es gibt zwei Arten von Sicherungen: "
-
-#: functions/instructions/instruction_backup.c:29
-msgid ""
-"1. The backup with root. \n"
-"2. The backup without root. \n"
-"When backing up with root, the partitions are copied as images and can be "
-"flashed again later."
-msgstr ""
-"1. Die Sicherung mit Root-Rechten. \n"
-"2. Die Sicherung ohne Root-Rechte. \n"
-"Bei der Sicherung mit Root-Rechten werden die Partitionen als Images kopiert "
-"und können später erneut geflasht werden."
-
-#: functions/instructions/instruction_backup.c:33
-msgid ""
-"'Open Android Backup' is used for backups without root. It is an open source "
-"tool for Linux."
-msgstr ""
-"'Open Android Backup' wird für Backups ohne Root-Zugriff verwendet. Es "
-"handelt sich um ein Open-Source-Tool für Linux."
-
-#: functions/instructions/instruction_preflash.c:67
-msgid "Preparation Flash"
-msgstr "Vorbereitungen Flash"
-
-#: functions/instructions/instruction_preflash.c:69
-msgid ""
-"1. Provide more detailed information about your device and the chipset of "
-"the device. \n"
-"2. Search for corresponding custom ROMs, custom recoverys or GSIs."
-msgstr ""
-"1. Geben Sie detailliertere Informationen zu Ihrem Gerät und dem Chipsatz "
-"des Geräts an. \n"
-"2. Suchen Sie nach entsprechenden benutzerdefinierten ROMs, "
-"benutzerdefinierten Wiederherstellungen oder GSIs."
-
-#: functions/instructions/instruction_preflash.c:73
-msgid ""
-"3. Check the availability of Project Treble for your device. \n"
-"4. Check which partitioning scheme is available on your device (a/b-devices "
-"or only-a-devices)."
-msgstr ""
-"3. Überprüfen Sie die Verfügbarkeit von Project Treble für Ihr Gerät. \n"
-"4. Überprüfen Sie, welches Partitionierungsschema auf Ihrem Gerät verfügbar "
-"ist (a/b-Geräte oder nur-a-Geräte)."
-
-#: functions/instructions/instruction_preflash.c:77
-msgid ""
-"5. Back up your data locally and, if you wish, in a cloud. \n"
-"6. Download all the files you need for the flash."
-msgstr ""
-
-#: functions/instructions/instruction_preflash.c:81
-msgid ""
-"7. Read the developer's instructions before using Flash. \n"
-"8. Copy all files that are flashed to: '~/Downloads/ROM-Install/'"
-msgstr ""
-"7. Lesen Sie die Anweisungen des Entwicklers, bevor Sie Flash verwenden. \n"
-"8. Kopieren Sie alle geflashten Dateien nach: '~/Downloads/ROM-Install/'"
-
-#: functions/instructions/instruction_preflash.c:129
-msgid "Some custom ROMs"
-msgstr "Einige Custom-ROMs"
-
-#: functions/instructions/instruction_preflash.c:130
-msgid "TWRP (a recovery)"
-msgstr "TWRP (Recovery)"
-
-#: functions/instructions/instruction_preflash.c:131
-msgid "/e/ OS"
-msgstr "/e/ OS"
-
-#: functions/instructions/instruction_preflash.c:132
-msgid "LineageOS"
-msgstr "LineageOS"
-
-#: functions/instructions/instruction_preflash.c:133
-msgid "Project Elixir"
-msgstr "Project Elixir"
-
-#: functions/instructions/instruction_preflash.c:134
-msgid "CrDroid"
-msgstr "CrDroid"
-
-#: functions/instructions/instruction_preflash.c:135
-msgid "Evolution X"
-msgstr "Evolution X"
-
-#: functions/instructions/instruction_GUI.c:14
-msgid "Dealing with ADB"
-msgstr "Umgang mit ADB"
-
-#: functions/instructions/instruction_GUI.c:15
-msgid "Flashing Images"
-msgstr "Images Flashen"
-
-#: functions/instructions/instruction_GUI.c:16
-msgid "Preparations"
-msgstr "Vorbereitungen"
-
-#: functions/instructions/instruction_adb.c:25
-msgid "ADB/Fastboot"
-msgstr "ADB/Fastboot"
-
-#: functions/instructions/instruction_adb.c:27
-msgid ""
-"ADB (Android Debug Bridge) serves as a communication interface between a "
-"computer and an Android device. It is used for debugging and file transfer."
-msgstr ""
-"ADB (Android Debug Bridge) dient als Kommunikationsschnittstelle zwischen "
-"einemComputer und einem Android-Gerät. Es wird zum Debuggen und zur "
-"Dateiübertragung verwendet."
-
-#: functions/instructions/instruction_adb.c:31
-msgid ""
-"Fastboot is a command line tool for the bootloader of Android devices, with "
-"which user-defined firmware and other system images can be flashed."
-msgstr ""
-"Fastboot ist ein Befehlszeilentool für den Bootloader von Android-Geräten, "
-"mit dem benutzerdefinierte Firmware und andere System-Images geflasht werden "
-"können."
-
-#: functions/instructions/instruction_adb.c:35
-msgid ""
-"Both tools are very useful for developers and advanced users when it comes "
-"to modifying and diagnosing Android devices."
-msgstr ""
-"Beide Tools sind für Entwickler und fortgeschrittene Nutzer sehr nützlich, "
-"wenn es darum geht, Android-Geräte zu modifizieren und zu diagnostizieren."
-
-#: functions/instructions/instruction_adb.c:80
-msgid "Bootloader/Preloader"
-msgstr "Bootloader/Preloader"
-
-#: functions/instructions/instruction_adb.c:82
-msgid ""
-"The bootloader is a program that loads the operating system when an Android "
-"device is started and checks whether the software is secure and authorized."
-msgstr ""
-"Der Bootloader ist ein Programm, das beim Start eines Android-Geräts das "
-"Betriebssystem lädt und überprüft, ob die Software sicher und autorisiert "
-"ist."
-
-#: functions/instructions/instruction_adb.c:86
-msgid ""
-"Opening the bootloader bypasses this security check to install custom OS or "
-"software on the device."
-msgstr ""
-"Durch das Öffnen des Bootloaders wird diese Sicherheitsüberprüfung umgangen, um ein benutzerdefiniertes Betriebssystem oder "
-"Software auf dem Gerät zu installieren."
-
-#: functions/instructions/instruction_adb.c:90
-msgid "This allows custom ROMs and other image files to be flashed."
-msgstr "Dadurch können Custom-ROMs und andere Image-Dateien geflasht werden."
-
-#: functions/instructions/instruction_adb.c:135
-msgid "Connect with ADB"
-msgstr "Verbinden über ADB"
-
-#: functions/instructions/instruction_adb.c:137
-msgid ""
-"Connect your device to your computer. \n"
-"1.Enable developer options. \n"
-"1.1. Search for 'Build number' in the settings."
-msgstr ""
-"Verbinden Sie ihr Gerät mit ihrem Computer \n"
-"1.Entwickleroptionen aktivieren. \n"
-"1.1. Suchen sie nach 'Build-Nummer'."
-
-#: functions/instructions/instruction_adb.c:141
-msgid ""
-"1.2. Tap the 'Build number' seven times. \n"
-"1.3. Search for 'Debug' in the settings. \n"
-"1.4. Activate USB debugging. \n"
-"1.5. Activate 'File transfer' in the USB settings."
-msgstr ""
-
-#: functions/instructions/instruction_adb.c:145
-msgid "2. Use the program to check whether there is a connection to the ADB."
-msgstr ""
-"2. Überprüfen Sie mit dem Programm, ob eine Verbindung zum ADB besteht."
-
-#: functions/instructions/instruction_adb.c:192
-msgid ""
-"1. Navigate in the application through 'Reboot device' to 'Reboot from ADB'."
-msgstr ""
-"1. Navigieren Sie in der Anwendung über 'Gerät neustarten' zu 'Von ADB neu "
-"starten'."
-
-#: functions/instructions/instruction_adb.c:196
-msgid "2. Wait until your device is in fastboot mode."
-msgstr "2. Warten Sie, bis sich Ihr Gerät im Fastboot-Modus befindet."
-
-#: functions/instructions/instruction_adb.c:200
-msgid "3. Check whether there is a connection to fastboot mode."
-msgstr "3. Überprüfen Sie, ob eine Verbindung zum Fastboot-Modus besteht."
-
-#: functions/instructions/instruction_gsi.c:25
-#: functions/instructions/instruction_root.c:38
-#: functions/instructions/instruction_custom_rom.c:25
-msgid "Notes"
-msgstr "Hinweise"
-
-#: functions/instructions/instruction_gsi.c:27
-msgid ""
-"GSI (Generic System Image) is an Android system image that requires support "
-"for Project Treble (see further information)."
-msgstr ""
-"GSI (Generic System Image) ist ein Android-System-Image, das Unterstützung "
-"für Project Treble erfordert (siehe weitere Informationen)."
-
-#: functions/instructions/instruction_gsi.c:31
-msgid ""
-"GSI enable Android devices without custom ROMs support manual flashing of "
-"newer Android versions."
-msgstr ""
-"GSI ermöglicht Android-Geräten ohne benutzerdefinierte ROMs das manuelle "
-"Flashen von neueren Android-Versionen."
-
-#: functions/instructions/instruction_gsi.c:72
-msgid "GSI Flashing"
-msgstr "GSI Flashen"
-
-#: functions/instructions/instruction_gsi.c:74
-msgid ""
-"1. Check if your device is compatible with Project Treble. \n"
-"2. Download a corresponding GSI. \n"
-"3. Prepare the images for the Flash."
-msgstr ""
-"1. Überprüfen Sie, ob Ihr Gerät mit Project Treble kompatibel ist. \n"
-"2. Laden Sie eine entsprechende GSI herunter. \n"
-"3. Bereiten Sie die Images für den Flash vor."
-
-#: functions/instructions/instruction_gsi.c:78
-msgid ""
-"4. Boot your device in Fastboot. \n"
-"5. Open the bootloader. Some devices do not support the Fastboot method."
-msgstr ""
-"4. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
-"5. Öffnen Sie den Bootloader. Einige Geräte unterstützen die Fastboot-"
-"Methode nicht."
-
-#: functions/instructions/instruction_gsi.c:82
-msgid ""
-"The alternatives 'dirty flash'(1) and 'clean flash'(2) are available as "
-"flash methods."
-msgstr ""
-"Die Alternativen 'Dirty Flash' (1) und 'Clean Flash' (2) sind als Flash-"
-"Methoden verfügbar."
-
-#: functions/instructions/instruction_gsi.c:126
-msgid "Clean Flash"
-msgstr "Clean Flash"
-
-#: functions/instructions/instruction_gsi.c:127
-msgid ""
-"1. Delete all user data. \n"
-"2. Flash the system image \n"
-"3. If necessary, flash a vbmeta.img. \n"
-"4. Restart your device."
-msgstr ""
-"1. Löschen Sie alle Benutzerdaten. \n"
-"2. Flashen Sie das System-Image. \n"
-"3. Flashen Sie gegebenenfalls eine vbmeta.img-Datei. \n"
-"4. Starten Sie Ihr Gerät neu."
-
-#: functions/instructions/instruction_gsi.c:165
-msgid "Dirty Flash"
-msgstr "Dirty Flash"
-
-#: functions/instructions/instruction_gsi.c:167
-msgid ""
-"After a 'dirty flash', the user data is retained, but not every GSI starts "
-"afterwards."
-msgstr ""
-"Nach einem 'Dirty Flash' bleiben die Benutzerdaten erhalten, aber nicht jede "
-"GSI startet danach neu."
-
-#: functions/instructions/instruction_gsi.c:171
-msgid ""
-"1. Flash the system image. \n"
-"2. Restart your device."
-msgstr ""
-"1. Flashen Sie das System-Image. \n"
-"2. Starten Sie ihr Gerät neu."
-
-#: functions/instructions/instruction_info.c:25
-msgid "Project Treble"
-msgstr "Project Treble"
-
-#: functions/instructions/instruction_info.c:27
-msgid ""
-"Project Treble is an Android initiative from Google that separates the "
-"operating system and hardware components."
-msgstr ""
-"Project Treble ist eine Android-Initiative von Google, die das "
-"Betriebssystem und die Hardwarekomponenten voneinander trennt."
-
-#: functions/instructions/instruction_info.c:31
-msgid ""
-"This makes it easier for manufacturers to provide updates while the OS is "
-"independent of chipset-specific drivers."
-msgstr ""
-"Dies erleichtert es den Herstellern, Updates bereitzustellen, während das "
-"Betriebssystem unabhängig von chipsatzspezifischen Treibern ist."
-
-#: functions/instructions/instruction_info.c:73
-msgid "a/b Partitioning"
-msgstr "a/b-Partitionierung"
-
-#: functions/instructions/instruction_info.c:75
-msgid ""
-"The A/B partitioning scheme uses two system partitions for seamless updates "
-"by switching the slot, provides higher security and continuous operation."
-msgstr ""
-"Das A/B-Partitionierungsschema verwendet zwei Systempartitionen für nahtlose "
-"Updates.Durch das Umschalten des Steckplatzes werden höhere Sicherheit und "
-"kontinuierlicher Betrieb gewährleistet."
-
-#: functions/instructions/instruction_info.c:79
-msgid ""
-"The Only-A scheme has only one partition, allows easier management, but is "
-"more prone to errors during the update."
-msgstr ""
-"Das Only-A-Schema hat nur eine Partition, ermöglicht eine einfachere "
-"Verwaltung, ist jedoch anfälliger für Fehler während der Aktualisierung."
-
-#: functions/instructions/instruction_info.c:120
-msgid "System-as-root"
-msgstr "System-as-Root"
-
-#: functions/instructions/instruction_info.c:122
-msgid ""
-"System-as-root is an Android mechanism in which the system image is mounted "
-"as the root file system."
-msgstr ""
-"System-as-root ist ein Android-Mechanismus, bei dem das System-Image als "
-"Root-Dateisystem gemountet wird."
-
-#: functions/instructions/instruction_info.c:126
-msgid ""
-"This improves the separation of system and vendor partitions, increases "
-"security and facilitates system updates and the management of authorizations."
-msgstr ""
-"Dies verbessert die Trennung von System- und Anbieterpartitionen, erhöht die "
-"Sicherheit und erleichtert Systemaktualisierungen und die Verwaltung von "
-"Berechtigungen."
-
-#: functions/instructions/instruction_info.c:167
-msgid "Kernel"
-msgstr "Kernel"
-
-#: functions/instructions/instruction_info.c:169
-msgid ""
-"The kernel is the core of an operating system, which communicates directly "
-"with the hardware and manages resources such as CPU, memory and devices."
-msgstr ""
-"Der Kernel ist der Kern eines Betriebssystems, der direkt mit der Hardware kommuniziert"
-"und Ressourcen wie CPU, Speicher und Geräte verwaltet."
-
-#: functions/instructions/instruction_info.c:173
-msgid ""
-"The kernel forms the interface between hardware, applications and the rest "
-"of the system and ensures secure and efficient execution."
-msgstr ""
-"Der Kernel bildet die Schnittstelle zwischen Hardware, Anwendungen und dem "
-"Rest des Systems und gewährleistet eine sichere und effiziente Ausführung."
-
-#: functions/instructions/instruction_info.c:177
-msgid ""
-"Android versions are only compatible with certain Kernel versions; if "
-"incompatible, Android will not start."
-msgstr ""
-"Android-Versionen sind nur mit bestimmten Kernel-Versionen kompatibel; bei "
-"Inkompatibilität startet Android nicht."
-
-#: functions/instructions/instruction_prepare_flash.c:15
-msgid "Prepare images"
-msgstr "Vorbereiten Images"
-
-#: functions/instructions/instruction_recovery.c:27
-msgid ""
-"Recovery mode is a special boot menu on Android devices that is used to "
-"maintain and restore the system."
-msgstr ""
-"Der Recoverymodus ist ein spezielles Startmenü auf Android-Geräten, das zur "
-"Wartung und Wiederherstellung des Systems verwendet wird."
-
-#: functions/instructions/instruction_recovery.c:31
-msgid ""
-"This enables functions such as resetting to factory settings, installing "
-"updates and some other basic functions to restore the system."
-msgstr ""
-"Dadurch werden Funktionen wie das Zurücksetzen auf die Werkseinstellungen, "
-"die Installation von Updates und einige andere grundlegende Funktionen zur "
-"Wiederherstellung des Systems ermöglicht."
-
-#: functions/instructions/instruction_recovery.c:35
-msgid ""
-"Custom coverys have many more functions than the stock recoverys from the "
-"same manufacturer. These usually only have basic features on board."
-msgstr ""
-"Custom-Recoveries haben viel mehr Funktionen als die Stockrecoveries "
-"desselben Herstellers. Diese verfügen in der Regel nur über grundlegende "
-"Funktionen."
-
-#: functions/instructions/instruction_recovery.c:80
-msgid "Flashing the recovery"
-msgstr "Recovery Flashen"
-
-#: functions/instructions/instruction_recovery.c:82
-msgid ""
-"1. Check whether there is a custom recovery for your device. \n"
-"2. Download a corresponding recovery. \n"
-"3. Prepare the images for the flash."
-msgstr ""
-"1. Überprüfen Sie, ob es eine Custom-Recovery für Ihr Gerät gibt. \n"
-"2. Laden Sie eine entsprechende Recvery herunter. \n"
-"3. Bereiten Sie die Images für den Flash-Vorgang vor."
-
-#: functions/instructions/instruction_recovery.c:86
-msgid ""
-"4. Boot your device into fastboot mode. \n"
-"5. Open the bootloader. Some devices do not support the fastboot method."
-msgstr ""
-"4. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
-"5. Öffnen Sie den Bootloader. Einige Geräte unterstützen die Fastboot-"
-"Methode nicht."
-
-#: functions/instructions/instruction_recovery.c:90
-msgid ""
-"Find out more about your chipset and the device. \n"
-"6. Flash the recovery image with this application. \n"
-"7. Boot your device into the recovery."
-msgstr ""
-"Erfahren Sie mehr über Ihren Chipsatz und das Gerät. \n"
-"6. Flashen Sie das Recovery-Image mit dieser Anwendung. \n"
-"7. Starten Sie Ihr Gerät im Recoverymodus."
-
-#: functions/instructions/instruction_root.c:40
-msgid ""
-"When rooting Android devices, the user is granted superuser rights that give "
-"them full access to Android. This gives them the possibility to make far-"
-"reaching changes."
-msgstr ""
-"Beim Rooten von Android-Geräten erhält der Nutzer Superuser-Rechte, die ihm "
-"vollen Zugriff auf Android gewähren. Dies gibt ihm die Möglichkeit, "
-"weitreichende Änderungen vorzunehmen."
-
-#: functions/instructions/instruction_root.c:44
-msgid ""
-"This allows you to remove pre-installed applications, change system settings "
-"and install special applications that require extended permissions."
-msgstr ""
-"Dadurch können Sie vorinstallierte Anwendungen entfernen, "
-"Systemeinstellungen ändern und spezielle Anwendungen installieren, die "
-"erweiterte Berechtigungen erfordern."
-
-#: functions/instructions/instruction_root.c:48
-msgid ""
-"With the extensive rights, there are also great dangers while users and "
-"software can cause great damage to the software."
-msgstr ""
-"Mit den weitreichenden Rechten gehen auch große Gefahren einher, da Nutzer "
-"und Software der Software großen Schaden zufügen können."
-
-#: functions/instructions/instruction_root.c:92
-#: functions/instructions/instruction_root.c:107
-msgid "Magisk"
-msgstr "Magisk"
-
-#: functions/instructions/instruction_root.c:94
-msgid ""
-"Magisk is a package of open source software for Android customization. With "
-"the following components:"
-msgstr ""
-"Magisk ist ein Paket mit Open-Source-Software zur Anpassung von Android. Mit "
-"den folgenden Komponenten:"
-
-#: functions/instructions/instruction_root.c:98
-msgid ""
-"1. MagiskSU: Provision of root access for applications. \n"
-"2. Magisk Modules: Change read-only partitions by installing modules."
-msgstr ""
-"1. MagiskSU: Bereitstellung von Root-Zugriff für Anwendungen. \n"
-"2. Magisk Module: Ändern Sie schreibgeschützte Partitionen durch die "
-"Installation von Modulen."
-
-#: functions/instructions/instruction_root.c:102
-msgid ""
-"3. MagiskBoot: The most comprehensive tool for unpacking and repacking "
-"Android boot images. \n"
-"4. Zygisk: Execute code in all processes of Android applications."
-msgstr ""
-"3. MagiskBoot: Das umfassendste Tool zum Entpacken und Wiederverpacken von "
-"Android-Boot-Images. \n"
-"4. Zygisk: Führen Sie Code in allen Prozessen von Android-Anwendungen aus."
-
-#: functions/instructions/instruction_root.c:108
-msgid "Magisk-APK"
-msgstr "Magisk-APK"
-
-#: functions/instructions/instruction_root.c:156
-msgid "Rooting via Magisk"
-msgstr "Rooten via Magisk"
-
-#: functions/instructions/instruction_root.c:158
-msgid ""
-"1. Install the Magisk APK on your device. \n"
-"2. Start Magisk on your device and select Install Magisk."
-msgstr ""
-"1. Installieren Sie die Magisk-APK auf Ihrem Gerät. \n"
-"2. Starten Sie Magisk auf Ihrem Gerät und wählen Sie 'Magisk installieren'."
-
-#: functions/instructions/instruction_root.c:162
-msgid ""
-"3. Select a boot image for your device and have it patched by Magisk "
-"(Usually the boot images can be found on the Internet. Caution is advised "
-"here)."
-msgstr ""
-"3. Wählen Sie ein Boot-Image für Ihr Gerät aus und lassen Sie es von Magisk "
-"patchen.(In der Regel finden Sie die Boot-Images im Internet. Seien Sie "
-"dabei vorsichtig hier)."
-
-#: functions/instructions/instruction_root.c:166
-msgid ""
-"4. Copy the boot image patched by Magisk to your computer. \n"
-"5. Rename the image to boot.img or let the application prepare it."
-msgstr ""
-"4. Kopieren Sie das von Magisk gepatchte Boot-Image auf Ihren Computer. \n"
-"5. Benennen Sie das Image in boot.img um oder lassen Sie es von der Anwendung vorbereiten."
-
-#: functions/instructions/instruction_root.c:170
-msgid ""
-"6. Start your device to Fastboot. \n"
-"7. Flash the boot image for your device type. \n"
-"8. Reboot your device. Now Magisk should provide root privileges."
-msgstr ""
-"6. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
-"7. Flashen Sie das Boot-Image für Ihren Gerätetyp. \n"
-"8. Starten Sie Ihr Gerät neu. Nun sollte Magisk Root-Rechte bereitstellen."
-
-#: functions/instructions/instruction_custom_rom.c:27
-msgid ""
-"Custom ROMs are modified versions of Android to offer additional functions, "
-"performance improvements or a different user interface."
-msgstr ""
-"Custom-ROMs sind modifizierte Versionen von Android, die zusätzliche "
-"Funktionen, Leistungsverbesserungen oder eine andere Benutzeroberfläche "
-"bieten."
-
-#: functions/instructions/instruction_custom_rom.c:31
-msgid ""
-"They replace the pre-installed Android and often contain newer software "
-"versions or special customizations that the manufacturer does not offer."
-msgstr ""
-"Sie ersetzen das vorinstallierte Android und enthalten oft neuere "
-"Softwareversionen oder spezielle Anpassungen, die der Hersteller nicht "
-"anbietet."
-
-#: functions/instructions/instruction_custom_rom.c:73
-msgid "Custom ROM flashing"
-msgstr "Flashen Custom-ROMs"
-
-#: functions/instructions/instruction_custom_rom.c:75
-msgid ""
-"1. Download a custom ROM for your device. \n"
-"2. Boot your device into fastboot mode. \n"
-"3. Unlock the bootloader."
-msgstr ""
-"1. Laden Sie ein benutzerdefiniertes ROM für Ihr Gerät herunter. \n"
-"2. Starten Sie Ihr Gerät im Fastboot-Modus. \n"
-"3. Entsperren Sie den Bootloader."
-
-#: functions/instructions/instruction_custom_rom.c:79
-msgid ""
-"4. Flash the custom recovery, the boot image (boot.img/init_boot.img), \n"
-"if necessary the dtbo.img. \n"
-"5. Perform a reboot in the recovery."
-msgstr ""
-"4. Flashen Sie die benutzerdefinierte Wiederherstellung, das Boot-Image "
-"(boot.img/init_boot.img), \n"
-"falls erforderlich, die dtbo.img. \n"
-"5. Führen Sie einen Neustart in der Wiederherstellung durch."
-
-#: functions/instructions/instruction_custom_rom.c:83
-msgid ""
-"6. Copy the zip of the custom ROM to your device. \n"
-"7. Tap install and flash the zip."
-msgstr ""
-"6. Kopieren Sie die ZIP-Datei des benutzerdefinierten ROMs auf Ihr Gerät. \n"
-"7. Tippen Sie auf 'Installieren' und flashen Sie die ZIP-Datei."
-
-#: functions/instructions/instruction_custom_rom.c:87
-msgid ""
-"8. Optionally you can now flash Magisk (as a zip) or Google services (only "
-"if your custom ROM does not contain any). \n"
-"9. Restart your device."
-msgstr ""
-"8. Optional können Sie nun Magisk (als ZIP-Datei) oder Google-Dienste (nur, "
-"wenn Ihr Custom-ROM keine enthält) flashen. \n"
-"9. Starten Sie Ihr Gerät neu."
-
-#: functions/run_first_run_setup.c:92
-msgid "Welcome to the Fastboot Assistant!"
-msgstr "Willkommen beim Fastboot-Assistant!"
-
-#: functions/run_first_run_setup.c:96
-msgid " Let's get everything set up together."
-msgstr "Lassen Sie uns alles gemeinsam vorbereiten."
-
-#: functions/run_first_run_setup.c:133
-msgid "Here you can set important preferences for your Fastboot Assistant."
-msgstr ""
-"Hier können Sie wichtige Einstellungen für Ihren Fastboot Assistant "
-"vornehmen."
-
-#: functions/run_first_run_setup.c:145
-msgid "Choose folder for flashing files"
-msgstr "Auswählen des Ordners für Flash Dateien"
-
-#: functions/run_first_run_setup.c:176
-msgid ""
-"To work correctly, the Fastboot Assistant needs to perform some initial "
-"setup."
-msgstr ""
-"Damit der Fastboot Assistant ordnungsgemäß funktioniert, muss zunächst eine "
-"Einrichtung durchgeführt werden."
-
-#: functions/run_first_run_setup.c:191
-msgid "1. Creating all required folders"
-msgstr "1. Erstellen der benötigten Ordner"
-
-#: functions/run_first_run_setup.c:198
-msgid "2. Adjusting the system environment"
-msgstr "2. Anpassungen an die System-Umgebung"
-
-#: functions/run_first_run_setup.c:205
-msgid "Configuration completed."
-msgstr "Konfiguration abgeschlossen."
-
-#: functions/run_first_run_setup.c:264
-msgid "Use"
-msgstr "Nutzung"
-
-#: functions/run_first_run_setup.c:269
-msgid "1. Please read the manual and documentation before using the program."
-msgstr ""
-"1. Bitte lesen Sie vor der Verwendung des Programms die Anleitung und die "
-"Dokumentation."
-
-#: functions/run_first_run_setup.c:273
-msgid "2. Always copy all images to be flashed into the 'ROM-Install' folder."
-msgstr ""
-"2. Kopieren Sie immer alle zu flashenden Bilder in den Ordner 'ROM-Install'."
-
-#: functions/run_first_run_setup.c:277
-msgid "3. If flashing Samsung devices, always use 'heimdall'."
-msgstr ""
-"3. Verwenden Sie beim Flashen von Samsung-Geräten immer die Option "
-"'heimdall'."
-
-#: functions/run_first_run_setup.c:281
-msgid "4. Check regularly for Fastboot-Assistant updates."
-msgstr ""
-"4. Überprüfen Sie regelmäßig, ob Updates für Fastboot-Assistant verfügbar "
-"sind."
-
-#: functions/run_first_run_setup.c:343
-msgid "Have fun with the Fastboot-Assistants!"
-msgstr "Viel Spaß mit den Fastboot-Assistant!"
-
-#: functions/run_first_run_setup.c:347
-msgid "The setup is complete. The Fastboot-Assistant is now ready."
-msgstr "Setup beendet. Der Fastboot-Assistant ist jetzt bereit."
-
-#: functions/run_first_run_setup.c:353
-msgid "Finished"
-msgstr "Beendet"
+#: build/design/dialogs/dialogs.c:33 build/design/dialogs/dialogs.c:53
+#: build/design/dialogs/dialogs.c:64 build/design/dialogs/dialogs.c:84
+msgid "OK"
+msgstr "OK"
+
+#: build/design/dialogs/dialogs.c:63 build/design/dialogs/dialogs.c:74
+msgid "Error"
+msgstr "Fehler"
+
+#: build/design/dialogs/about_dialog.c:76
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#: build/design/dialogs/about_dialog.c:80
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: build/design/dialogs/about_dialog.c:84
+msgid "Fonts"
+msgstr "Schriftarten"
+
+#: build/design/dialogs/about_dialog.c:89
+msgid "Special thanks to"
+msgstr "Besonderen Dank an"
+
+#: build/design/dialogs/dialog_multi_progress.c:44
+msgid "Completed."
+msgstr "Beendet."
+
+#: build/helper/log/write_log_text.c:52
+msgid "Log Viewer"
+msgstr "Log"
+
+#: build/helper/log/write_log_text.c:128
+msgid "Show Log"
+msgstr "Log anziegen"
