@@ -6,7 +6,7 @@ on:
       version:
         description: "Version number (0.9.1)"
         required: true
-        default: "0.9.1"
+        default: "0.9.1.1"
       snap_channel:
         description: "Snap channel to build for (stable)"
         required: false
