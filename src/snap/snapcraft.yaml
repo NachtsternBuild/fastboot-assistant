@@ -55,6 +55,7 @@ apps:
       GTK_THEME: ""
       LIBGL_DRIVERS_PATH: $SNAP/usr/lib/$SNAPCRAFT_ARCH_TRIPLET/dri
       SNAP_DESKTOP_RUNTIME: $SNAP/gnome-platform
+      LC_ALL: ""
 
 plugs:
   icon-themes:
@@ -165,6 +166,8 @@ parts:
       install -Dm755 fastboot-assistant $SNAPCRAFT_PART_INSTALL/usr/bin/fastboot-assistant
       install -Dm644 assets/sweet_unix.png $SNAPCRAFT_PART_INSTALL/usr/share/icons/hicolor/256x256/apps/sweet_unix.png
       install -Dm644 assets/fastboot-assistant-snap.desktop $SNAPCRAFT_PART_INSTALL/usr/share/applications/fastboot-assistant.desktop
+      install -Dm755 po/en/LC_MESSAGES/fastboot-assistant.mo $SNAPCRAFT_PART_INSTALL/usr/share/locale/en/LC_MESSAGES/fastboot-assistant.mo
+      install -Dm755 po/de/LC_MESSAGES/fastboot-assistant.mo $SNAPCRAFT_PART_INSTALL/usr/share/locale/de/LC_MESSAGES/fastboot-assistant.mo
       glib-compile-schemas $SNAPCRAFT_PART_INSTALL/usr/share/glib-2.0/schemas
       gio-querymodules $SNAPCRAFT_PART_INSTALL/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/gio/modules
       mkdir -p $SNAPCRAFT_PART_INSTALL/usr/lib/girepository-1.0
