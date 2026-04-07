@@ -41,8 +41,8 @@ jobs:
       run: |
         set -eux
         cd src
-      	make -f Dependencies.mk GIT_HTTPS=1
-      	make GIT_HTTPS=1
+        make -f Dependencies.mk GIT_HTTPS=1
+        make GIT_HTTPS=1
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
