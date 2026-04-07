@@ -36,14 +36,13 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        # "queries: security-extended" findet noch mehr potenzielle Bugs
         queries: security-extended,security-and-quality
 
     # SCHRITT: Manual build
     - name: Build Project
       run: |
         set -eux
-      	cd src
+        cd src
       	make -f Dependencies.mk GIT_HTTPS=1
       	make GIT_HTTPS=1
 
