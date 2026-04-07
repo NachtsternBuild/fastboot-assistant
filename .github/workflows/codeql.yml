@@ -1,0 +1,53 @@
+name: "CodeQL Scanning"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '30 18 * * 4' # scan once per week
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'cpp' ] # codeql use this for c code
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # SCHRITT: Install depends
+    - name: Install GTK4 Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y xz-utils unzip zip wget curl pkexec adb fastboot heimdall-flash heimdall-flash-frontend desktop-file-utils libglib2.0-0t64 libgtk-4-1 xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils libadwaita-1-0 libvte-2.91-gtk4-0 libnotify-bin debhelper rsync libgtk-4-dev libadwaita-1-dev libsecret-1-dev git libglib2.0-dev libnotify-dev pkgconf gcc make libvte-2.91-gtk4-dev
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        # "queries: security-extended" findet noch mehr potenzielle Bugs
+        queries: security-extended,security-and-quality
+
+    # SCHRITT: Manual build
+    - name: Build Project
+      run: |
+        set -eux
+      	cd src
+      	make -f Dependencies.mk GIT_HTTPS=1
+      	make GIT_HTTPS=1
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
