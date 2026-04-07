@@ -26,7 +26,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # SCHRITT: Install depends
     - name: Install GTK4 Dependencies
       run: |
         sudo apt update
@@ -38,7 +37,6 @@ jobs:
         languages: ${{ matrix.language }}
         queries: security-extended,security-and-quality
 
-    # SCHRITT: Manual build
     - name: Build Project
       run: |
         set -eux
