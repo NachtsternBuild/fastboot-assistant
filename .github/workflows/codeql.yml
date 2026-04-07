@@ -29,7 +29,7 @@ jobs:
     - name: Install GTK4 Dependencies
       run: |
         sudo apt update
-        sudo apt install -y xz-utils unzip zip wget curl pkexec adb fastboot heimdall-flash heimdall-flash-frontend desktop-file-utils libglib2.0-0t64 libgtk-4-1 xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils libadwaita-1-0 libvte-2.91-gtk4-0 libnotify-bin debhelper rsync libgtk-4-dev libadwaita-1-dev libsecret-1-dev git libglib2.0-dev libnotify-dev pkgconf gcc make libvte-2.91-gtk4-dev
+        sudo apt install -y xz-utils unzip zip wget curl pkexec adb fastboot heimdall-flash heimdall-flash-frontend desktop-file-utils libglib2.0-0t64 libgtk-4-1 xdg-desktop-portal xdg-desktop-portal-gtk xdg-utils libadwaita-1-0 libvte-2.91-gtk4-0 libnotify-bin debhelper rsync libgtk-4-dev libadwaita-1-dev libsecret-1-dev git libglib2.0-dev libnotify-dev pkgconf gcc make libvte-2.91-gtk4-dev ccache
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
