@@ -77,10 +77,9 @@ gpointer backup_root_thread(gpointer data)
         		
         // get slots
         snprintf(command, sizeof(command), "%s shell %s -c \"ls %s%s_a\" >/dev/null 2>&1", adb, SU, BLOCK_PATH, partition);
-        int has_slot_a = system(command);
         
         // for devices with a/b slots
-        if (has_slot_a == 0)
+        if (run_command_bool(command))
         {
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
@@ -91,6 +90,7 @@ gpointer backup_root_thread(gpointer data)
                 execute_command(command);
             }
         } 
+        
         else 
         {
             LOGD("Backing up %s", partition);
