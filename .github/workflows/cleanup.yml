@@ -25,7 +25,7 @@ jobs:
           keep_minimum_runs: 2
 
       - name: Delete old artifacts
-        uses: geekyeggo/delete-artifact@v4
+        uses: geekyeggo/delete-artifact@v6
         with:
           name: "*"
           failOnError: false
