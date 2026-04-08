@@ -39,6 +39,16 @@ void local_updater()
     char update_file[256];
     char local_file[256];
     get_config_dir(conf_dir, sizeof(conf_dir));
+
+    /* validate config directory derived from environment variables */
+    if (conf_dir[0] == '\0' || conf_dir[0] != '/')
+    {
+        LOGE("Invalid configuration directory: %s", conf_dir);
+        n = notify_notification_new(title, _("Error: Invalid configuration directory."), "dialog-error");
+        notify_notification_set_timeout(n, 5000);
+        notify_notification_show(n, NULL);
+        goto cleanup;
+    }
     
     snprintf(update_file, sizeof(update_file), "%s/%s", conf_dir, UPDATE_CONF);
     snprintf(local_file, sizeof(local_file), "%s/%s", conf_dir, LOCAL_CONF);
