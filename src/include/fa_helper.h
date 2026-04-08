@@ -18,7 +18,7 @@ extern "C" {
 
 #include "atlbase.h"
 
-extern GtkWidget *main_window;
+extern AdwApplicationWindow *main_window;
 extern GtkApplication* app;
 extern const char *detected_device;
 extern GtkWidget *bootctl_status_label;
@@ -76,6 +76,8 @@ int get_slot_of_device();
 void check_active_slot(char *active_slot, size_t size);
 // get the active slot with adb
 char *get_inactive_slot();
+// function to validate the partition name
+int valid_partition_name(const char *name);
 
 
 // function to check for connected devices
@@ -104,8 +106,6 @@ void flash_image(GtkWidget *widget, const char *partition1, const char *partitio
 
 // function that write the ab_device.txt
 void write_ab_file();
-// function that delete the ab_device.txt
-void delete_ab_file();
 // function that check if there are the ab_device.txt
 void check_ab_file();
 // function to check for the ab_device.txt and remove this file

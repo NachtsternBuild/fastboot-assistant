@@ -12,6 +12,29 @@
 #define GITHUB_API "https://api.github.com/repos/<USER>/<REPO>/releases/latest"
 #define CONF_FILE "update.conf"
 
+// function to check if the url is save
+bool is_safe_url(const char *url) 
+{
+    if (!url || strlen(url) == 0) 
+    { 
+    	return false;
+    }	
+    
+    // check for shell symbols
+    const char *forbidden = "; &|`$()<>\\";
+    if (strpbrk(url, forbidden)) 
+    {
+    	return false;
+    }
+    
+    // chech if url starts with http/https
+    if (strncmp(url, "http", 4) != 0) 
+    {
+    	return false;
+    }
+    return true;
+}
+
 // download the update.conf from the GitHub API
 bool download_update_conf() 
 {
@@ -24,23 +47,25 @@ bool download_update_conf()
     {
     	return false;
     }
+    
     if (!fgets(url, sizeof(url), fp)) 
     {
         pclose(fp);
         return false;
     }
+    
     pclose(fp);
     url[strcspn(url, "\n")] = '\0';
-
-    if (strlen(url) == 0) 
+    
+    // check if the url is save
+    if (!is_safe_url(url)) 
     {
-        LOGE("No update.conf URL found.");
-        fprintf(stderr, "No update.conf URL found.\n");
+        LOGE("Untrusted or malformed URL detected: %s", url);
         return false;
     }
 
     LOGD("Found update.conf: %s", url);
-    char cmd[1024];
+    char cmd[1500]; 
     
     char conf_dir[128];
     char update_file[256];
@@ -48,7 +73,10 @@ bool download_update_conf()
     get_config_dir(conf_dir, sizeof(conf_dir));
     snprintf(update_file, sizeof(update_file), "%s/%s", conf_dir, CONF_FILE);
     
-    snprintf(cmd, sizeof(cmd), "wget -q -O %s %s", update_file, url);
+    // using qutation to prevent shell expansion
+    snprintf(cmd, sizeof(cmd), "wget -q -O '%s' '%s'", update_file, url);
+    
     run_command(cmd);
-    return true; 
+    return true;
+    
 }

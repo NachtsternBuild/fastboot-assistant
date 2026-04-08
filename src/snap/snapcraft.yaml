@@ -157,6 +157,7 @@ parts:
       - libproxy1-plugin-gsettings
       - libproxy1-plugin-networkmanager
       - libproxy1v5
+      - heimdall-flash
 
     override-build: |
       set -eux

@@ -1,7 +1,7 @@
 /**
 * backup_root.c
 *
-* (C) Copyright 2025 @NachtsternBuild
+* (C) Copyright 2026 @NachtsternBuild
 *
 * License: GNU GENERAL PUBLIC LICENSE Version 3
 *
@@ -14,6 +14,9 @@
 
 AdwDialog *dialog;
 
+/**
+* @background thread for running the root backup
+*/
 gpointer backup_root_thread(gpointer data)
 {
     LOGD("backup_root");
@@ -65,28 +68,37 @@ gpointer backup_root_thread(gpointer data)
         // delete linebreak
         partition[strcspn(partition, "\r\n")] = 0;
         
-		// get slots 
+        // vaild the partitions
+        if (!valid_partition_name(partition)) 
+        {
+            LOGE("Skipping dangerous or invalid partition name: %s", partition);
+            continue;
+        }
+        		
+        // get slots
         snprintf(command, sizeof(command), "%s shell %s -c \"ls %s%s_a\" >/dev/null 2>&1", adb, SU, BLOCK_PATH, partition);
         int has_slot_a = system(command);
-		
-		// for devices with a/b slots
+        
+        // for devices with a/b slots
         if (has_slot_a == 0)
         {
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
-                LOGD("Safe %s (slot %c) to %s", partition, slot, command);
-                snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=%s/%s_%c.img", adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
+                LOGD("Backing up %s (slot %c)", partition, slot);
+                // create the dd command save
+                snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=\"%s/%s_%c.img\"", 
+                         adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
                 execute_command(command);
             }
         } 
-        
-        // for devices without a/b slots
         else 
         {
-            LOGD("Safe %s to %s", partition, command);
-            snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=%s/%s.img", adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
+            LOGD("Backing up %s", partition);
+            snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=\"%s/%s.img\"", 
+                     adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
             execute_command(command);
         }
+        
     }
 	
 	// close the file
@@ -106,6 +118,9 @@ gpointer backup_root_thread(gpointer data)
     return NULL;
 }
 
+/**
+* @brief function to backup your system as root user
+*/
 void backup_root(GtkWidget *widget, gpointer stack) 
 {   
     const char *title = "Backup";

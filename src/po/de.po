@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-09 10:05+0100\n"
+"POT-Creation-Date: 2026-04-08 14:02+0200\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -239,7 +239,7 @@ msgstr "Prüfe auf Bootctl..."
 msgid "Setting active slot..."
 msgstr "Setze aktiven Slot..."
 
-#: functions/treble_updater.c:160 functions/main.c:144
+#: functions/treble_updater.c:160 functions/main.c:155
 msgid "Treble Updater"
 msgstr "Treble Updater"
 
@@ -286,7 +286,7 @@ msgstr "Alternative für Slot Wechsel (nicht empfohlen)"
 msgid "Start Flash"
 msgstr "Starte Flash"
 
-#: functions/treble_updater.c:215 functions/main.c:138
+#: functions/treble_updater.c:215 functions/main.c:149
 msgid "Reboot Device"
 msgstr "Gerät Neustarten"
 
@@ -623,7 +623,7 @@ msgstr "Neustart Recovery"
 msgid "Reboot (heimdall)"
 msgstr "Neustart (Heimdall)"
 
-#: functions/flash/flash_payload.c:54 functions/main.c:141
+#: functions/flash/flash_payload.c:54 functions/main.c:152
 msgid "Flash"
 msgstr "Flash"
 
@@ -897,32 +897,32 @@ msgstr "Flash Running..."
 msgid "Erasing files..."
 msgstr "Lösche Dateien..."
 
-#: functions/main.c:87
+#: functions/main.c:98
 msgid "Fastboot-Assistant"
 msgstr "Fastboot-Assistant"
 
-#: functions/main.c:137
+#: functions/main.c:148
 msgid "Devices"
 msgstr "Geräte"
 
-#: functions/main.c:139
+#: functions/main.c:150
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: functions/main.c:140
+#: functions/main.c:151
 msgid "Prepare Flashing"
 msgstr "Flashen Vorbereiten"
 
-#: functions/main.c:142
+#: functions/main.c:153
 msgid "Instructions"
 msgstr "Anleitungen"
 
-#: functions/main.c:143 functions/instructions/instruction_GUI.c:17
+#: functions/main.c:154 functions/instructions/instruction_GUI.c:17
 #: functions/info.c:89
 msgid "Info"
 msgstr "Info"
 
-#: functions/main.c:145
+#: functions/main.c:156
 msgid "About"
 msgstr "Über das Programm"
 
@@ -1948,24 +1948,24 @@ msgstr "Fastboot-Assistant: v.0.9.1.dev"
 msgid "Fastboot-Assistant Updater"
 msgstr "Updater"
 
-#: functions/updater/local_updater.c:48
+#: functions/updater/local_updater.c:49
 msgid "Update check failed."
 msgstr "Update Prüfung fehlgeschlagen"
 
-#: functions/updater/local_updater.c:64
+#: functions/updater/local_updater.c:65
 msgid "Error: Invalid configuration files."
 msgstr ""
 
-#: functions/updater/local_updater.c:76
+#: functions/updater/local_updater.c:77
 msgid "No updates available."
 msgstr "Keine Updates verfügbar"
 
-#: functions/updater/local_updater.c:84
+#: functions/updater/local_updater.c:85
 #, c-format
 msgid "Update to version %s available."
 msgstr "Update auf Version %s verfügbar."
 
-#: functions/updater/local_updater.c:97
+#: functions/updater/local_updater.c:105
 msgid "Error downloading the package."
 msgstr "fehler beim Downloaden des Pakets"
 

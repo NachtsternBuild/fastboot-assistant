@@ -9,7 +9,7 @@
 #include "fastboot_assistant.h"
 
 // for the main window
-GtkWidget *main_window = NULL;
+AdwApplicationWindow *main_window = NULL;
 
 // function that show the about site
 static void about(GtkWidget *widget, gpointer stack)
@@ -53,9 +53,10 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     snprintf(setup_file, sizeof(setup_file), "%s/config.txt", setup_dir);
 
     FILE *file;
-
-    // check if file exists
-    if ((file = fopen(setup_file, "r")) != NULL) 
+    
+    // check if file exists 
+    file = fopen(setup_file, "r");
+    if (file != NULL) 
     {
         fclose(file);
         snprintf(setup_info, sizeof(setup_info), "old_fish");
@@ -64,20 +65,30 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     
     else 
     {
-        file = fopen(setup_file, "w");
-        if (file == NULL) 
+        // set permissions to 600
+        int fd = open(setup_file, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+        if (fd == -1) 
         {
-            LOGE("Could not create the file.");
+            LOGE("Could not create the file with safe permissions.");
             exit(1);
         }
+        
+        // switch filedesciptor for fprintf
+        file = fdopen(fd, "w");
+        if (file == NULL) 
+        {
+            close(fd);
+            exit(1);
+        }
+
         fprintf(file, "%s", content);
-        fclose(file);
+        fclose(file); // close fd
         snprintf(setup_info, sizeof(setup_info), "fish");
         LOGD("fish");
     }
     
     // create the main window
-    AdwApplicationWindow *main_window = ADW_APPLICATION_WINDOW(adw_application_window_new(app));
+	main_window = ADW_APPLICATION_WINDOW(adw_application_window_new(app));
     
     // create toolbar for header and content
     GtkWidget *toolbar_view = adw_toolbar_view_new();

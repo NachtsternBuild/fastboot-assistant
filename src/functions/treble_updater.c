@@ -140,7 +140,7 @@ void update_device(GtkWidget *widget, gpointer stack)
 	}
     
     // show the dialog and run the commands
-    show_progress_dialog_multi(main_window, "Treble Updater", "This may take some time...", commands);
+    show_progress_dialog_multi(GTK_WIDGET(main_window), "Treble Updater", "This may take some time...", commands);
     
     if (image_path != NULL) 
 	{

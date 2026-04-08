@@ -91,35 +91,39 @@ void check_active_slot(char *active_slot, size_t size)
 {
     char buffer[BUFFER_SIZE];
     FILE *pipe;
-
-    // fastboot-command for the boot-slot
+	
+	// fastboot command for the current boot slot 
     auto_free char *device_command = fastboot_command();
     char command[BUFFER_SIZE];
     snprintf(command, BUFFER_SIZE, "%s getvar current-slot 2>&1", device_command);
-
-    // open pipe and run command
+	
+	// open a pipe and run a command
     pipe = popen(command, "r");
     if (!pipe) 
     {
         LOGE("Could not open the pipe.");
-        free(device_command);
         exit(1);
     }
-
-    // reading output
+	
+	// reading output
     while (fgets(buffer, BUFFER_SIZE, pipe) != NULL) 
     {
         char *pos = strstr(buffer, "current-slot:");
         if (pos) 
         {
-            sscanf(pos, "current-slot: %s", active_slot);
-            break;
+            char format[20];
+            // create the a string with spezific size
+            snprintf(format, sizeof(format), "current-slot: %%%zus", size - 1);
+            
+            if (sscanf(pos, format, active_slot) == 1) 
+            {
+                break;
+            }
         }
     }
-
-    // close pipe
+	
+	// close the pipe
     pclose(pipe);
-    // the slot
     LOGD("current-slot: %s", active_slot);
 }
 

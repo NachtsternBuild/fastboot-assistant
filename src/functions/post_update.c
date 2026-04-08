@@ -32,45 +32,39 @@ int post_update_helper()
     LOGD("Checking files:");
     LOGD("- Old: %s", old_path);
     LOGD("- New: %s", new_path);
-    
-	// check if files exsists
-    if (access(old_path, F_OK) != 0) 
+       
+    // remove old file   
+    if (remove(old_path) != 0) 
     {
-        LOGW("Old configuration file (‘%s’) not found.", OLD_CONFIG_NAME);
-        return 1; // 1: old files missing
+        if (errno == ENOENT) 
+        {
+            LOGW("Old configuration file ('%s') not found.", OLD_CONFIG_NAME);
+            return 1; // 1: old file missing
+        }
+        else 
+        {
+            LOGE("ERROR when deleting the old file: %s", strerror(errno));
+            return 3; // 3: error remove old config file
+        }
     }
-   
-    if (access(new_path, F_OK) != 0) 
-    {
-        LOGW("New configuration file (‘%s’) not found.", NEW_CONFIG_NAME);
-        return 2; // 2: new files missing
-    }
-    
-    // remove old file
-    if (remove(old_path) == 0) 
-    {
-        LOGD("%s successfully deleted", OLD_CONFIG_NAME);
-    } 
-    
-    else 
-    {
-        LOGE("ERROR when deleting the old file");
-        perror("ERROR when deleting the old file");
-        return 3; // 3: error remove old config file
-    }
+    LOGD("%s successfully deleted", OLD_CONFIG_NAME);
 
     // rename new file
-    if (rename(new_path, final_path) == 0) 
+    if (rename(new_path, final_path) != 0) 
     {
-        LOGD("%s successfully renamed", NEW_CONFIG_NAME);
-    } 
-    
-    else 
-    {
-        LOGE("ERROR renaming the new file");
-        perror("ERROR renaming the new file");
-        return 4; // 4: error with renaming
+        if (errno == ENOENT) 
+        {
+            LOGW("New configuration file ('%s') not found.", NEW_CONFIG_NAME);
+            return 2; // 2: new file is missing
+        }
+        else 
+        {
+            LOGE("ERROR renaming the new file: %s", strerror(errno));
+            return 4; // 4: error rename new file
+        }
     }
+    LOGD("%s successfully renamed", NEW_CONFIG_NAME);
+    
     return 0; // 0: success
 }
 

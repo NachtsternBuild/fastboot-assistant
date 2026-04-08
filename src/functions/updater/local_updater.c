@@ -19,7 +19,7 @@ static void run_update(char *package_path)
 
     snprintf(cmd, sizeof(cmd), "bash /var/lib/fastboot-assistant/fa-updater.sh %d \"%s\" &", pid, package_path);
 
-    system(cmd);
+    run_command(cmd);
 }
 
 /**
@@ -39,6 +39,7 @@ void local_updater()
     char update_file[256];
     char local_file[256];
     get_config_dir(conf_dir, sizeof(conf_dir));
+    
     snprintf(update_file, sizeof(update_file), "%s/%s", conf_dir, UPDATE_CONF);
     snprintf(local_file, sizeof(local_file), "%s/%s", conf_dir, LOCAL_CONF);
     	
@@ -84,14 +85,21 @@ void local_updater()
     snprintf(msg, sizeof(msg), _("Update to version %s available."), remote_version);
     n = notify_notification_new(title, msg, "software-update-available");
     notify_notification_show(n, NULL);
-
+	
+	// vaild package path
+    char package_path[256];
+    if (strpbrk(package_name, "/\\")) 
+    {
+        LOGE("Malicious package name detected.");
+        goto cleanup;
+    }
+	
     // download package
     LOGD("Download package: %s", package_url);
     char cmd[1024];
-    char package_path[128];
     snprintf(package_path, sizeof(package_path), "/tmp/%s", package_name);
     snprintf(cmd, sizeof(cmd), "wget -q -O %s %s", package_path, package_url);
-    
+            
     if (!run_command_bool(cmd)) 
     {
         n = notify_notification_new(title, _("Error downloading the package."), "dialog-error");
@@ -104,22 +112,10 @@ void local_updater()
 
 // running cleanup
 cleanup:
-    if (local_version) 
-    {	
-    	free(local_version);
-    }
-    if (remote_version)
-    {
-    	free(remote_version);
-    }
-    if (package_url) 
-    {
-    	free(package_url);
-    }
-    if (package_name) 
-    {
-    	free(package_name);
-    }
+    free(local_version);
+   	free(remote_version);
+   	free(package_url);
+   	free(package_name);
     notify_uninit();
 }
 

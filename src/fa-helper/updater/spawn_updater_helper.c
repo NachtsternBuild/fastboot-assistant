@@ -46,16 +46,17 @@ const char *script_content =
 "exit 0\n";
 
 /**
-* Function to create a helper script for the updater
+* @brief Function to create a helper script for the updater
 */
 int spawn_updater_helper() 
 {
     struct stat st;
 
-    // check for directory and create it
+    // check directory 
     if (stat(UPDATE_DIR, &st) == -1) 
     {
         LOGD("Directory '%s' does not exist. Create it.", UPDATE_DIR);
+        // create directory with 755 in /var
         if (mkdir(UPDATE_DIR, 0755) == -1) 
         {
             LOGE("mkdir");
@@ -64,40 +65,40 @@ int spawn_updater_helper()
         }
     }
 
-    // check for the updater script
-    if (stat(SCRIPT_PATH, &st) == 0) 
+    // create file with 755 permissions
+    int fd = open(SCRIPT_PATH, O_WRONLY | O_CREAT | O_EXCL, S_IRWXU | S_IRGRP | S_IXGRP);
+    
+    if (fd == -1) 
     {
-        LOGI("Script '%s' already exists.", SCRIPT_PATH);
-        return 0;
+        if (errno == EEXIST) 
+        {
+            LOGI("Script '%s' already exists.", SCRIPT_PATH);
+            return 0;
+        }
+        LOGE("Could not create updater script: %s", strerror(errno));
+        return -1;
     }
 
-    // create the updater script
-    LOGD("Create update script at '%s'...", SCRIPT_PATH);
-    FILE *f = fopen(SCRIPT_PATH, "w");
+    // convert for writing
+    FILE *f = fdopen(fd, "w");
     if (!f) 
     {
-        LOGE("fopen");
-        perror("fopen");
+        LOGE("fdopen");
+        close(fd);
         return -1;
     }
 
+    LOGD("Writing update script to '%s'...", SCRIPT_PATH);
     if (fwrite(script_content, 1, strlen(script_content), f) < strlen(script_content)) 
     {
-        LOGE("fwrite");
-        perror("fwrite");
-        fclose(f);
+        LOGE("fwrite failed");
+        fclose(f); // close fd
         return -1;
     }
+    
     fclose(f);
-
-    // make executable script
-    if (chmod(SCRIPT_PATH, 0755) == -1) 
-    {
-        LOGE("chmod");
-        perror("chmod");
-        return -1;
-    }
 
     LOGD("Update script successfully created and made executable.");
     return 0;
 }
+
