@@ -38,6 +38,14 @@ const char* get_execution_environment();
 // set configs for application env
 void application_environment();
 
+/**
+* functions to ensure save paths 
+*/
+// validate that the string is a single, safe path component
+int is_safe_single_path_component(const char *s);
+// set that home dir is safe
+int is_safe_home_dir(const char *s);
+
 /** 
 * function, that get the path of the config file
 *
