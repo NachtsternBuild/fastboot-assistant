@@ -20,7 +20,7 @@ void get_config_dir(char *config_folder, size_t size)
     if (directory_exists("/mnt/c/Users")) 
     {
     	const char* user = getenv("USER");
-    	if (user && config_folder && size > 0) 
+    	if (user && config_folder && size > 0 && is_safe_single_path_component(user)) 
     	{
         	snprintf(config_folder, size, "/mnt/c/Users/%s/.config/fastboot-assistant", user);
     	} 
@@ -32,14 +32,14 @@ void get_config_dir(char *config_folder, size_t size)
     
     	else 
     	{
-        	LOGE("Invalid arguments provided to get_config_file_path.");
+        	LOGE("Invalid or unsafe USER value provided to get_config_file_path.");
     	}
     	return;
     }
     
     // standard linux
     const char *home_dir = getenv("HOME"); 
-    if (home_dir && config_folder && size > 0) 
+    if (home_dir && config_folder && size > 0 && is_safe_home_dir(home_dir)) 
     {
         snprintf(config_folder, size, "%s/.config/fastboot-assistant", home_dir);
     } 
@@ -51,6 +51,6 @@ void get_config_dir(char *config_folder, size_t size)
     
     else 
     {
-        LOGE("Invalid arguments provided to get_config_file_path.");
+        LOGE("Invalid or unsafe HOME value provided to get_config_file_path.");
     }
 }
