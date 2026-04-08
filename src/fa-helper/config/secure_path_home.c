@@ -6,6 +6,7 @@
 * License: GNU GENERAL PUBLIC LICENSE Version 3
 *
 */
+#include "fastboot_assistant.h"
 
 /**
 * @brief Validate that the string is a single, safe path component (e.g. a user name).
