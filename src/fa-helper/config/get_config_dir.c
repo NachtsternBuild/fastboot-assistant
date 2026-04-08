@@ -8,6 +8,47 @@
 */
 #include "fastboot_assistant.h"
 
+// Validate that the string is a single, safe path component (e.g. a user name).
+// It must not be empty, must not contain path separators, and must not contain "..".
+static int is_safe_single_path_component(const char *s)
+{
+    size_t len;
+
+    if (s == NULL) {
+        return 0;
+    }
+
+    len = strlen(s);
+    if (len == 0 || len > 255) {
+        return 0;
+    }
+
+    if (strchr(s, '/') != NULL || strchr(s, '\\') != NULL) {
+        return 0;
+    }
+
+    if (strstr(s, "..") != NULL) {
+        return 0;
+    }
+
+    return 1;
+}
+
+// Basic validation for HOME-like directory variables.
+// Require a non-empty absolute path (starting with '/').
+static int is_safe_home_dir(const char *s)
+{
+    if (s == NULL) {
+        return 0;
+    }
+
+    if (s[0] != '\0' && s[0] == '/') {
+        return 1;
+    }
+
+    return 0;
+}
+
 /** function that get the config dir
 *
 * Usage:
@@ -20,7 +61,7 @@ void get_config_dir(char *config_folder, size_t size)
     if (directory_exists("/mnt/c/Users")) 
     {
     	const char* user = getenv("USER");
-    	if (user && config_folder && size > 0) 
+    	if (user && config_folder && size > 0 && is_safe_single_path_component(user)) 
     	{
         	snprintf(config_folder, size, "/mnt/c/Users/%s/.config/fastboot-assistant", user);
     	} 
@@ -32,14 +73,14 @@ void get_config_dir(char *config_folder, size_t size)
     
     	else 
     	{
-        	LOGE("Invalid arguments provided to get_config_file_path.");
+        	LOGE("Invalid or unsafe USER value provided to get_config_file_path.");
     	}
     	return;
     }
     
     // standard linux
     const char *home_dir = getenv("HOME"); 
-    if (home_dir && config_folder && size > 0) 
+    if (home_dir && config_folder && size > 0 && is_safe_home_dir(home_dir)) 
     {
         snprintf(config_folder, size, "%s/.config/fastboot-assistant", home_dir);
     } 
@@ -51,6 +92,6 @@ void get_config_dir(char *config_folder, size_t size)
     
     else 
     {
-        LOGE("Invalid arguments provided to get_config_file_path.");
+        LOGE("Invalid or unsafe HOME value provided to get_config_file_path.");
     }
 }
