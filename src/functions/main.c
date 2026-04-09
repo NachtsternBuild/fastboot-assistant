@@ -44,7 +44,28 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
 
     // get config path
     get_config_dir(fish_path, sizeof(fish_path));
-    snprintf(setup_dir, sizeof(setup_dir), "%s/config", fish_path);
+    
+    // validate path BEFORE using it
+	if (!is_safe_home_dir(fish_path)) 
+	{
+    	LOGE("Unsafe config directory path!");
+    	exit(1);
+	}
+
+	// canonical path
+	char safe_base[PATH_MAX];
+	if (realpath(fish_path, safe_base) == NULL) 
+	{
+    	LOGE("Failed to resolve config path");
+    	exit(1);
+	}
+
+	// build safe path
+	if (snprintf(setup_dir, sizeof(setup_dir), "%s/config", safe_base) >= sizeof(setup_dir)) 
+	{
+    	LOGE("Path too long");
+    	exit(1);
+	}
     LOGD("Config path: %s", setup_dir);
     // create dir 
     create_directory(setup_dir);
@@ -55,18 +76,27 @@ void activate_fastboot_assistant(GtkApplication* app, gpointer user_data)
     FILE *file;
     
     // check if file exists 
-    file = fopen(setup_file, "r");
-    if (file != NULL) 
-    {
-        fclose(file);
-        snprintf(setup_info, sizeof(setup_info), "old_fish");
-        LOGD("old fish!");
-    } 
+    int fd = open(setup_file, O_WRONLY | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
+
+	if (fd == -1) 
+	{
+    	if (errno == EEXIST) 
+    	{
+    	    LOGD("old fish!");
+    	    snprintf(setup_info, sizeof(setup_info), "old_fish");
+    	} 
+    	
+    	else 
+    	{
+        	LOGE("File creation failed");
+        	exit(1);
+    	}
+	}
     
     else 
     {
         // set permissions to 600
-        int fd = open(setup_file, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+        int fd = open(setup_file, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, S_IRUSR | S_IWUSR);
         if (fd == -1) 
         {
             LOGE("Could not create the file with safe permissions.");

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fastboot-assistant 0.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 14:02+0200\n"
+"POT-Creation-Date: 2026-04-09 08:31+0200\n"
 "PO-Revision-Date: 2025-11-11 17:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -45,7 +45,7 @@ msgstr "Creating partition..."
 #: functions/flash/flash_payload.c:44 functions/flash/flash_system.c:24
 #: functions/flash/flash_system.c:107
 #: functions/flash/others/flash_list_images.c:174
-#: functions/flash/others/flash_images.c:164 functions/info.c:64
+#: functions/flash/others/flash_images.c:164 functions/info.c:187
 msgid "No device detected."
 msgstr "No device detected."
 
@@ -228,7 +228,7 @@ msgstr "Checking bootctl..."
 msgid "Setting active slot..."
 msgstr "Setting active slot..."
 
-#: functions/treble_updater.c:160 functions/main.c:155
+#: functions/treble_updater.c:160 functions/main.c:185
 msgid "Treble Updater"
 msgstr "Treble Updater"
 
@@ -274,7 +274,7 @@ msgstr "Alternative for slot change (not recommended)"
 msgid "Start Flash"
 msgstr "Start Flash"
 
-#: functions/treble_updater.c:215 functions/main.c:149
+#: functions/treble_updater.c:215 functions/main.c:179
 msgid "Reboot Device"
 msgstr "Reboot Device"
 
@@ -608,7 +608,7 @@ msgstr "Reboot Recovery"
 msgid "Reboot (heimdall)"
 msgstr "Reboot (heimdall)"
 
-#: functions/flash/flash_payload.c:54 functions/main.c:152
+#: functions/flash/flash_payload.c:54 functions/main.c:182
 msgid "Flash"
 msgstr "Flash"
 
@@ -882,32 +882,32 @@ msgstr "Flash running..."
 msgid "Erasing files..."
 msgstr "Erasing files..."
 
-#: functions/main.c:98
+#: functions/main.c:128
 msgid "Fastboot-Assistant"
 msgstr "Fastboot-Assistant"
 
-#: functions/main.c:148
+#: functions/main.c:178
 msgid "Devices"
 msgstr "Devices"
 
-#: functions/main.c:150
+#: functions/main.c:180
 msgid "Settings"
 msgstr "Settings"
 
-#: functions/main.c:151
+#: functions/main.c:181
 msgid "Prepare Flashing"
 msgstr "Prepare Flashing"
 
-#: functions/main.c:153
+#: functions/main.c:183
 msgid "Instructions"
 msgstr "Instructions"
 
-#: functions/main.c:154 functions/instructions/instruction_GUI.c:17
-#: functions/info.c:89
+#: functions/main.c:184 functions/instructions/instruction_GUI.c:17
+#: functions/info.c:212
 msgid "Info"
 msgstr "Info"
 
-#: functions/main.c:156
+#: functions/main.c:186
 msgid "About"
 msgstr "About"
 
@@ -1672,39 +1672,39 @@ msgstr ""
 "adjustments do not affect the compatibility and stability of the Android "
 "system."
 
-#: functions/info.c:53
+#: functions/info.c:176
 msgid "Android Info:"
 msgstr "Android Info:"
 
-#: functions/info.c:54
+#: functions/info.c:177
 msgid "Android Version: "
 msgstr "Android Version: "
 
-#: functions/info.c:55
+#: functions/info.c:178
 msgid "Kernel Version: "
 msgstr "Kernel Version: "
 
-#: functions/info.c:56
+#: functions/info.c:179
 msgid "Device Name: "
 msgstr "Device Name: "
 
-#: functions/info.c:57
+#: functions/info.c:180
 msgid "Project Treble: "
 msgstr "Project Treble: "
 
-#: functions/info.c:58
+#: functions/info.c:181
 msgid "Active Slot: "
 msgstr "Active Slot: "
 
-#: functions/info.c:59
+#: functions/info.c:182
 msgid "Root Access: "
 msgstr "Root Access: "
 
-#: functions/info.c:60
+#: functions/info.c:183
 msgid "System-on-Chip: "
 msgstr "System-on-Chip: "
 
-#: functions/info.c:136
+#: functions/info.c:259
 msgid "Check for root permissions..."
 msgstr "Check for root permissions..."
 
@@ -1907,28 +1907,28 @@ msgstr "System Informations"
 msgid "Fastboot-Assistant: v.0.9.1.dev"
 msgstr "Fastboot-Assistant: v.0.9.1.dev"
 
-#: functions/updater/local_updater.c:37
+#: functions/updater/local_updater.c:43
 msgid "Fastboot-Assistant Updater"
 msgstr "Fastboot-Assistant Updater"
 
-#: functions/updater/local_updater.c:49
+#: functions/updater/local_updater.c:83
 msgid "Update check failed."
 msgstr "Update check failed."
 
-#: functions/updater/local_updater.c:65
+#: functions/updater/local_updater.c:99
 msgid "Error: Invalid configuration files."
 msgstr ""
 
-#: functions/updater/local_updater.c:77
+#: functions/updater/local_updater.c:111
 msgid "No updates available."
 msgstr "No updates available."
 
-#: functions/updater/local_updater.c:85
+#: functions/updater/local_updater.c:119
 #, c-format
 msgid "Update to version %s available."
 msgstr "Update to version %s available."
 
-#: functions/updater/local_updater.c:105
+#: functions/updater/local_updater.c:146
 msgid "Error downloading the package."
 msgstr "Error downloading the package."
 

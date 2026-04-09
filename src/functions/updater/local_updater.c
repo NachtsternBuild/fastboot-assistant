@@ -16,10 +16,16 @@ static void run_update(char *package_path)
 {
     char cmd[512];
     pid_t pid = getpid();  // PID of fastboot-assistant
-
-    snprintf(cmd, sizeof(cmd), "bash /var/lib/fastboot-assistant/fa-updater.sh %d \"%s\" &", pid, package_path);
-
-    run_command(cmd);
+    
+    snprintf(cmd, sizeof(cmd), "%d \"%s\" &", pid, package_path);
+	
+	char *updater_argv[] = {
+        "bash",
+        "/var/lib/fastboot-assistant/fa-updater.sh",
+        cmd,        
+        NULL
+    };
+    run_command(updater_argv);
 }
 
 /**
@@ -38,7 +44,35 @@ void local_updater()
     char conf_dir[128];
     char update_file[256];
     char local_file[256];
+    char safe_base[PATH_MAX];
     get_config_dir(conf_dir, sizeof(conf_dir));
+    
+    // validate
+	if (!is_safe_home_dir(conf_dir)) 
+	{
+    	LOGE("Unsafe config dir!");
+    	goto cleanup;
+	}
+
+	// canonicalize
+	if (realpath(conf_dir, safe_base) == NULL) 
+	{
+    	LOGE("Failed to resolve config dir: %s", strerror(errno));
+    	goto cleanup;
+	}
+
+	// build safe paths
+	if (snprintf(update_file, sizeof(update_file), "%s/%s", safe_base, UPDATE_CONF) >= sizeof(update_file)) 
+	{
+    	LOGE("Path too long");
+    	goto cleanup;
+	}
+
+	if (snprintf(local_file, sizeof(local_file), "%s/%s", safe_base, LOCAL_CONF) >= sizeof(local_file)) 
+	{
+    	LOGE("Path too long");
+    	goto cleanup;
+	}
     
     snprintf(update_file, sizeof(update_file), "%s/%s", conf_dir, UPDATE_CONF);
     snprintf(local_file, sizeof(local_file), "%s/%s", conf_dir, LOCAL_CONF);
@@ -51,7 +85,7 @@ void local_updater()
         notify_notification_show(n, NULL);
         goto cleanup;
     }
-
+	
 	
 	// get the config values
     char *local_version = get_config_value(local_file, "version");
@@ -96,11 +130,18 @@ void local_updater()
 	
     // download package
     LOGD("Download package: %s", package_url);
-    char cmd[1024];
     snprintf(package_path, sizeof(package_path), "/tmp/%s", package_name);
-    snprintf(cmd, sizeof(cmd), "wget -q -O %s %s", package_path, package_url);
+    
+    char *download_update_arg[] = {
+    	"wget",
+    	"-q",
+    	"-O",
+    	package_path,
+    	package_url,
+    	NULL
+    };
             
-    if (!run_command_bool(cmd)) 
+    if (!run_command_bool(download_update_arg)) 
     {
         n = notify_notification_new(title, _("Error downloading the package."), "dialog-error");
         notify_notification_show(n, NULL);

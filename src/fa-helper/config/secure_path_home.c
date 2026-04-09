@@ -16,20 +16,38 @@ int is_safe_single_path_component(const char *s)
 {
     size_t len;
 
-    if (s == NULL) {
+    if (s == NULL) 
+    {
         return 0;
     }
 
     len = strlen(s);
-    if (len == 0 || len > 255) {
+    if (len == 0 || len > 255) 
+    {
         return 0;
     }
 
-    if (strchr(s, '/') != NULL || strchr(s, '\\') != NULL) {
+    if (strchr(s, '/') != NULL || strchr(s, '\\') != NULL) 
+    {
+        return 0;
+    }
+    
+    // forbid traversal
+    if (strstr(s, "..") != NULL) 
+    {
         return 0;
     }
 
-    if (strstr(s, "..") != NULL) {
+    // canonicalize path
+    char resolved[PATH_MAX];
+    if (realpath(s, resolved) == NULL) 
+    {
+        return 0;
+    }
+
+    // restrict special dirs
+    if (strncmp(resolved, "/home/", 6) != 0 && strcmp(resolved, "/root") != 0 && strcmp(resolved, "/etc") != 0 && strcmp(resolved, "/dev") != 0 && strcmp(resolved, "/sys") != 0 && strcmp(resolved, "/boot") != 0) 
+    {
         return 0;
     }
 
@@ -42,11 +60,13 @@ int is_safe_single_path_component(const char *s)
 */
 int is_safe_home_dir(const char *s)
 {
-    if (s == NULL) {
+    if (s == NULL) 
+    {
         return 0;
     }
 
-    if (s[0] != '\0' && s[0] == '/') {
+    if (s[0] != '\0' && s[0] == '/') 
+    {
         return 1;
     }
 

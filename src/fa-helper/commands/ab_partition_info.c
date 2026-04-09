@@ -17,8 +17,15 @@ void ab_partition_info()
     auto_free char *device_command = fastboot_command();
     char output_command[256];
     // get the current slot
-    snprintf(output_command, sizeof(output_command), "%s getvar current-slot 2>&1", device_command);
-    char *output = execute_command(output_command);
+    char *current_slot[] = {
+    	device_command,
+    	"getvar",
+    	"current-slot",
+    	"2>&1",
+    	NULL
+    };
+    
+    char *output = execute_command(current_slot);
 	
 	// errors
     if (output == NULL) 

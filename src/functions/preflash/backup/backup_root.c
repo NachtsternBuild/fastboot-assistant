@@ -22,9 +22,10 @@ gpointer backup_root_thread(gpointer data)
     LOGD("backup_root");
     
     char command[2048];
+    char full_path[512];
     char backup_dir[1024];
     char backup_predir_file[512];
-    auto_free const char *adb = adb_command();
+    auto_free char *adb = adb_command();
     
 	// get path
 	get_config_file_path(backup_predir_file, sizeof(backup_predir_file));
@@ -40,19 +41,38 @@ gpointer backup_root_thread(gpointer data)
     LOGD("Backup of all available partitions to %s.", backup_dir);
     
 	// create backup path
-    snprintf(command, sizeof(command), "mkdir -p %s", backup_dir);
-    execute_command(command);
+    char *dir_arg[] = {
+    	"mkdir",
+    	"-p",
+    	backup_dir,
+    	NULL
+    };
+    execute_command(dir_arg);
         
-    snprintf(command, sizeof(command), "%s wait-for-device", adb);
-    execute_command(command);
+    char *wait_device[] = {
+    	adb,
+    	"wait-for-device",
+    	NULL
+    };
+    execute_command(wait_device);
     
 	// write partition list to partition.txt
-    snprintf(command, sizeof(command), "%s shell %s -c \"ls %s\" > %s/partitions.txt", adb, SU, BLOCK_PATH, backup_dir);
-    execute_command(command);
-    
-    // file with all partitions
+	// file with all partitions
     char file_partition[1050];
     snprintf(file_partition, sizeof(file_partition), "%s/partitions.txt", backup_dir);
+	
+    snprintf(command, sizeof(command), "\"ls %s\"", BLOCK_PATH);
+    char *write_partition_list[] = {
+		adb,
+		"shell",
+		SU,
+		"-c",
+		command,
+		">",
+		file_partition,
+		NULL  
+    };
+    execute_command(write_partition_list);
     
     // open file
     FILE *file = fopen(file_partition, "r");
@@ -76,27 +96,61 @@ gpointer backup_root_thread(gpointer data)
         }
         		
         // get slots
-        snprintf(command, sizeof(command), "%s shell %s -c \"ls %s%s_a\" >/dev/null 2>&1", adb, SU, BLOCK_PATH, partition);
-        
+		snprintf(full_path, sizeof(full_path), "\"%s%s_a\"", BLOCK_PATH, partition);
+
+		char *argv[] = {
+    		adb,
+    		"shell",
+    		SU,      
+    		"-c",
+    		full_path,   
+    		NULL
+		};
+ 		
+ 		char in_path[2048];
+ 		char out_path[2048];
         // for devices with a/b slots
-        if (run_command_bool(command))
+        if (run_command_bool(argv))
         {
             for (char slot = 'a'; slot <= 'b'; slot++) 
             {
                 LOGD("Backing up %s (slot %c)", partition, slot);
                 // create the dd command save
-                snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s_%c\" | %s of=\"%s/%s_%c.img\"", 
-                         adb, SU, DD, BLOCK_PATH, partition, slot, DD, backup_dir, partition, slot);
-                execute_command(command);
+                snprintf(in_path, sizeof(in_path), "\"%s if=%s%s_%c\"", DD, BLOCK_PATH, partition, slot);
+                snprintf(out_path, sizeof(out_path), "of=\"%s/%s_%c.img\"", backup_dir, partition, slot);
+                char *backup_cmd[] = {
+                	adb,
+                	"shell",
+                	SU,
+                	"-c",
+                	in_path,
+                	"|",
+                	DD,
+                	out_path,
+                	NULL
+                };
+                
+                execute_command(backup_cmd);
             }
         } 
         
         else 
         {
             LOGD("Backing up %s", partition);
-            snprintf(command, sizeof(command), "%s shell %s -c \"%s if=%s%s\" | %s of=\"%s/%s.img\"", 
-                     adb, SU, DD, BLOCK_PATH, partition, DD, backup_dir, partition);
-            execute_command(command);
+            snprintf(in_path, sizeof(in_path), "\"%s if=%s%s\"", DD, BLOCK_PATH, partition);
+            snprintf(out_path, sizeof(out_path), "of=\"%s/%s.img\"", backup_dir, partition);
+            char *backup_cmd[] = {
+                adb,
+                "shell",
+                SU,
+                "-c",
+                in_path,
+                "|",
+                DD,
+                out_path,
+                NULL
+            };
+            execute_command(backup_cmd);
         }
         
     }

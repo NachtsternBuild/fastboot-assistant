@@ -20,28 +20,151 @@ void get_android_info(char *android_version, char *kernel_version, char *device_
         return;
     }
     
-    char *test_output = execute_command("adb devices");
+    auto_free char *info_command = adb_command();
+    
+    char *test_output_arg[] = {
+    	info_command,
+    	"devices",
+    	NULL
+    };
+    
+    char *test_output = execute_command(test_output_arg);
 	LOGD("ADB Output: %s\n", test_output);
 
-    auto_free char *info_command = adb_command();
-
     // android version
-    snprintf(android_version, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.build.version.release", info_command)));
+    char *android_version_argv[] = {
+    	info_command,
+    	"shell",
+    	"getprop",
+    	"ro.build.version.release",
+    	NULL
+	};
+	
+	char *android_version_output = execute_command(android_version_argv);
+
+	if (android_version_output)
+	{
+    	snprintf(android_version, 2048, "%s", android_version_output);
+    	free(android_version_output);
+	}
+	else
+	{
+    	android_version[0] = '\0';
+	}
     
     // android kernel version
-    snprintf(kernel_version, 2048, "%s", execute_command(g_strdup_printf("%s shell uname -r", info_command)));
+    char *kernel_version_argv[] = {
+    	info_command,
+    	"shell",
+    	"unname",
+    	"-r",
+    	NULL
+	};
+
+	char *kernel_version_output = execute_command(kernel_version_argv);
+
+	if (kernel_version_output)
+	{
+    	snprintf(kernel_version, 2048, "%s", kernel_version_output);
+    	free(kernel_version_output);
+	}
+	else
+	{
+    	kernel_version[0] = '\0';
+	}
 
     // device name
-    snprintf(device_name, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.product.model", info_command)));
+    char *device_name_argv[] = {
+    	info_command,
+    	"shell",
+    	"getprop",
+    	"ro.product.model",
+    	NULL
+	};
+
+	char *device_name_output = execute_command(device_name_argv);
+
+	if (device_name_output)
+	{
+    	snprintf(device_name, 2048, "%s", device_name_output);
+    	free(device_name_output);
+	}
+	else
+	{
+    	device_name[0] = '\0';
+	}
 
     // project treble support
-    snprintf(project_treble, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.treble.enabled", info_command)));
+    char *project_treble_argv[] = {
+    	info_command,
+    	"shell",
+    	"getprop",
+    	"ro.treble.enabled",
+    	NULL
+	};
+
+	char *project_treble_output = execute_command(project_treble_argv);
+
+	if (project_treble_output)
+	{
+    	snprintf(project_treble, 2048, "%s", project_treble_output);
+    	free(project_treble_output);
+	}
+	else
+	{
+    	project_treble[0] = '\0';
+	}
 
     // get active slot
-    snprintf(active_slot, 2048, "%s", execute_command(g_strdup_printf("%s shell getprop ro.boot.slot_suffix", info_command)));
+    char *active_slot_argv[] = {
+    	info_command,
+    	"shell",
+    	"getprop",
+    	"ro.boot.slot_suffix",
+    	NULL
+	};
+
+	char *active_slot_output = execute_command(active_slot_argv);
+
+	if (active_slot_output)
+	{
+    	snprintf(active_slot, 2048, "%s", active_slot_output);
+    	free(active_slot_output);
+	}
+	else
+	{
+    	active_slot[0] = '\0';
+	}
        
     // soc info
-    snprintf(get_soc, 2048, "%s", execute_command(g_strdup_printf("%s shell grep \"model name\" /proc/cpuinfo | head -1 | awk -F ': ' '{print $2}'", info_command)));
+    char *get_soc_argv[] = {
+    	info_command,
+    	"shell",
+    	"grep",
+    	"\"model name\"",
+    	"/proc/cpuinfo",
+    	"|",
+    	"head",
+    	"-1",
+    	"|",
+    	"awk",
+    	"-F",
+    	"': '",
+    	"'{print $2}'",
+    	NULL
+	};
+
+	char *get_soc_output = execute_command(get_soc_argv);
+
+	if (get_soc_output)
+	{
+    	snprintf(get_soc, 2048, "%s", get_soc_output);
+    	free(get_soc_output);
+	}
+	else
+	{
+    	get_soc[0] = '\0';
+	}
 }
 
 /* main function - info */

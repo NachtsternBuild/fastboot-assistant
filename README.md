@@ -1,4 +1,5 @@
 # fastboot-assistant
+[![CodeQL](https://github.com/NachtsternBuild/fastboot-assistant/actions/workflows/codeql.yml/badge.svg)](https://github.com/NachtsternBuild/fastboot-assistant/actions/workflows/codeql.yml)
 ## Description
 Program to facilitate the installation of custom ROMs and GSIs on Android devices. Based on GTK and Shell.
 

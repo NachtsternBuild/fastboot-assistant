@@ -65,8 +65,7 @@ bool download_update_conf()
     }
 
     LOGD("Found update.conf: %s", url);
-    char cmd[1500]; 
-    
+   
     char conf_dir[128];
     char update_file[256];
     
@@ -74,9 +73,16 @@ bool download_update_conf()
     snprintf(update_file, sizeof(update_file), "%s/%s", conf_dir, CONF_FILE);
     
     // using qutation to prevent shell expansion
-    snprintf(cmd, sizeof(cmd), "wget -q -O '%s' '%s'", update_file, url);
+    char *cmd_arg[] = {
+    	"wget",
+    	"-q",
+    	"-O",
+    	update_file,
+    	url,
+    	NULL
+    };
     
-    run_command(cmd);
+    run_command(cmd_arg);
     return true;
     
 }

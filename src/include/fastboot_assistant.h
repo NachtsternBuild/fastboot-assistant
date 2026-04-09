@@ -26,6 +26,7 @@ extern "C" {
 #include <glib-object.h>
 #include <libnotify/notify.h>
 #include <sys/prctl.h>
+#include <limits.h>
 
 #ifdef __cplusplus
 }

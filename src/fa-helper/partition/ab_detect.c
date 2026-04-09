@@ -18,26 +18,48 @@ const char *detected_device = "only_a";
 void write_ab_file() 
 {
     char dir_path[512];
+    char safe_base[PATH_MAX];
+    char path[PATH_MAX];
     char device_typ_dir[1024];
     get_config_dir(dir_path, sizeof(dir_path));
     
-    // create the path of the device dir
-    snprintf(device_typ_dir, sizeof(device_typ_dir), "%s/device", dir_path);
-    
-    // create the dir 
+    if (!is_safe_home_dir(dir_path)) 
+    {
+        LOGE("Unsafe config directory path!");
+        exit(1);
+    }
+
+    // canonicalize path
+    if (realpath(dir_path, safe_base) == NULL) 
+    {
+        LOGE("Failed to resolve config path: %s", strerror(errno));
+        exit(1);
+    }
+
+    // build device directory path safely
+    if (snprintf(device_typ_dir, sizeof(device_typ_dir), "%s/device", safe_base) >= sizeof(device_typ_dir)) 
+    {
+        LOGE("Path too long");
+        exit(1);
+    }
+
     create_directory(device_typ_dir);
 
-    char path[1040];
-    snprintf(path, sizeof(path), "%s/%s", device_typ_dir, AB_FILE);
-	
-	// write file with save permissions
-	int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+    // build file path safely
+    if (snprintf(path, sizeof(path), "%s/%s", device_typ_dir, AB_FILE) >= sizeof(path)) 
+    {
+        LOGE("Path too long");
+        exit(1);
+    }
+
+    // secure file creation
+    int fd = open(path, O_WRONLY | O_CREAT | O_TRUNC | O_NOFOLLOW, S_IRUSR | S_IWUSR);
     if (fd == -1) 
     {
-        LOGE("Error when opening the file for writing: %s", strerror(errno));
+        LOGE("Error opening file: %s", strerror(errno));
         exit(1);
-    }	
-	
+    }
+    	
     FILE *file = fdopen(fd, "w");
     if (file == NULL) 
     {
@@ -53,8 +75,21 @@ void write_ab_file()
 void check_ab_file() 
 {
     char dir_path[512];
+    char safe_base[PATH_MAX];
     char device_typ_dir[1024];
     get_config_dir(dir_path, sizeof(dir_path));
+    
+    if (!is_safe_home_dir(dir_path)) 
+    {
+    	LOGE("Unsafe config directory path!");
+    	return;
+	}
+
+	if (realpath(dir_path, safe_base) == NULL) 
+	{
+    	LOGE("Path resolve failed");
+    	return;
+	}
     
     // create the path of the device dir
     snprintf(device_typ_dir, sizeof(device_typ_dir), "%s/device", dir_path);
@@ -79,8 +114,21 @@ void check_ab_file()
 void check_ab_file_light() 
 {
     char dir_path[512];
+    char safe_base[PATH_MAX];
     char device_typ_dir[1024];
     get_config_dir(dir_path, sizeof(dir_path));
+    
+    if (!is_safe_home_dir(dir_path)) 
+    {
+    	LOGE("Unsafe config directory path!");
+    	return;
+	}
+
+	if (realpath(dir_path, safe_base) == NULL) 
+	{
+    	LOGE("Path resolve failed");
+    	return;
+	}
     
     // create the path of the device dir
     snprintf(device_typ_dir, sizeof(device_typ_dir), "%s/device", dir_path);
