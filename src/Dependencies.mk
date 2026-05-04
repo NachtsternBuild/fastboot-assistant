@@ -22,10 +22,10 @@ TMP_DIR := $(BUILD_DIR)/.external
 GIT_HTTPS ?= 0
 
 ifeq ($(GIT_HTTPS),1)
-  UIBASE_URL := https://github.com/AtlantisOS-Project/atlantis-UI-base.git
+  UIBASE_URL := https://github.com/AtlantisOS-Project/atlantis-UI-base-C.git
   DEBBUILD_URL := https://github.com/AtlantisOS-Project/base-debian-build.git
 else
-  UIBASE_URL := git@github.com:AtlantisOS-Project/atlantis-UI-base.git
+  UIBASE_URL := git@github.com:AtlantisOS-Project/atlantis-UI-base-C.git
   DEBBUILD_URL := git@github.com:AtlantisOS-Project/base-debian-build.git
 endif
 
